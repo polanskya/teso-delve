@@ -1,0 +1,93 @@
+
+
+body {
+  background: url('/gfx/The_Elder_Scrolls_Online_Background_Nord.jpg');
+  background-position: center top 50px;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.navigation {
+  width: 100%;
+  position: fixed;
+  top: 0px;
+}
+
+#app {
+  padding-top: 90px;
+}
+
+.circle {
+  border-radius: 50%;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+}
+
+.set-table .item-icon {
+  max-width: 25px;
+}
+
+.min-width {
+  max-width: 1%;
+}
+
+.form-control:focus {
+  background-color: #353535 !important;
+  color: #fff;
+  border: 1px solid lighten(#404040, 10%);
+}
+
+.quality-5 {
+  background: $quality-legendary !important;
+  border: 1px solid $quality-legendary-border !important;
+}
+
+.quality-4 {
+  background: $quality-artifact !important;
+  border: 1px solid $quality-artifact-border !important;
+}
+
+.quality-3 {
+  background: $quality-arcane !important;
+  border: 1px solid $quality-arcane-border !important;
+}
+
+.quality-2 {
+  background: $quality-magic !important;
+  border: 1px solid $quality-magic-border !important;
+}
+
+.quality-1 {
+  background: $quality-normal !important;
+  border: 1px solid $quality-normal-border !important;
+}
+
+.quality-0 {
+  background: $quality-trash !important;
+  border: 1px solid $quality-trash-border !important;
+}
+
+.navbar-inverse .navbar-nav>li>a,
+.navbar-inverse .navbar-brand
+{
+  color: lighten(#444, 20%);
+}
+
+
+.text-legendary {
+  color: $quality-legendary;
+}
+
+body.sidebar-disabled #sidebar-switch, body:not(.sidebar-disabled) #top-menu-switch {
+  display: block;
+}
+
+.fa {
+  font-size: 14px;
+  color: white;
+}
+
+#export-upload {
+  margin-top: 15px;
+}

@@ -1,0 +1,92 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+body {
+  background: url("/gfx/The_Elder_Scrolls_Online_Background_Nord.jpg");
+  background-position: center top 50px;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.navigation {
+  width: 100%;
+  position: fixed;
+  top: 0px;
+}
+
+#app {
+  padding-top: 90px;
+}
+
+.circle {
+  border-radius: 50%;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+}
+
+.set-table .item-icon {
+  max-width: 25px;
+}
+
+.min-width {
+  max-width: 1%;
+}
+
+.form-control:focus {
+  background-color: #353535 !important;
+  color: #fff;
+  border: 1px solid #5a5a5a;
+}
+
+.quality-5 {
+  background: #EECA2A !important;
+  border: 1px solid #d4b011 !important;
+}
+
+.quality-4 {
+  background: #A02EF7 !important;
+  border: 1px solid #8809e9 !important;
+}
+
+.quality-3 {
+  background: #3A92FF !important;
+  border: 1px solid #0776ff !important;
+}
+
+.quality-2 {
+  background: #2DC50E !important;
+  border: 1px solid #22950b !important;
+}
+
+.quality-1 {
+  background: white !important;
+  border: 1px solid #e6e6e6 !important;
+}
+
+.quality-0 {
+  background: white !important;
+  border: 1px solid #e6e6e6 !important;
+}
+
+.navbar-inverse .navbar-nav > li > a,
+.navbar-inverse .navbar-brand {
+  color: #777777;
+}
+
+.text-legendary {
+  color: #EECA2A;
+}
+
+body.sidebar-disabled #sidebar-switch, body:not(.sidebar-disabled) #top-menu-switch {
+  display: block;
+}
+
+.fa {
+  font-size: 14px;
+  color: white;
+}
+
+#export-upload {
+  margin-top: 15px;
+}
+
+/*# sourceMappingURL=app.css.map */
