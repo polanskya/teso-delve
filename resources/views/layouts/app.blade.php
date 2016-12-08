@@ -15,6 +15,7 @@
     <link href="/css/spin.css" rel="stylesheet">
     <link href="/css/lib.min.css" rel="stylesheet">
     <link href="/css/app.css" rel="stylesheet">
+    @yield('stylesheet')
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
@@ -32,5 +33,8 @@
 <!-- Scripts -->
 <script src="/js/app.js"></script>
 <script src="/js/dropzone.js"></script>
+<script src="/js/set-rows.js"></script>
+@yield('javascript')
+
 </body>
 </html>

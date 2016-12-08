@@ -65,12 +65,12 @@
                             <li role="separator" class="divider"></li>
                             <li>
                                 <a href="#">Craftable</a>
-                                <a href="#">Dungeons</a>
+                                <a href="{{route('dungeons.index')}}">Dungeons</a>
                             </li>
                         </ul>
                     </li>
 
-                    <li class="dropdown">
+                    <li class="dropdown hidden">
                         <a class="dropdown-toggle user-dropdown" data-toggle="dropdown" href="javascript: void(0)" role="button" aria-expanded="false">
                             <span class="m-r-1">Builds</span>
                         </a>

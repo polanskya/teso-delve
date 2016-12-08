@@ -18,9 +18,13 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
-Route::get('/import', 'ImportController@import');
+Route::get('/import-data', 'ImportController@import');
 Route::get('/export', 'ImportController@export');
 
+
+Route::get('/dungeons', 'DungeonController@index')->name('dungeons.index');
+Route::put('/dungeon/{dungeon}/set', 'DungeonController@addSet')->name('dungeon.addSet');
+Route::get('/dungeon/{dungeon}', 'DungeonController@show')->name('dungeon.show');
 
 
 Route::get('/my-sets', 'SetController@mySets')->name('set.my-sets');

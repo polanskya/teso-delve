@@ -9,6 +9,8 @@
 namespace App\Http\Controllers;
 
 
+use App\Model\Dungeon;
+use App\Model\DungeonSet;
 use App\Model\Set;
 use App\Model\SetBonus;
 use App\Model\UserSetFavourite;
@@ -27,10 +29,15 @@ class ImportController
         $sets = Set::all();
         $setBonuses = SetBonus::all();
         $userFavourites = UserSetFavourite::all();
+        $dungeons = Dungeon::all();
+        $dungeonSets = DungeonSet::all();
+
 
         file_put_contents(storage_path('dump/sets.json'), $sets->toJson());
         file_put_contents(storage_path('dump/setBonuses.json'), $setBonuses->toJson());
         file_put_contents(storage_path('dump/userFavourites.json'), $userFavourites->toJson());
+        file_put_contents(storage_path('dump/dungeons.json'), $dungeons->toJson());
+        file_put_contents(storage_path('dump/dungeonSets.json'), $dungeonSets->toJson());
 
         return 'success';
     }
@@ -42,6 +49,9 @@ class ImportController
             /** @var $file UploadedFile */
             if($file->getClientOriginalName() == 'AddonDB.lua') {
                 $esoImport->import($file->getRealPath());
+            }
+            else {
+                abort(404);
             }
         }
     }

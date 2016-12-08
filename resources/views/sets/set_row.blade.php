@@ -7,7 +7,7 @@ $isFavourite = in_array($set->id, $favourites)
 
 <tr class="{{ $isFavourite ? 'bg-gray-darker' : ''}}">
     <td>
-        <a href="#" ><i class="fa fa-chevron-{{$isFavourite ? 'up' : 'down'}}" aria-hidden="true"></i></a>
+        <a href="#" class="open-set-row" setId="{{$set->id}}" ><i class="fa fa-chevron-{{$isFavourite ? 'up' : 'down'}}" aria-hidden="true"></i></a>
     </td>
     <td colspan="2"><a href="{{route('set.show', [$set->id])}}"><strong>{{$set->name}}</strong></a> <strong>({{$setCount}})</strong></td>
 
@@ -18,7 +18,9 @@ $isFavourite = in_array($set->id, $favourites)
     </td>
     <td colspan="4">
         <div class="btn-group pull-right" role="group" aria-label="...">
-            <a href="{{route('set.edit', [$set->id])}}" class="btn btn-default btn-xs"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+            @if(Gate::allows('update', $set))
+                <a href="{{route('set.edit', [$set->id])}}" class="btn btn-default btn-xs"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+            @endif
             @if($isFavourite)
                 <button type="button" class="btn btn-default btn-xs"><i class="fa fa-star text-legendary" aria-hidden="true"></i></button>
             @else
