@@ -8,13 +8,17 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         @foreach($dungeons as $alliance => $zoneDungeons)
-                            {{ trans('alliance.'.$alliance . "") }}
                             <table class="table table-condensed">
                                 <thead>
+                                <tr>
+                                    <th class="min-width"><img class="alliance-img" src="gfx/alliance_{{$alliance}}.png"></th>
+                                    <th><h4>{{ trans('alliance.'.$alliance . "") }}</h4></th>
+                                </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($zoneDungeons->sortBy('zone') as $dungeon)
                                     <tr>
+                                        <td></td>
                                         <td><a href="{{route('dungeon.show', [$dungeon->id])}}">{{$dungeon->name}}</a></td>
                                     </tr>
                                 @endforeach

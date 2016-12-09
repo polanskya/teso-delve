@@ -32,7 +32,7 @@ $isFavourite = in_array($set->id, $favourites)
 
 
 @if($setItems->count() > 0)
-    @foreach($setItems->sortBy('name') as $item)
+    @foreach($setItems->sortBy('equipType') as $item)
         <tr class="set-member-{{$set->id}} {{$isFavourite == false ? 'hidden' : ''}}">
             <td class="min-width"><span class="circle quality-{{$item->quality}}"></span></td>
             <td class="min-width"><img class="item-icon" src="http://esoicons.uesp.net/{{str_ireplace('.dds', '.png', $item->icon)}}"></td>

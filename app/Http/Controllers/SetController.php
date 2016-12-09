@@ -12,7 +12,7 @@ class SetController
     public function mySets() {
         $favourites = Auth::user()->favouriteSets->pluck('setId')->toArray();
         $sets = Set::with('bonuses')->orderBy('name')->get();
-        $items = Auth::user()->items;
+        $items = Auth::user()->items()->orderBy('equipType')->get();
 
         return view('sets.my_sets', compact('sets', 'items', 'favourites'));
     }
