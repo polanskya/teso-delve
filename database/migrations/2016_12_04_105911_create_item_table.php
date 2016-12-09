@@ -14,10 +14,10 @@ class CreateItemTable extends Migration
     public function up()
     {
         Schema::create('items', function (Blueprint $table) {
-            $table->timestamps();
             $table->increments('id');
             $table->integer('userId');
             $table->string('uniqueId');
+            $table->integer('characterId')->nullable();
             $table->string('name');
             $table->integer('trait')->nullable();
             $table->integer('equipType')->nullable();
@@ -32,6 +32,7 @@ class CreateItemTable extends Migration
             $table->integer('level')->nullable();
             $table->integer('championLevel')->nullable();
             $table->integer('type')->nullable();
+            $table->timestamps();
         });
     }
 

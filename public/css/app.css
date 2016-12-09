@@ -125,4 +125,8 @@ body.sidebar-disabled #sidebar-switch, body:not(.sidebar-disabled) #top-menu-swi
   width: 1%;
 }
 
+.text-bold {
+  font-weight: bold;
+}
+
 /*# sourceMappingURL=app.css.map */

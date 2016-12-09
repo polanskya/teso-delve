@@ -12,13 +12,21 @@ class SetController
     public function mySets() {
         $favourites = Auth::user()->favouriteSets->pluck('setId')->toArray();
         $sets = Set::with('bonuses')->orderBy('name')->get();
-        $items = Auth::user()->items()->orderBy('equipType')->get();
+        $items = Auth::user()->items()->with('character')->orderBy('equipType')->get();
 
         return view('sets.my_sets', compact('sets', 'items', 'favourites'));
     }
 
     public function edit(Set $set) {
         return view('sets.edit', compact('set'));
+    }
+
+    public function show(Set $set) {
+        $user = Auth::user();
+        $user->load('items', 'favouriteSets');
+        $favourites = $user->favouriteSets->pluck('setId')->toArray();
+        $items = $user->items->where('setId', $set->id)->load('character');
+        return view('sets.show', compact('set', 'items', 'favourites'));
     }
 
     public function update(Set $set, Request $request) {

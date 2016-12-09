@@ -17,7 +17,7 @@ class CreateSetBonusTable extends Migration
             $table->increments('id');
             $table->integer('setId');
             $table->integer('bonusNumber');
-            $table->string('description');
+            $table->string('description', 500);
             $table->timestamps();
         });
     }

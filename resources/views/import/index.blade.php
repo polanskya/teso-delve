@@ -24,7 +24,7 @@
                             <li>Start ESO and enable the addon</li>
                             <li>Login on a character and open/close your inventory to export items. <br>It will only be this characters inventory and your bank that will be exported.<br>Which means you'll have to do this on all your characters you wish to import</li>
                             <li>Logout or run command /reloadui to write to your log file <br>(ESO only writes to file when reloading UI)</li>
-                            <li>Find your log file here: <strong>Documents\Elder Scrolls Online\live\SavedVariables\AddonDB.lua</strong><br>
+                            <li>Find your log file here: <strong>Documents\Elder Scrolls Online\live\SavedVariables\TesoDelve.lua</strong><br>
                             Having trouble finding your log? Find your Addon folder and it'll be a folder next to it.</li>
                         </ul>
 

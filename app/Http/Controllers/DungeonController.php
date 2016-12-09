@@ -18,7 +18,7 @@ class DungeonController
     public function show(Dungeon $dungeon) {
         $sets = $dungeon->sets;
         $all_sets = Set::whereNotIn('id', $sets->pluck('id'))->orderBy('name')->get();
-        $items = Auth::user()->items;
+        $items = Auth::user()->items->load('character');
         $favourites = Auth::user()->favouriteSets->pluck('setId')->toArray();
 
         return view('dungeon.show', compact('dungeon', 'items', 'favourites', 'sets', 'all_sets'));

@@ -13,11 +13,17 @@ class DungeonSeeder extends Seeder
     {
 
         $dungeons = file_get_contents(storage_path('dump/dungeons.json'));
+        $dungeonsSets = file_get_contents(storage_path('dump/dungeonSets.json'));
 
         $dungeons = json_decode($dungeons);
+        $dungeonSets = json_decode($dungeonsSets);
 
         foreach($dungeons as $dungeon) {
-            DB::table('sets')->insert((array) $dungeon);
+            DB::table('dungeons')->insert((array) $dungeon);
+        }
+
+        foreach($dungeonSets as $dungeonSet) {
+            DB::table('dungeon_sets')->insert((array) $dungeonSet);
         }
 
     }

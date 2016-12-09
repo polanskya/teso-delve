@@ -32,7 +32,6 @@ class ImportController
         $dungeons = Dungeon::all();
         $dungeonSets = DungeonSet::all();
 
-
         file_put_contents(storage_path('dump/sets.json'), $sets->toJson());
         file_put_contents(storage_path('dump/setBonuses.json'), $setBonuses->toJson());
         file_put_contents(storage_path('dump/userFavourites.json'), $userFavourites->toJson());

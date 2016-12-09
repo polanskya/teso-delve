@@ -70,6 +70,24 @@
                         </ul>
                     </li>
 
+                    <li class="dropdown">
+                        <a class="dropdown-toggle user-dropdown" data-toggle="dropdown" href="javascript: void(0)" role="button" aria-expanded="false">
+                            <span class="m-r-1">Characters</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            @foreach(Auth::user()->characters()->orderBy('championLevel', 'desc')->orderBy('level', 'desc')->get() as $character)
+                            <li>
+                                <a href="#">{{$character->name}}</a>
+                            </li>
+                            @endforeach
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a href="#">Craftable</a>
+                                <a href="{{route('dungeons.index')}}">Dungeons</a>
+                            </li>
+                        </ul>
+                    </li>
+
                     <li class="dropdown hidden">
                         <a class="dropdown-toggle user-dropdown" data-toggle="dropdown" href="javascript: void(0)" role="button" aria-expanded="false">
                             <span class="m-r-1">Builds</span>
@@ -983,16 +1001,6 @@
                         </ul>
                         <!-- END Messages Dropdown Menu -->
 
-                    </li>
-
-                    <li>
-                        <form action="{{route('import.upload')}}"
-                              class="dropzone"
-                              id="export-upload">
-
-                            {{csrf_field()}}
-
-                        </form>
                     </li>
 
                     <li class="dropdown">

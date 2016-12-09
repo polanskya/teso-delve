@@ -12,7 +12,7 @@
                                 <thead>
                                 <tr>
                                     <th class="min-width"><img class="alliance-img" src="gfx/alliance_{{$alliance}}.png"></th>
-                                    <th><h4>{{ trans('alliance.'.$alliance . "") }}</h4></th>
+                                    <th><h5>{{ trans('alliance.'.$alliance . "") }}</h5></th>
                                 </tr>
                                 </thead>
                                 <tbody>

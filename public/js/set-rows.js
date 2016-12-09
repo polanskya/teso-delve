@@ -5,6 +5,7 @@ $(document).ready(function() {
 
         var setId = $(this).attr('setId');
         console.log(setId);
+
         itemRows = $(".set-member-" + setId);
         if(itemRows.hasClass('hidden')) {
             itemRows.removeClass('hidden');

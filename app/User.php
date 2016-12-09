@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Model\Character;
 use App\Model\Item;
 use App\Model\UserSetFavourite;
 use Illuminate\Notifications\Notifiable;
@@ -35,5 +36,9 @@ class User extends Authenticatable
 
     public function favouriteSets() {
         return $this->hasMany(UserSetFavourite::class, 'userId');
+    }
+
+    public function characters() {
+        return $this->hasMany(Character::class, 'userId');
     }
 }

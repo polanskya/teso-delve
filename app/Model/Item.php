@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null weaponType
  * @property int|null championLevel
  * @property int|null level
+ * @property int|null characterId
  */
 class Item extends Model
 {
@@ -49,6 +50,10 @@ class Item extends Model
 
     public function set() {
         return $this->belongsTo(Set::class, 'setId');
+    }
+
+    public function character() {
+        return $this->belongsTo(Character::class, 'characterId');
     }
 
     public function traitCategory() {

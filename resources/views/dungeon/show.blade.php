@@ -8,6 +8,7 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <h1>{{$dungeon->name}}</h1>
+
                         <table class="table table-condensed set-table">
                             <thead>
                             </thead>

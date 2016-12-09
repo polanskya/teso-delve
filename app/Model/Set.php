@@ -21,4 +21,8 @@ class Set extends Model
        return $this->hasMany(SetBonus::class, 'setId');
     }
 
+    public function dungeons() {
+        return $this->belongsToMany(Dungeon::class, 'dungeon_sets', 'id', 'dungeonId');
+    }
+
 }

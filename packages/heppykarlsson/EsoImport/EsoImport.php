@@ -1,6 +1,8 @@
 <?php namespace HeppyKarlsson\EsoImport;
 
 
+use App\Enum\BagType;
+use App\Model\Character;
 use App\Model\Item;
 use App\Model\Set;
 use Illuminate\Support\Facades\Auth;
@@ -9,17 +11,20 @@ use Illuminate\Support\Facades\DB;
 class EsoImport
 {
 
+    private $characters = [];
+
     public function import($file_path) {
-        DB::table('items')->truncate();
+        Auth::user()->items()->delete();
         echo "Importing<br>";
         $file = fopen($file_path, 'r');
+
+        $lines = [];
 
         if($file) {
             $line = null;
             while (!feof($file))
             {
-                $line = fgets($file);
-                $this->importItem($line);
+                $lines[] = fgets($file);
             }
             fclose($file);
         }
@@ -27,6 +32,63 @@ class EsoImport
             throw new \Exception('File couldnt be opened');
         }
 
+
+        foreach($lines as $line) {
+            $this->importCharacter($line);
+        }
+
+        Auth::user()->load('characters');
+
+        foreach($lines as $line) {
+            $this->importItem($line);
+        }
+
+        $this->cleanCharacters();
+
+    }
+
+    public function importCharacter($line) {
+        $item_start = stripos($line, 'CHARACTER:');
+        if($item_start === false) {
+            return false;
+        }
+
+        $line = str_ireplace('",', '', $line);
+        $line = substr($line, $item_start + 10);
+
+        $properties = explode(';', $line);
+
+        $character = Auth::user()->characters()->withTrashed()->where('externalId', $properties[0])->first();
+
+        if(!$character) {
+            $character = new Character();
+        }
+
+        $character->name = $properties[1];
+        $character->externalId = $properties[0];
+        $character->classId = $properties[3];
+        $character->level = $properties[4];
+        $character->championLevel = $properties[5];
+        $character->raceId = $properties[7];
+        $character->allianceId = $properties[8];
+        $character->userId = Auth::user()->id;
+        $character->deleted_at = null;
+
+        if(isset($properties[9])) {
+            // Calculate when next riding lesson is unlocked
+            $properties = explode(';', $line);
+            $seconds = intval($properties[9]) / 1000;
+            $nextTraining = intval($properties[10]) + $seconds;
+            $character->ridingUnlocked_at = $nextTraining;
+        }
+
+        $character->save();
+
+        $this->characters[] = $character->externalId;
+    }
+
+    public function cleanCharacters() {
+        Auth::user()->characters()->where('userId', Auth::id())->whereNotIn('externalId', $this->characters)->delete();
     }
 
     public function importItem($line) {
@@ -40,10 +102,12 @@ class EsoImport
 
         $properties = explode(';', $line);
 
-        $item_exists = Item::where('uniqueId', $properties[0])->first();
+        $character = null;
+        $bagType = isset($properties[15]) ? $properties[15] : null;
+        $character = Auth::user()->characters()->where('externalId', intval($properties[14]))->first();
 
-        if($item_exists) {
-            //return true;
+        if(isset($bagType[15]) and $bagType === BagType::BANK) {
+            $character = null;
         }
 
         $item = new Item();
@@ -61,6 +125,7 @@ class EsoImport
         $item->championLevel = isset($properties[11]) ? intval($properties[11]) : null;
         $item->level = isset($properties[12]) ? intval($properties[12]) : null;
         $item->weaponType = isset($properties[13]) ? intval($properties[13]) : null;
+        $item->characterId = $character ? $character->id : null;
 
         if(!empty(trim($properties[4]))) {
             $set = Set::where('name', $properties[4])->first();
