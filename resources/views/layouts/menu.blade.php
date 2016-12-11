@@ -44,64 +44,61 @@
                     </li>
 
 
-                    <li>
-                        <a href="{{url('/home')}}" aria-expanded="false">
-                            <span class="m-r-1">Inventory</span>
-                        </a>
-                    </li>
+                    @if(Auth::check())
+                        <li>
+                            <a href="{{url('/home')}}" aria-expanded="false">
+                                <span class="m-r-1">Inventory</span>
+                            </a>
+                        </li>
 
-                    <li class="dropdown">
-                        <a class="dropdown-toggle user-dropdown" data-toggle="dropdown" href="javascript: void(0)" role="button" aria-expanded="false">
-                            <span class="m-r-1">Sets</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="dropdown-header text-gray-lighter">
-                                <strong class="text-uppercase">Sets</strong>
-                            </li>
-                            <li role="separator" class="divider"></li>
-                            <li>
-                                <a href="{{route('set.my-sets')}}">My sets</a>
-                            </li>
-                            <li role="separator" class="divider"></li>
-                            <li>
-                                <a href="#">Craftable</a>
-                                <a href="{{route('dungeons.index')}}">Dungeons</a>
-                            </li>
-                        </ul>
-                    </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle user-dropdown" data-toggle="dropdown" href="javascript: void(0)" role="button" aria-expanded="false">
+                                <span class="m-r-1">Sets</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="dropdown-header text-gray-lighter">
+                                    <strong class="text-uppercase">Sets</strong>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                    <a href="{{route('set.my-sets')}}">My sets</a>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                    <a href="#">Craftable</a>
+                                    <a href="{{route('dungeons.index')}}">Dungeons</a>
+                                </li>
+                            </ul>
+                        </li>
 
-                    <li class="dropdown">
-                        <a class="dropdown-toggle user-dropdown" data-toggle="dropdown" href="javascript: void(0)" role="button" aria-expanded="false">
-                            <span class="m-r-1">Characters</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            @foreach(Auth::user()->characters()->orderBy('championLevel', 'desc')->orderBy('level', 'desc')->get() as $character)
-                            <li>
-                                <a href="#">{{$character->name}}</a>
-                            </li>
-                            @endforeach
-                            <li role="separator" class="divider"></li>
-                            <li>
-                                <a href="#">Craftable</a>
-                                <a href="{{route('dungeons.index')}}">Dungeons</a>
-                            </li>
-                        </ul>
-                    </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle user-dropdown" data-toggle="dropdown" href="javascript: void(0)" role="button" aria-expanded="false">
+                                <span class="m-r-1">Characters</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                @foreach(Auth::user()->characters()->orderBy('championLevel', 'desc')->orderBy('level', 'desc')->get() as $character)
+                                    <li>
+                                        <a href="#">{{$character->name}}</a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </li>
 
-                    <li class="dropdown hidden">
-                        <a class="dropdown-toggle user-dropdown" data-toggle="dropdown" href="javascript: void(0)" role="button" aria-expanded="false">
-                            <span class="m-r-1">Builds</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="{{route('set.my-sets')}}">Templar</a>
-                                <a href="{{route('set.my-sets')}}">Dragonknight</a>
-                                <a href="{{route('set.my-sets')}}">Sorcerer</a>
-                                <a href="{{route('set.my-sets')}}">Nightblade</a>
-                            </li>
-                        </ul>
-                    </li>
+                        <li class="dropdown hidden">
+                            <a class="dropdown-toggle user-dropdown" data-toggle="dropdown" href="javascript: void(0)" role="button" aria-expanded="false">
+                                <span class="m-r-1">Builds</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{{route('set.my-sets')}}">Templar</a>
+                                    <a href="{{route('set.my-sets')}}">Dragonknight</a>
+                                    <a href="{{route('set.my-sets')}}">Sorcerer</a>
+                                    <a href="{{route('set.my-sets')}}">Nightblade</a>
+                                </li>
+                            </ul>
+                        </li>
 
+                    @endif
 
                     <li id="top-menu-switch" class="dropdown">
                         <a href="javascript: void(0)" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Menu <i class="fa fa-fw fa-caret-down"></i></a>

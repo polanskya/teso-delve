@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property bool craftable
  * @property int|null traitNeeded
  * @property string|null description
+ * @property mixed id
  */
 class Set extends Model
 {
@@ -22,7 +23,7 @@ class Set extends Model
     }
 
     public function dungeons() {
-        return $this->belongsToMany(Dungeon::class, 'dungeon_sets', 'id', 'dungeonId');
+        return $this->belongsToMany(Dungeon::class, 'dungeon_sets', 'setId', 'dungeonId');
     }
 
 }

@@ -7,17 +7,8 @@ use App\Enum\ItemType;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @property string uniqueId
- * @property string icon
- * @property string enchant
- * @property int locked
- * @property int armorType
- * @property int quality
- * @property int|null setId
- * @property int equipType
- * @property int trait
- * @property string name
- * @property int|null type
+ * @property int userId
+ * @property int setId
  */
 class UserSetFavourite extends Model
 {

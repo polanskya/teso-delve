@@ -7,6 +7,18 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-body">
+                        <div class="btn-group pull-right" role="group" aria-label="...">
+                            @if(Gate::allows('update', $set))
+                                <a href="{{route('set.edit', [$set->id])}}" class="btn btn-default btn-xs"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                            @endif
+                            @if($isFavourite)
+                                <a href="{{route('set.favourite', [$set->id])}}" class="btn btn-default btn-xs setFavourite"><i class="fa fa-star text-legendary favouriteIcon" aria-hidden="true"></i></a>
+                            @else
+                                <a href="{{route('set.favourite', [$set->id])}}" class="btn btn-default btn-xs setFavourite"><i class="fa fa-star-o favouriteIcon" aria-hidden="true"></i></a>
+                            @endif
+                        </div>
+
+
                         <h1>{{$set->name}}</h1>
 
                         {{$set->description}}

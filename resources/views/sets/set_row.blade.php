@@ -5,7 +5,7 @@ $setCount = $setItems->count();
 $isFavourite = in_array($set->id, $favourites)
 ?>
 
-<tr class="{{ $isFavourite ? 'bg-gray-darker' : ''}}">
+<tr class="{{ $isFavourite ? 'bg-gray-darker' : ''}} set-row-{{$set->id}}">
     <td>
         <a href="#" class="open-set-row" setId="{{$set->id}}" ><i class="fa fa-chevron-{{$isFavourite ? 'up' : 'down'}}" aria-hidden="true"></i></a>
     </td>
@@ -22,9 +22,9 @@ $isFavourite = in_array($set->id, $favourites)
                 <a href="{{route('set.edit', [$set->id])}}" class="btn btn-default btn-xs"><i class="fa fa-pencil" aria-hidden="true"></i></a>
             @endif
             @if($isFavourite)
-                <button type="button" class="btn btn-default btn-xs"><i class="fa fa-star text-legendary" aria-hidden="true"></i></button>
+                <a href="{{route('set.favourite', [$set->id])}}" class="btn btn-default btn-xs setFavourite"><i class="fa fa-star text-legendary favouriteIcon" aria-hidden="true"></i></a>
             @else
-                <button type="button" class="btn btn-default btn-xs"><i class="fa fa-star-o" aria-hidden="true"></i></button>
+                <a href="{{route('set.favourite', [$set->id])}}" class="btn btn-default btn-xs setFavourite"><i class="fa fa-star-o favouriteIcon" aria-hidden="true"></i></a>
             @endif
         </div>
     </td>
@@ -33,7 +33,7 @@ $isFavourite = in_array($set->id, $favourites)
 
 @if($setItems->count() > 0)
     @foreach($setItems->sortBy('equipType') as $item)
-      @include('item.item_row', ['hidden' => !$isFavourite])
+        @include('item.item_row', ['hidden' => !$isFavourite])
     @endforeach
 @else
     <tr class="set-member-{{$set->id}} {{$isFavourite == false ? 'hidden' : ''}}">

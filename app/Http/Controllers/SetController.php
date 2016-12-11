@@ -3,6 +3,7 @@
 
 use App\Model\Set;
 use App\Model\SetBonus;
+use App\Model\UserSetFavourite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,7 +27,21 @@ class SetController
         $user->load('items', 'favouriteSets');
         $favourites = $user->favouriteSets->pluck('setId')->toArray();
         $items = $user->items->where('setId', $set->id)->load('character');
-        return view('sets.show', compact('set', 'items', 'favourites'));
+        $isFavourite = in_array($set->id, $favourites);
+        return view('sets.show', compact('set', 'items', 'favourites', 'isFavourite'));
+    }
+
+    public function toggleFavourite(Set $set) {
+        $user = Auth::user();
+        if($user->favouriteSets->contains('setId', $set->id)) {
+            $user->favouriteSets()->where('setId', $set->id)->delete();
+        }
+        else {
+            $favourite = new UserSetFavourite();
+            $favourite->setId = $set->id;
+            $favourite->userId = $user->id;
+            $favourite->save();
+        }
     }
 
     public function update(Set $set, Request $request) {

@@ -19,4 +19,24 @@ $(document).ready(function() {
 
     });
 
+
+    $(".setFavourite").click(function(e) {
+        e.preventDefault();
+        var link = $(this);
+
+        $.ajax({
+            url: $(this).attr('href'),
+            success: function(data) {
+                var favouriteIcon = link.find('.favouriteIcon');
+                if(favouriteIcon.hasClass('fa-star-o')) {
+                    favouriteIcon.removeClass('fa-star-o').addClass('fa-star');
+                }
+                else {
+                    console.log('doesn\'t have class');
+                    favouriteIcon.removeClass('fa-star').addClass('fa-star-o');
+                }
+            },
+        });
+    });
+
 });

@@ -17,6 +17,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
+include('ajax.php');
+
 Route::get('/home', 'HomeController@index');
 Route::get('/import-data', 'ImportController@import');
 Route::get('/export', 'ImportController@export');
