@@ -129,4 +129,8 @@ body.sidebar-disabled #sidebar-switch, body:not(.sidebar-disabled) #top-menu-swi
   font-weight: bold;
 }
 
+.characterClassImage {
+  max-width: 21px;
+}
+
 /*# sourceMappingURL=app.css.map */

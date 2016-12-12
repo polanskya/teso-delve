@@ -8,7 +8,7 @@
         {{$item->weaponType != null ? trans('enums.WeaponType.' . $item->weaponType) : ''}}
     </td>
     <td>{{$item->traitCategory() !== false ? trans('enums.Trait.'. $item->traitCategory() . "." . $item->trait) : ''}}</td>
-    <td>{{$item->character->name}}</td>
+    <td><img class="characterClassImage" src="/gfx/class_{{$item->character->classId}}.png"> {{$item->character->name}}</td>
     <td class="text-right">
         @if($item->locked)
             <a type="button" class="btn btn-xs"><i class="fa fa-lock" aria-hidden="true"></i></a>

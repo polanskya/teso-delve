@@ -22,15 +22,19 @@
                         <ul>
                             <li>Download and install Eso Delve Addon</li>
                             <li>Start ESO and enable the addon</li>
-                            <li>Login on a character and open/close your inventory to export items. <br>It will only be this characters inventory and your bank that will be exported.<br>Which means you'll have to do this on all your characters you wish to import</li>
+                            <li>Login on a character and open/close your inventory to export items (or use <strong>/tesodelve</strong> command). <br>It will only be this characters inventory and your bank that will be exported.<br>Which means you'll have to do this on all your characters you wish to import</li>
                             <li>Logout or run command /reloadui to write to your log file <br>(ESO only writes to file when reloading UI)</li>
                             <li>Find your log file here: <strong>Documents\Elder Scrolls Online\live\SavedVariables\TesoDelve.lua</strong><br>
-                            Having trouble finding your log? Find your Addon folder and it'll be a folder next to it.</li>
+                                Having trouble finding your log? Find your Addon folder and it'll be a folder next to it.</li>
                         </ul>
 
-                        <div id="importDropzone" url="{{route('import.upload')}}">
+                        <div id="importDropzone" url="{{route('import.upload')}}" class="{{Auth::check() ? '' : 'dropzoneDisabled'}}">
                             <div class="dropzone-message message-default">
-                                <p>Drop your TesoDelve.lua file here to import all your information. <br>After that you're all set to get organized with TESO Delve!</p>
+                                @if(Auth::check())
+                                    <p>Drop your TesoDelve.lua file here to import all your information. <br>After that you're all set to get organized with TESO Delve!</p>
+                                @else
+                                    <p>You need to be logged in to use TESO Delve...</p>
+                                @endif
                             </div>
 
                             <div class="dropzone-message message-successfull">
@@ -52,8 +56,10 @@
 
             <div class="col-md-3">
                 <div class="panel panel-default">
-                    <div class="panel-body">
-
+                    <div class="panel-body text-center">
+                        <h3>Teso Delve addon</h3>
+                        <p>Download TESO Delve addon by clicking on the link below, then install it into your ESO addons folder.</p>
+                        <a href="https://github.com/HeppyKarlsson/teso-delve-addon/archive/1.0.0-beta.1.zip" class="btn btn-primary">Download TESO Delve addon</a>
                     </div>
                 </div>
             </div>
