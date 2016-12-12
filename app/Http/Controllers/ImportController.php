@@ -46,7 +46,7 @@ class ImportController
 
         foreach($files as $file) {
             /** @var $file UploadedFile */
-            if($file->getClientOriginalName() == 'AddonDB.lua') {
+            if($file->getClientOriginalName() == 'TesoDelve.lua') {
                 $esoImport->import($file->getRealPath());
             }
             else {
