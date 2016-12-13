@@ -21,6 +21,8 @@
 
                         <h1>{{$set->name}}</h1>
 
+                        @include('sets/setbox')
+
                         {{$set->description}}
 
                         <h4>Where to find</h4>
