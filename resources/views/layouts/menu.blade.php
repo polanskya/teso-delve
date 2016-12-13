@@ -1003,9 +1003,8 @@
 
                         <li class="dropdown">
                             <a class="dropdown-toggle user-dropdown" data-toggle="dropdown" href="javascript: void(0)" role="button" aria-expanded="false">
-                                <span class="m-r-1">Ubaldo Mills</span>
+                                <span class="m-r-1">{{Auth::user()->name}}</span>
                                 <div class="avatar avatar-image avatar-sm avatar-inline loaded">
-                                    <img alt="User" src="https://s3.amazonaws.com/uifaces/faces/twitter/hfalucas/128.jpg">
                                 </div>
                             </a>
                             <ul class="dropdown-menu">
@@ -1018,9 +1017,6 @@
                                 </li>
                                 <li>
                                     <a href="../apps/profile-edit.html">Settings</a>
-                                </li>
-                                <li>
-                                    <a href="../apps/faq.html">Faq</a>
                                 </li>
                                 <li role="separator" class="divider"></li>
                                 <li>
