@@ -137,3 +137,21 @@ body.sidebar-disabled #sidebar-switch, body:not(.sidebar-disabled) #top-menu-swi
 .characterClassImage {
   max-width: 21px;
 }
+
+.setbox {
+  width: 300px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border: 1px solid #EECA2A !important;
+  margin-bottom: 20px;
+
+  .champion-icon {
+    max-width: 20px;
+    margin-top: -2px;
+  }
+
+  li {
+    margin-bottom: 5px;
+  }
+
+}

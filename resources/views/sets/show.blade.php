@@ -39,7 +39,7 @@
                             <h4>Bonuses</h4>
                             <ul>
                                 @foreach($set->bonuses as $bonus)
-                                    <li class="{{$items->count() >= $bonus->bonusNumber ? 'text-bold' : ''}}">({{$bonus->bonusNumber}} items) {{$bonus->description}}</li>
+                                    <li class="{{$items->count() >= $bonus->bonusNumber ? 'text-bold' : ''}}">({{$bonus->bonusNumber}} items) {!! $bonus->description !!}</li>
                                 @endforeach
                             </ul>
                         @endif

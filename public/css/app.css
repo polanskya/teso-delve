@@ -133,4 +133,21 @@ body.sidebar-disabled #sidebar-switch, body:not(.sidebar-disabled) #top-menu-swi
   max-width: 21px;
 }
 
+.setbox {
+  width: 300px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border: 1px solid #EECA2A !important;
+  margin-bottom: 20px;
+}
+
+.setbox .champion-icon {
+  max-width: 20px;
+  margin-top: -2px;
+}
+
+.setbox li {
+  margin-bottom: 5px;
+}
+
 /*# sourceMappingURL=app.css.map */
