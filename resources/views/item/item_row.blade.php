@@ -8,10 +8,20 @@
         {{$item->weaponType != null ? trans('enums.WeaponType.' . $item->weaponType) : ''}}
     </td>
     <td>{{$item->traitCategory() !== false ? trans('enums.Trait.'. $item->traitCategory() . "." . $item->trait) : ''}}</td>
-    <td><img class="characterClassImage" src="/gfx/class_{{$item->character->classId}}.png"> {{$item->character->name}}</td>
+    <td>
+        @if($item->character)
+            <img class="characterClassImage" src="/gfx/class_{{$item->character->classId}}.png"> {{$item->character->name}}
+        @endif
+    </td>
     <td class="text-right">
+        @if($item->bagtypeId == \App\Enum\BagType::WORN)
+            <i class="fa fa-link" aria-hidden="true" title="Item worn"></i>
+        @endif
+        @if($item->bagtypeId == \App\Enum\BagType::BANK)
+            <i class="fa fa-bank" aria-hidden="true" title="Item in bank"></i>
+        @endif
         @if($item->locked)
-            <a type="button" class="btn btn-xs"><i class="fa fa-lock" aria-hidden="true"></i></a>
+            <i class="fa fa-lock" aria-hidden="true"></i>
         @endif
     </td>
 </tr>

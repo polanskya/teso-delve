@@ -103,10 +103,11 @@ class EsoImport
         $properties = explode(';', $line);
 
         $character = null;
-        $bagType = isset($properties[15]) ? $properties[15] : null;
+        $bagType = isset($properties[15]) ? intval($properties[15]) : null;
         $character = Auth::user()->characters()->where('externalId', intval($properties[14]))->first();
 
-        if(isset($bagType[15]) and $bagType === BagType::BANK) {
+
+        if(isset($bagType) and $bagType === BagType::BANK) {
             $character = null;
         }
 
@@ -126,6 +127,7 @@ class EsoImport
         $item->level = isset($properties[12]) ? intval($properties[12]) : null;
         $item->weaponType = isset($properties[13]) ? intval($properties[13]) : null;
         $item->characterId = $character ? $character->id : null;
+        $item->bagtypeId = $bagType;
 
         if(!empty(trim($properties[4]))) {
             $set = Set::where('name', $properties[4])->first();

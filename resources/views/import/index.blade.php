@@ -31,7 +31,7 @@
                         <div id="importDropzone" url="{{route('import.upload')}}" class="{{Auth::check() ? '' : 'dropzoneDisabled'}}">
                             <div class="dropzone-message message-default">
                                 @if(Auth::check())
-                                    <p>Drop your TesoDelve.lua file here to import all your information. <br>After that you're all set to get organized with TESO Delve!</p>
+                                    <p><i class="fa fa-upload" aria-hidden="true" title="Item worn"></i> Drop your TesoDelve.lua file here to import all your information. <br>After that you're all set to get organized with TESO Delve!</p>
                                 @else
                                     <p>You need to be logged in to use TESO Delve...</p>
                                 @endif
@@ -59,7 +59,7 @@
                     <div class="panel-body text-center">
                         <h3>Teso Delve addon</h3>
                         <p>Download TESO Delve addon by clicking on the link below, then install it into your ESO addons folder.</p>
-                        <a href="https://github.com/HeppyKarlsson/teso-delve-addon/archive/1.0.0-beta.1.zip" class="btn btn-primary">Download TESO Delve addon</a>
+                        <a href="https://github.com/HeppyKarlsson/teso-delve-addon/archive/1.0.0-beta.1.zip" class="btn btn-primary"><i class="fa fa-download" aria-hidden="true" title="Item worn"></i> Download TESO Delve addon</a>
                     </div>
                 </div>
             </div>

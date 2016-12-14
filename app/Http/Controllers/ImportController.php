@@ -22,7 +22,7 @@ class ImportController
 {
 
     public function import(EsoImport $esoImport) {
-        $esoImport->import(storage_path('AddonDB.lua'));
+        $esoImport->import(storage_path('TesoDelve.lua'));
     }
 
     public function export() {

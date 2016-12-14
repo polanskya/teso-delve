@@ -26,4 +26,8 @@ class Set extends Model
         return $this->belongsToMany(Dungeon::class, 'dungeon_sets', 'setId', 'dungeonId');
     }
 
+    public function zones() {
+        return $this->hasMany(ZoneSet::class, 'setId');
+    }
+
 }

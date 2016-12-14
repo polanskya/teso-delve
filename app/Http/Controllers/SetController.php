@@ -4,6 +4,7 @@
 use App\Model\Set;
 use App\Model\SetBonus;
 use App\Model\UserSetFavourite;
+use App\Model\ZoneSet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,7 +29,29 @@ class SetController
         $favourites = $user->favouriteSets->pluck('setId')->toArray();
         $items = $user->items->where('setId', $set->id)->load('character');
         $isFavourite = in_array($set->id, $favourites);
+
         return view('sets.show', compact('set', 'items', 'favourites', 'isFavourite'));
+    }
+
+    public function editZones(Request $request, Set $set) {
+        ZoneSet::where('setId', $set->id)->delete();
+
+        foreach($request->get('zones') as $zone) {
+            $zoneSet = new ZoneSet();
+            $zoneSet->setId = $set->id;
+            $zoneSet->zoneId = $zone;
+            $zoneSet->save();
+        }
+
+        return redirect()->back();
+    }
+
+    public function craftable() {
+        $favourites = Auth::user()->favouriteSets->pluck('setId')->toArray();
+        $sets = Set::with('bonuses')->where('craftable', 1)->orderBy('name')->get();
+        $items = Auth::user()->items()->with('character')->orderBy('equipType')->get();
+
+        return view('sets.my_sets', compact('sets', 'items', 'favourites'));
     }
 
     public function toggleFavourite(Set $set) {

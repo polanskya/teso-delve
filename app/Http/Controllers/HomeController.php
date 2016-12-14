@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\Item;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,7 +24,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $items = Item::with('set')->orderBy('setId', 'DESC')->orderBy('name')->get();
+        $items = Auth::user()->items()
+            ->with('set')
+            ->orderBy('setId', 'DESC')
+            ->orderBy('name')
+            ->get();
+
         return view('item.index', compact('items'));
     }
 }

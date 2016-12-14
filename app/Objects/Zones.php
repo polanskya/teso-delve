@@ -42,8 +42,28 @@ class Zones
 
     ];
 
-    public function getZone() {
+    public function getZone($zoneId) {
+        return $this->zones[$zoneId];
+    }
 
+    public function getZones() {
+        return $this->zones;
+    }
+
+    public function getZonesByAlliance() {
+        $zones = $this->getZones();
+
+        $zonesByAlliance = [
+            Alliance::ALDMERI_DOMINION => [],
+            Alliance::EBONHEART_PACT => [],
+            Alliance::DAGGERFALL_COVENANT => [],
+            Alliance::NEUTRAL => [],
+        ];
+        foreach($zones as $key => $zone) {
+            $zonesByAlliance[$zone['Alliance']][$key] = $zone;
+        }
+
+        return $zonesByAlliance;
     }
 
 }
