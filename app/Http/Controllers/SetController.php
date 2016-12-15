@@ -1,6 +1,8 @@
 <?php namespace App\Http\Controllers;
 
 
+use App\Model\Dungeon;
+use App\Model\DungeonSet;
 use App\Model\Set;
 use App\Model\SetBonus;
 use App\Model\UserSetFavourite;
@@ -12,38 +14,43 @@ class SetController
 {
 
     public function mySets() {
-        $favourites = Auth::user()->favouriteSets->pluck('setId')->toArray();
-        $sets = Set::with('bonuses')->orderBy('name')->get();
-        $items = Auth::user()->items()->with('character')->orderBy('equipType')->get();
+        $favourites = Auth::user()->favouriteSets
+            ->pluck('setId')
+            ->toArray();
+
+        $sets = Set::with('bonuses')
+            ->orderBy('name')
+            ->get();
+
+        $items = Auth::user()->items()
+            ->with('character')
+            ->orderBy('equipType')
+            ->get();
 
         return view('sets.my_sets', compact('sets', 'items', 'favourites'));
     }
 
     public function edit(Set $set) {
-        return view('sets.edit', compact('set'));
+        $dungeonsByAlliance = Dungeon::all()->groupBy('alliance');
+        $set->load('bonuses', 'dungeons', 'zones');
+        return view('sets.edit', compact('set', 'dungeonsByAlliance'));
     }
 
     public function show(Set $set) {
         $user = Auth::user();
         $user->load('items', 'favouriteSets');
-        $favourites = $user->favouriteSets->pluck('setId')->toArray();
-        $items = $user->items->where('setId', $set->id)->load('character');
+
+        $favourites = $user->favouriteSets
+            ->pluck('setId')
+            ->toArray();
+
+        $items = $user->items
+            ->where('setId', $set->id)
+            ->load('character');
+
         $isFavourite = in_array($set->id, $favourites);
 
-        return view('sets.show', compact('set', 'items', 'favourites', 'isFavourite'));
-    }
-
-    public function editZones(Request $request, Set $set) {
-        ZoneSet::where('setId', $set->id)->delete();
-
-        foreach($request->get('zones') as $zone) {
-            $zoneSet = new ZoneSet();
-            $zoneSet->setId = $set->id;
-            $zoneSet->zoneId = $zone;
-            $zoneSet->save();
-        }
-
-        return redirect()->back();
+        return view('sets.show', compact('set', 'items', 'favourites', 'isFavourite', 'user'));
     }
 
     public function craftable() {
@@ -91,6 +98,37 @@ class SetController
 
             $set->bonuses()->save($bonus);
         }
+
+        ZoneSet::where('setId', $set->id)->delete();
+
+        if($request->has('zones')) {
+            foreach ($request->get('zones') as $zone) {
+                if (empty($zone)) {
+                    continue;
+                }
+
+                $zoneSet = new ZoneSet();
+                $zoneSet->setId = $set->id;
+                $zoneSet->zoneId = $zone;
+                $zoneSet->save();
+            }
+        }
+
+        DungeonSet::where('setId', $set->id)->delete();
+
+        if($request->has('dungeons')) {
+            foreach($request->get('dungeons') as $dungeonId) {
+                if(empty($dungeonId)) {
+                    continue;
+                }
+
+                $dungeonSet = new DungeonSet();
+                $dungeonSet->setId = $set->id;
+                $dungeonSet->dungeonId = $dungeonId;
+                $dungeonSet->save();
+            }
+        }
+
 
         return redirect()->back()->with('updated', true);
     }

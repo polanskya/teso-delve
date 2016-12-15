@@ -13,15 +13,18 @@
             <img class="characterClassImage" src="/gfx/class_{{$item->character->classId}}.png"> {{$item->character->name}}
         @endif
     </td>
-    <td class="text-right">
+    <td class="text-right item-icons">
         @if($item->bagtypeId == \App\Enum\BagType::WORN)
-            <i class="fa fa-link" aria-hidden="true" title="Item worn"></i>
+            <i class="fa fa-male" aria-hidden="true" title="Item is worn"></i>
+        @endif
+        @if($item->isBound)
+            <i class="fa fa-link" aria-hidden="true" title="Item is bound"></i>
         @endif
         @if($item->bagtypeId == \App\Enum\BagType::BANK)
             <i class="fa fa-bank" aria-hidden="true" title="Item in bank"></i>
         @endif
         @if($item->locked)
-            <i class="fa fa-lock" aria-hidden="true"></i>
+            <i class="fa fa-lock" aria-hidden="true" title="Item is locked"></i>
         @endif
     </td>
 </tr>

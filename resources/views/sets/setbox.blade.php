@@ -10,10 +10,12 @@
         <div class="col-md-6"><h4><img class="champion-icon" src="/gfx/champion_icon.png"> 160</h4></div>
 
 
+        <div class="col-md-12 text-center text-white">You have <strong>{{$user->items->where('setId', $set->id)->groupBy('equipType')->count()}}/{{$set->bonuses->sortBy('bonusNumber')->last()->bonusNumber or ''}}</strong> item types of {{$set->name}}</div>
+
         <div class="col-md-12 setBonuses">
-            <ul class="list-unstyled">
+            <ul class="list-unstyled setbonus-list">
             @foreach($set->bonuses as $bonus)
-                <li>({{$bonus->bonusNumber}} items) {!! $bonus->description !!}</li>
+                <li>({{$bonus->bonusNumber}} items) @include('sets.setbonus')</li>
             @endforeach
             </ul>
         </div>

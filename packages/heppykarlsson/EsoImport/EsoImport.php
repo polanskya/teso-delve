@@ -74,6 +74,13 @@ class EsoImport
         $character->userId = Auth::user()->id;
         $character->deleted_at = null;
 
+        if(isset($properties[11])) {
+            $roles = explode('-', $properties[11]);
+            $character->isDPS = $roles[0] == 'true';
+            $character->isHealer = $roles[1] == 'true';
+            $character->isTank = $roles[2] == 'true';
+        }
+
         if(isset($properties[9])) {
             // Calculate when next riding lesson is unlocked
             $properties = explode(';', $line);
@@ -104,6 +111,7 @@ class EsoImport
 
         $character = null;
         $bagType = isset($properties[15]) ? intval($properties[15]) : null;
+        
         $character = Auth::user()->characters()->where('externalId', intval($properties[14]))->first();
 
 
@@ -128,6 +136,8 @@ class EsoImport
         $item->weaponType = isset($properties[13]) ? intval($properties[13]) : null;
         $item->characterId = $character ? $character->id : null;
         $item->bagtypeId = $bagType;
+
+        $item->isBound = (isset($properties[16]) and stripos($properties[16], 'true') !== false);
 
         if(!empty(trim($properties[4]))) {
             $set = Set::where('name', $properties[4])->first();

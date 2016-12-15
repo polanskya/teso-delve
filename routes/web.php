@@ -33,7 +33,6 @@ Route::get('/my-sets', 'SetController@mySets')->name('set.my-sets');
 Route::get('/set/craftable', 'SetController@craftable')->name('set.craftable');
 Route::get('/set/{set}', 'SetController@show')->name('set.show');
 Route::post('/set/{set}/update', 'SetController@update')->name('set.update');
-Route::post('/set/{set}/zones', 'SetController@editZones')->name('set.editZones');
 Route::get('/set/{set}/edit', 'SetController@edit')->name('set.edit');
 
 

@@ -47,33 +47,12 @@
 
                                 </ul>
 
-                                @if(Gate::allows('update', $set))
-                                    <form method="post" class="form-horizontal" action="{{route('set.editZones', [$set->id])}}">
-                                        {{csrf_field()}}
-                                        <div class="form-group">
-                                            <div class="col-sm-12">
-                                                <select multiple="multiple" class="form-control" name="zones[]" style="height: 250px;">
-                                                    <?php $zones = new \App\Objects\Zones(); ?>
-                                                    @foreach($zones->getZonesByAlliance() as $alliance => $zonesList)
-                                                        <optgroup label="{{trans('alliance.'.$alliance)}}">
-                                                            @foreach($zonesList as $key => $zone)
-                                                                <option value="{{$key}}" {{$set->zones->contains('zoneId', $key) ? ' selected="selected"' : ''}}>{{$zone['name']}}</option>
-                                                            @endforeach
-                                                        </optgroup>
-                                                    @endforeach
-                                                </select>
-                                                <br>
-                                                <input type="submit" value="Add zones" class="btn btn-primary">
-                                            </div>
-                                        </div>
-                                    </form>
-                                @endif
 
                                 @if($set->bonuses->count() > 0)
                                     <h4>Bonuses</h4>
-                                    <ul>
+                                    <ul class="setbonus-list">
                                         @foreach($set->bonuses as $bonus)
-                                            <li class="{{$items->count() >= $bonus->bonusNumber ? 'text-bold' : ''}}">({{$bonus->bonusNumber}} items) {!! $bonus->description !!}</li>
+                                            <li class="{{$items->count() >= $bonus->bonusNumber ? 'text-bold' : ''}}">({{$bonus->bonusNumber}} items) @include('sets.setbonus')</li>
                                         @endforeach
                                     </ul>
                                 @endif

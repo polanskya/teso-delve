@@ -145,6 +145,10 @@ body.sidebar-disabled #sidebar-switch, body:not(.sidebar-disabled) #top-menu-swi
   border: 1px solid #EECA2A !important;
   margin-bottom: 20px;
 
+  .setBonuses {
+    margin-top: 10px;
+  }
+
   .champion-icon {
     max-width: 20px;
     margin-top: -2px;
@@ -154,4 +158,37 @@ body.sidebar-disabled #sidebar-switch, body:not(.sidebar-disabled) #top-menu-swi
     margin-bottom: 5px;
   }
 
+}
+
+h1,h2,h3,h4,h5,h6 {
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+.setbonus-list {
+
+  span.health {
+    color: #ff6666;
+  }
+
+  span.number {
+    font-weight: bold;
+    color: #eec929;
+  }
+
+  span.magicka {
+    color: #5c5cf6;
+  }
+
+  span.stamina {
+    color: #008000;
+  }
+
+}
+
+.item-icons i {
+  margin-left: 5px;
+}
+
+.faded-icon {
+  color: darken(dimgray, 20%);
 }

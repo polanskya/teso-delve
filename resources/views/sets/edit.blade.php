@@ -1,17 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container-fluid">
-        <div class="row-fluid">
-            <div class="col-md-4">
-                <form method="POST" action="{{route('set.update', [$set->id])}}" class="form-horizontal">
-                    {{ csrf_field() }}
+    <div class="container">
+        <form method="POST" action="{{route('set.update', [$set->id])}}" class="form-horizontal">
+            {{ csrf_field() }}
+            <div class="row">
+                <div class="col-md-8">
+
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <div class="btn-group pull-right" role="group" aria-label="...">
-                                <button type="button" class="btn btn-default btn-xs">Edit set</button>
-                                <button type="button" class="btn btn-default btn-xs">Save</button>
-                            </div>
                             <h3 class="panel-title">{{$set->name}} ({{$set->id}})</h3>
                         </div>
                         <div class="panel-body">
@@ -44,18 +41,18 @@
                                     </div>
                                 </div>
 
-                                    <div class="form-group">
-                                        <label for="set[traitNeeded]" class="control-label col-md-2">Trait</label>
-                                        <div class="col-md-2">
-                                            <input id="set[traitNeeded]" name="set[traitNeeded]" value="{{$set->traitNeeded}}" class="form-control">
-                                        </div>
+                                <div class="form-group">
+                                    <label for="set[traitNeeded]" class="control-label col-md-2">Trait</label>
+                                    <div class="col-md-2">
+                                        <input id="set[traitNeeded]" name="set[traitNeeded]" value="{{$set->traitNeeded}}" class="form-control">
                                     </div>
+                                </div>
                             </div>
                             <hr>
                             <div class="form-content">
 
                                 <h4>Set bonuses</h4>
-                                @for($i = 0; $i < 4; $i++)
+                                @for($i = 0; $i < 6; $i++)
                                     <?php
                                     $setBonus = isset($set->bonuses[$i]) ? $set->bonuses[$i] : null;
                                     ?>
@@ -73,17 +70,68 @@
 
                             </div>
 
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Zone drops</h3>
+                        </div>
+                        <div class="panel-body">
+
                             <div class="row">
-                                <div class="col-md-12">
-                                    <input type="submit" value="Save" class="btn btn-sm btn-primary pull-right">
+                                <div class="col-sm-12">
+                                    <select multiple="multiple" class="form-control" name="zones[]" style="height: 300px;">
+                                        <?php $zones = new \App\Objects\Zones(); ?>
+                                        @foreach($zones->getZonesByAlliance() as $alliance => $zonesList)
+                                            <option value="">None</option>
+                                            <optgroup label="{{trans('alliance.'.$alliance)}}">
+                                                @foreach($zonesList as $key => $zone)
+                                                    <option value="{{$key}}" {{$set->zones->contains('zoneId', $key) ? ' selected="selected"' : ''}}>{{$zone['name']}}</option>
+                                                @endforeach
+                                            </optgroup>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
 
 
                         </div>
                     </div>
-                </form>
+                </div>
+
+
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Dungeon drops</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <select multiple="multiple" class="form-control" name="dungeons[]" style="height: 300px;">
+                                        <option value="">None</option>
+                                        @foreach($dungeonsByAlliance as $alliance => $dungons)
+                                            <optgroup label="{{trans('alliance.'.$alliance)}}">
+                                                @foreach($dungons as $key => $dungeon)
+                                                    <option value="{{$dungeon->id}}" {{$set->dungeons->contains('id', $dungeon->id) ? ' selected="selected"' : ''}}>{{$dungeon['name']}}</option>
+                                                @endforeach
+                                            </optgroup>
+                                        @endforeach
+                                    </select>
+                                    <br>
+                                </div>
+                                <div class="col-sm-12 text-right">
+                                    <input type="submit" value="Save set" class="btn btn-primary">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
 @endsection
