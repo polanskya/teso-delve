@@ -1,10 +1,40 @@
 $(document).ready(function() {
 
+    $('[data-toggle="tooltip"]').tooltip();
+
+    var setAjax = null;
+    $('.set-hover').hover(function() {
+        var setHover = $(this);
+        var setId = setHover.attr('setId');
+        $('.setbox').hide();
+
+        if(setHover.find('.setbox').length == 0) {
+
+            if(setAjax) {
+                setAjax.abort();
+            }
+
+            setAjax = $.ajax({
+                url: '/ajax/set/' + setId,
+                success: function(data) {
+                    $(data).find('setbox').show();
+                    setHover.append(data);
+                },
+            });
+        }
+
+        setHover.find('.setbox').show();
+
+
+    }, function() {
+        $(this).find('.setbox').hide();
+    });
+
+
     $('.open-set-row').click(function(event) {
         event.preventDefault();
 
         var setId = $(this).attr('setId');
-        console.log(setId);
 
         itemRows = $(".set-member-" + setId);
         if(itemRows.hasClass('hidden')) {

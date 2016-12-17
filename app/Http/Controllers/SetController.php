@@ -14,7 +14,10 @@ class SetController
 {
 
     public function mySets() {
-        $favourites = Auth::user()->favouriteSets
+        $user = Auth::user();
+        $user->load('favouriteSets', 'items.set');
+
+        $favourites = $user->favouriteSets
             ->pluck('setId')
             ->toArray();
 
@@ -22,12 +25,12 @@ class SetController
             ->orderBy('name')
             ->get();
 
-        $items = Auth::user()->items()
+        $items = $user->items()
             ->with('character')
             ->orderBy('equipType')
             ->get();
 
-        return view('sets.my_sets', compact('sets', 'items', 'favourites'));
+        return view('sets.my_sets', compact('sets', 'items', 'favourites', 'user'));
     }
 
     public function edit(Set $set) {
@@ -72,6 +75,23 @@ class SetController
             $favourite->userId = $user->id;
             $favourite->save();
         }
+    }
+
+    public function ajaxShow(Set $set) {
+        $user = Auth::user();
+        $user->load('items', 'favouriteSets');
+
+        $favourites = $user->favouriteSets
+            ->pluck('setId')
+            ->toArray();
+
+        $items = $user->items
+            ->where('setId', $set->id)
+            ->load('character');
+
+        $isFavourite = in_array($set->id, $favourites);
+
+        return view('sets.setbox', compact('set', 'items', 'favourites', 'isFavourite', 'user'));
     }
 
     public function update(Set $set, Request $request) {

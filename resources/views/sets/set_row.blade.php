@@ -9,7 +9,11 @@ $isFavourite = in_array($set->id, $favourites)
     <td>
         <a href="#" class="open-set-row" setId="{{$set->id}}" ><i class="fa fa-chevron-{{$isFavourite ? 'up' : 'down'}}" aria-hidden="true"></i></a>
     </td>
-    <td colspan="2"><a href="{{route('set.show', [$set->id])}}"><strong>{{$set->name}}</strong></a> <strong>({{$setCount}})</strong></td>
+    <td colspan="2">
+        <div class="set-hover" setId="{{$set->id}}">
+            <a href="{{route('set.show', [$set->id])}}"><strong>{{$set->name}}</strong></a> <strong>({{$setCount}})</strong>
+        </div>
+    </td>
 
     <td>
 
@@ -20,9 +24,9 @@ $isFavourite = in_array($set->id, $favourites)
                 <a href="{{route('set.edit', [$set->id])}}" class="btn btn-default btn-xs"><i class="fa fa-pencil" aria-hidden="true"></i></a>
             @endif
             @if($isFavourite)
-                <a href="{{route('set.favourite', [$set->id])}}" class="btn btn-default btn-xs setFavourite"><i class="fa fa-star text-legendary favouriteIcon" aria-hidden="true"></i></a>
+                <a href="{{route('set.favourite', [$set->id])}}" class="btn btn-default btn-xs setFavourite" data-toggle="tooltip" title="Toggle as favourite set"><i class="fa fa-star text-legendary favouriteIcon" aria-hidden="true"></i></a>
             @else
-                <a href="{{route('set.favourite', [$set->id])}}" class="btn btn-default btn-xs setFavourite"><i class="fa fa-star-o favouriteIcon" aria-hidden="true"></i></a>
+                <a href="{{route('set.favourite', [$set->id])}}" class="btn btn-default btn-xs setFavourite" data-toggle="tooltip" title="Toggle as favourite set"><i class="fa fa-star-o favouriteIcon" aria-hidden="true"></i></a>
             @endif
         </div>
     </td>

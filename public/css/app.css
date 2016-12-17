@@ -38,6 +38,26 @@ body {
   border: 1px solid #5a5a5a;
 }
 
+.quality-text-5 {
+  color: #EECA2A !important;
+}
+
+.quality-text-4 {
+  color: #A02EF7 !important;
+}
+
+.quality-text-3 {
+  color: #3A92FF !important;
+}
+
+.quality-text-2 {
+  color: #2DC50E !important;
+}
+
+.quality-text-1 {
+  color: white !important;
+}
+
 .quality-5 {
   background: #EECA2A !important;
   border: 1px solid #d4b011 !important;
@@ -134,7 +154,7 @@ body.sidebar-disabled #sidebar-switch, body:not(.sidebar-disabled) #top-menu-swi
 }
 
 .setbox {
-  width: 300px;
+  width: 325px;
   padding-left: 20px;
   padding-right: 20px;
   border: 1px solid #EECA2A !important;
@@ -146,7 +166,12 @@ body.sidebar-disabled #sidebar-switch, body:not(.sidebar-disabled) #top-menu-swi
 }
 
 .setbox .setBonuses {
+  margin-top: 15px;
+}
+
+.setbox .setCount {
   margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .setbox .champion-icon {
@@ -155,6 +180,46 @@ body.sidebar-disabled #sidebar-switch, body:not(.sidebar-disabled) #top-menu-swi
 }
 
 .setbox li {
+  margin-bottom: 5px;
+}
+
+.itemBox {
+  margin-top: 40px;
+  width: 400px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border: 1px solid #EECA2A !important;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.itemBox .item-icon {
+  margin-top: -30px;
+  margin-bottom: -10px;
+}
+
+.itemBox .bonusName {
+  color: #EECA2A;
+}
+
+.itemBox .setBonuses {
+  margin-top: 10px;
+}
+
+.itemBox .champion-icon {
+  max-width: 20px;
+  margin-top: -2px;
+}
+
+.itemBox .enchantInfo {
+  margin-bottom: 10px;
+}
+
+.itemBox .traitInfo {
+  margin-bottom: 10px;
+}
+
+.itemBox li {
   margin-bottom: 5px;
 }
 
@@ -185,6 +250,19 @@ h1, h2, h3, h4, h5, h6 {
 
 .faded-icon {
   color: #363636;
+}
+
+.set-hover .setbox {
+  display: inline;
+  position: absolute;
+  background-color: #1A1A1A;
+  left: 60px;
+  margin-top: 17px;
+  width: 300px;
+}
+
+.set-hover :hover .setbox {
+  display: inline;
 }
 
 /*# sourceMappingURL=app.css.map */

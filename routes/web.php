@@ -39,6 +39,8 @@ Route::post('/set/{set}/update', 'SetController@update')->name('set.update');
 Route::get('/set/{set}/edit', 'SetController@edit')->name('set.edit');
 
 
+Route::get('/item/{item}', 'ItemController@show')->name('item.show');
+
 
 Route::post('/import-data', 'ImportController@upload')->name('import.upload');
 Route::get('/import', 'ImportController@index')->name('import.index');

@@ -167,6 +167,7 @@ return [
          * Package Service Providers...
          */
         HeppyKarlsson\EsoImport\ServiceProvider::class,
+//        Barryvdh\Debugbar\ServiceProvider::class,
 
         //
 

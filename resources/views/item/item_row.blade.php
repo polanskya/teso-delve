@@ -1,7 +1,7 @@
 <tr class="{{ isset($set) ? 'set-member-'.$set->id : '' }} {{(isset($hidden) && $hidden) == true ? 'hidden' : ''}}">
     <td class="min-width"><span class="circle quality-{{$item->quality}}"></span></td>
     <td class="min-width"><img class="item-icon" src="http://esoicons.uesp.net/{{str_ireplace('.dds', '.png', $item->icon)}}"></td>
-    <td>{{$item->name}} {{ $item->count > 1 ? "($item->count)" : '' }}</td>
+    <td><a href="{{route('item.show', [$item->id])}}">{{$item->name}}</a> {{ $item->count > 1 ? "($item->count)" : '' }}</td>
     <td>{{trans('enums.EquipType.' . $item->equipType)}}</td>
     <td>
         {{$item->armorType != null ? trans('enums.ArmorType.' . $item->armorType) : ''}}
@@ -15,16 +15,16 @@
     </td>
     <td class="text-right item-icons">
         @if($item->bagtypeId == \App\Enum\BagType::WORN)
-            <i class="fa fa-male" aria-hidden="true" title="Item is worn"></i>
+            <i class="fa fa-male" aria-hidden="true" data-toggle="tooltip" title="Item is worn"></i>
         @endif
         @if($item->isBound)
-            <i class="fa fa-link" aria-hidden="true" title="Item is bound"></i>
+            <i class="fa fa-link" aria-hidden="true" data-toggle="tooltip" title="Item is bound"></i>
         @endif
         @if($item->bagtypeId == \App\Enum\BagType::BANK)
-            <i class="fa fa-bank" aria-hidden="true" title="Item in bank"></i>
+            <i class="fa fa-bank" aria-hidden="true" data-toggle="tooltip" title="Item in bank"></i>
         @endif
         @if($item->locked)
-            <i class="fa fa-lock" aria-hidden="true" title="Item is locked"></i>
+            <i class="fa fa-lock" aria-hidden="true" data-toggle="tooltip" title="Item is locked"></i>
         @endif
     </td>
 </tr>
