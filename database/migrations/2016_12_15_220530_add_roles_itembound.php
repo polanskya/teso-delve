@@ -21,6 +21,7 @@ class AddRolesItembound extends Migration
 
         Schema::table('items', function ($table) {
             $table->boolean('isBound')->nullable()->after('locked');
+            $table->boolean('isJunk')->nullable()->after('isBound');
         });
     }
 
@@ -39,6 +40,7 @@ class AddRolesItembound extends Migration
 
         Schema::table('items', function ($table) {
             $table->dropColumn('isBound');
+            $table->dropColumn('isJunk');
         });
     }
 }

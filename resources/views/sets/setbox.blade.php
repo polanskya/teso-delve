@@ -1,7 +1,7 @@
 <div class="setbox pull-right">
     <div class="row">
         <div class="col-md-12">
-            <h2 class="text-center">{{$set->name}} set</h2>
+            <h2 class="text-center bonusName">{{$set->name}} set</h2>
             <hr>
         </div>
 

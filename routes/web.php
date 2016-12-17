@@ -28,6 +28,9 @@ Route::get('/dungeons', 'DungeonController@index')->name('dungeons.index');
 Route::put('/dungeon/{dungeon}/set', 'DungeonController@addSet')->name('dungeon.addSet');
 Route::get('/dungeon/{dungeon}', 'DungeonController@show')->name('dungeon.show');
 
+Route::get('/zones', 'ZoneController@index')->name('zones.index');
+Route::get('/zone/{zoneId}', 'ZoneController@show')->name('zone.show');
+
 
 Route::get('/my-sets', 'SetController@mySets')->name('set.my-sets');
 Route::get('/set/craftable', 'SetController@craftable')->name('set.craftable');

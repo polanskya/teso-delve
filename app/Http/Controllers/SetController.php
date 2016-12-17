@@ -76,7 +76,6 @@ class SetController
 
     public function update(Set $set, Request $request) {
         $data = $request->get('set');
-        $set->name = $data['name'];
         $set->craftable = isset($data['craftable']);
         $set->traitNeeded = null;
         if($set->craftable) {

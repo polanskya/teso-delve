@@ -137,6 +137,7 @@ class EsoImport
         $item->characterId = $character ? $character->id : null;
         $item->bagtypeId = $bagType;
 
+        $item->count = isset($properties[17]) ? intval($properties[17]) : 1;
         $item->isBound = (isset($properties[16]) and stripos($properties[16], 'true') !== false);
 
         if(!empty(trim($properties[4]))) {

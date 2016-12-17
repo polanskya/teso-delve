@@ -40,8 +40,8 @@
                                         </li>
 
                                     @else
-                                        @foreach($set->zones as $zone)
-                                            <li>{{$zone->getZoneInfo()['name']}}</li>
+                                        @foreach($set->zones as $zoneId => $zone)
+                                                <li><a href="{{route('zone.show', [$zone->zoneId])}}">{{$zone->getZoneInfo()['name']}}</a></li>
                                         @endforeach
                                     @endif
 

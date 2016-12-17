@@ -23,7 +23,7 @@
                                 <div class="form-group">
                                     <label for="set[name]" class="control-label col-md-2">Set name</label>
                                     <div class="col-md-10">
-                                        <input type="text" id="set[name]" name="set[name]" value="{{$set->name}}" class="form-control">
+                                        <input type="text" id="set[name]" disabled="disabled" value="{{$set->name}}" class="form-control">
                                     </div>
                                 </div>
 

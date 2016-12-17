@@ -1,7 +1,7 @@
 <tr class="{{ isset($set) ? 'set-member-'.$set->id : '' }} {{(isset($hidden) && $hidden) == true ? 'hidden' : ''}}">
     <td class="min-width"><span class="circle quality-{{$item->quality}}"></span></td>
     <td class="min-width"><img class="item-icon" src="http://esoicons.uesp.net/{{str_ireplace('.dds', '.png', $item->icon)}}"></td>
-    <td>{{$item->name}}</td>
+    <td>{{$item->name}} {{ $item->count > 1 ? "($item->count)" : '' }}</td>
     <td>{{trans('enums.EquipType.' . $item->equipType)}}</td>
     <td>
         {{$item->armorType != null ? trans('enums.ArmorType.' . $item->armorType) : ''}}

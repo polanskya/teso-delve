@@ -141,6 +141,10 @@ body.sidebar-disabled #sidebar-switch, body:not(.sidebar-disabled) #top-menu-swi
   margin-bottom: 20px;
 }
 
+.setbox .bonusName {
+  color: #EECA2A;
+}
+
 .setbox .setBonuses {
   margin-top: 10px;
 }

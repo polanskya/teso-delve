@@ -65,6 +65,7 @@
                                 </li>
                                 <li role="separator" class="divider"></li>
                                 <li>
+                                    <a href="{{route('zones.index')}}">Zones</a>
                                     <a href="{{route('set.craftable')}}">Craftable</a>
                                     <a href="{{route('dungeons.index')}}">Dungeons</a>
                                 </li>
