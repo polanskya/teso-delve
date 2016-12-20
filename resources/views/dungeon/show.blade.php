@@ -8,17 +8,18 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <h1>{{$dungeon->name}}</h1>
-
                         <table class="table table-condensed set-table">
                             <thead>
                             </thead>
                             <tbody>
-                            @foreach($sets->whereIn('id', $favourites) as $set)
-                                @include('sets.set_row')
-                            @endforeach
+                            @if(Auth::check())
+                                @foreach($sets->whereIn('id', $favourites) as $set)
+                                    @include('sets.set_row')
+                                @endforeach
+                            @endif
 
                             @foreach($sets as $set)
-                                @if(in_array($set->id, $favourites))
+                                @if(Auth::check() and in_array($set->id, $favourites))
                                     @continue
                                 @endif
 

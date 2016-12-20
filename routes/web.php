@@ -11,15 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
-});
 
 Auth::routes();
 
 include('ajax.php');
 
-Route::get('/home', 'HomeController@index');
 Route::get('/import-data', 'ImportController@import');
 Route::get('/export', 'ImportController@export');
 
@@ -44,3 +40,7 @@ Route::get('/item/{item}', 'ItemController@show')->name('item.show');
 
 Route::post('/import-data', 'ImportController@upload')->name('import.upload');
 Route::get('/import', 'ImportController@index')->name('import.index');
+
+Route::get('/home', 'SetController@mySets')->name('home.index');
+Route::get('/', 'HomeController@index');
+

@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row-fluid">
 
-             <div class="col-md-12">
+            <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-body">
 
@@ -12,12 +12,14 @@
                             <thead>
                             </thead>
                             <tbody>
-                            @foreach($sets->whereIn('id', $favourites) as $set)
-                                @include('sets.set_row')
-                            @endforeach
+                            @if($user)
+                                @foreach($sets->whereIn('id', $favourites) as $set)
+                                    @include('sets.set_row')
+                                @endforeach
+                            @endif
 
                             @foreach($sets as $set)
-                                @if(in_array($set->id, $favourites))
+                                @if($user and in_array($set->id, $favourites))
                                     @continue
                                 @endif
 

@@ -159,6 +159,7 @@ body.sidebar-disabled #sidebar-switch, body:not(.sidebar-disabled) #top-menu-swi
   padding-right: 20px;
   border: 1px solid #EECA2A !important;
   margin-bottom: 20px;
+  z-index: 10;
 }
 
 .setbox .bonusName {
@@ -191,6 +192,7 @@ body.sidebar-disabled #sidebar-switch, body:not(.sidebar-disabled) #top-menu-swi
   border: 1px solid #EECA2A !important;
   margin-bottom: 20px;
   text-align: center;
+  z-index: 10;
 }
 
 .itemBox .item-icon {
@@ -263,6 +265,15 @@ h1, h2, h3, h4, h5, h6 {
 
 .set-hover :hover .setbox {
   display: inline;
+}
+
+.startpage-tracked .count:nth-child(1) {
+  margin-top: 0px;
+}
+
+.startpage-tracked .count {
+  color: white;
+  margin-bottom: 0px;
 }
 
 /*# sourceMappingURL=app.css.map */

@@ -8,13 +8,15 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="btn-group pull-right" role="group" aria-label="...">
-                            @if(Gate::allows('update', $set))
-                                <a href="{{route('set.edit', [$set->id])}}" class="btn btn-default btn-xs"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                            @endif
-                            @if($isFavourite)
-                                <a href="{{route('set.favourite', [$set->id])}}" class="btn btn-default btn-xs setFavourite"><i class="fa fa-star text-legendary favouriteIcon" aria-hidden="true"></i></a>
-                            @else
-                                <a href="{{route('set.favourite', [$set->id])}}" class="btn btn-default btn-xs setFavourite"><i class="fa fa-star-o favouriteIcon" aria-hidden="true"></i></a>
+                            @if($user)
+                                @if(Gate::allows('update', $set))
+                                    <a href="{{route('set.edit', [$set->id])}}" class="btn btn-default btn-xs"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                @endif
+                                @if($isFavourite)
+                                    <a href="{{route('set.favourite', [$set->id])}}" class="btn btn-default btn-xs setFavourite"><i class="fa fa-star text-legendary favouriteIcon" aria-hidden="true"></i></a>
+                                @else
+                                    <a href="{{route('set.favourite', [$set->id])}}" class="btn btn-default btn-xs setFavourite"><i class="fa fa-star-o favouriteIcon" aria-hidden="true"></i></a>
+                                @endif
                             @endif
                         </div>
 
@@ -41,7 +43,7 @@
 
                                     @else
                                         @foreach($set->zones as $zoneId => $zone)
-                                                <li><a href="{{route('zone.show', [$zone->zoneId])}}">{{$zone->getZoneInfo()['name']}}</a></li>
+                                            <li><a href="{{route('zone.show', [$zone->zoneId])}}">{{$zone->getZoneInfo()['name']}}</a></li>
                                         @endforeach
                                     @endif
 
@@ -52,7 +54,7 @@
                                     <h4>Bonuses</h4>
                                     <ul class="setbonus-list">
                                         @foreach($set->bonuses as $bonus)
-                                            <li class="{{$items->count() >= $bonus->bonusNumber ? 'text-bold' : ''}}">({{$bonus->bonusNumber}} items) @include('sets.setbonus')</li>
+                                            <li class="{{$items and $items->count() >= $bonus->bonusNumber ? 'text-bold' : ''}}">({{$bonus->bonusNumber}} items) @include('sets.setbonus', ['description' => $bonus->description])</li>
                                         @endforeach
                                     </ul>
                                 @endif
@@ -63,19 +65,20 @@
                                 @include('sets/setbox')
                             </div>
 
-                            <div class="col-md-12">
-
-                                <h4>Items you have</h4>
-                                <table class="table table-condensed set-table">
-                                    <thead>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($items as $item)
-                                        @include('item.item_row', ['hidden' => false])
-                                    @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                            @if(Auth::check())
+                                <div class="col-md-12">
+                                    <h4>Items you have</h4>
+                                    <table class="table table-condensed set-table">
+                                        <thead>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($items as $item)
+                                            @include('item.item_row', ['hidden' => false])
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

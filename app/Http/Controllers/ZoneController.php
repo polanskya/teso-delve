@@ -19,17 +19,21 @@ class ZoneController
     }
 
     public function show($zoneId) {
+        $user = Auth::user();
+        $items = null;
+        $favourites = null;
+        if($user) {
+            $items = $user->items->load('character');
+            $favourites = $user->favouriteSets->pluck('setId')->toArray();
+        }
+
         $zoneSets = ZoneSet::where('zoneId', $zoneId)->get();
-        $items = Auth::user()->items->load('character');
-        $favourites = Auth::user()->favouriteSets->pluck('setId')->toArray();
-        $z = new Zones();
-
         $sets = Set::whereIn('id', $zoneSets->pluck('setId'))->get();
-
+        $z = new Zones();
 
         $zone = $z->getZone($zoneId);
 
-        return view('zones.show', compact('zone', 'items', 'favourites', 'sets', 'all_sets'));
+        return view('zones.show', compact('zone', 'items', 'favourites', 'sets', 'all_sets', 'user'));
     }
 
 }

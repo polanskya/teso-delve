@@ -5,6 +5,7 @@ use App\Enum\BagType;
 use App\Model\Character;
 use App\Model\Item;
 use App\Model\Set;
+use App\Model\UserItem;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -12,11 +13,15 @@ class EsoImport
 {
 
     private $characters = [];
+    private $items = null;
 
     public function import($file_path) {
-        Auth::user()->items()->delete();
+//        Auth::user()->items()->delete();
+        UserItem::where('userId', Auth::id())->delete();
         echo "Importing<br>";
         $file = fopen($file_path, 'r');
+
+        $this->items = Item::all()->keyBy('itemLink');
 
         $lines = [];
 
@@ -111,49 +116,102 @@ class EsoImport
 
         $character = null;
         $bagType = isset($properties[15]) ? intval($properties[15]) : null;
-        
-        $character = Auth::user()->characters()->where('externalId', intval($properties[14]))->first();
 
+        $character = Auth::user()->characters()->where('externalId', intval($properties[14]))->first();
 
         if(isset($bagType) and $bagType === BagType::BANK) {
             $character = null;
         }
 
-        $item = new Item();
-        $item->uniqueId = $properties[0];
-        $item->userId = Auth::id();
-        $item->name = $properties[1];
-        $item->trait = $properties[2];
-        $item->equipType = $properties[3];
-        $item->quality = $properties[5];
-        $item->armorType = $properties[6];
-        $item->locked = $properties[7] == 'true';
-        $item->enchant = $properties[8];
-        $item->icon = $properties[9];
-        $item->type = isset($properties[10]) ? intval($properties[10]) : null;
-        $item->championLevel = isset($properties[11]) ? intval($properties[11]) : null;
-        $item->level = isset($properties[12]) ? intval($properties[12]) : null;
-        $item->weaponType = isset($properties[13]) ? intval($properties[13]) : null;
-        $item->characterId = $character ? $character->id : null;
-        $item->bagtypeId = $bagType;
 
-        $item->count = isset($properties[17]) ? intval($properties[17]) : 1;
-        $item->isBound = (isset($properties[16]) and stripos($properties[16], 'true') !== false);
+        if(isset($properties[19])) {
 
-        if(!empty(trim($properties[4]))) {
-            $set = Set::where('name', $properties[4])->first();
 
-            if(!$set) {
-                $set = new Set();
-                $set->name = $properties[4];
-                $set->save();
+            $item = Item::where('itemLink', $properties[19])->first();
+            if(!$item) {
+                $item = new Item();
+                $item->uniqueId = $properties[0];
+                $item->name = $properties[1];
+                $item->equipType = $properties[3];
+                $item->armorType = $properties[6];
+                $item->quality = $properties[5];
+                $item->icon = $properties[9];
+                $item->type = intval($properties[10]);
+                $item->championLevel = intval($properties[11]);
+                $item->level = intval($properties[12]);
+                $item->weaponType = intval($properties[13]);
+                $item->itemLink = $properties[19];
+                $item->trait = $properties[2];
+                $item->traitDescription = $properties[21];
+                $item->enchant = $properties[8];
+                $item->enchantDescription = $properties[20];
+                $item->itemValue = intval($properties[22]);
+
+
+                if(!empty($properties[4])) {
+                    $item->setItemSet($properties[4]);
+                }
+
+                $item->save();
             }
 
-            $item->setId = $set->id;
+            if($item) {
+                $userItem = new UserItem();
+                $userItem->userId = Auth::id();
+                $userItem->itemId = $item->id;
+                $userItem->characterId = $character ? $character->id : null;
+                $userItem->uniqueId = $properties[0];
+                $userItem->traitEnum = $properties[2];
+                $userItem->traitDescription = $properties[21];
+                $userItem->enchant = $properties[8];
+                $userItem->enchantDescription = $properties[20];
+                $userItem->bagEnum = $bagType;
+
+                $userItem->equipTypeEnum = $properties[3];
+                $userItem->armorTypeEnum = $properties[6];
+                $userItem->weaponTypeEnum = intval($properties[13]);
+                $userItem->count = intval($properties[17]);
+
+                $userItem->isBound = (isset($properties[16]) and stripos($properties[16], 'true') !== false);
+                $userItem->isLocked = $properties[7] == 'true';
+
+                $userItem->save();
+
+            }
+
         }
+        else {
+            return true;
+            $item = new Item();
+            $item->uniqueId = $properties[0];
+            $item->userId = Auth::id();
+            $item->name = $properties[1];
+            $item->trait = $properties[2];
+            $item->equipType = $properties[3];
+            $item->quality = $properties[5];
+            $item->armorType = $properties[6];
+            $item->locked = $properties[7] == 'true';
+            $item->enchant = $properties[8];
+            $item->icon = $properties[9];
+            $item->type = isset($properties[10]) ? intval($properties[10]) : null;
+            $item->championLevel = isset($properties[11]) ? intval($properties[11]) : null;
+            $item->level = isset($properties[12]) ? intval($properties[12]) : null;
+            $item->weaponType = isset($properties[13]) ? intval($properties[13]) : null;
+            $item->characterId = $character ? $character->id : null;
+            $item->bagtypeId = $bagType;
 
-        $item->save();
+            $item->enchant = $properties[8];
+            $item->enchantDescription = $properties[20];
 
+            $item->count = isset($properties[17]) ? intval($properties[17]) : 1;
+            $item->isBound = (isset($properties[16]) and stripos($properties[16], 'true') !== false);
+
+            if(!empty($properties[4])) {
+                $item->setItemSet($properties[4]);
+            }
+
+            $item->save();
+        }
     }
 
 }

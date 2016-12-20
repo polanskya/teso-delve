@@ -15,13 +15,24 @@ class DungeonController
         return view('dungeon.index', compact('dungeons', 'items'));
     }
 
-    public function show(Dungeon $dungeon) {
+    public function show(Dungeon $dungeon)
+    {
         $sets = $dungeon->sets;
-        $all_sets = Set::whereNotIn('id', $sets->pluck('id'))->orderBy('name')->get();
-        $items = Auth::user()->items->load('character');
-        $favourites = Auth::user()->favouriteSets->pluck('setId')->toArray();
 
-        return view('dungeon.show', compact('dungeon', 'items', 'favourites', 'sets', 'all_sets'));
+        $all_sets = Set::whereNotIn('id', $sets->pluck('id'))
+            ->orderBy('name')
+            ->get();
+
+        $items = null;
+        $favourites = null;
+        $user = null;
+        if (Auth::check()) {
+            $items = Auth::user()->items->load('character');
+            $favourites = Auth::user()->favouriteSets->pluck('setId')->toArray();
+            $user = Auth::user();
+        }
+
+        return view('dungeon.show', compact('dungeon', 'items', 'favourites', 'sets', 'all_sets', 'user'));
     }
 
     public function addSet(Request $request, Dungeon $dungeon) {

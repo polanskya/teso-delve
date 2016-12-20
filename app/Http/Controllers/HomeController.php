@@ -2,20 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Character;
+use App\Model\DailyPledges;
 use App\Model\Item;
-use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     /**
      * Show the application dashboard.
@@ -24,12 +17,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $items = Auth::user()->items()
-            ->with('set')
-            ->orderBy('setId', 'DESC')
-            ->orderBy('name')
+        $dailyPledges = DailyPledges::where('date', '>=', Carbon::now()->subDay())
+            ->with('firstPledge.sets', 'secondPledge.sets', 'thirdPledge.sets')
+            ->take(2)
+            ->orderBy('date')
             ->get();
 
-        return view('item.index', compact('items'));
+        $itemCount = Item::count();
+
+        $characterCount = Character::count();
+
+        return view('home.index', compact('dailyPledges', 'itemCount', 'characterCount'));
     }
 }

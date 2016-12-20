@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null championLevel
  * @property int|null level
  * @property int|null characterId
+ * @property string itemLink
  */
 class Item extends Model
 {
@@ -54,6 +55,19 @@ class Item extends Model
 
     public function character() {
         return $this->belongsTo(Character::class, 'characterId');
+    }
+
+    public function setItemSet($setName) {
+            $setName = trim($setName);
+            $set = Set::where('name', $setName)->first();
+
+            if (!$set) {
+                $set = new Set();
+                $set->name = $setName;
+                $set->save();
+            }
+
+            $this->setId = $set->id;
     }
 
     public function traitCategory() {

@@ -6,16 +6,17 @@
         </div>
 
 
-        <div class="col-md-6 text-right"><h4>Level 50</h4></div>
-        <div class="col-md-6"><h4><img class="champion-icon" src="/gfx/champion_icon.png"> 160</h4></div>
+        <div class="col-sm-6 text-right"><h4>Level 50</h4></div>
+        <div class="col-sm-6"><h4><img class="champion-icon" src="/gfx/champion_icon.png"> 160</h4></div>
 
-
-        <div class="col-md-12 text-center text-white setCount">You have <strong>{{$user->items->where('setId', $set->id)->groupBy('equipType')->count()}}/{{$set->bonuses->sortBy('bonusNumber')->last()->bonusNumber or ''}}</strong> item types of {{$set->name}}</div>
+        @if($user)
+            <div class="col-md-12 text-center text-white setCount">You have <strong>{{$user->items->where('setId', $set->id)->groupBy('equipType')->count()}}/{{$set->bonuses->sortBy('bonusNumber')->last()->bonusNumber or ''}}</strong> item types of {{$set->name}}</div>
+        @endif
 
         <div class="col-md-12 setBonuses">
             <ul class="list-unstyled setbonus-list">
             @foreach($set->bonuses as $bonus)
-                <li>({{$bonus->bonusNumber}} items) @include('sets.setbonus')</li>
+                <li>({{$bonus->bonusNumber}} items) @include('sets.setbonus', ['description' => $bonus->description])</li>
             @endforeach
             </ul>
         </div>

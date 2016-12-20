@@ -31,7 +31,8 @@ class User extends Authenticatable
     ];
 
     public function items() {
-        return $this->hasMany(Item::class, 'userId');
+        return $this->belongsToMany(Item::class, 'user_items', 'userId', 'itemId')
+            ->withPivot('characterId', 'uniqueId', 'bagEnum', 'traitEnum', 'traitDescription', 'enchant', 'enchantDescription', 'equipTypeEnum', 'armorTypeEnum', 'weaponTypeEnum', 'isLocked', 'isBound', 'isJunk', 'count');
     }
 
     public function favouriteSets() {

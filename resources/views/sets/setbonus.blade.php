@@ -1,5 +1,5 @@
 <?php
-    $description = strip_tags($bonus->description);
+    $description = strip_tags($description);
 
     $search = [
         '[n]',
@@ -11,6 +11,8 @@
         'stamina recovery',
         'max magicka',
         'magicka recovery',
+        '|cffffff',
+        '|r',
     ];
 
     $replace = [
@@ -23,6 +25,9 @@
         '<span class="stamina">Stamina Recovery</span>',
         '<span class="magicka">Max Magicka</span>',
         '<span class="magicka">Magicka Recovery</span>',
+        '<span style="color: #ffffff;">',
+        '</span>',
+
     ];
 
     $description = str_ireplace($search, $replace, $description);

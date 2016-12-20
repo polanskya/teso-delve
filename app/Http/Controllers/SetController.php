@@ -26,7 +26,6 @@ class SetController
             ->get();
 
         $items = $user->items()
-            ->with('character')
             ->orderBy('equipType')
             ->get();
 
@@ -40,28 +39,43 @@ class SetController
     }
 
     public function show(Set $set) {
-        $user = Auth::user();
-        $user->load('items', 'favouriteSets');
 
-        $favourites = $user->favouriteSets
-            ->pluck('setId')
-            ->toArray();
+        $user = null;
+        $items = null;
+        $favourites = null;
+        $isFavourite = null;
 
-        $items = $user->items
-            ->where('setId', $set->id)
-            ->load('character');
+        if(Auth::check()) {
+            $user = Auth::user();
+            $user->load('items', 'favouriteSets');
 
-        $isFavourite = in_array($set->id, $favourites);
+            $favourites = $user->favouriteSets
+                ->pluck('setId')
+                ->toArray();
+
+            $items = $user->items
+                ->where('setId', $set->id)
+                ->load('character');
+
+            $isFavourite = in_array($set->id, $favourites);
+            return view('sets.show', compact('set', 'items', 'favourites', 'isFavourite', 'user'));
+        }
 
         return view('sets.show', compact('set', 'items', 'favourites', 'isFavourite', 'user'));
     }
 
     public function craftable() {
-        $favourites = Auth::user()->favouriteSets->pluck('setId')->toArray();
-        $sets = Set::with('bonuses')->where('craftable', 1)->orderBy('name')->get();
-        $items = Auth::user()->items()->with('character')->orderBy('equipType')->get();
+        $user = Auth::user();
+        $favourites = null;
+        $items = null;
 
-        return view('sets.my_sets', compact('sets', 'items', 'favourites'));
+        if($user) {
+            $favourites = $user->favouriteSets->pluck('setId')->toArray();
+            $items = $user->items()->with('character')->orderBy('equipType')->get();
+        }
+        $sets = Set::with('bonuses')->where('craftable', 1)->orderBy('name')->get();
+
+        return view('sets.my_sets', compact('sets', 'items', 'favourites', 'user'));
     }
 
     public function toggleFavourite(Set $set) {
@@ -78,18 +92,26 @@ class SetController
     }
 
     public function ajaxShow(Set $set) {
-        $user = Auth::user();
-        $user->load('items', 'favouriteSets');
+        $user = null;
+        $favourites = null;
+        $items = null;
+        $isFavourite = null;
 
-        $favourites = $user->favouriteSets
-            ->pluck('setId')
-            ->toArray();
+        if(Auth::check()) {
+            $user = Auth::user();
+            $user->load('items', 'favouriteSets');
 
-        $items = $user->items
-            ->where('setId', $set->id)
-            ->load('character');
+            $favourites = $user->favouriteSets
+                ->pluck('setId')
+                ->toArray();
 
-        $isFavourite = in_array($set->id, $favourites);
+
+            $items = $user->items
+                ->where('setId', $set->id)
+                ->load('character');
+
+            $isFavourite = in_array($set->id, $favourites);
+        }
 
         return view('sets.setbox', compact('set', 'items', 'favourites', 'isFavourite', 'user'));
     }

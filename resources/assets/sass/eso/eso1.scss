@@ -164,6 +164,7 @@ body.sidebar-disabled #sidebar-switch, body:not(.sidebar-disabled) #top-menu-swi
   padding-right: 20px;
   border: 1px solid #EECA2A !important;
   margin-bottom: 20px;
+  z-index: 10;
 
   .bonusName {
     color: #EECA2A;
@@ -197,6 +198,7 @@ body.sidebar-disabled #sidebar-switch, body:not(.sidebar-disabled) #top-menu-swi
   border: 1px solid #EECA2A !important;
   margin-bottom: 20px;
   text-align: center;
+  z-index: 10;
 
   .item-icon {
     margin-top: -30px;
@@ -277,5 +279,16 @@ h1,h2,h3,h4,h5,h6 {
       display: inline;
     }
 
+  }
+}
+
+.startpage-tracked {
+  .count:nth-child(1) {
+    margin-top: 0px;
+  }
+
+  .count {
+    color:white;
+    margin-bottom: 0px;
   }
 }

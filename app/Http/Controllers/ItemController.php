@@ -18,18 +18,22 @@ class ItemController
     }
 
     public function show(Item $item) {
+        $user = Auth::user();
+        $userItem = $user->items->where('id', $item->id)->first();
+        if($userItem) {
+            $item = $userItem;
+        }
+
         $item->load('set.bonuses');
 
         $set = $item->set;
-        $user = Auth::user();
 
         $favourites = $user->favouriteSets
             ->pluck('setId')
             ->toArray();
 
         $items = $user->items
-            ->where('setId', $set->id)
-            ->load('character');
+            ->where('setId', $set->id);
 
         return view('item.show', compact('item', 'favourites', 'items', 'set'));
     }
