@@ -13,12 +13,14 @@
                             <thead>
                             </thead>
                             <tbody>
-                            @foreach($sets->whereIn('id', $favourites) as $set)
-                                @include('sets.set_row')
-                            @endforeach
+                            @if($user)
+                                @foreach($sets->whereIn('id', $favourites) as $set)
+                                    @include('sets.set_row')
+                                @endforeach
+                            @endif
 
                             @foreach($sets as $set)
-                                @if(in_array($set->id, $favourites))
+                                @if($user and in_array($set->id, $favourites))
                                     @continue
                                 @endif
 
