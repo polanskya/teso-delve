@@ -125,9 +125,11 @@ class EsoImport
 
 
         if(isset($properties[19])) {
+            $item = Item::where('uniqueId', $properties[0])
+                ->where('trait', $properties[2])
+                ->where('quality', $properties[5])
+                ->first();
 
-
-            $item = Item::where('itemLink', $properties[19])->first();
             if(!$item) {
                 $item = new Item();
                 $item->uniqueId = $properties[0];
@@ -178,40 +180,6 @@ class EsoImport
                 $userItem->save();
 
             }
-
-        }
-        else {
-            return true;
-            $item = new Item();
-            $item->uniqueId = $properties[0];
-            $item->userId = Auth::id();
-            $item->name = $properties[1];
-            $item->trait = $properties[2];
-            $item->equipType = $properties[3];
-            $item->quality = $properties[5];
-            $item->armorType = $properties[6];
-            $item->locked = $properties[7] == 'true';
-            $item->enchant = $properties[8];
-            $item->icon = $properties[9];
-            $item->type = isset($properties[10]) ? intval($properties[10]) : null;
-            $item->championLevel = isset($properties[11]) ? intval($properties[11]) : null;
-            $item->level = isset($properties[12]) ? intval($properties[12]) : null;
-            $item->weaponType = isset($properties[13]) ? intval($properties[13]) : null;
-            $item->characterId = $character ? $character->id : null;
-            $item->bagtypeId = $bagType;
-
-            $item->enchant = $properties[8];
-            $item->enchantDescription = $properties[20];
-
-            $item->count = isset($properties[17]) ? intval($properties[17]) : 1;
-            $item->isBound = (isset($properties[16]) and stripos($properties[16], 'true') !== false);
-
-            if(!empty($properties[4])) {
-                $item->setItemSet($properties[4]);
-            }
-
-            $item->save();
         }
     }
-
 }
