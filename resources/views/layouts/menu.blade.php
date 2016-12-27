@@ -60,6 +60,7 @@
                                 <li role="separator" class="divider"></li>
                                 <li>
                                     <a href="{{route('zones.index')}}">Zones</a>
+                                    <a href="{{route('set.monster')}}">Monster</a>
                                     <a href="{{route('set.craftable')}}">Craftable</a>
                                     <a href="{{route('dungeons.index')}}">Dungeons</a>
                                 </li>
@@ -73,7 +74,7 @@
                             <ul class="dropdown-menu">
                                 @foreach(Auth::user()->characters()->orderBy('championLevel', 'desc')->orderBy('level', 'desc')->get() as $character)
                                     <li>
-                                        <a href="#">{{$character->name}}</a>
+                                        <a href="{{route('characters.show', [$character->id])}}">{{$character->name}}</a>
                                     </li>
                                 @endforeach
                             </ul>

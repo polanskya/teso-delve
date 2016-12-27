@@ -77,5 +77,11 @@ return [
             24 => 'Ornate',
             23 => 'Robust',
         ]
-    ]
+    ],
+    'SetType' => [
+        1 => 'Monster set',
+        2 => 'Zone set',
+        3 => 'Dungeon set',
+        4 => 'Crafted set',
+    ],
 ];

@@ -16,5 +16,8 @@ class UserItem extends Model
         return $this->belongsTo(Character::class, 'characterId');
     }
 
+    public function item() {
+        return $this->hasOne(Item::class, 'id', 'itemId');
+    }
 
 }

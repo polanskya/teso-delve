@@ -35,6 +35,19 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label for="set[setTypeEnum]" class="control-label col-md-2">Type</label>
+                                    <div class="col-md-10">
+                                        <select id="set[setTypeEnum]" name="set[setTypeEnum]" class="form-control">
+                                            <option>None</option>
+                                            @foreach(\App\Enum\SetType::all() as $type)
+                                                <option {{$type == $set->setTypeEnum ? 'selected="selected"' : ''}} value="{{$type}}">{{trans('enums.SetType.'.$type)}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
                                     <label for="set[craftable]" class="control-label col-md-2">Craftable</label>
                                     <div class="col-md-10">
                                         <input type="checkbox" id="set[craftable]" name="set[craftable]" class="checkbox" value="1" {{$set->craftable == 1 ? 'checked="checked"' : ''}}>

@@ -114,15 +114,13 @@ class EsoImport
 
         $properties = explode(';', $line);
 
-        $character = null;
         $bagType = isset($properties[15]) ? intval($properties[15]) : null;
 
         $character = Auth::user()->characters()->where('externalId', intval($properties[14]))->first();
-
+              
         if(isset($bagType) and $bagType === BagType::BANK) {
             $character = null;
         }
-
 
         if(isset($properties[19])) {
             $item = Item::where('uniqueId', $properties[0])

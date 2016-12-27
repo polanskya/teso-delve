@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 
+use App\Enum\SetType;
 use App\Model\Dungeon;
 use App\Model\DungeonSet;
 use App\Model\Set;
@@ -64,6 +65,20 @@ class SetController
         return view('sets.show', compact('set', 'items', 'favourites', 'isFavourite', 'user'));
     }
 
+    public function monster() {
+        $user = Auth::user();
+        $favourites = null;
+        $items = null;
+
+        if($user) {
+            $favourites = $user->favouriteSets->pluck('setId')->toArray();
+            $items = $user->items()->with('character')->orderBy('equipType')->get();
+        }
+        $sets = Set::with('bonuses')->where('setTypeEnum', SetType::MONSTER)->orderBy('name')->get();
+
+        return view('sets.my_sets', compact('sets', 'items', 'favourites', 'user'));
+    }
+
     public function craftable() {
         $user = Auth::user();
         $favourites = null;
@@ -124,8 +139,9 @@ class SetController
             $set->traitNeeded = intval($data['traitNeeded']);
         }
         $set->description = $data['description'];
-        $set->save();
+        $set->setTypeEnum = $data['setTypeEnum'] != 0 ? intval($data['setTypeEnum']) : null;
 
+        $set->save();
         $set->bonuses()->delete();
 
         foreach($request->get('set_bonus') as $setBonus) {

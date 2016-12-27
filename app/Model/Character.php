@@ -21,6 +21,11 @@ class Character extends Model
 
     use SoftDeletes;
 
+    public function items() {
+        return $this->belongsToMany(Item::class, 'user_items', 'characterId', 'itemId')
+            ->withPivot('characterId', 'uniqueId', 'bagEnum', 'traitEnum', 'traitDescription', 'enchant', 'enchantDescription', 'equipTypeEnum', 'armorTypeEnum', 'weaponTypeEnum', 'isLocked', 'isBound', 'isJunk', 'count');
+    }
+
     protected $fillable = [
 
     ];

@@ -47,6 +47,7 @@
                                         @endforeach
                                     @endif
 
+                                    @include('sets.settype_drop')
                                 </ul>
 
 
