@@ -264,6 +264,24 @@ h1,h2,h3,h4,h5,h6 {
   color: darken(dimgray, 20%);
 }
 
+.item-hover {
+  .itemBo {
+    display: inline;
+    position: absolute;
+    background-color: #1A1A1A;
+    left: 60px;
+    margin-top: 17px;
+    width: 300px;
+  }
+
+  :hover {
+    .itemBox {
+      display: inline;
+    }
+
+  }
+}
+
 .set-hover {
   .setbox {
     display: inline;

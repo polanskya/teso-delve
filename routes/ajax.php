@@ -5,4 +5,5 @@ Route::group(['prefix' => 'ajax'], function () {
 
 
     Route::get('set/{set}', 'SetController@ajaxShow')->name('set.ajaxShow');
+    Route::get('item/{item}', 'ItemController@ajaxShow')->name('item.ajaxShow');
 });

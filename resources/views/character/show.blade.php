@@ -24,51 +24,52 @@
                             <div class="col-md-4">
                                 <div class="row">
                                     <div class="col-md-12 text-center">
-                                        @include('item.worn_image', ['equippedItem' => $equippedItems->where('equipTypeEnum', \App\Enum\EquipType::HEAD)->first()])
+                                        @include('item.worn_image', ['equippedItem' => $equippedItems->where('pivot.equipTypeEnum', \App\Enum\EquipType::HEAD)->first()])
                                     </div>
 
                                     <div class="col-md-6">
-                                        @include('item.worn_image', ['equippedItem' => $equippedItems->where('equipTypeEnum', \App\Enum\EquipType::SHOULDERS)->first()])
+                                        @include('item.worn_image', ['equippedItem' => $equippedItems->where('pivot.equipTypeEnum', \App\Enum\EquipType::SHOULDERS)->first()])
                                     </div>
                                     <div class="col-md-6 text-right">
-                                        @include('item.worn_image', ['equippedItem' => $equippedItems->where('equipTypeEnum', \App\Enum\EquipType::CHEST)->first()])
+                                        @include('item.worn_image', ['equippedItem' => $equippedItems->where('pivot.equipTypeEnum', \App\Enum\EquipType::CHEST)->first()])
                                     </div>
 
                                     <div class="col-md-6">
-                                        @include('item.worn_image', ['equippedItem' => $equippedItems->where('equipTypeEnum', \App\Enum\EquipType::HAND)->first()])
+                                        @include('item.worn_image', ['equippedItem' => $equippedItems->where('pivot.equipTypeEnum', \App\Enum\EquipType::HAND)->first()])
                                     </div>
                                     <div class="col-md-6 text-right">
-                                        @include('item.worn_image', ['equippedItem' => $equippedItems->where('equipTypeEnum', \App\Enum\EquipType::WAIST)->first()])
+                                        @include('item.worn_image', ['equippedItem' => $equippedItems->where('pivot.equipTypeEnum', \App\Enum\EquipType::WAIST)->first()])
                                     </div>
 
                                     <div class="col-md-6">
-                                        @include('item.worn_image', ['equippedItem' => $equippedItems->where('equipTypeEnum', \App\Enum\EquipType::LEGS)->first()])
+                                        @include('item.worn_image', ['equippedItem' => $equippedItems->where('pivot.equipTypeEnum', \App\Enum\EquipType::LEGS)->first()])
                                     </div>
                                     <div class="col-md-6 text-right">
-                                        @include('item.worn_image', ['equippedItem' => $equippedItems->where('equipTypeEnum', \App\Enum\EquipType::FEET)->first()])
+                                        @include('item.worn_image', ['equippedItem' => $equippedItems->where('pivot.equipTypeEnum', \App\Enum\EquipType::FEET)->first()])
                                     </div>
 
                                     <hr>
 
                                     <div class="col-md-3">
-                                        @include('item.worn_image', ['equippedItem' => $equippedItems->where('equipTypeEnum', \App\Enum\EquipType::COSTUME)->first()])
+                                        @include('item.worn_image', ['equippedItem' => $equippedItems->where('pivot.equipTypeEnum', \App\Enum\EquipType::COSTUME)->first()])
                                     </div>
                                     <div class="col-md-3">
-                                        @include('item.worn_image', ['equippedItem' => $equippedItems->where('equipTypeEnum', \App\Enum\EquipType::NECK)->first()])
+                                        @include('item.worn_image', ['equippedItem' => $equippedItems->where('pivot.equipTypeEnum', \App\Enum\EquipType::NECK)->first()])
                                     </div>
                                     <div class="col-md-3">
-                                        @include('item.worn_image', ['equippedItem' => $equippedItems->where('equipTypeEnum', \App\Enum\EquipType::RING)->first()])
+                                        @include('item.worn_image', ['equippedItem' => $equippedItems->where('pivot.equipTypeEnum', \App\Enum\EquipType::RING)->first()])
                                     </div>
                                     <div class="col-md-3">
-                                        @include('item.worn_image', ['equippedItem' => $equippedItems->where('equipTypeEnum', \App\Enum\EquipType::RING)->values()->all()[1]])
+                                        @include('item.worn_image', ['equippedItem' => $equippedItems->where('pivot.equipTypeEnum', \App\Enum\EquipType::RING)->first()])
                                     </div>
                                 </div>
                             </div>
 
                             <div class="col-md-8">
-                                @foreach($equippedItems->groupBy('item.setId') as $setId => $items)
+                                <h3>Set bonuses</h3>
+                                @foreach($equippedItems->groupBy('setId') as $setId => $items)
                                     <?php
-                                    $set = $items->first()->item->set;
+                                    $set = $items->first()->set;
                                     ?>
 
                                     @if($set)
@@ -80,6 +81,28 @@
                                         </ul>
                                     @endif
                                 @endforeach
+                            </div>
+
+
+                            <div class="col-md-12">
+                                <h3>List</h3>
+                                <table class="table table-condensed set-table">
+                                    <thead>
+                                    <th></th>
+                                    <th></th>
+                                    <th>Item</th>
+                                    <th>Weight</th>
+                                    <th>Trait</th>
+                                    <th>Set</th>
+                                    <th>Glyph</th>
+                                    <th></th>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($equippedItems->sortBy('pivot.equipTypeEnum') as $item)
+                                        @include('item.item_row_worn', ['item' => $item, 'character' => $character])
+                                    @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
 

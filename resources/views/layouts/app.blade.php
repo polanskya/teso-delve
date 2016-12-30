@@ -47,6 +47,7 @@
 <script src="/js/dropzone.js"></script>
 <script src="/js/set-rows.js"></script>
 <script src="/js/set.js"></script>
+<script src="/js/items.js"></script>
 @yield('javascript')
 
 </body>

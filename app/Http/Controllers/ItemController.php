@@ -38,4 +38,10 @@ class ItemController
         return view('item.show', compact('item', 'favourites', 'items', 'set'));
     }
 
+    public function ajaxShow(Item $item) {
+        $set = $item->set;
+        $items = Auth::user()->items;
+        return view('item.itembox', compact('item', 'set', 'items'));
+    }
+
 }

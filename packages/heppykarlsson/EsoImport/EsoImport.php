@@ -6,6 +6,7 @@ use App\Model\Character;
 use App\Model\Item;
 use App\Model\Set;
 use App\Model\UserItem;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -21,6 +22,10 @@ class EsoImport
         echo "Importing<br>";
         $file = fopen($file_path, 'r');
 
+        $user = Auth::user();
+        $user->dumpUploaded_at = Carbon::now();
+        $user->save();
+        
         $this->items = Item::all()->keyBy('itemLink');
 
         $lines = [];
