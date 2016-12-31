@@ -50,10 +50,6 @@
                                 <span class="m-r-1">Sets</span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li class="dropdown-header text-gray-lighter">
-                                    <strong class="text-uppercase">Sets</strong>
-                                </li>
-                                <li role="separator" class="divider"></li>
                                 <li>
                                     <a href="{{route('set.my-sets')}}">My sets</a>
                                 </li>
@@ -72,6 +68,11 @@
                                 <span class="m-r-1">Characters</span>
                             </a>
                             <ul class="dropdown-menu">
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                    <a href="{{route('characters.index')}}">My characters</a>
+                                </li>
+                                <li role="separator" class="divider"></li>
                                 @foreach(Auth::user()->characters()->orderBy('championLevel', 'desc')->orderBy('level', 'desc')->get() as $character)
                                     <li>
                                         <a href="{{route('characters.show', [$character->id])}}">{{$character->name}}</a>
@@ -79,22 +80,7 @@
                                 @endforeach
                             </ul>
                         </li>
-
-                        <li class="dropdown hidden">
-                            <a class="dropdown-toggle user-dropdown" data-toggle="dropdown" href="javascript: void(0)" role="button" aria-expanded="false">
-                                <span class="m-r-1">Builds</span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="{{route('set.my-sets')}}">Templar</a>
-                                    <a href="{{route('set.my-sets')}}">Dragonknight</a>
-                                    <a href="{{route('set.my-sets')}}">Sorcerer</a>
-                                    <a href="{{route('set.my-sets')}}">Nightblade</a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        @else
+                    @else
                         <li class="dropdown">
                             <a class="dropdown-toggle user-dropdown" data-toggle="dropdown" href="javascript: void(0)" role="button" aria-expanded="false">
                                 <span class="m-r-1">Sets</span>

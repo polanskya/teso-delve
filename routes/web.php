@@ -21,7 +21,7 @@ Route::get('/export', 'ImportController@export');
 
 
 Route::get('/character/{character}', 'CharacterController@show')->name('characters.show');
-
+Route::get('/characters', 'CharacterController@index')->name('characters.index');
 
 
 Route::get('/dungeons', 'DungeonController@index')->name('dungeons.index');

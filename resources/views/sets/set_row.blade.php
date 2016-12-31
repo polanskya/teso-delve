@@ -16,12 +16,12 @@ if($user) {
         <a href="#" class="open-set-row" setId="{{$set->id}}" ><i class="fa fa-chevron-{{$isFavourite ? 'up' : 'down'}}" aria-hidden="true"></i></a>
     </td>
     <td colspan="2">
-        <div class="set-hover" setId="{{$set->id}}">
+        <span class="set-hover" setId="{{$set->id}}">
             <a href="{{route('set.show', [$set->id])}}"><strong>{{$set->name}}</strong></a>
             @if($user)
                 <strong>({{$setCount}})</strong>
             @endif
-        </div>
+        </span>
     </td>
 
     <td>

@@ -16,6 +16,14 @@ class AddLastDumpUploaded extends Migration
         Schema::table('users', function ($table) {
             $table->dateTime('dumpUploaded_at')->nullable()->after('remember_token');
         });
+
+        Schema::table('user_items', function ($table) {
+            $table->integer('slotId')->nullable()->after('bagEnum');
+        });
+
+        Schema::table('characters', function ($table) {
+            $table->integer('currency')->nullable()->after('isDPS');
+        });
     }
 
     /**
@@ -28,5 +36,14 @@ class AddLastDumpUploaded extends Migration
         Schema::table('users', function ($table) {
             $table->dropColumn('dumpUploaded_at');
         });
+
+        Schema::table('user_items', function ($table) {
+            $table->dropColumn('slotId');
+        });
+
+        Schema::table('characters', function ($table) {
+            $table->dropColumn('currency');
+        });
+
     }
 }

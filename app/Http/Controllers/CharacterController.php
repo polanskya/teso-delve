@@ -18,9 +18,13 @@ class CharacterController
             ->with('set.bonuses')
             ->get();
 
-        //$head = $equippedItems->where('equipTypeEnum', EquipType::HEAD)->first();
-
         return view('character.show', compact('character', 'equippedItems', 'user'));
+    }
+
+    public function index() {
+        $user = Auth::user();
+        $characters = $user->characters()->orderByRaw('level DESC, name')->get();
+        return view('character.index', compact('characters'));
     }
 
 

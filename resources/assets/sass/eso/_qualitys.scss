@@ -1,0 +1,82 @@
+
+.quality-text-5 {
+  color: $quality-legendary !important;;
+}
+
+.quality-text-4 {
+  color: $quality-artifact !important;;
+}
+
+.quality-text-3 {
+  color: $quality-arcane !important;;
+}
+
+.quality-text-2 {
+  color: $quality-magic !important;;
+}
+
+.quality-text-1 {
+  color: $quality-trash !important;;
+}
+
+
+.quality-square {
+  height: 100%;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+.quality-opacity-5 {
+  background: rgba($quality-legendary, $opacity);
+  border: 1px solid darken($quality-legendary-border, 20%);
+}
+
+.quality-opacity-4 {
+  background: rgba($quality-artifact, $opacity);
+  border: 1px solid darken($quality-artifact-border, 20%);
+}
+
+.quality-opacity-3 {
+  background: rgba($quality-arcane, $opacity);
+  border: 1px solid darken($quality-arcane-border, 20%);
+}
+
+.quality-opacity-2 {
+  background: rgba($quality-magic, $opacity);
+  border: 1px solid darken($quality-magic-border, 20%);
+}
+
+.quality-opacity-1 {
+  background: rgba($quality-normal, $opacity);
+  border: 1px solid darken($quality-normal-border, 20%);
+}
+
+.quality-5 {
+  background: $quality-legendary !important;
+  border: 1px solid $quality-legendary-border !important;
+}
+
+.quality-4 {
+  background: $quality-artifact !important;
+  border: 1px solid $quality-artifact-border !important;
+}
+
+.quality-3 {
+  background: $quality-arcane !important;
+  border: 1px solid $quality-arcane-border !important;
+}
+
+.quality-2 {
+  background: $quality-magic !important;
+  border: 1px solid $quality-magic-border !important;
+}
+
+.quality-1 {
+  background: $quality-normal !important;
+  border: 1px solid $quality-normal-border !important;
+}
+
+.quality-0 {
+  background: $quality-trash !important;
+  border: 1px solid $quality-trash-border !important;
+}

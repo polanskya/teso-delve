@@ -83,6 +83,7 @@ class EsoImport
         $character->allianceId = $properties[8];
         $character->userId = Auth::user()->id;
         $character->deleted_at = null;
+        $character->currency = intval($properties[12]);
 
         if(isset($properties[11])) {
             $roles = explode('-', $properties[11]);
@@ -91,6 +92,7 @@ class EsoImport
             $character->isTank = $roles[2] == 'true';
         }
 
+        $character->ridingUnlocked_at = null;
         if(isset($properties[9])) {
             // Calculate when next riding lesson is unlocked
             $properties = explode(';', $line);
@@ -127,7 +129,7 @@ class EsoImport
             $character = null;
         }
 
-        if(isset($properties[19])) {
+        if(isset($properties[23])) {
             $item = Item::where('uniqueId', $properties[0])
                 ->where('trait', $properties[2])
                 ->where('quality', $properties[5])
@@ -152,7 +154,6 @@ class EsoImport
                 $item->enchantDescription = $properties[20];
                 $item->itemValue = intval($properties[22]);
 
-
                 if(!empty($properties[4])) {
                     $item->setItemSet($properties[4]);
                 }
@@ -171,6 +172,7 @@ class EsoImport
                 $userItem->enchant = $properties[8];
                 $userItem->enchantDescription = $properties[20];
                 $userItem->bagEnum = $bagType;
+                $userItem->slotId = intval($properties[23]);
 
                 $userItem->equipTypeEnum = $properties[3];
                 $userItem->armorTypeEnum = $properties[6];

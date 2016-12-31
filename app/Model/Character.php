@@ -23,12 +23,28 @@ class Character extends Model
 
     public function items() {
         return $this->belongsToMany(Item::class, 'user_items', 'characterId', 'itemId')
-            ->withPivot('characterId', 'uniqueId', 'bagEnum', 'traitEnum', 'traitDescription', 'enchant', 'enchantDescription', 'equipTypeEnum', 'armorTypeEnum', 'weaponTypeEnum', 'isLocked', 'isBound', 'isJunk', 'count');
+            ->withPivot('characterId', 'uniqueId', 'bagEnum', 'slotId', 'traitEnum', 'traitDescription', 'enchant', 'enchantDescription', 'equipTypeEnum', 'armorTypeEnum', 'weaponTypeEnum', 'isLocked', 'isBound', 'isJunk', 'count');
     }
 
     protected $fillable = [
 
     ];
 
+    public function roles() {
+        $roles = [];
+
+        if($this->isTank) {
+            $roles[] = 'Tank';
+        }
+
+        if($this->isHealer) {
+            $roles[] = 'Healer';
+        }
+        if($this->isDPS) {
+            $roles[] = 'Damage dealer';
+        }
+
+        return $roles;
+    }
 
 }

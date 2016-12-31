@@ -17,12 +17,17 @@ $(document).ready(function() {
             setAjax = $.ajax({
                 url: '/ajax/set/' + setId,
                 success: function(data) {
+                    $('.itemBox').hide();
+                    $('.setbox').hide();
                     $(data).find('setbox').show();
                     setHover.append(data);
+
                 },
             });
         }
 
+        $('.itemBox').hide();
+        $('.setbox').hide();
         setHover.find('.setbox').show();
 
 
