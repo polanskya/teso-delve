@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('meta-title')
+    Sets found in {{$zone['name']}}
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row-fluid">

@@ -85,12 +85,22 @@ class SetController
         $items = null;
 
         if($user) {
-            $favourites = $user->favouriteSets->pluck('setId')->toArray();
-            $items = $user->items()->with('character')->orderBy('equipType')->get();
-        }
-        $sets = Set::with('bonuses')->where('craftable', 1)->orderBy('name')->get();
+            $favourites = $user->favouriteSets
+                ->pluck('setId')
+                ->toArray();
 
-        return view('sets.my_sets', compact('sets', 'items', 'favourites', 'user'));
+            $items = $user->items()
+                ->with('character')
+                ->orderBy('equipType')
+                ->get();
+        }
+
+        $sets = Set::with('bonuses')
+            ->where('craftable', 1)
+            ->orderBy('name')
+            ->get();
+
+        return view('sets.craftable', compact('sets', 'items', 'favourites', 'user'));
     }
 
     public function toggleFavourite(Set $set) {

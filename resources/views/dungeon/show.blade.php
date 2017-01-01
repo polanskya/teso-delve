@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@section('meta-title')
+    Sets found in {{$dungeon->name}}
+@endsection
+
+
 @section('content')
     <div class="container">
         <div class="row-fluid">

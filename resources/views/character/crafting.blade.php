@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('meta-title')
+    {{trans('enums.CraftingType.' . $caftingTypeEnum)}} crafting for {{$character->name}}
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row-fluid">
@@ -45,7 +49,10 @@
                                             <?php
                                             $craftingTrait = $craftingTraits->where('researchLineIndex', $key)->where('traitId', $traitId)->first();
                                             ?>
-                                            <td class="text-center">{!! ($craftingTrait and $craftingTrait->isKnown) ? '<i class="fa fa-check"></i>' : '' !!}</td>
+                                            <td class="text-center">
+                                                {!! ($craftingTrait and $craftingTrait->isResearched()) ? '<i class="fa fa-check"></i>' : '' !!}
+                                                {!! ($craftingTrait and $craftingTrait->isResearching()) ? '<i class="fa fa-clock-o" title="Researching, done at: ' . $craftingTrait->researchDone_at . '"></i>' : ''!!}
+                                            </td>
                                         @endforeach
 
                                     </tr>
