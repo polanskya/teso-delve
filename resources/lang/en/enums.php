@@ -1,5 +1,14 @@
 <?php
 return [
+    'CraftingType' => [
+        4 => 'Alchemy',
+        1 => 'Blacksmithing',
+        2 => 'Clothier',
+        3 => 'Enchanting',
+        0 => 'Invalid',
+        5 => 'Provisioning',
+        6  => 'Woodworking',
+    ],
     'EquipType' => [
         3 => 'Chest',
         11 => 'Costume',
@@ -77,6 +86,37 @@ return [
             24 => 'Ornate',
             23 => 'Robust',
         ]
+    ],
+    'TraitType' => [
+        18 => 'DIVINES',
+        /* 17 => 'EXPLORATION', */
+        12 => 'IMPENETRABLE',
+        16 => 'INFUSED',
+        20 => 'INTRICATE',
+        25 => 'NIRNHONED',
+        19 => 'ORNATE',
+        17 => 'PROSPEROUS',
+        13 => 'REINFORCED',
+        11 => 'STURDY',
+        15 => 'TRAINING',
+        14 => 'WELL_FITTED',
+        22 => 'ARCANE',
+        21 => 'HEALTHY',
+        24 => 'ORNATE',
+        23 => 'ROBUST',
+        27 => 'SPECIAL_STAT',
+        2 => 'CHARGED',
+        /* 8 => '_WEAPON_DECISIVE', */
+        5 => 'DEFENDING',
+        4 => 'INFUSED',
+        9 => 'INTRICATE',
+        26 => 'NIRNHONED',
+        10 => 'ORNATE',
+        1 => 'POWERED',
+        3 => 'PRECISE',
+        7 => 'SHARPENED',
+        6 => 'TRAINING',
+        8 => 'WEIGHTED',
     ],
     'SetType' => [
         1 => 'Monster set',

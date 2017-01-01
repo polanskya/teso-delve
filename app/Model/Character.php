@@ -2,6 +2,9 @@
 
 namespace App\Model;
 
+use App\Enum\CraftingType;
+use Carbon\Carbon;
+use HeppyKarlsson\Meta\Traits\Meta;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -19,7 +22,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Character extends Model
 {
 
-    use SoftDeletes;
+    use SoftDeletes,
+        Meta;
 
     public function items() {
         return $this->belongsToMany(Item::class, 'user_items', 'characterId', 'itemId')
@@ -29,6 +33,24 @@ class Character extends Model
     protected $fillable = [
 
     ];
+
+    public function craftingTraits() {
+        return $this->hasMany(CraftingTrait::class, 'characterId');
+    }
+
+    public function canResearch($craftingType) {
+        $value = 1;
+        $maxResearch = $this->meta->where('key', 'max_smithing_' . $craftingType)->first();
+        if($maxResearch) {
+            $value = $maxResearch->value;
+        }
+
+        return $this->craftingTraits->where('researchDone_at', '>', Carbon::now())->where('craftingTypeEnum', $craftingType)->count() < $value;
+    }
+
+    public function nextResearch($craftingType) {
+        return $this->craftingTraits->where('researchDone_at', '>', Carbon::now())->where('craftingTypeEnum', $craftingType)->min('researchDone_at');
+    }
 
     public function roles() {
         $roles = [];

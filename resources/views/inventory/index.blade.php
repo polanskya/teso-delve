@@ -1,0 +1,61 @@
+@extends('layouts.app')
+
+@section('content')
+    <div class="container">
+        <div class="row-fluid">
+            <div class="col-md-12">
+
+                <div class="panel panel-default">
+
+                    <div class="panel-body">
+                        @if(isset($character) and $character)
+                            @include('character.tabs')
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row character-name">
+                                        <div class="col-md-2">
+                                            <img title="{{trans('alliance.'.$character->allianceId)}}" src="/gfx/alliance_{{$character->allianceId}}.png">
+                                        </div>
+                                        <div class="col-md-10">
+                                            <h1>{{$character->name}}</h1>
+                                            <h3>{{trans('eso.races.'.$character->raceId.'.name')}} {{trans('eso.classes.'.$character->classId.'.name')}}</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+
+
+                        <div class="row col-md-6">
+                            <div class="inventory col-md-12">
+                                @foreach($items as $item)
+                                    <div class="item_image">
+                                        @if($item)
+                                            <span class="item-hover quality-square quality-opacity-{{$item->quality}}" itemId="{{$item->id}}">
+                                            {!! $item->pivot->isLocked ? '<i class="fa fa-lock"></i>' : '' !!}
+                                                <img class="item-icon size-40" src="http://esoicons.uesp.net/{{str_ireplace('.dds', '.png', $item->icon)}}">
+                                            </span>
+                                            @if($item->pivot->count > 1)
+                                                <span class="slot-count">{{$item->pivot->count}}</span>
+                                            @endif
+                                        @endif
+                                    </div>
+
+                                @endforeach
+                                <hr>
+                            </div>
+                            <div class="col-md-6">
+                                Inventory space: <span class="text-white">{{$items->count()}} /</span>
+                            </div>
+                            <div class="col-md-6 text-right text-white">
+                                {{number_format($gold)}} <img src="/gfx/gold.png">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+

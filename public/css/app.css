@@ -99,6 +99,30 @@
   margin-bottom: 0px;
 }
 
+.item-icon.size-40 {
+  max-width: 40px;
+}
+
+.item_image .fa {
+  position: absolute;
+  margin-left: -5px;
+  margin-top: -5px;
+}
+
+.inventory .item_image {
+  display: inline-block;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+.inventory .slot-count {
+  position: absolute;
+  color: white;
+  margin-top: -17px;
+  width: 40px;
+  text-align: right;
+}
+
 body {
   background: url("/gfx/The_Elder_Scrolls_Online_Background_Nord.jpg");
   background-position: center top 50px;
@@ -106,6 +130,10 @@ body {
   background-attachment: fixed;
   padding-bottom: 100px;
   color: dimgray;
+}
+
+.no-padding {
+  padding: 0px !important;
 }
 
 .navigation {

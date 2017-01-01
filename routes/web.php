@@ -21,31 +21,34 @@ Route::get('/export', 'ImportController@export');
 
 
 Route::get('/character/{character}', 'CharacterController@show')->name('characters.show');
-Route::get('/characters', 'CharacterController@index')->name('characters.index');
+Route::get('/character/{character}/crafting/{craftingTypeEnum}', 'CharacterController@craftingResearch')->name('character.crafting');
+Route::get('/characters', 'CharacterController@index')->name('characters.index')->middleware('auth');;
 
+Route::get('/character/{character}/inventory', 'CharacterController@inventory')->name('character.inventory')->middleware('auth');;
+
+Route::get('/bank', 'BankController@index')->name('bank.index');
 
 Route::get('/dungeons', 'DungeonController@index')->name('dungeons.index');
-Route::put('/dungeon/{dungeon}/set', 'DungeonController@addSet')->name('dungeon.addSet');
+Route::put('/dungeon/{dungeon}/set', 'DungeonController@addSet')->name('dungeon.addSet')->middleware('auth');;
 Route::get('/dungeon/{dungeon}', 'DungeonController@show')->name('dungeon.show');
 
 Route::get('/zones', 'ZoneController@index')->name('zones.index');
 Route::get('/zone/{zoneId}', 'ZoneController@show')->name('zone.show');
 
 
-Route::get('/my-sets', 'SetController@mySets')->name('set.my-sets');
+Route::get('/my-sets', 'SetController@mySets')->name('set.my-sets')->middleware('auth');;
 Route::get('/set/craftable', 'SetController@craftable')->name('set.craftable');
 Route::get('/set/monster', 'SetController@monster')->name('set.monster');
 Route::get('/set/{set}', 'SetController@show')->name('set.show');
-Route::post('/set/{set}/update', 'SetController@update')->name('set.update');
-Route::get('/set/{set}/edit', 'SetController@edit')->name('set.edit');
+Route::post('/set/{set}/update', 'SetController@update')->name('set.update')->middleware('auth');;
+Route::get('/set/{set}/edit', 'SetController@edit')->name('set.edit')->middleware('auth');;
 
 
 Route::get('/item/{item}', 'ItemController@show')->name('item.show');
 
-
 Route::post('/import-data', 'ImportController@upload')->name('import.upload');
 Route::get('/import', 'ImportController@index')->name('import.index');
 
-Route::get('/home', 'SetController@mySets')->name('home.index');
+Route::get('/home', 'SetController@mySets')->name('home.index')->middleware('auth');
 Route::get('/', 'HomeController@index');
 

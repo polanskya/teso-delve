@@ -1,5 +1,7 @@
 @import "qualitys";
 @import "character";
+@import "itemIcon";
+@import "inventory";
 
 
 body {
@@ -10,6 +12,10 @@ body {
   padding-bottom: 100px;
 
   color: lighten(#5c5c5c, 5%);
+}
+
+.no-padding {
+  padding: 0px !important;
 }
 
 .navigation {

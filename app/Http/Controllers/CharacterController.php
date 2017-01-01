@@ -2,9 +2,13 @@
 
 
 use App\Enum\BagType;
+use App\Enum\CraftingType;
 use App\Enum\EquipType;
+use App\Enum\SetType;
 use App\Model\Character;
+use App\Model\Set;
 use App\Model\UserItem;
+use HeppyKarlsson\Meta\Model\Meta;
 use Illuminate\Support\Facades\Auth;
 
 class CharacterController
@@ -23,9 +27,40 @@ class CharacterController
 
     public function index() {
         $user = Auth::user();
-        $characters = $user->characters()->orderByRaw('level DESC, name')->get();
+        $characters = $user->characters()
+            ->with('craftingTraits')
+            ->orderByRaw('level DESC, name')
+            ->get();
+
         return view('character.index', compact('characters'));
     }
 
+    public function craftingResearch(Character $character, $caftingTypeEnum) {
+        $user = Auth::user();
+
+        $equippedItems = $character->items()
+            ->where('user_items.bagEnum', BagType::WORN)
+            ->with('set.bonuses')
+            ->get();
+
+        $craftingTraits = $character->craftingTraits()
+            ->where('craftingTypeEnum', $caftingTypeEnum)
+            ->get();
+
+        $researchLineIndex = $craftingTraits->groupBy('researchLineIndex');
+
+        $craftableSets = Set::where('setTypeEnum', SetType::CRAFTED)
+            ->orderBy('traitNeeded')
+            ->get();
+
+        return view('character.crafting', compact('character', 'equippedItems', 'user', 'craftingTraits', 'researchLineIndex', 'craftableSets', 'caftingTypeEnum'));
+    }
+
+    public function inventory(Character $character, $bagEnum = null) {
+        $items = $character->items->where('pivot.bagEnum', is_null($bagEnum) ? BagType::BACKPACK : $bagEnum);
+        $gold = $character->currency;
+
+        return view('inventory.index', compact('character', 'bagEnum', 'items', 'gold'));
+    }
 
 }

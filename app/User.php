@@ -5,8 +5,8 @@ namespace App;
 use App\Model\Character;
 use App\Model\Item;
 use App\Model\UserSetFavourite;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -32,7 +32,7 @@ class User extends Authenticatable
 
     public function items() {
         return $this->belongsToMany(Item::class, 'user_items', 'userId', 'itemId')
-            ->withPivot('characterId', 'uniqueId', 'bagEnum', 'traitEnum', 'traitDescription', 'enchant', 'enchantDescription', 'equipTypeEnum', 'armorTypeEnum', 'weaponTypeEnum', 'isLocked', 'isBound', 'isJunk', 'count');
+            ->withPivot('characterId', 'uniqueId', 'bagEnum', 'slotId', 'traitEnum', 'traitDescription', 'enchant', 'enchantDescription', 'equipTypeEnum', 'armorTypeEnum', 'weaponTypeEnum', 'isLocked', 'isBound', 'isJunk', 'count');
     }
 
     public function favouriteSets() {
@@ -42,4 +42,5 @@ class User extends Authenticatable
     public function characters() {
         return $this->hasMany(Character::class, 'userId');
     }
+
 }

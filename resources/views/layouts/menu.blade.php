@@ -80,6 +80,13 @@
                                 @endforeach
                             </ul>
                         </li>
+
+                        <li>
+                            <a href="{{route('bank.index')}}" aria-expanded="false">
+                                <span class="m-r-1">Bank</span>
+                            </a>
+                        </li>
+
                     @else
                         <li class="dropdown">
                             <a class="dropdown-toggle user-dropdown" data-toggle="dropdown" href="javascript: void(0)" role="button" aria-expanded="false">

@@ -2,13 +2,14 @@
 
 
 use App\Enum\BagType;
+use App\Enum\CraftingType;
 use App\Model\Character;
+use App\Model\CraftingTrait;
 use App\Model\Item;
-use App\Model\Set;
 use App\Model\UserItem;
 use Carbon\Carbon;
+use HeppyKarlsson\Meta\Service\MetaService;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class EsoImport
 {
@@ -47,13 +48,62 @@ class EsoImport
             $this->importCharacter($line);
         }
 
-        Auth::user()->load('characters');
+        Auth::user()->load('characters.craftingTraits');
+
+        foreach($lines as $line) {
+            $this->importSmithing($line);
+        }
+//        die();
 
         foreach($lines as $line) {
             $this->importItem($line);
         }
 
+
         $this->cleanCharacters();
+
+    }
+
+    public function importSmithing($line) {
+        if(stripos($line, 'SMITHING:') === false) {
+            return false;
+        }
+
+        $info = explode(';', $line);
+//        dump($info);
+        $character = Auth::user()->characters->where('externalId', $info[1])->first();
+        $smithingType = intval($info[3]);
+
+        $craftingTrait = $character->craftingTraits->where('craftingTypeEnum', $smithingType)
+            ->where('traitId', intval($info[7]))
+            ->where('researchLineIndex', intval($info[4]))
+            ->where('traitIndex', intval($info[5]))
+            ->first();
+
+//        dd($info);
+
+        if(is_null($craftingTrait)) {
+            $craftingTrait = new CraftingTrait();
+            $craftingTrait->characterId = $character->id;
+            $craftingTrait->craftingTypeEnum = $smithingType;
+            $craftingTrait->traitId = intval($info[7]);
+            $craftingTrait->researchLineIndex = intval($info[4]);
+            $craftingTrait->traitIndex = intval($info[5]);
+            $craftingTrait->name = $info[10];
+            $craftingTrait->image = $info[11];
+        }
+
+        if(isset($info[13]) and $info[2] !== 'nil') {
+            $researchDone = intval($info[13]) + intval($info[2]);
+            $craftingTrait->researchDone_at = Carbon::createFromTimestamp($researchDone);
+        }
+
+        $craftingTrait->isKnown = stripos($info[9], 'true') !== false;
+        $craftingTrait->save();
+
+    }
+
+    public function createMeta($meta, $character, $value) {
 
     }
 
@@ -84,6 +134,20 @@ class EsoImport
         $character->userId = Auth::user()->id;
         $character->deleted_at = null;
         $character->currency = intval($properties[12]);
+
+
+//        if($character->externalId == '8798292061724666') {
+//            dd($properties);
+//        }
+
+        if(isset($properties[13])) {
+            $smithingSkills = explode('-', $properties[13]);
+
+            $metaService = new MetaService();
+            $metaService->update($character, 'max_smithing_' . CraftingType::BLACKSMITHING, intval($smithingSkills[0]));
+            $metaService->update($character, 'max_smithing_' . CraftingType::CLOTHIER, intval($smithingSkills[1]));
+            $metaService->update($character, 'max_smithing_' . CraftingType::WOODWORKING, intval($smithingSkills[2]));
+        }
 
         if(isset($properties[11])) {
             $roles = explode('-', $properties[11]);
