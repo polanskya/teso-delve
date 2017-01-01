@@ -95,6 +95,7 @@
                             <ul class="dropdown-menu">
                                 <li>
                                     <a href="{{route('zones.index')}}">Zones</a>
+                                    <a href="{{route('set.monster')}}">Monster</a>
                                     <a href="{{route('set.craftable')}}">Craftable</a>
                                     <a href="{{route('dungeons.index')}}">Dungeons</a>
                                 </li>
