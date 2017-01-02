@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('meta-title')
-    {{$set->name}} set
+    {{$set->name}} {{ !is_null($set->getMeta('monster_chest')) ? " monster " : '' }}set
 @endsection
 
 @section('content')

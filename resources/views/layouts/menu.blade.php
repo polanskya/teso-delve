@@ -68,7 +68,6 @@
                                 <span class="m-r-1">Characters</span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li role="separator" class="divider"></li>
                                 <li>
                                     <a href="{{route('characters.index')}}">My characters</a>
                                 </li>

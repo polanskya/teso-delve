@@ -47,19 +47,31 @@
                                 </div>
 
 
-                                <div class="form-group">
-                                    <label for="set[craftable]" class="control-label col-md-2">Craftable</label>
-                                    <div class="col-md-10">
-                                        <input type="checkbox" id="set[craftable]" name="set[craftable]" class="checkbox" value="1" {{$set->craftable == 1 ? 'checked="checked"' : ''}}>
+                                @if($set->setTypeEnum == \App\Enum\SetType::CRAFTED)
+                                    <div class="form-group">
+                                        <label for="set[traitNeeded]" class="control-label col-md-2">Trait</label>
+                                        <div class="col-md-2">
+                                            <input id="set[traitNeeded]" name="set[traitNeeded]" value="{{$set->traitNeeded}}" class="form-control">
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
 
-                                <div class="form-group">
-                                    <label for="set[traitNeeded]" class="control-label col-md-2">Trait</label>
-                                    <div class="col-md-2">
-                                        <input id="set[traitNeeded]" name="set[traitNeeded]" value="{{$set->traitNeeded}}" class="form-control">
+                                @if($set->setTypeEnum == \App\Enum\SetType::MONSTER)
+                                    <div class="form-group">
+                                        <label for="set_meta[monster]" class="control-label col-md-2">Monster chest</label>
+                                        <div class="col-md-5">
+                                            <select name="set_meta[monster]" id="set_meta[monster]" class="form-control">
+                                                <option>Choose a pledge chest</option>
+                                                @foreach(\App\Enum\PledgeChest::all() as $pledgeChest)
+                                                    <option value="{{$pledgeChest}}" {{(!is_null($set->meta->where('key', 'monster_chest')->first()) and $pledgeChest == $set->meta->where('key', 'monster_chest')->first()->value) ? 'selected="selected"' : ''}}>{{trans('eso.pledgeChest.' . $pledgeChest)}}</option>
+                                                @endforeach
+                                            </select>
+
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
+
+
                             </div>
                             <hr>
                             <div class="form-content">

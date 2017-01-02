@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use HeppyKarlsson\Meta\Traits\Meta;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -10,9 +11,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null traitNeeded
  * @property string|null description
  * @property mixed id
+ * @property int setTypeEnum
  */
 class Set extends Model
 {
+    use Meta;
 
     protected $fillable = [
 

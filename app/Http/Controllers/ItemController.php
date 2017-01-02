@@ -6,6 +6,7 @@ use App\Model\Item;
 use App\Model\Set;
 use App\Model\ZoneSet;
 use App\Objects\Zones;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -19,21 +20,24 @@ class ItemController
 
     public function show(Item $item) {
         $user = Auth::user();
-        $userItem = $user->items->where('id', $item->id)->first();
-        if($userItem) {
-            $item = $userItem;
+        $items = new Collection();
+
+        if($user) {
+            $userItem = $user->items->where('id', $item->id)->first();
+            if ($userItem) {
+                $item = $userItem;
+            }
+
+            $favourites = $user->favouriteSets
+                ->pluck('setId')
+                ->toArray();
+
+            $items = $user->items
+                ->where('setId', $item->setId);
         }
 
         $item->load('set.bonuses');
-
         $set = $item->set;
-
-        $favourites = $user->favouriteSets
-            ->pluck('setId')
-            ->toArray();
-
-        $items = $user->items
-            ->where('setId', $set->id);
 
         return view('item.show', compact('item', 'favourites', 'items', 'set'));
     }

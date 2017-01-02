@@ -11,7 +11,6 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <h1>{{$item->name}}</h1>
-                        <h1>UNDER DEVELOPMENT</h1>
                         @include('item.itembox')
                     </div>
                 </div>

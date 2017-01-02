@@ -8,6 +8,7 @@ use App\Model\Set;
 use App\Model\SetBonus;
 use App\Model\UserSetFavourite;
 use App\Model\ZoneSet;
+use HeppyKarlsson\Meta\Service\MetaService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -76,7 +77,7 @@ class SetController
         }
         $sets = Set::with('bonuses')->where('setTypeEnum', SetType::MONSTER)->orderBy('name')->get();
 
-        return view('sets.my_sets', compact('sets', 'items', 'favourites', 'user'));
+        return view('sets.monster_sets', compact('sets', 'items', 'favourites', 'user'));
     }
 
     public function craftable() {
@@ -196,6 +197,11 @@ class SetController
             }
         }
 
+        $set_meta = $request->get('set_meta');
+        if($set->setTypeEnum == SetType::MONSTER and isset($set_meta['monster'])) {
+            $ms = new MetaService();
+            $ms->update($set, 'monster_chest', $set_meta['monster']);
+        }
 
         return redirect()->back()->with('updated', true);
     }

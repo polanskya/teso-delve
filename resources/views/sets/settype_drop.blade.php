@@ -17,11 +17,9 @@
     <li>Regular monsters throughout Tamriel have a small chance of dropping any item set piece that can drop in that zone.</li>
 @elseif($set->setTypeEnum == \App\Enum\SetType::MONSTER)
     <li>Monster Masks will drop 100% of the time from the final boss in Veteran mode.</li>
-    <li>
-        Shoulders have a chance to drop from Pledge
-
-        Chest using Pledge Key.
-    </li>
+    @if(!is_null($set->meta->where('key', 'monster_chest')->first()))
+        <li>Shoulders have a chance to drop from <u><strong>{{ trans('eso.pledgeChest.'.$set->meta->where('key', 'monster_chest')->first()->value) }}'s</strong></u> Chest using Pledge Key.</li>
+    @endif
 @elseif($set->setTypeEnum == \App\Enum\SetType::DUNGEON)
     <li>Dungeon bosses and mini bosses will now drop a set piece 100% of the time.</li>
     <li>Mini bosses will drop either a hand, waist, or feet set piece.</li>
