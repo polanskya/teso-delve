@@ -26,14 +26,14 @@ if($user) {
         <br>
         {{$set->traitNeeded}} traits needed
     </td>
-    <td>
+    <td colspan="4">
         <ul class="list-unstyled setbonus-list">
         @foreach($set->bonuses as $bonus)
             <li>@include('sets.setbonus', ['description' => $bonus->description])</li>
         @endforeach
         </ul>
     </td>
-    <td colspan="4">
+    <td colspan="1">
         <div class="btn-group pull-right" role="group" aria-label="...">
             @if($user)
                 @if(Gate::allows('update', $set))
