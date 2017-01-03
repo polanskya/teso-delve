@@ -4,23 +4,22 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <link rel="icon" type="image/png" href="/gfx/ON-mapicon-Delve.png" />
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>
-        @yield('meta-title')
-        @if(array_key_exists('meta-title', View::getSections()))
-         -
-        @endif
-        {{ config('app.name', 'Laravel') }}</title>
+        @section('meta-title')
+            {{config('app.name', 'Laravel')}}
+        @show
+    </title>
 
     <!-- Styles -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="/css/spin.css" rel="stylesheet">
     <link href="/css/lib.min.css" rel="stylesheet">
     <link href="/css/app.css" rel="stylesheet">
-    @yield('stylesheet')
+@yield('stylesheet')
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([

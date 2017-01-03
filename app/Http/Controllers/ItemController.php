@@ -44,7 +44,10 @@ class ItemController
 
     public function ajaxShow(Item $item) {
         $set = $item->set;
-        $items = Auth::user()->items;
+        $items = new Collection();
+        if(Auth::check()) {
+            $items = Auth::user()->items;
+        }
         return view('item.itembox', compact('item', 'set', 'items'));
     }
 

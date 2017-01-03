@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('meta-title')
-    {{trans('enums.CraftingType.' . $caftingTypeEnum)}} crafting for {{$character->name}}
+    {{trans('enums.CraftingType.' . $caftingTypeEnum)}} crafting for {{$character->name}} - @parent
 @endsection
 
 @section('content')

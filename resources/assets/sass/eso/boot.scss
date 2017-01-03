@@ -14,6 +14,19 @@ body {
   color: lighten(#5c5c5c, 5%);
 }
 
+.betaLogo {
+  background-color: red;
+  position: absolute;
+  margin-bottom: -32px;
+  margin-top: 9px;
+  margin-left: -29px;
+  z-index: 2;
+}
+
+.badge {
+  margin-top: -2px;
+}
+
 .no-padding {
   padding: 0px !important;
 }

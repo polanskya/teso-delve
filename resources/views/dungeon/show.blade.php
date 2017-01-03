@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('meta-title')
-    Sets found in {{$dungeon->name}}
+    Sets found in {{$dungeon->name}} - @parent
 @endsection
 
 

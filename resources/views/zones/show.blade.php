@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('meta-title')
-    Sets found in {{$zone['name']}}
+    Sets found in {{$zone['name']}} - @parent
 @endsection
 
 @section('content')

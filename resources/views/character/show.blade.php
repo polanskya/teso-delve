@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('meta-title')
-    {{$character->name}} with gear, and set bonuses
+    {{$character->name}} with gear, and set bonuses - @parent
 @endsection
 
 @section('content')

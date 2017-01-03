@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('meta-title')
+    Dungeon sets in Elder Scrolls Online - @parent
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row-fluid">
@@ -7,6 +11,7 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-body">
+                        <h1>Dungeon sets</h1>
                         @foreach($dungeons as $alliance => $zoneDungeons)
                             <table class="table table-condensed">
                                 <thead>

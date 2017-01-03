@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('meta-title')
-    {{$item->name}}
+    {{$item->name}} - @parent
 @endsection
 
 @section('content')

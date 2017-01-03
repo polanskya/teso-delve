@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('meta-title')
-    Craftable sets in Elder Scrolls Online
+    Craftable sets in Elder Scrolls Online - @parent
 @endsection
 
 @section('content')

@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('meta-title')
+    TesoDelve.com your own little delve to organize your items/sets across all your characters in Elder Scrolls Online
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row-fluid">

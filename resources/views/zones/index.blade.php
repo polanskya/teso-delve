@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('meta-title')
+Zone sets in Elder Scrolls Online - @parent
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row-fluid">
@@ -7,6 +11,7 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-body">
+                        <h1>Zones</h1>
                         @foreach($zones as $alliance => $azones)
                             <table class="table table-condensed">
                                 <thead>

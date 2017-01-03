@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('meta-title')
-   Monster sets
+   Monster sets in Elder Scrolls Online - @parent
 @endsection
 
 @section('content')

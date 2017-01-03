@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('meta-title')
-    My sets
+    My sets - @parent
 @endsection
 
 @section('content')

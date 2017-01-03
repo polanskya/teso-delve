@@ -7,6 +7,7 @@
                 <a class="current navbar-brand" href="/">
                     TESO Delve
                 </a>
+                <sup class="betaLogo label label-danger">Beta</sup>
                 <button class="action-right-sidebar-toggle navbar-toggle collapsed active" data-target="#navdbar" data-toggle="collapse" type="button" data-original-title="" title="">
                     <i class="fa fa-fw fa-align-right text-white"></i>
                 </button>
