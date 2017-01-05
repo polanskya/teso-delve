@@ -50,7 +50,7 @@ class CharacterController
         $researchLineIndex = $craftingTraits->groupBy('researchLineIndex');
 
         $craftableSets = Set::where('setTypeEnum', SetType::CRAFTED)
-            ->orderBy('traitNeeded')
+            ->with('meta')
             ->get();
 
         return view('character.crafting', compact('character', 'equippedItems', 'user', 'craftingTraits', 'researchLineIndex', 'craftableSets', 'caftingTypeEnum'));

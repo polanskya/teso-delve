@@ -15,7 +15,7 @@ class Zones
 
         /** Daggerfall Covenant **/
         7 => ['name' => "Alik'r Desert", 'Alliance' => Alliance::DAGGERFALL_COVENANT],
-        8 => ['name' => 'Bangkorai', 'Alliance' => Alliance::DAGGERFALL_COVENANT],
+        8 => ['name' => 'Bangkorai', 'Alliance' => Alliance::DAGGERFALL_COVENANT, 'image' => 'bangkorai.jpg'],
         9 => ['name' => 'Betnikh', 'Alliance' => Alliance::DAGGERFALL_COVENANT],
         10 => ['name' => 'Glenumbra', 'Alliance' => Alliance::DAGGERFALL_COVENANT],
         11 => ['name' => 'Rivenspire', 'Alliance' => Alliance::DAGGERFALL_COVENANT],

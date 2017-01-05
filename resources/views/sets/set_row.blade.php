@@ -5,8 +5,12 @@ $setCount = null;
 $isFavourite = false;
 $setItems = null;
 if($user) {
-    $setItems = $items->where('setId', $set->id);
-    $setCount = $setItems->count();
+    $setItems = isset($items[$set->id]) ? $items[$set->id] : null;
+    if(Request::has('sortBy')) {
+
+    }
+
+    $setCount = isset($setItems) ? $setItems->count() : 0;
     $isFavourite = in_array($set->id, $favourites);
 }
 ?>
@@ -44,8 +48,8 @@ if($user) {
 </tr>
 
 
-@if($user and $setItems->count() > 0)
-    @foreach($setItems->sortBy('equipType') as $item)
+@if($user and $setCount > 0)
+    @foreach($setItems as $item)
         @include('item.item_row', ['hidden' => !$isFavourite])
     @endforeach
 @else

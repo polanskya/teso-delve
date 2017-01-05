@@ -33,14 +33,15 @@
 
                                 <h4>Where to find</h4>
                                 <ul>
-                                    @foreach($set->dungeons as $dungeon)
-                                        <li><a href="{{route('dungeon.show', [$dungeon->id])}}">{{$dungeon->name}}</a></li>
-                                    @endforeach
-                                    @if($set->craftable)
-                                        <li>Craftable: {{$set->traitNeeded}} traits
+                                    @if($set->setTypeEnum == \App\Enum\SetType::DUNGEON)
+                                        @foreach($set->dungeons as $dungeon)
+                                            <li><a href="{{route('dungeon.show', [$dungeon->id])}}">{{$dungeon->name}}</a></li>
+                                        @endforeach
+                                    @elseif($set->setTypeEnum == \App\Enum\SetType::CRAFTED)
+                                        <li>Craftable: {{$set->getMeta('crafting_traits_needed')}} traits
                                             <ul>
                                                 @foreach($set->zones as $zone)
-                                                    <li>{{$zone->getZoneInfo()['name']}}</li>
+                                                    <li><a href="{{route('zone.show', [$zone->zoneId])}}">{{$zone->getZoneInfo()['name']}}</a> - {{$set->getMeta('crafting_bench_' . $zone->zoneId)}}</li>
                                                 @endforeach
                                             </ul>
                                         </li>
@@ -73,7 +74,7 @@
                             @if(Auth::check())
                                 <div class="col-md-12">
                                     <h4>Items you have</h4>
-                                    <table class="table table-condensed set-table">
+                                    <table class="table table-condensed set-table table-hover">
                                         <thead>
                                         </thead>
                                         <tbody>

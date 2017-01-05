@@ -10,6 +10,7 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-body">
+                        <h1>My characters</h1>
                         <table class="table table-condensed">
                             <thead>
                                 <tr>

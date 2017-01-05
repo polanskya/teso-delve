@@ -11,7 +11,24 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <h1>{{$zone['name']}}</h1>
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h1>{{$zone['name']}}</h1>
+                                <ul class="list-unstyled">
+                                    @foreach($dungeons as $dungeon)
+                                        <li><img src="/gfx/group-instance.png" class="icon-size"> <a href="{{route('dungeon.show', [$dungeon->id])}}">{{$dungeon->name}}</a></li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            <div class="col-md-4">
+                                @if(isset($zone['image']))
+                                    <img src="/gfx/zones/{{$zone['image']}}" class="max-width">
+                                @endif
+                            </div>
+                        </div>
+
+                        <br>
 
                         <table class="table table-condensed set-table">
                             <thead>

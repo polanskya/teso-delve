@@ -1,6 +1,22 @@
 <?php
     $routeName = Route::getCurrentRoute()->getName();
 ?>
+
+<div class="row">
+
+    <div class="col-md-6">
+        <div class="row character-name">
+            <div class="col-md-2">
+                <img title="{{trans('alliance.'.$character->allianceId)}}" src="/gfx/alliance_{{$character->allianceId}}.png">
+            </div>
+            <div class="col-md-10">
+                <h1>{{$character->name}}</h1>
+                <h3>{{trans('eso.races.'.$character->raceId.'.name')}} {{trans('eso.classes.'.$character->classId.'.name')}}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
 <ul class="nav nav-tabs">
     <li role="presentation" class="{{ $routeName == 'characters.show' ? 'active' : '' }}"><a href="{{route('characters.show', [$character->id])}}">Gear</a></li>
     <li role="presentation" class="{{ $routeName == 'character.inventory' ? 'active' : '' }}"><a href="{{route('character.inventory', [$character->id])}}">Inventory</a></li>

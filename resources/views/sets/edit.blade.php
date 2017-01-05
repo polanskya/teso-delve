@@ -49,11 +49,20 @@
 
                                 @if($set->setTypeEnum == \App\Enum\SetType::CRAFTED)
                                     <div class="form-group">
-                                        <label for="set[traitNeeded]" class="control-label col-md-2">Trait</label>
+                                        <label for="crafted_traitNeeded" class="control-label col-md-2">Trait</label>
                                         <div class="col-md-2">
-                                            <input id="set[traitNeeded]" name="set[traitNeeded]" value="{{$set->traitNeeded}}" class="form-control">
+                                            <input id="crafted_traitNeeded" name="crafted_traitNeeded" value="{{$set->getMeta('crafting_traits_needed')}}" class="form-control">
                                         </div>
                                     </div>
+
+                                    @foreach($set->zones as $zone)
+                                        <div class="form-group">
+                                            <label for="craftingBench[{{$zone->zoneId}}]" class="control-label col-md-2">{{$zonesService->getZone($zone->zoneId)['name']}}</label>
+                                            <div class="col-md-6">
+                                                <input id="craftingBench[{{$zone->zoneId}}]" name="craftingBench[{{$zone->zoneId}}]" value="{{$set->getMeta('crafting_bench_' . $zone->zoneId)}}" class="form-control">
+                                            </div>
+                                        </div>
+                                    @endforeach
                                 @endif
 
                                 @if($set->setTypeEnum == \App\Enum\SetType::MONSTER)

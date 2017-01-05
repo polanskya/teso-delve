@@ -24,13 +24,13 @@ if($user) {
             @endif
         </span>
         <br>
-        {{$set->traitNeeded}} traits needed
+        {{$set->getMeta('crafting_traits_needed')}} traits needed
     </td>
     <td colspan="4">
         <ul class="list-unstyled setbonus-list">
         @foreach($set->bonuses as $bonus)
             <li>
-                <span class="badge badge-outline badge-success">{{$bonus->bonusNumber}}</span>
+                ({{$bonus->bonusNumber}} items)
                 @include('sets.setbonus', ['description' => $bonus->description])
             </li>
         @endforeach

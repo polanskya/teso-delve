@@ -8,6 +8,7 @@ use App\Model\Set;
 use App\Model\SetBonus;
 use App\Model\UserSetFavourite;
 use App\Model\ZoneSet;
+use App\Objects\Zones;
 use HeppyKarlsson\Meta\Service\MetaService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +16,7 @@ use Illuminate\Support\Facades\Auth;
 class SetController
 {
 
-    public function mySets() {
+    public function mySets(Request $request) {
         $user = Auth::user();
         $user->load('favouriteSets', 'items.set');
 
@@ -24,20 +25,31 @@ class SetController
             ->toArray();
 
         $sets = Set::with('bonuses')
-            ->orderBy('name')
-            ->get();
+            ->orderBy('name');
 
+        if($request->has('search')) {
+            $sets->where('name', 'like', '%'.$request->get('search').'%');
+        }
+
+        $sets = $sets->get();
+
+        $characterId = $request->get('characterId');
         $items = $user->items()
-            ->orderBy('equipType')
-            ->get();
+            ->orderBy($request->has('sortBy') ? $request->get('sortBy') : 'equipType', $request->has('sort') ? $request->get('sort') : 'asc')
+            ->when($characterId, function($query) use ($characterId) {
+               return $query->where('user_items.characterId', $characterId);
+            })
+            ->get()
+            ->groupBy('setId');
 
         return view('sets.my_sets', compact('sets', 'items', 'favourites', 'user'));
     }
 
     public function edit(Set $set) {
+        $zonesService = new Zones();
         $dungeonsByAlliance = Dungeon::all()->groupBy('alliance');
         $set->load('bonuses', 'dungeons', 'zones');
-        return view('sets.edit', compact('set', 'dungeonsByAlliance'));
+        return view('sets.edit', compact('set', 'dungeonsByAlliance', 'zonesService'));
     }
 
     public function show(Set $set) {
@@ -97,7 +109,7 @@ class SetController
         }
 
         $sets = Set::with('bonuses')
-            ->where('craftable', 1)
+            ->where('setTypeEnum', SetType::CRAFTED)
             ->orderBy('name')
             ->get();
 
@@ -145,10 +157,6 @@ class SetController
     public function update(Set $set, Request $request) {
         $data = $request->get('set');
         $set->craftable = isset($data['craftable']);
-        $set->traitNeeded = null;
-        if($set->craftable) {
-            $set->traitNeeded = intval($data['traitNeeded']);
-        }
         $set->description = $data['description'];
         $set->setTypeEnum = $data['setTypeEnum'] != 0 ? intval($data['setTypeEnum']) : null;
 
@@ -199,8 +207,21 @@ class SetController
 
         $set_meta = $request->get('set_meta');
         if($set->setTypeEnum == SetType::MONSTER and isset($set_meta['monster'])) {
-            $ms = new MetaService();
-            $ms->update($set, 'monster_chest', $set_meta['monster']);
+            $set->setMeta('monster_chest', $set_meta['monster']);
+        }
+
+
+        if($set->setTypeEnum == SetType::CRAFTED) {
+
+            if($request->has('crafted_traitNeeded')) {
+                $set->setMeta('crafting_traits_needed', $request->get('crafted_traitNeeded'));
+            }
+
+            if($request->has('craftingBench')) {
+                foreach ($request->get('craftingBench') as $key => $craftingBench) {
+                    $set->setMeta('crafting_bench_' . $key, $craftingBench);
+                }
+            }
         }
 
         return redirect()->back()->with('updated', true);

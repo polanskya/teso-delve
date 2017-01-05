@@ -39,8 +39,8 @@
         </script>
     @endif
 </head>
-<body class="eso-background">
-<div id="app">
+<body class="sidebar-disabled navbar-fixed">
+<div id="app" class="main-wrap">
     @include('layouts.menu')
 
     @yield('content')

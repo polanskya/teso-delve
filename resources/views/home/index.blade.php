@@ -6,17 +6,30 @@
 
 @section('content')
     <div class="container">
-        <div class="row-fluid">
-            <div class="col-md-9">
+        <div class="row">
+            <div class="panel panel-default col-md-9">
+            @if(Auth::id() == 1)
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
+                    <div class="col-md-4">
+                        <h3>Track set items</h3>
+                        <img src="/gfx/sets-screenshot.png" style="max-width: 100%;">
+                        <p class="text-center">See a summarized view of all your items in a set, across all your characters</p>
+                    </div>
 
-                            </div>
-                        </div>
+                    <div class="col-md-4">
+                        <h3>Research timers</h3>
+                        <img src="/gfx/sets-screenshot.png" style="max-width: 100%;">
+                        <p class="text-center">Never miss your crafting research on a character again. You can now see a list on when research timers are unlocked again</p>
+                    </div>
+
+                    <div class="col-md-4">
+                        <h3>Dungeon drops</h3>
+                        <img src="/gfx/sets-screenshot.png" style="max-width: 100%;">
+                        <p class="text-center">See what dungeons drop what sets, and if the recent drop has a better trait than the one you already have</p>
                     </div>
                 </div>
+                @endif
+                &nbsp;
             </div>
 
             <div class="col-md-3">
@@ -67,16 +80,16 @@
                     </div>
 
 
-                        <div class="col-md-12 startpage-tracked">
-                            <div class="panel panel-default">
-                                <div class="panel-body text-center">
-                                    <h2 class="count">{{number_format($itemCount)}}</h2>
-                                    Items tracked
-                                    <h2 class="count">{{number_format($characterCount)}}</h2>
-                                    Characters tracked
-                                </div>
+                    <div class="col-md-12 startpage-tracked">
+                        <div class="panel panel-default">
+                            <div class="panel-body text-center">
+                                <h2 class="count">{{number_format($itemCount)}}</h2>
+                                Items tracked
+                                <h2 class="count">{{number_format($characterCount)}}</h2>
+                                Characters tracked
                             </div>
                         </div>
+                    </div>
 
                 </div>
             </div>

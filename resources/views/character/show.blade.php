@@ -4,6 +4,7 @@
     {{$character->name}} with gear, and set bonuses - @parent
 @endsection
 
+
 @section('content')
     <div class="container">
         <div class="row-fluid">
@@ -14,46 +15,9 @@
                     <div class="panel-body">
                         @include('character.tabs')
 
-                        <div class="row">
-
-                            <div class="col-md-6">
-                                <div class="row character-name">
-                                    <div class="col-md-2">
-                                        <img title="{{trans('alliance.'.$character->allianceId)}}" src="/gfx/alliance_{{$character->allianceId}}.png">
-                                    </div>
-                                    <div class="col-md-10">
-                                        <h1>{{$character->name}}</h1>
-                                        <h3>{{trans('eso.races.'.$character->raceId.'.name')}} {{trans('eso.classes.'.$character->classId.'.name')}}</h3>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    @if($character->level >= 50)
-                                        <div class="col-sm-3 text-bold">Champion: </div>
-                                        <div class="col-sm-8"><img class="icon-size" src="/gfx/champion_icon.png" class="champion-icon"> {{$character->championLevel}}</div>
-                                    @else
-                                        <div class="col-sm-3 text-bold">Level:</div>
-                                        <div class="col-sm-8">{{$character->level}}</div>
-                                    @endif
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-sm-3 text-bold">Roles:</div>
-                                    <div class="col-sm-8">{{implode(', ', $character->roles())}}</div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-sm-3 text-bold">Horse training:</div>
-                                    <div class="col-sm-8">{{$character->ridingUnlocked_at < time() ? 'Available now' : date('Y-m-d H:i:s', $character->ridingUnlocked_at)}}</div>
-                                </div>
-
-
-                            </div>
-                        </div>
-
-                        <br>
-
                         <div class="row character-equipped">
                             <div class="col-md-4 character-equipped-items">
+                                <h1>Gear</h1>
                                 <div class="row">
                                     <div class="col-md-12 text-center">
                                         @include('item.worn_image', ['equippedItem' => $equippedItems->where('pivot.slotId', \App\Enum\WornBag::HEAD)->first()])
@@ -131,6 +95,28 @@
                             </div>
 
                             <div class="col-md-8">
+
+                                <h3>Info</h3>
+                                <div class="row">
+                                    @if($character->level >= 50)
+                                        <div class="col-sm-3 text-bold">Champion: </div>
+                                        <div class="col-sm-8"><img class="icon-size" src="/gfx/champion_icon.png" class="champion-icon"> {{$character->championLevel}}</div>
+                                    @else
+                                        <div class="col-sm-3 text-bold">Level:</div>
+                                        <div class="col-sm-8">{{$character->level}}</div>
+                                    @endif
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-3 text-bold">Roles:</div>
+                                    <div class="col-sm-8">{{implode(', ', $character->roles())}}</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-3 text-bold">Horse training:</div>
+                                    <div class="col-sm-8">{{$character->ridingUnlocked_at < time() ? 'Available now' : date('Y-m-d H:i:s', $character->ridingUnlocked_at)}}</div>
+                                </div>
+
                                 <h3>Set bonuses</h3>
                                 @foreach($equippedItems->groupBy('setId') as $setId => $items)
                                     <?php
@@ -138,10 +124,12 @@
                                     ?>
 
                                     @if($set)
-                                        <p>{{$set->name}}</p>
+                                        <p>{{$set->name}} <span class="badge">{{count($items)}}/{{$set->bonuses->max('bonusNumber')}}</span></p>
                                         <ul class="setbonus-list">
                                             @foreach($set->bonuses as $bonus)
-                                                <li class="{{count($items) >= $bonus->bonusNumber ? 'text-bold' : ''}}">({{$bonus->bonusNumber}} items) @include('sets.setbonus', ['description' => $bonus->description])</li>
+                                                @if(count($items) >= $bonus->bonusNumber)
+                                                    <li>@include('sets.setbonus', ['description' => $bonus->description])</li>
+                                                @endif
                                             @endforeach
                                         </ul>
                                     @endif

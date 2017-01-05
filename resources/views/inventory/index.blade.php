@@ -10,24 +10,11 @@
                     <div class="panel-body">
                         @if(isset($character) and $character)
                             @include('character.tabs')
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="row character-name">
-                                        <div class="col-md-2">
-                                            <img title="{{trans('alliance.'.$character->allianceId)}}" src="/gfx/alliance_{{$character->allianceId}}.png">
-                                        </div>
-                                        <div class="col-md-10">
-                                            <h1>{{$character->name}}</h1>
-                                            <h3>{{trans('eso.races.'.$character->raceId.'.name')}} {{trans('eso.classes.'.$character->classId.'.name')}}</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         @endif
 
 
                         <div class="row col-md-6">
+                            <h1>Inventory</h1>
                             <div class="inventory col-md-12">
                                 @foreach($items as $item)
                                     <div class="item_image">

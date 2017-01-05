@@ -27,12 +27,31 @@ class DungeonController
         $favourites = null;
         $user = null;
         if (Auth::check()) {
-            $items = Auth::user()->items->load('character');
+            $items = Auth::user()->items->load('character')->groupBy('setId');
             $favourites = Auth::user()->favouriteSets->pluck('setId')->toArray();
             $user = Auth::user();
         }
 
         return view('dungeon.show', compact('dungeon', 'items', 'favourites', 'sets', 'all_sets', 'user'));
+    }
+
+    public function update(Dungeon $dungeon, Request $request) {
+
+        $data = $request->get('dungeon');
+        $dungeon->description = $data['description'];
+        $dungeon->name = $data['name'];
+        $dungeon->save();
+
+    }
+
+    public function edit(Dungeon $dungeon) {
+        $sets = $dungeon->sets;
+
+        $all_sets = Set::whereNotIn('id', $sets->pluck('id'))
+            ->orderBy('name')
+            ->get();
+
+        return view('dungeon.edit', compact('dungeon', 'sets', 'all_sets'));
     }
 
     public function addSet(Request $request, Dungeon $dungeon) {

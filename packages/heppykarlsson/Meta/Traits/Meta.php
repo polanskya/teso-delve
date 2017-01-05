@@ -1,15 +1,28 @@
 <?php namespace HeppyKarlsson\Meta\Traits;
 
+use HeppyKarlsson\Meta\Model\Meta as MetaModel;
+
 trait Meta
 {
 
     public function meta() {
-//        $parent = get_called_class();
-        return $this->morphMany(\HeppyKarlsson\Meta\Model\Meta::class, 'metable');
+        return $this->morphMany(MetaModel::class, 'metable');
     }
 
     public function getMeta($key) {
-        return $this->meta->where('key', $key)->first();
+        $meta = $this->meta->where('key', $key)->first();
+
+        return is_null($meta) ? null : $meta->value;
+    }
+
+    public function setMeta($key, $value) {
+        $meta = $this->meta->where('key', $key)->first();
+        if(is_null($meta)) {
+            $meta = new MetaModel();
+        }
+        $meta->key = $key;
+        $meta->value = $value;
+        $this->meta()->save($meta);
     }
 
 }

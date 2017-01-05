@@ -12,7 +12,17 @@
             <div class="col-md-9">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <h1>{{$dungeon->name}}</h1>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h1>{{$dungeon->name}}</h1>
+                            </div>
+                            <div class="col-sm-6">
+                                <div role="group" aria-label="" class="btn-group pull-right">
+                                    <a href="{{route('dungeon.edit', [$dungeon->id])}}" class="btn btn-default btn-xs"><i aria-hidden="true" class="fa fa-pencil"></i></a>
+                                </div>
+                            </div>
+                        </div>
                         <table class="table table-condensed set-table">
                             <thead>
                             </thead>

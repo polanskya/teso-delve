@@ -14,26 +14,12 @@
                     <div class="panel-body">
                         @include('character.tabs')
 
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="row character-name">
-                                    <div class="col-md-2">
-                                        <img title="{{trans('alliance.'.$character->allianceId)}}" src="/gfx/alliance_{{$character->allianceId}}.png">
-                                    </div>
-                                    <div class="col-md-10">
-                                        <h1>{{$character->name}}</h1>
-                                        <h3>{{trans('eso.races.'.$character->raceId.'.name')}} {{trans('eso.classes.'.$character->classId.'.name')}}</h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                         <h3>{{trans('enums.CraftingType.' . $caftingTypeEnum)}}</h3>
 
                         @if($craftingTraits->count() == 0)
                             <div class="text-center">Crafting export not found<br> Please upload a TesoDelve dump with this character.</div>
                         @else
-                            <table class="table table-condensed">
+                            <table class="table table-condensed table-hover">
                                 <thead>
                                 <th>Trait</th>
                                 @foreach($researchLineIndex as $key => $researchLineIndexNumber)
@@ -64,7 +50,7 @@
                                     <tr>
                                         <td><span class="set-hover" setId="{{$set->id}}"><a href="{{route('set.show', [$set->id])}}">{{$set->name}}</a></span></td>
                                         @foreach($researchLineIndex as $key => $researchLineIndexNumber)
-                                            <td class="text-center">{!! $researchLineIndexNumber->where('isKnown', 1)->count() >= $set->traitNeeded ? '<i class="fa fa-check"></i>' : '' !!}</td>
+                                            <td class="text-center">{!! $researchLineIndexNumber->where('isKnown', 1)->count() >= $set->getMeta('crafting_traits_needed') ? '<i class="fa fa-check"></i>' : '' !!}</td>
                                         @endforeach
                                     </tr>
                                 @endforeach

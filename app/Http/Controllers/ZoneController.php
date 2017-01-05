@@ -23,17 +23,18 @@ class ZoneController
         $items = null;
         $favourites = null;
         if($user) {
-            $items = $user->items->load('character');
+            $items = $user->items->load('character')->groupBy('setId');
             $favourites = $user->favouriteSets->pluck('setId')->toArray();
         }
 
         $zoneSets = ZoneSet::where('zoneId', $zoneId)->get();
+        $dungeons = Dungeon::where('zone', $zoneId)->orderBy('type')->get();
         $sets = Set::whereIn('id', $zoneSets->pluck('setId'))->get();
         $z = new Zones();
 
         $zone = $z->getZone($zoneId);
 
-        return view('zones.show', compact('zone', 'items', 'favourites', 'sets', 'all_sets', 'user'));
+        return view('zones.show', compact('zone', 'items', 'favourites', 'sets', 'all_sets', 'user', 'dungeons'));
     }
 
 }
