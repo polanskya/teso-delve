@@ -52,6 +52,10 @@ class Character extends Model
         return $this->craftingTraits->where('researchDone_at', '>', Carbon::now())->where('craftingTypeEnum', $craftingType)->min('researchDone_at');
     }
 
+    public function itemStyles() {
+        return $this->hasMany(CharacterItemStyle::class, 'characterId', 'id');
+    }
+
     public function roles() {
         $roles = [];
 

@@ -20,9 +20,11 @@ include('admin.php');
 Route::get('/import-data', 'ImportController@import');
 Route::get('/export', 'ImportController@export');
 
+Route::get('/esoui/art/icons/{image}', 'EsouiController@image');
 
 Route::get('/character/{character}', 'CharacterController@show')->name('characters.show');
 Route::get('/character/{character}/crafting/{craftingTypeEnum}', 'CharacterController@craftingResearch')->name('character.crafting');
+Route::get('/character/{character}/motifs', 'CharacterController@itemStyles')->name('character.itemstyles');
 Route::get('/characters', 'CharacterController@index')->name('characters.index')->middleware('auth');;
 
 Route::get('/character/{character}/inventory', 'CharacterController@inventory')->name('character.inventory')->middleware('auth');;

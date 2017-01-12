@@ -3,9 +3,12 @@
 
 use App\Enum\BagType;
 use App\Enum\CraftingType;
+use App\Enum\ItemStyleChapter;
 use App\Model\Character;
+use App\Model\CharacterItemStyle;
 use App\Model\CraftingTrait;
 use App\Model\Item;
+use App\Model\ItemStyle;
 use App\Model\UserItem;
 use Carbon\Carbon;
 use HeppyKarlsson\Meta\Service\MetaService;
@@ -18,7 +21,7 @@ class EsoImport
     private $items = null;
 
     public function import($file_path) {
-//        Auth::user()->items()->delete();
+        set_time_limit(120);
         UserItem::where('userId', Auth::id())->delete();
         echo "Importing<br>";
         $file = fopen($file_path, 'r');
@@ -43,6 +46,9 @@ class EsoImport
             throw new \Exception('File couldnt be opened');
         }
 
+        foreach($lines as $line) {
+            $this->importStyles($line);
+        }
 
         foreach($lines as $line) {
             $this->importCharacter($line);
@@ -53,7 +59,6 @@ class EsoImport
         foreach($lines as $line) {
             $this->importSmithing($line);
         }
-//        die();
 
         foreach($lines as $line) {
             $this->importItem($line);
@@ -64,13 +69,52 @@ class EsoImport
 
     }
 
+    public function importStyles($line) {
+        if(stripos($line, 'ITEMSTYLE:') === false) {
+            return false;
+        }
+
+        $data = explode(';', $line);
+        $externalId = intval($data[5]);
+        $itemStyle = ItemStyle::where('externalId', $externalId)->first();
+
+        if(is_null($itemStyle)) {
+            $itemStyle = new ItemStyle();
+            $itemStyle->externalId = $externalId;
+            $itemStyle->name = '';
+            $itemStyle->image = $data[4];
+            $itemStyle->material = $data[3];
+            $itemStyle->save();
+        }
+
+        $character = Character::where('externalId', $data[1])->first();
+        if(is_null($character)) {
+            return true;
+        }
+
+        $chapterKnown = explode('-', $data[7]);
+        $chapters = ItemStyleChapter::order();
+
+        foreach($chapterKnown as $key => $known) {
+            if(stripos($known, 'true') !== false) {
+                $characterItemStyle = CharacterItemStyle::firstOrNew([
+                    'characterId' => $character->id,
+                    'itemStyleId' => $itemStyle->id,
+                    'itemStyleChapterEnum' => $chapters[$key],
+                    'isKnown' => 1,
+                ]);
+
+                $characterItemStyle->save();
+            }
+        }
+    }
+
     public function importSmithing($line) {
         if(stripos($line, 'SMITHING:') === false) {
             return false;
         }
 
         $info = explode(';', $line);
-//        dump($info);
         $character = Auth::user()->characters->where('externalId', $info[1])->first();
         $smithingType = intval($info[3]);
 
@@ -80,7 +124,6 @@ class EsoImport
             ->where('traitIndex', intval($info[5]))
             ->first();
 
-//        dd($info);
 
         if(is_null($craftingTrait)) {
             $craftingTrait = new CraftingTrait();
@@ -134,11 +177,6 @@ class EsoImport
         $character->userId = Auth::user()->id;
         $character->deleted_at = null;
         $character->currency = intval($properties[12]);
-
-
-//        if($character->externalId == '8798292061724666') {
-//            dd($properties);
-//        }
 
         if(isset($properties[13])) {
             $smithingSkills = explode('-', $properties[13]);
@@ -194,18 +232,26 @@ class EsoImport
         }
 
         if(isset($properties[23])) {
-            $item = Item::where('uniqueId', $properties[0])
-                ->where('trait', $properties[2])
-                ->where('quality', $properties[5])
+            $item = Item::where('name', trim($properties[1]))
+                ->where('trait', intval($properties[2]))
+                ->where('quality', intval($properties[5]))
+                ->where('equipType', intval($properties[3]))
+                ->where('armorType', intval($properties[6]))
+                ->where('type', intval($properties[10]))
+                ->where('weaponType', intval($properties[13]))
+                ->where('enchant', trim($properties[8]))
+                ->where('itemValue', intval($properties[22]))
+                ->where('level', intval($properties[12]))
+                ->where('championLevel', intval($properties[11]))
                 ->first();
 
             if(!$item) {
                 $item = new Item();
                 $item->uniqueId = $properties[0];
-                $item->name = $properties[1];
-                $item->equipType = $properties[3];
-                $item->armorType = $properties[6];
-                $item->quality = $properties[5];
+                $item->name = trim($properties[1]);
+                $item->equipType = intval($properties[3]);
+                $item->armorType = intval($properties[6]);
+                $item->quality = intval($properties[5]);
                 $item->icon = $properties[9];
                 $item->type = intval($properties[10]);
                 $item->championLevel = intval($properties[11]);

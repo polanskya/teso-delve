@@ -6,6 +6,7 @@ use App\Enum\CraftingType;
 use App\Enum\EquipType;
 use App\Enum\SetType;
 use App\Model\Character;
+use App\Model\ItemStyle;
 use App\Model\Set;
 use App\Model\UserItem;
 use HeppyKarlsson\Meta\Model\Meta;
@@ -33,6 +34,13 @@ class CharacterController
             ->get();
 
         return view('character.index', compact('characters'));
+    }
+
+    public function itemStyles(Character $character) {
+        $knownItemStyles = $character->itemStyles;
+        $itemStyles = ItemStyle::where('craftable', 1)->get();
+
+        return view('character.itemStyles', compact('character', 'knownItemStyles', 'itemStyles'));
     }
 
     public function craftingResearch(Character $character, $caftingTypeEnum) {

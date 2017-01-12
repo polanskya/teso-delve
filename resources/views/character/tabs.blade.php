@@ -27,6 +27,7 @@
             Crafting <span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
+            <li><a href="{{route('character.itemstyles', [$character->id])}}">Motifs</a></li>
             <li><a href="{{route('character.crafting', [$character->id, \App\Enum\CraftingType::BLACKSMITHING])}}">Blacksmithing</a></li>
             <li><a href="{{route('character.crafting', [$character->id, \App\Enum\CraftingType::CLOTHIER])}}">Clothier</a></li>
             <li><a href="{{route('character.crafting', [$character->id, \App\Enum\CraftingType::WOODWORKING])}}">Woodworking</a></li>
