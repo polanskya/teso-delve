@@ -1,7 +1,9 @@
 <?php namespace App\Http\Controllers\Admin;
 
 use App\Enum\BagType;
+use App\Enum\ItemStyleChapter;
 use App\Http\Controllers\Controller;
+use App\Model\Item;
 use App\Model\ItemStyle;
 use App\User;
 use Illuminate\Http\Request;
@@ -12,7 +14,10 @@ class CraftingController extends Controller
 
     public function itemStyles() {
         $itemStyles = ItemStyle::all();
-        return view('admin.crafting.itemStyles', compact('itemStyles'));
+        $chapters = ItemStyleChapter::order();
+        $motifs = Item::where('type', 8)->orderBy('name')->get();
+
+        return view('admin.crafting.itemStyles', compact('itemStyles', 'chapters', 'motifs'));
     }
 
     public function updateStyles(Request $request) {

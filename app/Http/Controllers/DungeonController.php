@@ -15,8 +15,9 @@ class DungeonController
         return view('dungeon.index', compact('dungeons', 'items'));
     }
 
-    public function show(Dungeon $dungeon)
+    public function show($dungeon)
     {
+        $dungeon = Dungeon::findBySlugOrFail($dungeon);
         $sets = $dungeon->sets;
 
         $all_sets = Set::whereNotIn('id', $sets->pluck('id'))
@@ -57,7 +58,7 @@ class DungeonController
     public function addSet(Request $request, Dungeon $dungeon) {
         $setId = $request->get('setId');
         $dungeon->sets()->attach($setId);
-        return redirect()->route('dungeon.show', [$dungeon->id]);
+        return redirect()->route('dungeon.show', [$dungeon->slug]);
     }
 
 }

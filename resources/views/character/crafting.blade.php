@@ -48,7 +48,7 @@
 
                                 @foreach($craftableSets as $set)
                                     <tr>
-                                        <td><span class="set-hover" setId="{{$set->id}}"><a href="{{route('set.show', [$set->id])}}">{{$set->name}}</a></span></td>
+                                        <td><span class="set-hover" setId="{{$set->id}}"><a href="{{route('set.show', [$set->slug])}}">{{$set->name}}</a></span></td>
                                         @foreach($researchLineIndex as $key => $researchLineIndexNumber)
                                             <td class="text-center">{!! $researchLineIndexNumber->where('isKnown', 1)->count() >= $set->getMeta('crafting_traits_needed') ? '<i class="fa fa-check"></i>' : '' !!}</td>
                                         @endforeach

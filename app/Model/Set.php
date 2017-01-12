@@ -2,6 +2,8 @@
 
 namespace App\Model;
 
+use Cviebrock\EloquentSluggable\Sluggable;
+use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use HeppyKarlsson\Meta\Traits\Meta;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,11 +17,25 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Set extends Model
 {
-    use Meta;
+    use Meta,
+        Sluggable,
+        SluggableScopeHelpers;
 
     protected $fillable = [
 
     ];
+
+    public function sluggable() {
+        return [
+            'slug' => [
+                'source' => 'nameSanitized'
+            ]
+        ];
+    }
+
+    public function getNameSanitizedAttribute() {
+        return str_ireplace("'", '', $this->name);
+    }
 
     public function bonuses() {
        return $this->hasMany(SetBonus::class, 'setId');

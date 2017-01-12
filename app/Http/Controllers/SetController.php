@@ -9,6 +9,7 @@ use App\Model\SetBonus;
 use App\Model\UserSetFavourite;
 use App\Model\ZoneSet;
 use App\Objects\Zones;
+use Carbon\Carbon;
 use HeppyKarlsson\Meta\Service\MetaService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,6 +34,13 @@ class SetController
 
         $sets = $sets->get();
 
+
+        foreach($sets as $set) {
+            $set->updated_at = Carbon::now();
+            $set->save();
+        }
+
+
         $characterId = $request->get('characterId');
         $items = $user->items()
             ->orderBy($request->has('sortBy') ? $request->get('sortBy') : 'equipType', $request->has('sort') ? $request->get('sort') : 'asc')
@@ -45,14 +53,16 @@ class SetController
         return view('sets.my_sets', compact('sets', 'items', 'favourites', 'user'));
     }
 
-    public function edit(Set $set) {
+    public function edit($set) {
+        $set = Set::findBySlugOrFail($set);
         $zonesService = new Zones();
         $dungeonsByAlliance = Dungeon::all()->groupBy('alliance');
         $set->load('bonuses', 'dungeons', 'zones');
         return view('sets.edit', compact('set', 'dungeonsByAlliance', 'zonesService'));
     }
 
-    public function show(Set $set) {
+    public function show($set) {
+        $set = Set::findBySlugOrFail($set);
 
         $user = null;
         $items = null;
@@ -142,7 +152,6 @@ class SetController
             $favourites = $user->favouriteSets
                 ->pluck('setId')
                 ->toArray();
-
 
             $items = $user->items
                 ->where('setId', $set->id)

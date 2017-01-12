@@ -52,24 +52,24 @@
                                 @foreach($dailyPledges as $key => $dailyPledge)
                                     <h4>{{$key == 0 ? 'Todays pledges' : 'Tomorrows pledges' }}</h4>
                                     <ul class="list-unstyled">
-                                        <li><a href="{{route('dungeon.show', [$dailyPledge->pledge1])}}">{{$dailyPledge->firstPledge->name}}</a>
+                                        <li><a href="{{route('dungeon.show', [$dailyPledge->firstPledge->slug])}}">{{$dailyPledge->firstPledge->name}}</a>
                                             <ul>
                                                 @foreach($dailyPledge->firstPledge->sets as $set)
-                                                    <li><div class="set-hover" setId="{{$set->id}}"><a href="{{route('set.show', [$set->id])}}">{{$set->name}}</a></div></li>
+                                                    <li><div class="set-hover" setId="{{$set->id}}"><a href="{{route('set.show', [$set->slug])}}">{{$set->name}}</a></div></li>
                                                 @endforeach
                                             </ul>
                                         </li>
-                                        <li><a href="{{route('dungeon.show', [$dailyPledge->pledge2])}}">{{$dailyPledge->secondPledge->name}}</a>
+                                        <li><a href="{{route('dungeon.show', [$dailyPledge->secondPledge->slug])}}">{{$dailyPledge->secondPledge->name}}</a>
                                             <ul>
                                                 @foreach($dailyPledge->secondPledge->sets as $set)
-                                                    <li><div class="set-hover" setId="{{$set->id}}"><a href="{{route('set.show', [$set->id])}}">{{$set->name}}</a></div></li>
+                                                    <li><div class="set-hover" setId="{{$set->id}}"><a href="{{route('set.show', [$set->slug])}}">{{$set->name}}</a></div></li>
                                                 @endforeach
                                             </ul>
                                         </li>
-                                        <li><a href="{{route('dungeon.show', [$dailyPledge->pledge3])}}">{{$dailyPledge->thirdPledge->name}}</a>
+                                        <li><a href="{{route('dungeon.show', [$dailyPledge->thirdPledge->slug])}}">{{$dailyPledge->thirdPledge->name}}</a>
                                             <ul>
                                                 @foreach($dailyPledge->thirdPledge->sets as $set)
-                                                    <li><div class="set-hover" setId="{{$set->id}}"><a href="{{route('set.show', [$set->id])}}">{{$set->name}}</a></div></li>
+                                                    <li><div class="set-hover" setId="{{$set->id}}"><a href="{{route('set.show', [$set->slug])}}">{{$set->name}}</a></div></li>
                                                 @endforeach
                                             </ul>
                                         </li>

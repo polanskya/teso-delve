@@ -88,6 +88,7 @@ return [
         ]
     ],
     'styleItemChapter' => [
+        \App\Enum\ItemStyleChapter::ALL => ['image' => null, 'self' => 'All'],
         \App\Enum\ItemStyleChapter::AXES => ['image' => '/esoui/art/icons/gear_breton_1haxe_a.png', 'self' => 'Axes'],
         \App\Enum\ItemStyleChapter::SWORDS => ['image' => '/esoui/art/icons/gear_breton_1hsword_a.png', 'self' => 'Swords'],
         \App\Enum\ItemStyleChapter::MACES => ['image' => '/esoui/art/icons/gear_breton_1hsword_a.png', 'self' => 'Maces'],

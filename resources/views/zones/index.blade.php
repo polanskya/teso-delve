@@ -24,7 +24,7 @@ Zone sets in Elder Scrolls Online - @parent
                                 @foreach($azones as $zoneId => $z)
                                     <tr>
                                         <td></td>
-                                        <td><a href="{{route('zone.show', [$zoneId])}}">{{$z['name']}}</a></td>
+                                        <td><a href="{{route('zone.show', [$z['slug']])}}">{{$z['name']}}</a></td>
                                     </tr>
                                 @endforeach
                                 </tbody>

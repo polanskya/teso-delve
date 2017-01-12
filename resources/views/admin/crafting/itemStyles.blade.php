@@ -28,6 +28,23 @@
                                         <td><input type="text" value="{{$itemStyle->name}}" class="form-control" id="itemStyle[{{$itemStyle->id}}][name]" name="itemStyle[{{$itemStyle->id}}][name]"></td>
                                         <td class="min-width"><img class="icon-size" src="{{$itemStyle->image}}" title="{{$itemStyle->material}}"></td>
                                     </tr>
+                                        @foreach($chapters as $chapter)
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td colspan="3">
+                                                    @lang('enums.styleItemChapter.' . $chapter . '.self')
+                                                    <select class="form-control">
+                                                        <option>Choose motif</option>
+                                                        @foreach($motifs as $motif)
+                                                            <option value="{{$motif->id}}">{{$motif->name}}</option>
+                                                        @endforeach
+                                                    </select>
+
+                                                </td>
+                                            </tr>
+                                        @endforeach
+
                                 @endforeach
                                 <tr>
                                     <td class="text-right" colspan="4">

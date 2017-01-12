@@ -26,8 +26,8 @@ $(document).ready(function() {
             });
         }
 
-        $('.itemBox').hide();
-        $('.setbox').hide();
+        $('.item-hover .itemBox').hide();
+        $('.set-hover .setbox').hide();
         setHover.find('.setbox').show();
 
 

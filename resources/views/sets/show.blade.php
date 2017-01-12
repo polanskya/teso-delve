@@ -14,7 +14,7 @@
                         <div class="btn-group pull-right" role="group" aria-label="...">
                             @if($user)
                                 @if(Gate::allows('update', $set))
-                                    <a href="{{route('set.edit', [$set->id])}}" class="btn btn-default btn-xs"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                    <a href="{{route('set.edit', [$set->slug])}}" class="btn btn-default btn-xs"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                 @endif
                                 @if($isFavourite)
                                     <a href="{{route('set.favourite', [$set->id])}}" class="btn btn-default btn-xs setFavourite"><i class="fa fa-star text-legendary favouriteIcon" aria-hidden="true"></i></a>
@@ -35,20 +35,20 @@
                                 <ul>
                                     @if($set->setTypeEnum == \App\Enum\SetType::DUNGEON)
                                         @foreach($set->dungeons as $dungeon)
-                                            <li><a href="{{route('dungeon.show', [$dungeon->id])}}">{{$dungeon->name}}</a></li>
+                                            <li><a href="{{route('dungeon.show', [$dungeon->slug])}}">{{$dungeon->name}}</a></li>
                                         @endforeach
                                     @elseif($set->setTypeEnum == \App\Enum\SetType::CRAFTED)
                                         <li>Craftable: {{$set->getMeta('crafting_traits_needed')}} traits
                                             <ul>
                                                 @foreach($set->zones as $zone)
-                                                    <li><a href="{{route('zone.show', [$zone->zoneId])}}">{{$zone->getZoneInfo()['name']}}</a> - {{$set->getMeta('crafting_bench_' . $zone->zoneId)}}</li>
+                                                    <li><a href="{{route('zone.show', [$zone->getZoneInfo()['slug']])}}">{{$zone->getZoneInfo()['name']}}</a> - {{$set->getMeta('crafting_bench_' . $zone->zoneId)}}</li>
                                                 @endforeach
                                             </ul>
                                         </li>
 
                                     @else
                                         @foreach($set->zones as $zoneId => $zone)
-                                            <li><a href="{{route('zone.show', [$zone->zoneId])}}">{{$zone->getZoneInfo()['name']}}</a></li>
+                                            <li><a href="{{route('zone.show', [$zone->getZoneInfo()['slug']])}}">{{$zone->getZoneInfo()['name']}}</a></li>
                                         @endforeach
                                     @endif
 
