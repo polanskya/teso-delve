@@ -169,7 +169,7 @@ return [
         HeppyKarlsson\EsoImport\ServiceProvider::class,
 //        Barryvdh\Debugbar\ServiceProvider::class,
         Cviebrock\EloquentSluggable\ServiceProvider::class,
-
+        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
         //
 
         /*

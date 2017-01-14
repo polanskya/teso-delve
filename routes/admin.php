@@ -15,4 +15,6 @@ Route::group(['prefix' => 'admin', 'middleware' => $middlewares], function () {
     Route::post('crafting/motifs/{itemStyle}', 'Admin\CraftingController@updateItemStyle')->name('admin.crafting.item-style.update');
 
     Route::get('generate-slugs', 'Admin\SlugController@generateSlugs')->name('admin.generate-slugs');
+
+    Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 });
