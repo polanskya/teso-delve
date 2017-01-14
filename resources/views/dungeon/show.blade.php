@@ -19,7 +19,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div role="group" aria-label="" class="btn-group pull-right">
-                                    <a href="{{route('dungeon.edit', [$dungeon->id])}}" class="btn btn-default btn-xs"><i aria-hidden="true" class="fa fa-pencil"></i></a>
+                                    <a href="{{route('dungeon.edit', [$dungeon])}}" class="btn btn-default btn-xs"><i aria-hidden="true" class="fa fa-pencil"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -52,7 +52,7 @@
                         <div class="panel-body">
 
                             <h3>Add set to Dungeon</h3>
-                            <form method="post" action="{{route('dungeon.addSet', [$dungeon->id])}}">
+                            <form method="post" action="{{route('dungeon.addSet', [$dungeon])}}">
                                 {{method_field('PUT')}}
                                 {{csrf_field()}}
 

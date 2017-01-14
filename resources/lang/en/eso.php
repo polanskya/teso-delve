@@ -3,6 +3,7 @@
 return [
     'classes' => [
         6 => ['name' => 'Templar'],
+        2 => ['name' => 'Sorcerer'],
         3 => ['name' => 'Nightblade'],
         1 => ['name' => 'Dragonknight'],
     ],
@@ -12,7 +13,10 @@ return [
         6 => ['name' => 'Argonian'],
         5 => ['name' => 'Nord'],
         1 => ['name' => 'Breton'],
+        3 => ['name' => 'Orc'],
         8 => ['name' => 'Wood elf'],
+        2 => ['name' => 'Redguard'],
+        7 => ['name' => 'High elf'],
     ],
     'pledgeChest' => [
         \App\Enum\PledgeChest::MAJ_AL_RAGATH => 'Maj-al Ragath',

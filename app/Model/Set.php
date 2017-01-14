@@ -2,9 +2,8 @@
 
 namespace App\Model;
 
-use Cviebrock\EloquentSluggable\Sluggable;
-use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use HeppyKarlsson\Meta\Traits\Meta;
+use HeppyKarlsson\Sluggify\Traits\Sluggify;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -18,20 +17,19 @@ use Illuminate\Database\Eloquent\Model;
 class Set extends Model
 {
     use Meta,
-        Sluggable,
-        SluggableScopeHelpers;
+        Sluggify;
+
+    protected $sluggify = [
+        'slugs' => [
+            'slug' => 'name'
+        ],
+        'routeKey' => 'slug',
+    ];
 
     protected $fillable = [
 
     ];
 
-    public function sluggable() {
-        return [
-            'slug' => [
-                'source' => 'nameSanitized'
-            ]
-        ];
-    }
 
     public function getNameSanitizedAttribute() {
         return str_ireplace("'", '', $this->name);

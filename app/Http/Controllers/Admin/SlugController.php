@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Controller;
 use App\Model\Dungeon;
+use App\Model\ItemStyle;
 use App\Model\Set;
 use Carbon\Carbon;
 
@@ -13,6 +14,11 @@ class SlugController extends Controller
         foreach(Set::all() as $set) {
             $set->updated_at = Carbon::now();
             $set->save();
+        }
+
+        foreach(ItemStyle::all() as $itemStyle) {
+            $itemStyle->updated_at = Carbon::now();
+            $itemStyle->save();
         }
 
         foreach(Dungeon::all() as $dungeon) {

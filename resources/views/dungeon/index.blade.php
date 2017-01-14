@@ -24,7 +24,7 @@
                                 @foreach($zoneDungeons->sortBy('zone') as $dungeon)
                                     <tr>
                                         <td></td>
-                                        <td><a href="{{route('dungeon.show', [$dungeon->slug])}}">{{$dungeon->name}}</a></td>
+                                        <td><a href="{{route('dungeon.show', [$dungeon])}}">{{$dungeon->name}}</a></td>
                                     </tr>
                                 @endforeach
                                 </tbody>

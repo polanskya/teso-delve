@@ -17,6 +17,10 @@ class AddSlugColumn extends Migration
             $table->string('slug')->nullable()->after('id')->unique();
         });
 
+        Schema::table('itemStyles', function (Blueprint $table) {
+            $table->string('slug')->nullable()->after('id')->unique();
+        });
+
         Schema::table('dungeons', function (Blueprint $table) {
             $table->string('slug')->nullable()->after('id')->unique();
         });
@@ -34,6 +38,10 @@ class AddSlugColumn extends Migration
         });
 
         Schema::table('dungeons', function (Blueprint $table) {
+            $table->dropColumn('slug');
+        });
+
+        Schema::table('itemStyles', function (Blueprint $table) {
             $table->dropColumn('slug');
         });
     }

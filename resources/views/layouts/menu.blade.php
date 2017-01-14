@@ -104,7 +104,6 @@
                     @endif
 
 
-
                 </ul>
                 <!-- START Left Side Navbar -->
 
@@ -401,6 +400,25 @@
                             <!-- END Messages Dropdown Menu -->
 
                         </li>
+
+                        @if(Auth::user()->id == 1)
+                        <li class="dropdown">
+                            <a class="dropdown-toggle user-dropdown" data-toggle="dropdown" href="javascript: void(0)" role="button" aria-expanded="false">
+                                <span class="m-r-1">Admin</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{{route('admin.crafting.itemstyles')}}">Styles & Motifs</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('admin.users.index')}}">Users</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('admin.generate-slugs')}}">Generate slugs</a>
+                                </li>
+                            </ul>
+                        </li>
+                        @endif
 
                         <li class="dropdown">
                             <a class="dropdown-toggle user-dropdown" data-toggle="dropdown" href="javascript: void(0)" role="button" aria-expanded="false">

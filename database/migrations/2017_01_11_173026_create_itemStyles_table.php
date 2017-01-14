@@ -18,10 +18,21 @@ class CreateItemStylesTable extends Migration
             $table->string('name');
             $table->boolean('craftable')->default(0);
             $table->string('image');
-            $table->string('externalId');
+            $table->integer('externalId');
             $table->string('material')->nullable();
+            $table->text('location')->nullable();
+            $table->boolean('isHidden')->default(1);
             $table->timestamps();
         });
+
+        Schema::table('items', function (Blueprint $table) {
+            $table->integer('itemStyleId')->nullable()->after('equipType');
+        });
+
+        Schema::table('user_items', function (Blueprint $table) {
+            $table->integer('itemStyleId')->nullable()->after('uniqueId');
+        });
+
     }
 
     /**
@@ -32,5 +43,13 @@ class CreateItemStylesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('itemStyles');
+
+        Schema::table('items', function ($table) {
+            $table->dropColumn('itemStyleId');
+        });
+
+        Schema::table('user_items', function ($table) {
+            $table->dropColumn('itemStyleId');
+        });
     }
 }

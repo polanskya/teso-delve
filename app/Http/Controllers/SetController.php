@@ -53,17 +53,14 @@ class SetController
         return view('sets.my_sets', compact('sets', 'items', 'favourites', 'user'));
     }
 
-    public function edit($set) {
-        $set = Set::findBySlugOrFail($set);
+    public function edit(Set $set) {
         $zonesService = new Zones();
         $dungeonsByAlliance = Dungeon::all()->groupBy('alliance');
         $set->load('bonuses', 'dungeons', 'zones');
         return view('sets.edit', compact('set', 'dungeonsByAlliance', 'zonesService'));
     }
 
-    public function show($set) {
-        $set = Set::findBySlugOrFail($set);
-
+    public function show(Set $set) {
         $user = null;
         $items = null;
         $favourites = null;

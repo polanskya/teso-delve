@@ -231,6 +231,7 @@ class EsoImport
             $character = null;
         }
 
+
         if(isset($properties[23])) {
             $item = Item::where('name', trim($properties[1]))
                 ->where('trait', intval($properties[2]))
@@ -268,6 +269,11 @@ class EsoImport
                     $item->setItemSet($properties[4]);
                 }
 
+                if(isset($properties[25]) and intval($properties[25]) != 0) {
+                    $itemStyle = ItemStyle::where('externalId', intval($properties[25]))->first();
+                    $item->itemStyleId = isset($itemStyle->id) ? $itemStyle->id : null;
+                }
+
                 $item->save();
             }
 
@@ -283,6 +289,11 @@ class EsoImport
                 $userItem->enchantDescription = $properties[20];
                 $userItem->bagEnum = $bagType;
                 $userItem->slotId = intval($properties[23]);
+
+                if(isset($properties[25]) and intval($properties[25]) != 0) {
+                    $itemStyle = ItemStyle::where('externalId', intval($properties[25]))->first();
+                    $userItem->itemStyleId = isset($itemStyle->id) ? $itemStyle->id : null;
+                }
 
                 $userItem->equipTypeEnum = $properties[3];
                 $userItem->armorTypeEnum = $properties[6];

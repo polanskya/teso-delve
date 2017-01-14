@@ -17,9 +17,9 @@
                                     <a href="{{route('set.edit', [$set->slug])}}" class="btn btn-default btn-xs"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                 @endif
                                 @if($isFavourite)
-                                    <a href="{{route('set.favourite', [$set->id])}}" class="btn btn-default btn-xs setFavourite"><i class="fa fa-star text-legendary favouriteIcon" aria-hidden="true"></i></a>
+                                    <a href="{{route('set.favourite', [$set])}}" class="btn btn-default btn-xs setFavourite"><i class="fa fa-star text-legendary favouriteIcon" aria-hidden="true"></i></a>
                                 @else
-                                    <a href="{{route('set.favourite', [$set->id])}}" class="btn btn-default btn-xs setFavourite"><i class="fa fa-star-o favouriteIcon" aria-hidden="true"></i></a>
+                                    <a href="{{route('set.favourite', [$set])}}" class="btn btn-default btn-xs setFavourite"><i class="fa fa-star-o favouriteIcon" aria-hidden="true"></i></a>
                                 @endif
                             @endif
                         </div>
@@ -35,7 +35,7 @@
                                 <ul>
                                     @if($set->setTypeEnum == \App\Enum\SetType::DUNGEON)
                                         @foreach($set->dungeons as $dungeon)
-                                            <li><a href="{{route('dungeon.show', [$dungeon->slug])}}">{{$dungeon->name}}</a></li>
+                                            <li><a href="{{route('dungeon.show', [$dungeon])}}">{{$dungeon->name}}</a></li>
                                         @endforeach
                                     @elseif($set->setTypeEnum == \App\Enum\SetType::CRAFTED)
                                         <li>Craftable: {{$set->getMeta('crafting_traits_needed')}} traits

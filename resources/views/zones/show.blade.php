@@ -17,7 +17,7 @@
                                 <h1>{{$zone['name']}}</h1>
                                 <ul class="list-unstyled">
                                     @foreach($dungeons as $dungeon)
-                                        <li><img src="/gfx/group-instance.png" class="icon-size"> <a href="{{route('dungeon.show', [$dungeon->slug])}}">{{$dungeon->name}}</a></li>
+                                        <li><img src="/gfx/group-instance.png" class="icon-size"> <a href="{{route('dungeon.show', [$dungeon])}}">{{$dungeon->name}}</a></li>
                                     @endforeach
                                 </ul>
                             </div>

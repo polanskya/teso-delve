@@ -13,7 +13,7 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
 
-                        <form method="post" action="{{route('dungeon.update', [$dungeon->id])}}" class="form-horizontal">
+                        <form method="post" action="{{route('dungeon.update', [$dungeon])}}" class="form-horizontal">
                             {{csrf_field()}}
 
                             <div class="form-content">
@@ -51,7 +51,7 @@
                         <div class="panel-body">
 
                             <h3>Add set to Dungeon</h3>
-                            <form method="post" action="{{route('dungeon.addSet', [$dungeon->id])}}">
+                            <form method="post" action="{{route('dungeon.addSet', [$dungeon])}}">
                                 {{method_field('PUT')}}
                                 {{csrf_field()}}
 

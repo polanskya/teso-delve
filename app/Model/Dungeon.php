@@ -2,10 +2,7 @@
 
 namespace App\Model;
 
-use App\Enum\EquipType;
-use App\Enum\ItemType;
-use Cviebrock\EloquentSluggable\Sluggable;
-use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+use HeppyKarlsson\Sluggify\Traits\Sluggify;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,21 +11,16 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Dungeon extends Model
 {
+    use Sluggify;
 
-    use Sluggable,
-        SluggableScopeHelpers;
+    protected $sluggify = [
+        'slugs' => ['slug' => 'name'],
+        'routeKey' => 'slug',
+    ];
 
     protected $fillable = [
 
     ];
-
-    public function sluggable() {
-        return [
-            'slug' => [
-                'source' => 'nameSanitized'
-            ]
-        ];
-    }
 
     public function getNameSanitizedAttribute() {
         return str_ireplace("'", '', $this->name);

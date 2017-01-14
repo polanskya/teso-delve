@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <form method="POST" action="{{route('set.update', [$set->id])}}" class="form-horizontal">
+        <form method="POST" action="{{route('set.update', [$set])}}" class="form-horizontal">
             {{ csrf_field() }}
             <div class="row">
                 <div class="col-md-8">
