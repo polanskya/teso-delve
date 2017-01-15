@@ -14,6 +14,8 @@ class ItemStyle extends Model
 
     public $table = 'itemStyles';
 
-
+    public function chapters() {
+        return $this->hasMany(ItemStyleChapter::class, 'itemStyleId');
+    }
 
 }

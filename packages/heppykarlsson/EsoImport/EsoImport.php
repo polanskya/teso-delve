@@ -1,6 +1,5 @@
 <?php namespace HeppyKarlsson\EsoImport;
 
-
 use App\Enum\BagType;
 use App\Enum\CraftingType;
 use App\Enum\ItemStyleChapter;
@@ -47,26 +46,18 @@ class EsoImport
         }
 
         foreach($lines as $line) {
-            $this->importStyles($line);
-        }
-
-        foreach($lines as $line) {
             $this->importCharacter($line);
         }
 
         Auth::user()->load('characters.craftingTraits');
 
         foreach($lines as $line) {
+            $this->importStyles($line);
             $this->importSmithing($line);
-        }
-
-        foreach($lines as $line) {
             $this->importItem($line);
         }
 
-
         $this->cleanCharacters();
-
     }
 
     public function importStyles($line) {

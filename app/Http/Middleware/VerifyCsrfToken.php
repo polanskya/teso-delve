@@ -12,6 +12,7 @@ class VerifyCsrfToken extends BaseVerifier
      * @var array
      */
     protected $except = [
-        'import-data'
+        'import-data',
+        'admin/crafting/motifs/upload-images/*'
     ];
 }

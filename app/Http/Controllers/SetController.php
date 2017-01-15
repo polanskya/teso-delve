@@ -136,7 +136,8 @@ class SetController
         }
     }
 
-    public function ajaxShow(Set $set) {
+    public function ajaxShow($setId) {
+        $set = Set::find($setId);
         $user = null;
         $favourites = null;
         $items = null;

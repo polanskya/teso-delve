@@ -133,7 +133,30 @@
 
 .itemstyle-armor img {
   max-height: 250px;
-  border: 1px solid black;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+.motifs-list .item_image {
+  float: left;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+.itemstyle-armor {
+  clear: both;
+}
+
+.itemstyle-armor img {
+  max-height: 250px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+.motifs-list .item_image {
+  float: left;
+  margin-right: 5px;
+  margin-bottom: 5px;
 }
 
 body {

@@ -57,6 +57,14 @@
         </div>
         @endif
 
+        @if($item->type == 8 and !is_null($itemStyleChapter))
+            <div class="col-md-12 motif-known-by">
+                <h3>Known by</h3>
+                @foreach($characters as $character)
+                    {{$character->itemStyles->where('itemStyleChapterEnum', $itemStyleChapter->itemStyleChapterEnum)->where('itemStyleId', $itemStyleChapter->itemStyleId)->count() == 1 ? $character->name .',' : '' }}
+                @endforeach
+            </div>
+        @endif
 
         @if($item->set)
             <div class="col-md-12 text-center text-white">Part of the {{$set->name}} set (<strong>{{$items->where('setId', $set->id)->groupBy('equipType')->count()}}/{{$set->bonuses->sortBy('bonusNumber')->last()->bonusNumber or ''}}</strong> items)</div>

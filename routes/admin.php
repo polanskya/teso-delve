@@ -11,6 +11,7 @@ Route::group(['prefix' => 'admin', 'middleware' => $middlewares], function () {
 
     Route::get('crafting/motifs', 'Admin\CraftingController@itemStyles')->name('admin.crafting.itemstyles');
     Route::get('crafting/motifs/{itemStyle}', 'Admin\CraftingController@itemStyle')->name('admin.crafting.item-style.edit');
+    Route::post('crafting/motifs/upload-images/{itemStyle}', 'Admin\CraftingController@uploadImages')->name('admin.crafting.item-style.upload-images');
     Route::post('crafting/motifs', 'Admin\CraftingController@updateStyles')->name('admin.crafting.updateStyles');
     Route::post('crafting/motifs/{itemStyle}', 'Admin\CraftingController@updateItemStyle')->name('admin.crafting.item-style.update');
 

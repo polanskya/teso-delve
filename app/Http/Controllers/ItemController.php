@@ -3,6 +3,7 @@
 
 use App\Model\Dungeon;
 use App\Model\Item;
+use App\Model\ItemStyleChapter;
 use App\Model\Set;
 use App\Model\ZoneSet;
 use App\Objects\Zones;
@@ -45,10 +46,16 @@ class ItemController
     public function ajaxShow(Item $item) {
         $set = $item->set;
         $items = new Collection();
+        $itemStyleChapter = ItemStyleChapter::where('itemId', $item->id)->first();
+
         if(Auth::check()) {
+            $characters = Auth::user()->characters()
+                ->with('itemStyles')
+                ->get();
+
             $items = Auth::user()->items;
         }
-        return view('item.itembox', compact('item', 'set', 'items'));
+        return view('item.itembox', compact('item', 'set', 'items', 'characters', 'itemStyleChapter'));
     }
 
 }

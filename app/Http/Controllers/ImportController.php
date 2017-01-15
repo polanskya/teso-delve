@@ -1,13 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Heppy
- * Date: 2016-12-04
- * Time: 13:15
- */
-
-namespace App\Http\Controllers;
-
+<?php namespace App\Http\Controllers;
 
 use App\Model\Dungeon;
 use App\Model\DungeonSet;

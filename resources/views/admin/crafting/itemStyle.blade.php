@@ -1,5 +1,13 @@
 @extends('layouts.app')
 
+@section('stylesheet')
+    <link href="/css/app.css" rel="stylesheet">
+@endsection
+
+@section('javascript')
+    <script src="/js/importDropzone.js"></script>
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row-fluid">
@@ -49,14 +57,22 @@
                                             <label for="itemStyle[chapter][{{$chapter}}]" class="control-label col-md-4">@lang('enums.styleItemChapter.'.$chapter.'.self')</label>
                                             <div class="col-md-8">
                                                 <select class="form-control" name="itemStyle[chapter][{{$chapter}}]">
-                                                    <option>Select motif</option>
+                                                    <option value="">Select motif</option>
+                                                    <?php  $itemStyleChapterSelected = $chapters->where('itemStyleChapterEnum', $chapter)->first(); ?>
                                                     @foreach($motifs as $motif)
-                                                        <option value="{{$motif->id}}">{{$motif->name}}</option>
+                                                        <option {{ (!is_null($itemStyleChapterSelected) and $itemStyleChapterSelected->itemId == $motif->id)  ? 'selected="selected"' : '' }} value="{{$motif->id}}">{{$motif->name}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                         </div>
                                     @endforeach
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h3>Upload style images</h3>
+                                        <div url="{{route('admin.crafting.item-style.upload-images', [$itemStyle])}}" id="importDropzone"></div>
+                                    </div>
                                 </div>
 
                                 <div class="form-group">
@@ -65,12 +81,8 @@
                                     </div>
                                 </div>
 
-
-
                             </div>
-
                         </form>
-
                     </div>
                 </div>
             </div>

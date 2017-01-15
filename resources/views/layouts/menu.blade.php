@@ -87,6 +87,15 @@
                             </a>
                         </li>
 
+                        @if(Auth::id() == 1)
+
+                            <li>
+                                <a href="{{route('item-styles.index')}}" aria-expanded="false">
+                                    <span class="m-r-1">Styles & Motifs</span>
+                                </a>
+                            </li>
+                        @endif
+
                     @else
                         <li class="dropdown">
                             <a class="dropdown-toggle user-dropdown" data-toggle="dropdown" href="javascript: void(0)" role="button" aria-expanded="false">
