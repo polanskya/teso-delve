@@ -21,7 +21,7 @@
                             @foreach($itemStyles as $itemStyle)
                                 <tr class="input-group-sm">
                                     <td class="valign-middle"><h3 class="no-margin"><a href="{{route('item-styles.show', [$itemStyle])}}">{{$itemStyle->name}}</a></h3></td>
-                                    <td class="valign-middle">
+                                    <td class="valign-middle nowrap">
                                         @if($helmets->has($itemStyle->id))
                                             <ul class="list-inline">
                                                 @foreach($helmets->get($itemStyle->id) as $helmet)
