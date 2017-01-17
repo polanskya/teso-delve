@@ -30,6 +30,10 @@ class Character extends Model
             ->withPivot('characterId', 'uniqueId', 'bagEnum', 'slotId', 'traitEnum', 'traitDescription', 'enchant', 'enchantDescription', 'equipTypeEnum', 'armorTypeEnum', 'weaponTypeEnum', 'isLocked', 'isBound', 'isJunk', 'count');
     }
 
+    public function userItems() {
+        return $this->hasMany(UserItem::class, 'characterId');
+    }
+
     protected $fillable = [
 
     ];

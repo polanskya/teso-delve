@@ -20,7 +20,7 @@
     <link href="/css/lib.min.css" rel="stylesheet">
     <link href="/css/app.css" rel="stylesheet">
 @yield('stylesheet')
-    <!-- Scripts -->
+<!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
             'csrfToken' => csrf_token(),
@@ -39,11 +39,43 @@
         </script>
     @endif
 </head>
-<body class="eso-background">
-<div id="app">
+<body class="sidebar-disabled navbar-fixed">
+<div id="app" class="main-wrap full">
     @include('layouts.menu')
 
-    @yield('content')
+    <div class="content">
+
+        @hasSection('breadcrumbs')
+        <div class="sub-navbar sub-navbar__header-breadcrumbs">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 sub-navbar-column">
+                        <div class="sub-navbar-header">
+                            <h3>Styleguide</h3>
+                        </div>
+                        <ol class="breadcrumb navbar-text navbar-right no-bg">
+                            <li class="current-parent">
+                                <a class="current-parent" href="../index.html">
+                                    <i class="fa fa-fw fa-home"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript: void(0)">
+                                    Styleguide
+                                </a>
+                            </li>
+                            <li class="active">Styleguide</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
+
+        @yield('content')
+    </div>
+
+    @include('layouts.footer')
 </div>
 
 <!-- Scripts -->

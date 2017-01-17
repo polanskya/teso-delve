@@ -87,14 +87,11 @@
                             </a>
                         </li>
 
-                        @if(Auth::id() == 1)
-
-                            <li>
-                                <a href="{{route('item-styles.index')}}" aria-expanded="false">
-                                    <span class="m-r-1">Styles & Motifs</span>
-                                </a>
-                            </li>
-                        @endif
+                        <li>
+                            <a href="{{route('item-styles.index')}}" aria-expanded="false">
+                                <span class="m-r-1">Styles & Motifs</span>
+                            </a>
+                        </li>
 
                     @else
                         <li class="dropdown">
@@ -109,6 +106,11 @@
                                     <a href="{{route('dungeons.index')}}">Dungeons</a>
                                 </li>
                             </ul>
+                        </li>
+                        <li>
+                            <a href="{{route('item-styles.index')}}" aria-expanded="false">
+                                <span class="m-r-1">Styles & Motifs</span>
+                            </a>
                         </li>
                     @endif
 
@@ -410,23 +412,29 @@
 
                         </li>
 
-                        @if(Auth::user()->id == 1)
                         <li class="dropdown">
-                            <a class="dropdown-toggle user-dropdown" data-toggle="dropdown" href="javascript: void(0)" role="button" aria-expanded="false">
-                                <span class="m-r-1">Admin</span>
+                            <a href="{{route('contribute')}}" aria-expanded="false">
+                                <span class="m-r-1">Contribute</span>
                             </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="{{route('admin.crafting.itemstyles')}}">Styles & Motifs</a>
-                                </li>
-                                <li>
-                                    <a href="{{route('admin.users.index')}}">Users</a>
-                                </li>
-                                <li>
-                                    <a href="{{route('admin.generate-slugs')}}">Generate slugs</a>
-                                </li>
-                            </ul>
                         </li>
+
+                        @if(Auth::user()->id == 1)
+                            <li class="dropdown">
+                                <a class="dropdown-toggle user-dropdown" data-toggle="dropdown" href="javascript: void(0)" role="button" aria-expanded="false">
+                                    <span class="m-r-1">Admin</span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="{{route('admin.crafting.itemstyles')}}">Styles & Motifs</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{route('admin.users.index')}}">Users</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{route('admin.generate-slugs')}}">Generate slugs</a>
+                                    </li>
+                                </ul>
+                            </li>
                         @endif
 
                         <li class="dropdown">
@@ -438,13 +446,6 @@
                             <ul class="dropdown-menu">
                                 <li class="dropdown-header text-gray-lighter">
                                     <strong class="text-uppercase">Account</strong>
-                                </li>
-                                <li role="separator" class="divider"></li>
-                                <li>
-                                    <a href="../apps/profile-details.html">Your Profile</a>
-                                </li>
-                                <li>
-                                    <a href="../apps/profile-edit.html">Settings</a>
                                 </li>
                                 <li role="separator" class="divider"></li>
                                 <li>
@@ -465,6 +466,12 @@
                     <!-- END Right Side Navbar -->
                 @else
                     <ul class="nav navbar-nav navbar-right">
+
+                        <li class="dropdown">
+                            <a href="{{route('contribute')}}" aria-expanded="false">
+                                <span class="m-r-1">Contribute</span>
+                            </a>
+                        </li>
 
                         <li>
                             <a href="{{route('login')}}" aria-expanded="false">

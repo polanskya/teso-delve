@@ -47,7 +47,10 @@ class ImportController
     }
 
     public function index() {
-        return view('import.index');
+        $addonVersion = env('TESO_DELVE_ADDON_URL');
+        $addonVersion = explode('/', $addonVersion);
+        $addonVersion = str_ireplace('.zip', '', array_pop($addonVersion));
+        return view('import.index', compact('addonVersion'));
     }
 
 }

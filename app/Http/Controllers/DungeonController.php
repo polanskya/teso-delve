@@ -36,12 +36,13 @@ class DungeonController
     }
 
     public function update(Dungeon $dungeon, Request $request) {
-
         $data = $request->get('dungeon');
         $dungeon->description = $data['description'];
         $dungeon->name = $data['name'];
+        $dungeon->image = $data['image'];
         $dungeon->save();
 
+        return redirect()->route('dungeon.show', $dungeon);
     }
 
     public function edit(Dungeon $dungeon) {

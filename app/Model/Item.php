@@ -24,6 +24,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null level
  * @property int|null characterId
  * @property string itemLink
+ * @property string traitDescription
+ * @property string enchantDescription
+ * @property int itemValue
+ * @property int itemStyleId
  */
 class Item extends Model
 {

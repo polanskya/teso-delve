@@ -8,9 +8,9 @@
         <div class="row-fluid">
             <div class="col-md-12">
 
-                <div class="panel panel-default">
+                <div>
 
-                    <div class="panel-body">
+                    <div>
                         @include('character.tabs')
 
                         <h3>Known motifs</h3>
@@ -33,7 +33,7 @@
                             @foreach($itemStyles as $itemStyle)
                                 <tr>
                                     <td class="min-width"><img class="icon-size" title="{{$itemStyle->material}}" src="{{$itemStyle->image}}"></td>
-                                    <td class="nowrap">{{$itemStyle->name}}</td>
+                                    <td class="nowrap"><a href="{{route('item-styles.show', [$itemStyle])}}">{{$itemStyle->name}}</a></td>
                                     @foreach(\App\Enum\ItemStyleChapter::order() as $chapter)
                                         <td class="text-center"><span class="{{($knownItemStyles->where('itemStyleId', $itemStyle->id)->where('itemStyleChapterEnum', $chapter)->count() > 0) ? 'badge badge-success' : '' }}">&nbsp;</span></td>
                                     @endforeach

@@ -1,15 +1,20 @@
 .itemstyle-armor  {
   clear: both;
 
-  img {
-    max-height: 250px;
-    margin-right: 5px;
-    margin-bottom: 5px;
+  .thumbnail {
+    img {
+      max-height:250px;
+    }
+
+    float: left;
   }
 }
 
 
 .motifs-list {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  max-width: 600px;
 
   .item_image {
     float: left;

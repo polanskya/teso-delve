@@ -8,10 +8,8 @@
     <div class="container">
         <div class="row-fluid">
             <div class="col-md-12">
-
-                <div class="panel panel-default">
-
-                    <div class="panel-body">
+                <div>
+                    <div>
                         @include('character.tabs')
 
                         <h3>{{trans('enums.CraftingType.' . $caftingTypeEnum)}}</h3>

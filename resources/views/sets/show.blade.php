@@ -9,8 +9,8 @@
         <div class="row-fluid">
 
             <div class="col-md-12">
-                <div class="panel panel-default">
-                    <div class="panel-body">
+                <div class="">
+                    <div class="">
                         <div class="btn-group pull-right" role="group" aria-label="...">
                             @if($user)
                                 @if(Gate::allows('update', $set))

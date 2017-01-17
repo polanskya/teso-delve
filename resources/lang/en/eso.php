@@ -17,6 +17,7 @@ return [
         8 => ['name' => 'Wood elf'],
         2 => ['name' => 'Redguard'],
         7 => ['name' => 'High elf'],
+        4 => ['name' => 'Dunmer'],
     ],
     'pledgeChest' => [
         \App\Enum\PledgeChest::MAJ_AL_RAGATH => 'Maj-al Ragath',

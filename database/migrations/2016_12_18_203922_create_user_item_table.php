@@ -24,7 +24,7 @@ class CreateUserItemTable extends Migration
             $table->integer('traitEnum')->nullable();
             $table->string('traitDescription')->nullable();
             $table->string('enchant')->nullable();
-            $table->string('enchantDescription')->nullable();
+            $table->string('enchantDescription', 500)->nullable();
             $table->integer('equipTypeEnum')->nullable();
             $table->integer('armorTypeEnum')->nullable();
             $table->integer('weaponTypeEnum')->nullabe();
@@ -46,7 +46,7 @@ class CreateUserItemTable extends Migration
             $table->string('itemLink')->nullable()->after('uniqueId');
             $table->integer('userId')->nullable()->after('uniqueId');
             $table->string('traitDescription')->nullable()->after('trait');
-            $table->string('enchantDescription')->nullable()->after('enchant');
+            $table->string('enchantDescription', 500)->nullable()->after('enchant');
             $table->integer('itemValue')->nullable()->after('weaponType');
         });
 

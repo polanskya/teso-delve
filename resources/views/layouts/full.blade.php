@@ -20,7 +20,7 @@
     <link href="/css/lib.min.css" rel="stylesheet">
     <link href="/css/app.css" rel="stylesheet">
 @yield('stylesheet')
-    <!-- Scripts -->
+<!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
             'csrfToken' => csrf_token(),
@@ -43,7 +43,11 @@
 <div id="app" class="main-wrap">
     @include('layouts.menu')
 
-    @yield('content')
+    <div class="content">
+        @yield('content')
+    </div>
+
+    @include('layouts.footer')
 </div>
 
 <!-- Scripts -->

@@ -8,8 +8,8 @@
     <div class="container">
         <div class="row-fluid">
             <div class="col-md-12">
-                <div class="panel panel-default">
-                    <div class="panel-body">
+                <div>
+                    <div>
                         <h1>My characters</h1>
                         <table class="table table-condensed">
                             <thead>
@@ -26,6 +26,7 @@
                                     <th>Wood</th>
                                     <th>Cloth</th>
                                     <th>Horse training</th>
+                                    <th class="text-right">Inventory</th>
                                     <th class="text-right">Gold</th>
                                 </tr>
                             </thead>
@@ -48,12 +49,17 @@
                                     <td>{!! $character->canResearch(\App\Enum\CraftingType::WOODWORKING) ? '' : App\Presenter\Date::until($character->nextResearch(\App\Enum\CraftingType::WOODWORKING)) !!}</td>
                                     <td>{!! $character->canResearch(\App\Enum\CraftingType::CLOTHIER) ? '' : App\Presenter\Date::until($character->nextResearch(\App\Enum\CraftingType::CLOTHIER)) !!}</td>
                                     <td class="min-width nowrap">{!! $character->ridingUnlocked_at < time() ? 'Available' : App\Presenter\Date::until(Carbon\Carbon::createFromTimestamp($character->ridingUnlocked_at)) !!}</td>
+                                    <td class="text-right">
+                                        @if(intval($character->getMeta('bag_' . App\Enum\BagType::BACKPACK)) != 0)
+                                            <span title="Free inventory space">{{ intval($character->getMeta('bag_' . App\Enum\BagType::BACKPACK)) - $character->userItems->where('bagEnum', \App\Enum\BagType::BACKPACK)->count() }}</span>
+                                        @endif
+                                    </td>
                                     <td class="text-right">{{number_format($character->currency, 0, '.', ' ')}}</td>
                                 </tr>
                             @endforeach
                             <tfoot>
                             <tr>
-                                <td colspan="13"></td>
+                                <td colspan="14"></td>
                                 <td class="text-right">
                                     {{ number_format($characters->sum('currency'), 0, '.', ' ')}}
                                     <img class="icon-size" src="/gfx/gold.png">

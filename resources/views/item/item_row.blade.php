@@ -21,17 +21,10 @@
         @endif
     </td>
     <td class="text-right item-icons">
-        @if($item->pivot->bagEnum == \App\Enum\BagType::WORN)
-            <i class="fa fa-male" aria-hidden="true" data-toggle="tooltip" title="Item is worn"></i>
-        @endif
-        @if($item->pivot->isBound)
-            <i class="fa fa-link" aria-hidden="true" data-toggle="tooltip" title="Item is bound"></i>
-        @endif
-        @if($item->pivot->bagEnum == \App\Enum\BagType::BANK)
-            <i class="fa fa-bank" aria-hidden="true" data-toggle="tooltip" title="Item in bank"></i>
-        @endif
-        @if($item->pivot->isLocked)
-            <i class="fa fa-lock" aria-hidden="true" data-toggle="tooltip" title="Item is locked"></i>
-        @endif
+            <i class="fa fa-male {{$item->pivot->bagEnum == \App\Enum\BagType::WORN ? '' : 'color-inactive'}}" aria-hidden="true" data-toggle="tooltip" title="Item is worn"></i>
+            <i class="fa fa-link {{$item->pivot->isBound ? '' : 'color-inactive'}}" aria-hidden="true" data-toggle="tooltip" title="Item is bound"></i>
+            <i class="fa fa-bank {{$item->pivot->bagEnum == \App\Enum\BagType::BANK ? '' : 'color-inactive'}}" aria-hidden="true" data-toggle="tooltip" title="Item in bank"></i>
+            <i class="fa fa-lock {{$item->pivot->isLocked ? '' : 'color-inactive'}}" aria-hidden="true" data-toggle="tooltip" title="Item is locked"></i>
+            <i class="fa fa-trash-o {{$item->pivot->isJunk ? '' : 'color-inactive'}}" aria-hidden="true" data-toggle="tooltip" title="Item is marked as junk"></i>
     </td>
 </tr>

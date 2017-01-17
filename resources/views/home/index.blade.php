@@ -7,92 +7,94 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="panel panel-default col-md-9">
-            @if(Auth::id() == 1)
-                <div class="row">
-                    <div class="col-md-4">
-                        <h3>Track set items</h3>
-                        <img src="/gfx/sets-screenshot.png" style="max-width: 100%;">
-                        <p class="text-center">See a summarized view of all your items in a set, across all your characters</p>
-                    </div>
 
-                    <div class="col-md-4">
-                        <h3>Research timers</h3>
-                        <img src="/gfx/sets-screenshot.png" style="max-width: 100%;">
-                        <p class="text-center">Never miss your crafting research on a character again. You can now see a list on when research timers are unlocked again</p>
-                    </div>
 
-                    <div class="col-md-4">
-                        <h3>Dungeon drops</h3>
-                        <img src="/gfx/sets-screenshot.png" style="max-width: 100%;">
-                        <p class="text-center">See what dungeons drop what sets, and if the recent drop has a better trait than the one you already have</p>
+            @if(!Auth::check())
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            @include('auth.login_startpage')
+                        </div>
                     </div>
                 </div>
-                @endif
-                &nbsp;
-            </div>
+            @endif
 
-            <div class="col-md-3">
-                <div class="row">
-
-
-                    @if(!Auth::check())
-                        <div class="col-md-12">
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    @include('auth.login_form_sidebar')
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-
-                    <div class="col-md-12 dailyPledges">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                @foreach($dailyPledges as $key => $dailyPledge)
-                                    <h4>{{$key == 0 ? 'Todays pledges' : 'Tomorrows pledges' }}</h4>
-                                    <ul class="list-unstyled">
-                                        <li><a href="{{route('dungeon.show', [$dailyPledge->firstPledge])}}">{{$dailyPledge->firstPledge->name}}</a>
-                                            <ul>
-                                                @foreach($dailyPledge->firstPledge->sets as $set)
-                                                    <li><div class="set-hover" setId="{{$set->id}}"><a href="{{route('set.show', [$set])}}">{{$set->name}}</a></div></li>
-                                                @endforeach
-                                            </ul>
-                                        </li>
-                                        <li><a href="{{route('dungeon.show', [$dailyPledge->secondPledge])}}">{{$dailyPledge->secondPledge->name}}</a>
-                                            <ul>
-                                                @foreach($dailyPledge->secondPledge->sets as $set)
-                                                    <li><div class="set-hover" setId="{{$set->id}}"><a href="{{route('set.show', [$set])}}">{{$set->name}}</a></div></li>
-                                                @endforeach
-                                            </ul>
-                                        </li>
-                                        <li><a href="{{route('dungeon.show', [$dailyPledge->thirdPledge])}}">{{$dailyPledge->thirdPledge->name}}</a>
-                                            <ul>
-                                                @foreach($dailyPledge->thirdPledge->sets as $set)
-                                                    <li><div class="set-hover" setId="{{$set->id}}"><a href="{{route('set.show', [$set])}}">{{$set->name}}</a></div></li>
-                                                @endforeach
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                @endforeach
-                            </div>
-                        </div>
+            <div class="col-md-12 m-t-3 m-b-3">
+                <div class="row text-center">
+                    <div class="col-md-3">
+                        <h4>Keep track of your Gear</h4>
+                        <p>
+                            Teso-Delve.com gathers all your gear and gives you a simple overview of all your gear and where you can find it.
+                        </p>
                     </div>
 
-
-                    <div class="col-md-12 startpage-tracked">
-                        <div class="panel panel-default">
-                            <div class="panel-body text-center">
-                                <h2 class="count">{{number_format($itemCount)}}</h2>
-                                Items tracked
-                                <h2 class="count">{{number_format($characterCount)}}</h2>
-                                Characters tracked
-                            </div>
-                        </div>
+                    <div class="col-md-3">
+                        <h4>Crafting timers</h4>
+                        <p>
+                            Keep track of your crafting timers, at what time locally can I start another research again?
+                        </p>
                     </div>
 
+                    <div class="col-md-3">
+                        <h4>Star sets</h4>
+                        <p>Star sets so you easily can see what sets you're collecting in a dungeon/zone</p>
+                    </div>
+
+                    <div class="col-md-3">
+                        <h4>Character details</h4>
+                        <p>See a list of your characters with misc information like horse training, free inventory space, roles </p>
+                    </div>
                 </div>
             </div>
+
+            <div class="col-md-12">
+                <a href="/gfx/my-sets.png" class="thumbnail no-bg"><img src="/gfx/my-sets.png"></a>
+            </div>
+
+            <div id="daily-pledges-container" class="col-md-12">
+                @foreach($dailyPledges as $key => $dailyPledge)
+                    <div class="daily-day-{{$key}}">
+                        <div class="row">
+                            <h3 class="col-md-8">{{$key == 0 ? 'Todays pledges' : 'Tomorrows pledges' }}</h3>
+                            <ul class="pager col-md-4 hidden">
+                                <li class="previous"><a href="javascript: void(0)" class="show-pledge" day="0"><span aria-hidden="true">←</span></a></li>
+                                <li class="next"><a href="javascript: void(0)" class="show-pledge" day="0"><span aria-hidden="true">→</span></a></li>
+                            </ul>
+                        </div>
+
+                        <div class="row">
+                            @include('dungeon.pledge-box', ['dungeon' => $dailyPledge->firstPledge])
+                            @include('dungeon.pledge-box', ['dungeon' => $dailyPledge->secondPledge])
+                            @include('dungeon.pledge-box', ['dungeon' => $dailyPledge->thirdPledge])
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+
+            <div class="col-md-12 m-t-3 m-b-3">
+                <div class="row text-center">
+                    <div class="col-md-3">
+                        <h4>{{$setsCount}}</h4>
+                        <p>Total sets recorded</p>
+                    </div>
+
+                    <div class="col-md-3">
+                        <h4>{{$characterCount}}</h4>
+                        <p>Characters using Teso-Delve.com</p>
+                    </div>
+
+                    <div class="col-md-3">
+                        <h4>{{$motifCount}}</h4>
+                        <p>Motifs learnt across all characters</p>
+                    </div>
+
+                    <div class="col-md-3">
+                        <h4>{{$itemCount}}</h4>
+                        <p>Items found in ESO sofar</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 @endsection

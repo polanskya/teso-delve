@@ -23,6 +23,11 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label for="dungeon[image]" class="control-label col-md-2">Image</label>
+                                    <div class="col-md-10"><input type="text" id="dungeon[image]" name="dungeon[image]" value="{{$dungeon->image}}" class="form-control"></div>
+                                </div>
+
+                                <div class="form-group">
                                     <label for="dungeon[description]" class="control-label col-md-2">Description</label>
                                     <div class="col-md-10"><textarea id="dungeon[description]" rows="8" name="dungeon[description]" class="form-control"></textarea></div>
                                 </div>

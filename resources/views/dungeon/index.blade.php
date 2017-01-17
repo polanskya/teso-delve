@@ -9,8 +9,8 @@
         <div class="row-fluid">
 
             <div class="col-md-12">
-                <div class="panel panel-default">
-                    <div class="panel-body">
+                <div>
+                    <div>
                         <h1>Dungeon sets</h1>
                         @foreach($dungeons as $alliance => $zoneDungeons)
                             <table class="table table-condensed">

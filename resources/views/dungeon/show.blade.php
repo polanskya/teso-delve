@@ -9,18 +9,26 @@
     <div class="container">
         <div class="row-fluid">
 
-            <div class="col-md-9">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-
+            <div class="col-md-12">
+                <div>
+                    <div>
                         <div class="row">
-                            <div class="col-sm-6">
+                            @if(Auth::id() == 1)
+                                <div class="col-md-12">
+                                    <div role="group" aria-label="" class="btn-group pull-right">
+                                        <a href="{{route('dungeon.edit', [$dungeon])}}" class="btn btn-default btn-xs"><i aria-hidden="true" class="fa fa-pencil"></i></a>
+                                    </div>
+                                    <br>
+                                    <hr>
+                                </div>
+                            @endif
+                            <div class="col-sm-7">
                                 <h1>{{$dungeon->name}}</h1>
                             </div>
-                            <div class="col-sm-6">
-                                <div role="group" aria-label="" class="btn-group pull-right">
-                                    <a href="{{route('dungeon.edit', [$dungeon])}}" class="btn btn-default btn-xs"><i aria-hidden="true" class="fa fa-pencil"></i></a>
-                                </div>
+                            <div class="col-sm-5 text-right dungeon-image pull-right">
+                                @if(!empty($dungeon->image))
+                                    <a href="{{$dungeon->image}}" class="thumbnail no-bg"><img src="{{$dungeon->image}}"  alt="{{$dungeon->name}}"></a>
+                                @endif
                             </div>
                         </div>
                         <table class="table table-condensed set-table">

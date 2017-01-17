@@ -4,10 +4,8 @@
     <div class="container">
         <div class="row-fluid">
             <div class="col-md-12">
-
-                <div class="panel panel-default">
-
-                    <div class="panel-body">
+                <div class="">
+                    <div class="">
                         @if(isset($character) and $character)
                             @include('character.tabs')
                         @endif
@@ -33,7 +31,7 @@
                                 <hr>
                             </div>
                             <div class="col-md-6">
-                                Inventory space: <span class="text-white">{{$items->count()}} /</span>
+                                Inventory space: <span class="text-white">{{$items->count()}} / {{$bagSize}}</span>
                             </div>
                             <div class="col-md-6 text-right text-white">
                                 {{number_format($gold)}} <img src="/gfx/gold.png">

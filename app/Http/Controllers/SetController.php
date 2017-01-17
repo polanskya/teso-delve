@@ -34,13 +34,6 @@ class SetController
 
         $sets = $sets->get();
 
-
-        foreach($sets as $set) {
-            $set->updated_at = Carbon::now();
-            $set->save();
-        }
-
-
         $characterId = $request->get('characterId');
         $items = $user->items()
             ->orderBy($request->has('sortBy') ? $request->get('sortBy') : 'equipType', $request->has('sort') ? $request->get('sort') : 'asc')

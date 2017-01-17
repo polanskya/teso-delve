@@ -13,8 +13,8 @@
         <div class="row-fluid">
 
             <div class="col-md-9">
-                <div class="panel panel-default">
-                    <div class="panel-body">
+                <div>
+                    <div>
 
                         <h1>Upload your ESO information</h1>
                         <p>Upload your ESO log file to submit your ESO information, which you can find here:</p>
@@ -58,6 +58,7 @@
                 <div class="panel panel-default">
                     <div class="panel-body text-center">
                         <h3>Teso Delve addon</h3>
+                        <p class="addon-version">({{$addonVersion}})</p>
                         <p>Download TESO Delve addon by clicking on the link below, then install it into your ESO addons folder.</p>
                         <a href="{{env('TESO_DELVE_ADDON_URL', 'https://github.com/HeppyKarlsson/teso-delve-addon/archive/1.0.0-beta.3.zip')}}" class="btn btn-primary"><i class="fa fa-download" aria-hidden="true" title="Item worn"></i> Download TESO Delve addon</a>
                     </div>

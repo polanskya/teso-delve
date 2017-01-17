@@ -16,8 +16,9 @@ use Illuminate\Support\Facades\Auth;
 class EsoImport
 {
 
-    private $characters = [];
+    private $characters = null;
     private $items = null;
+    private $itemStyles = null;
 
     public function import($file_path) {
         set_time_limit(120);
@@ -28,8 +29,11 @@ class EsoImport
         $user = Auth::user();
         $user->dumpUploaded_at = Carbon::now();
         $user->save();
-        
+
         $this->items = Item::all()->keyBy('itemLink');
+        $this->characters = Auth::user()->characters()->with('itemStyles', 'meta')->withTrashed()->get();
+        $this->itemStyles = ItemStyle::all();
+
 
         $lines = [];
 
@@ -67,7 +71,7 @@ class EsoImport
 
         $data = explode(';', $line);
         $externalId = intval($data[5]);
-        $itemStyle = ItemStyle::where('externalId', $externalId)->first();
+        $itemStyle = $this->itemStyles->where('externalId', $externalId)->first();
 
         if(is_null($itemStyle)) {
             $itemStyle = new ItemStyle();
@@ -78,7 +82,7 @@ class EsoImport
             $itemStyle->save();
         }
 
-        $character = Character::where('externalId', $data[1])->first();
+        $character = $this->characters->where('externalId', $data[1])->first();
         if(is_null($character)) {
             return true;
         }
@@ -125,22 +129,22 @@ class EsoImport
             $craftingTrait->traitIndex = intval($info[5]);
             $craftingTrait->name = $info[10];
             $craftingTrait->image = $info[11];
+            $craftingTrait->isKnown = stripos($info[9], 'true') !== false;
+            $craftingTrait->save();
         }
 
         if(isset($info[13]) and $info[2] !== 'nil') {
             $researchDone = intval($info[13]) + intval($info[2]);
             $craftingTrait->researchDone_at = Carbon::createFromTimestamp($researchDone);
+            $craftingTrait->save();
         }
 
-        $craftingTrait->isKnown = stripos($info[9], 'true') !== false;
-        $craftingTrait->save();
-
     }
 
-    public function createMeta($meta, $character, $value) {
-
-    }
-
+    /**
+     * @param $line
+     * @return bool
+     */
     public function importCharacter($line) {
         $item_start = stripos($line, 'CHARACTER:');
         if($item_start === false) {
@@ -152,7 +156,7 @@ class EsoImport
 
         $properties = explode(';', $line);
 
-        $character = Auth::user()->characters()->withTrashed()->where('externalId', $properties[0])->first();
+        $character = $this->characters->where('externalId', $properties[0])->first();
 
         if(!$character) {
             $character = new Character();
@@ -172,10 +176,17 @@ class EsoImport
         if(isset($properties[13])) {
             $smithingSkills = explode('-', $properties[13]);
 
-            $metaService = new MetaService();
-            $metaService->update($character, 'max_smithing_' . CraftingType::BLACKSMITHING, intval($smithingSkills[0]));
-            $metaService->update($character, 'max_smithing_' . CraftingType::CLOTHIER, intval($smithingSkills[1]));
-            $metaService->update($character, 'max_smithing_' . CraftingType::WOODWORKING, intval($smithingSkills[2]));
+            if($character->getMeta('max_smithing_' . CraftingType::BLACKSMITHING) != intval($smithingSkills[1])) {
+                $character->setMeta('max_smithing_' . CraftingType::BLACKSMITHING, intval($smithingSkills[1]));
+            }
+
+            if($character->getMeta('max_smithing_' . CraftingType::CLOTHIER) != intval($smithingSkills[1])) {
+                $character->setMeta('max_smithing_' . CraftingType::CLOTHIER, intval($smithingSkills[1]));
+            }
+
+            if($character->getMeta('max_smithing_' . CraftingType::WOODWORKING) != intval($smithingSkills[2])) {
+                $character->setMeta('max_smithing_' . CraftingType::WOODWORKING, intval($smithingSkills[2]));
+            }
         }
 
         if(isset($properties[11])) {
@@ -194,13 +205,23 @@ class EsoImport
             $character->ridingUnlocked_at = $nextTraining;
         }
 
+        if(isset($properties[16])) {
+            $character->setMeta('bag_' . BagType::BACKPACK, intval($properties[16]));
+            $currentBank = Auth::user()->getMeta('bag_' . BagType::BANK);
+            if(intval($currentBank) != intval($properties[17])) {
+                Auth::user()->setMeta('bag_' . BagType::BANK, intval($properties[17]));
+            }
+        }
+
         $character->save();
 
-        $this->characters[] = $character->externalId;
+        if($this->characters->where('id', $character->id)->count() == 0) {
+            $this->characters->push($character);
+        }
     }
 
     public function cleanCharacters() {
-        Auth::user()->characters()->where('userId', Auth::id())->whereNotIn('externalId', $this->characters)->delete();
+        Auth::user()->characters()->where('userId', Auth::id())->whereNotIn('externalId', $this->characters->pluck('externalId'))->delete();
     }
 
     public function importItem($line) {
@@ -216,12 +237,11 @@ class EsoImport
 
         $bagType = isset($properties[15]) ? intval($properties[15]) : null;
 
-        $character = Auth::user()->characters()->where('externalId', intval($properties[14]))->first();
-              
+        $character = $this->characters->where('externalId', intval($properties[14]))->first();
+
         if(isset($bagType) and $bagType === BagType::BANK) {
             $character = null;
         }
-
 
         if(isset($properties[23])) {
             $item = Item::where('name', trim($properties[1]))
@@ -261,7 +281,7 @@ class EsoImport
                 }
 
                 if(isset($properties[25]) and intval($properties[25]) != 0) {
-                    $itemStyle = ItemStyle::where('externalId', intval($properties[25]))->first();
+                    $itemStyle = $this->itemStyles->where('externalId', intval($properties[25]))->first();
                     $item->itemStyleId = isset($itemStyle->id) ? $itemStyle->id : null;
                 }
 
@@ -276,13 +296,14 @@ class EsoImport
                 $userItem->uniqueId = $properties[0];
                 $userItem->traitEnum = $properties[2];
                 $userItem->traitDescription = $properties[21];
+                $userItem->isJunk = $properties[18] == 'true';
                 $userItem->enchant = $properties[8];
                 $userItem->enchantDescription = $properties[20];
                 $userItem->bagEnum = $bagType;
                 $userItem->slotId = intval($properties[23]);
 
                 if(isset($properties[25]) and intval($properties[25]) != 0) {
-                    $itemStyle = ItemStyle::where('externalId', intval($properties[25]))->first();
+                    $itemStyle = $this->itemStyles->where('externalId', intval($properties[25]))->first();
                     $userItem->itemStyleId = isset($itemStyle->id) ? $itemStyle->id : null;
                 }
 

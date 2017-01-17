@@ -52,6 +52,8 @@ Route::get('/set/{set}', 'SetController@show')->name('set.show');
 Route::post('/set/{set}/update', 'SetController@update')->name('set.update')->middleware('auth');
 Route::get('/set/{set}/edit', 'SetController@edit')->name('set.edit')->middleware('auth');
 
+Route::get('/contribute', 'ContributeController@index')->name('contribute');
+Route::get('/about', 'AboutController@index')->name('about');
 
 Route::get('/item/{item}', 'ItemController@show')->name('item.show');
 

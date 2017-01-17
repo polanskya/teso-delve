@@ -10,9 +10,9 @@
         <div class="row-fluid">
             <div class="col-md-12">
 
-                <div class="panel panel-default">
+                <div>
 
-                    <div class="panel-body">
+                    <div>
                         @include('character.tabs')
 
                         <div class="row character-equipped">

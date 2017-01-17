@@ -31,7 +31,7 @@
                                 <div class="form-group">
                                     <label for="itemStyle[location]" class="control-label col-md-2">Description</label>
                                     <div class="col-md-10">
-                                        <textarea name="itemStyle[location]" rows="8" name="itemStyle[location]" class="form-control"></textarea>
+                                        <textarea name="itemStyle[location]" rows="8" name="itemStyle[location]" class="form-control">{{$itemStyle->location}}</textarea>
                                     </div>
                                 </div>
 
@@ -60,7 +60,9 @@
                                                     <option value="">Select motif</option>
                                                     <?php  $itemStyleChapterSelected = $chapters->where('itemStyleChapterEnum', $chapter)->first(); ?>
                                                     @foreach($motifs as $motif)
-                                                        <option {{ (!is_null($itemStyleChapterSelected) and $itemStyleChapterSelected->itemId == $motif->id)  ? 'selected="selected"' : '' }} value="{{$motif->id}}">{{$motif->name}}</option>
+                                                        @if(! in_array($motif->id, $assignedMotifs) or (!is_null($itemStyleChapterSelected) and $itemStyleChapterSelected->itemId == $motif->id))
+                                                            <option {{ (!is_null($itemStyleChapterSelected) and $itemStyleChapterSelected->itemId == $motif->id)  ? 'selected="selected"' : '' }} value="{{$motif->id}}">{{$motif->name}}</option>
+                                                        @endif
                                                     @endforeach
                                                 </select>
                                             </div>

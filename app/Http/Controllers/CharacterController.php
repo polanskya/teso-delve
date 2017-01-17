@@ -29,7 +29,7 @@ class CharacterController
     public function index() {
         $user = Auth::user();
         $characters = $user->characters()
-            ->with('craftingTraits')
+            ->with('craftingTraits', 'userItems', 'meta')
             ->orderByRaw('level DESC, name')
             ->get();
 
@@ -67,8 +67,9 @@ class CharacterController
     public function inventory(Character $character, $bagEnum = null) {
         $items = $character->items->where('pivot.bagEnum', is_null($bagEnum) ? BagType::BACKPACK : $bagEnum);
         $gold = $character->currency;
+        $bagSize = $character->getMeta('bag_' . BagType::BACKPACK);
 
-        return view('inventory.index', compact('character', 'bagEnum', 'items', 'gold'));
+        return view('inventory.index', compact('character', 'bagEnum', 'items', 'gold', 'bagSize'));
     }
 
 }

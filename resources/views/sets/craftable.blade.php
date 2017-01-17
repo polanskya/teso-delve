@@ -9,8 +9,8 @@
         <div class="row-fluid">
 
             <div class="col-md-12">
-                <div class="panel panel-default">
-                    <div class="panel-body">
+                <div>
+                    <div>
                         <h1>Crafted sets</h1>
 
                         <table class="table table-condensed set-table">

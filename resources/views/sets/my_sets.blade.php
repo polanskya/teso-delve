@@ -9,8 +9,8 @@
         <div class="row-fluid">
 
             <div class="col-md-12">
-                <div class="panel panel-default">
-                    <div class="panel-body">
+                <div class="">
+                    <div class="">
 
                         <h1>My sets</h1>
                         <form method="get" action="{{route('set.my-sets')}}" class="form-horizontal">

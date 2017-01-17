@@ -127,14 +127,26 @@
   border: 1px solid #2d2d2d;
 }
 
+.valign-middle {
+  vertical-align: middle !important;
+}
+
 .itemstyle-armor {
   clear: both;
 }
 
-.itemstyle-armor img {
+.itemstyle-armor .thumbnail {
+  float: left;
+}
+
+.itemstyle-armor .thumbnail img {
   max-height: 250px;
-  margin-right: 5px;
-  margin-bottom: 5px;
+}
+
+.motifs-list {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  max-width: 600px;
 }
 
 .motifs-list .item_image {
@@ -143,20 +155,69 @@
   margin-bottom: 5px;
 }
 
-.itemstyle-armor {
-  clear: both;
+.dungeon-image.max-width-350 {
+  max-width: 350px;
 }
 
-.itemstyle-armor img {
-  max-height: 250px;
-  margin-right: 5px;
-  margin-bottom: 5px;
+.dungeon-image.max-width-350 img {
+  max-width: 340px;
 }
 
-.motifs-list .item_image {
-  float: left;
-  margin-right: 5px;
-  margin-bottom: 5px;
+#daily-pledges-container {
+  color: white;
+}
+
+#daily-pledges-container img {
+  max-width: 100%;
+}
+
+#daily-pledges-container .daily-pledge {
+  margin-bottom: 15px;
+}
+
+#daily-pledges-container .daily-pledge .pledge-image {
+  background-size: cover;
+  background-position: center;
+}
+
+#daily-pledges-container .daily-pledge h5, #daily-pledges-container .daily-pledge .sets {
+  background: rgba(38, 38, 38, 0.9);
+}
+
+#daily-pledges-container .daily-pledge h5 {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 5px;
+}
+
+#daily-pledges-container .daily-pledge h5 a {
+  color: white;
+}
+
+#daily-pledges-container .daily-pledge .sets {
+  min-height: 58px;
+  margin-top: 200px;
+  padding-left: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.no-margin {
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}
+
+.margin-top-19 {
+  margin-top: 19px;
+}
+
+.margin-top-66 {
+  margin-top: 66px;
+}
+
+.addon-version {
+  margin-top: -15px;
+  color: white;
 }
 
 body {
@@ -167,8 +228,11 @@ body {
   max-width: 100%;
 }
 
+.color-inactive {
+  color: #363636 !important;
+}
+
 body.eso-background {
-  background: url("/gfx/The_Elder_Scrolls_Online_Background_Nord.jpg");
   background-position: center top 50px;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -203,8 +267,24 @@ body.eso-background {
   white-space: nowrap;
 }
 
-#app {
+#app > .content {
+  min-height: 80vh;
+}
+
+#app.panels {
   padding-top: 90px;
+}
+
+#app.full {
+  padding-top: 52px;
+}
+
+.content > .container {
+  padding-top: 19px;
+}
+
+body .sub-navbar.sub-navbar__header-breadcrumbs {
+  margin-bottom: 0px;
 }
 
 .circle {
@@ -218,6 +298,10 @@ body.eso-background {
   display: inline-block;
   height: 100%;
   border-radius: 5px;
+}
+
+.icon-size-40 {
+  max-height: 40px;
 }
 
 .icon-size {
@@ -390,6 +474,7 @@ body.sidebar-disabled #sidebar-switch, body:not(.sidebar-disabled) #top-menu-swi
   width: 400px;
   padding-left: 20px;
   padding-right: 20px;
+  padding-bottom: 20px;
   border: 1px solid #EECA2A !important;
   margin-bottom: 20px;
   text-align: center;
@@ -447,7 +532,7 @@ h1, h2, h3, h4, h5, h6 {
   color: #008000;
 }
 
-.item-icons i {
+.item-icons > i {
   margin-left: 5px;
 }
 

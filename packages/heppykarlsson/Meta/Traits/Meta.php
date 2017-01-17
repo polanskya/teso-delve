@@ -16,7 +16,7 @@ trait Meta
     }
 
     public function setMeta($key, $value) {
-        $meta = $this->meta->where('key', $key)->first();
+        $meta = $this->meta()->where('key', $key)->first();
         if(is_null($meta)) {
             $meta = new MetaModel();
         }

@@ -7,7 +7,6 @@
     "require": {
         "php": ">=5.6.4",
         "laravel/framework": "5.3.*",
-        "barryvdh/laravel-debugbar": "^2.3",
         "cviebrock/eloquent-sluggable": "^4.1",
         "rap2hpoutre/laravel-log-viewer": "^0.8.0"
     },
@@ -16,6 +15,7 @@
         "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "~5.0",
         "symfony/css-selector": "3.1.*",
+        "barryvdh/laravel-debugbar": "^2.3",
         "symfony/dom-crawler": "3.1.*"
     },
     "autoload": {

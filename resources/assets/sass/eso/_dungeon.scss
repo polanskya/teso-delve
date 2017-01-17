@@ -1,0 +1,49 @@
+.dungeon-image.max-width-350 {
+  max-width: 350px;
+
+  img {
+    max-width: 340px;
+  }
+}
+
+
+#daily-pledges-container {
+  color: white;
+
+  img {
+    max-width: 100%;
+  }
+
+
+  .daily-pledge {
+    margin-bottom: 15px;
+
+    .pledge-image {
+      background-size: cover;
+      background-position: center;
+    }
+
+    h5, .sets {
+      background: rgba(38, 38, 38, .9);
+    }
+
+    h5 {
+      a {
+        color: white;
+      }
+
+      padding-top: 10px;
+      padding-bottom: 10px;
+      padding-left: 5px;
+    }
+
+    .sets {
+      min-height: 58px;
+      margin-top: 200px;
+      padding-left: 5px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+  }
+
+}

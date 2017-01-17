@@ -5,12 +5,14 @@ namespace App;
 use App\Model\Character;
 use App\Model\Item;
 use App\Model\UserSetFavourite;
+use HeppyKarlsson\Meta\Traits\Meta;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable,
+        Meta;
 
     /**
      * The attributes that are mass assignable.

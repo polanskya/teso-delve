@@ -23,9 +23,10 @@ class CraftingController extends Controller
     }
 
     public function itemStyle(ItemStyle $itemStyle) {
+        $assignedMotifs = \App\Model\ItemStyleChapter::all()->pluck('itemId')->toArray();
         $motifs = Item::where('type', 8)->orderBy('name')->get();
         $chapters = $itemStyle->chapters;
-        return view('admin.crafting.itemStyle', compact('itemStyle', 'motifs', 'chapters'));
+        return view('admin.crafting.itemStyle', compact('itemStyle', 'motifs', 'chapters', 'assignedMotifs'));
     }
 
     public function uploadImages(Request $request, ItemStyle $itemStyle) {

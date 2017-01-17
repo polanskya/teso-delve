@@ -4,22 +4,47 @@
     <div class="container">
         <div class="row-fluid">
 
-            <div class="col-md-12">
-                <div class="panel panel-default">
+            <div>
+                <div>
                     <div class="panel-body">
-                        <h1>{{$itemStyle->name}}</h1>
-                        <div class="itemstyle-content">
-                            {{$itemStyle->location}}
-                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h1>{{$itemStyle->name}}</h1>
+                                <div class="itemstyle-content">
+                                    {!! nl2br($itemStyle->location) !!}
+                                </div>
 
-                        <div class="motifs-list">
-                            @foreach($itemStyle->chapters as $chapter)
-                                @include('item.worn_image', ['equippedItem' => $chapter->item])
-                            @endforeach
-                        </div>
+                                <hr>
 
-                        <div class="clearfix"></div>
-                        <hr>
+                                @foreach($armors as $armorType => $armorsList)
+                                    <h4>{{trans('enums.ArmorType.' . $armorType)}}</h4>
+                                    <ul class="list-inline">
+                                        @foreach($armorsList->groupBy('equipType') as $armorsListByEquipType)
+                                            <li>@include('item.worn_image', ['equippedItem' => $armorsListByEquipType->first(), 'qualityBackground' => false])</li>
+                                        @endforeach
+                                    </ul>
+                                @endforeach
+
+                                @if($weapons->count() > 0)
+                                    <h4>Weapons</h4>
+                                    <ul class="list-inline">
+                                        @foreach($weapons as $weaponType => $weaponList)
+                                            <li>@include('item.worn_image', ['equippedItem' => $weaponList->first(), 'qualityBackground' => false])</li>
+                                        @endforeach
+                                    </ul>
+                                @endif
+
+                            </div>
+
+                            <div class="motifs-list col-md-4">
+                                @if($itemStyle->chapters->count() > 0)
+                                    <h4>Motifs</h4>
+                                    @foreach($itemStyle->chapters as $chapter)
+                                        @include('item.worn_image', ['equippedItem' => $chapter->item])
+                                    @endforeach
+                                @endif
+                            </div>
+                        </div>
 
                         @foreach($images as $weight => $genders)
                             <div class="itemstyle-armor row">
@@ -29,7 +54,7 @@
                                     @foreach($gender as $group => $images)
                                         <div class="armor-group col-md-12">
                                             @foreach($images as $image)
-                                                <a target="_blank" href="/gfx/item-style/{{$itemStyle->id}}/{{$image}}"><img class="pull-left" src="/gfx/item-style/{{$itemStyle->id}}/{{$image}}"></a>
+                                                <a target="_blank" href="/gfx/item-style/{{$itemStyle->id}}/{{$image}}" class="thumbnail no-bg"><img class="pull-left" src="/gfx/item-style/{{$itemStyle->id}}/{{$image}}"></a>
                                             @endforeach
                                         </div>
                                     @endforeach
