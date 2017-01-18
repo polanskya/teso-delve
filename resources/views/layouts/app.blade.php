@@ -8,11 +8,8 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>
-        @section('meta-title')
-            {{config('app.name', 'Laravel')}}
-        @show
-    </title>
+    <title>@section('meta-title'){{config('app.name', 'Laravel')}}@show</title>
+    <meta name="description" content="@section('meta-description'){{config('app.description')}}@show">
 
     <!-- Styles -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">

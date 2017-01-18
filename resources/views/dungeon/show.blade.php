@@ -1,9 +1,12 @@
 @extends('layouts.app')
 
 @section('meta-title')
-    Sets found in {{$dungeon->name}} - @parent
+    Sets in {{$dungeon->name}} - @parent
 @endsection
 
+@section('meta-description')
+    Sets found in {{$dungeon->name}}: {{implode(', ', $dungeon->sets->pluck('name')->toArray())}}
+@endsection
 
 @section('content')
     <div class="container">
@@ -22,14 +25,19 @@
                                     <hr>
                                 </div>
                             @endif
-                            <div class="col-sm-7">
+                            <div class="col-sm-7 m-b-3">
                                 <h1>{{$dungeon->name}}</h1>
+
+                                <div>
+                                    {!! nl2br($dungeon->description) !!}
+                                </div>
                             </div>
                             <div class="col-sm-5 text-right dungeon-image pull-right">
                                 @if(!empty($dungeon->image))
                                     <a href="{{$dungeon->image}}" class="thumbnail no-bg"><img src="{{$dungeon->image}}"  alt="{{$dungeon->name}}"></a>
                                 @endif
                             </div>
+
                         </div>
                         <table class="table table-condensed set-table">
                             <thead>

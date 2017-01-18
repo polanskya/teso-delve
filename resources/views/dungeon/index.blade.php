@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
 @section('meta-title')
-    Dungeon sets in Elder Scrolls Online - @parent
+    Dungeon sets - @parent
+@endsection
+
+@section('meta-description')
+    Sets found in dungeons all around Elder Scrolls Online
 @endsection
 
 @section('content')

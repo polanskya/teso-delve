@@ -4,6 +4,10 @@
     {{$itemStyle->name}} style - @parent
 @endsection
 
+@section('meta-description')
+    {{$itemStyle->location}}
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row-fluid">
@@ -12,6 +16,14 @@
                 <div>
                     <div class="panel-body">
                         <div class="row">
+                            @if(Auth::id() == 1)
+                                <div class="col-md-12">
+                                    <div role="group" aria-label="" class="btn-group pull-right">
+                                        <a href="{{route('admin.crafting.item-style.edit', [$itemStyle])}}" class="btn btn-default btn-xs"><i aria-hidden="true" class="fa fa-pencil"></i></a>
+                                    </div>
+                                </div>
+                            @endif
+
                             <div class="col-md-8">
                                 <h1>{{$itemStyle->name}}</h1>
                                 <div class="itemstyle-content">

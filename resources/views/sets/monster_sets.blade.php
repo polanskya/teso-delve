@@ -4,6 +4,10 @@
    Monster sets in Elder Scrolls Online - @parent
 @endsection
 
+@section('meta-description')
+    Monster sets, helmet drops by end boss in dungeons (veteran) and shoulders comes from Undaunted Chest using pledge key
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row-fluid">

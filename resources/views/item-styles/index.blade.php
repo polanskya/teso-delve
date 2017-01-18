@@ -4,6 +4,10 @@
     Styles - @parent
 @endsection
 
+@section('meta-description')
+    Styles found in Elder Scrolls Online and how to acquire them
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row-fluid">

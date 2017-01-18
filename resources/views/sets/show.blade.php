@@ -1,7 +1,18 @@
 @extends('layouts.app')
 
 @section('meta-title')
-    {{$set->name}} {{ $set->setTypeEnum == \App\Enum\SetType::MONSTER ? " monster " : '' }}set - @parent
+    {{$set->name}} {{ $set->setTypeEnum == \App\Enum\SetType::MONSTER ? "monster " : '' }}set - @parent
+@endsection
+
+@section('meta-description')
+    {{ trans('description.set.' . $set->setTypeEnum, [
+        'name' => $set->name,
+        'dungeons' => implode(', ', $set->dungeons->pluck('name')->toArray()),
+        'traits' => $set->getMeta('crafting_traits_needed'),
+        'zones' => rtrim(implode(', ', $set->zones->pluck('name')->toArray())),
+        'dungeon' => $set->dungeons->count() > 0 ? $set->dungeons->first()->name : '',
+        'pledgeChest' => trans('eso.pledgeChest.'.$set->getMeta('monster_chest'))
+    ])}}
 @endsection
 
 @section('content')
@@ -29,11 +40,11 @@
                             <div class="col-md-8">
                                 <h1>{{$set->name}}</h1>
 
-                                {{$set->description}}
+                                {!! nl2br($set->description) !!}
 
                                 <h4>Where to find</h4>
                                 <ul>
-                                    @if($set->setTypeEnum == \App\Enum\SetType::DUNGEON)
+                                    @if($set->setTypeEnum == \App\Enum\SetType::DUNGEON or $set->setTypeEnum == \App\Enum\SetType::MONSTER)
                                         @foreach($set->dungeons as $dungeon)
                                             <li><a href="{{route('dungeon.show', [$dungeon])}}">{{$dungeon->name}}</a></li>
                                         @endforeach

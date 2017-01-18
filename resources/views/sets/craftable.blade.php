@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
 @section('meta-title')
-    Craftable sets in Elder Scrolls Online - @parent
+    Craftable sets - @parent
+@endsection
+
+@section('meta-description')
+    Sets you can craft and where to craft them in Elder Scrolls Online
 @endsection
 
 @section('content')

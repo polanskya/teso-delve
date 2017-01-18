@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
 @section('meta-title')
-Zone sets in Elder Scrolls Online - @parent
+Zone sets - @parent
+@endsection
+
+@section('meta-description')
+    Sets found in zones throughout Elder Scrolls Online
 @endsection
 
 @section('content')

@@ -13,8 +13,8 @@
         <div class="row-fluid">
 
             <div class="col-md-9">
-                <div class="panel panel-default">
-                    <div class="panel-body">
+                <div>
+                    <div>
                         <h1>{{$itemStyle->name}}</h1>
 
                         <form method="post" action="{{route('admin.crafting.item-style.update', [$itemStyle])}}" class="form-group form-horizontal">
