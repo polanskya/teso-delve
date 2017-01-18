@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('meta-title')
+    Styles - @parent
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row-fluid">
@@ -20,7 +24,7 @@
                             <tbody>
                             @foreach($itemStyles as $itemStyle)
                                 <tr class="input-group-sm">
-                                    <td class="valign-middle"><h3 class="no-margin"><a href="{{route('item-styles.show', [$itemStyle])}}">{{$itemStyle->name}}</a></h3></td>
+                                    <td class="valign-middle nowrap"><h3 class="no-margin"><a href="{{route('item-styles.show', [$itemStyle])}}">{{$itemStyle->name}}</a></h3></td>
                                     <td class="valign-middle nowrap">
                                         @if($helmets->has($itemStyle->id))
                                             <ul class="list-inline">

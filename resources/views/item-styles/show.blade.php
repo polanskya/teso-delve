@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('meta-title')
+    {{$itemStyle->name}} style - @parent
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row-fluid">
