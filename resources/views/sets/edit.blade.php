@@ -86,6 +86,8 @@
                             <div class="form-content">
 
                                 <h4>Set bonuses</h4>
+                                <p>[n] number [/n]</p>
+
                                 @for($i = 0; $i < 6; $i++)
                                     <?php
                                     $setBonus = isset($set->bonuses[$i]) ? $set->bonuses[$i] : null;
@@ -93,7 +95,7 @@
                                     <div class="form-group">
                                         <label for="set[description]" class="control-label col-xs-2">Bonus: {{$i + 1}}</label>
                                         <div class="col-xs-2">
-                                            <input id="set_bonus[{{$i}}][bonusNumber]" name="set_bonus[{{$i}}][bonusNumber]" value="{{isset($setBonus) ? $setBonus->bonusNumber : ''}}" class="form-control">
+                                            <input id="set_bonus[{{$i}}][bonusNumber]" name="set_bonus[{{$i}}][bonusNumber]" value="{{isset($setBonus) ? $setBonus->bonusNumber : $i + 2}}" class="form-control">
                                         </div>
                                         <div class="col-xs-8">
                                             <input id="set_bonus[{{$i}}][description]" name="set_bonus[{{$i}}][description]" value="{{isset($setBonus) ? $setBonus->description : ''}}" class="form-control">

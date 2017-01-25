@@ -166,7 +166,7 @@ class SetController
         $set->bonuses()->delete();
 
         foreach($request->get('set_bonus') as $setBonus) {
-            if(intval($setBonus['bonusNumber']) == 0) {
+            if(empty($setBonus['description'])) {
                 continue;
             }
 

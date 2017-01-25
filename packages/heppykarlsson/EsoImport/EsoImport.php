@@ -278,6 +278,7 @@ class EsoImport
                 ->where('type', intval($properties[10]))
                 ->where('weaponType', intval($properties[13]))
                 ->where('enchant', trim($properties[8]))
+                ->where('icon', trim($properties[9]))
                 ->where('itemValue', intval($properties[22]))
                 ->where('level', intval($properties[12]))
                 ->where('championLevel', intval($properties[11]))
@@ -291,7 +292,7 @@ class EsoImport
                 $item->equipType = intval($properties[3]);
                 $item->armorType = intval($properties[6]);
                 $item->quality = intval($properties[5]);
-                $item->icon = $properties[9];
+                $item->icon = trim($properties[9]);
                 $item->type = intval($properties[10]);
                 $item->championLevel = intval($properties[11]);
                 $item->level = intval($properties[12]);
@@ -299,7 +300,7 @@ class EsoImport
                 $item->itemLink = $properties[19];
                 $item->trait = $properties[2];
                 $item->traitDescription = $properties[21];
-                $item->enchant = $properties[8];
+                $item->enchant = trim($properties[8]);
                 $item->enchantDescription = $properties[20];
                 $item->itemValue = intval($properties[22]);
 
@@ -312,6 +313,8 @@ class EsoImport
                     if(is_null($itemStyle)) {
                         $itemStyle = new ItemStyle();
                         $itemStyle->externalId = intval($properties[25]);
+                        $itemStyle->name = '';
+                        $itemStyle->image = '';
                         $itemStyle->save();
                     }
                     $item->itemStyleId = isset($itemStyle->id) ? $itemStyle->id : null;
