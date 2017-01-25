@@ -309,7 +309,7 @@ class EsoImport
                 }
 
                 if(isset($properties[25]) and intval($properties[25]) != 0) {
-                    $itemStyle = $this->itemStyles->where('externalId', intval($properties[25]))->first();
+                    $itemStyle = $this->itemStyles()->where('externalId', intval($properties[25]))->first();
                     if(is_null($itemStyle)) {
                         $itemStyle = new ItemStyle();
                         $itemStyle->externalId = intval($properties[25]);

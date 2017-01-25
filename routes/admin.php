@@ -8,6 +8,7 @@ $middlewares = [
 Route::group(['prefix' => 'admin', 'middleware' => $middlewares], function () {
     Route::get('users', 'Admin\UserController@index')->name('admin.users.index');
     Route::get('ghost/{user}', 'Admin\UserController@ghost')->name('admin.users.ghost');
+    Route::get('download-dump/{user}', 'Admin\UserController@downloadLua')->name('admin.users.download-dump');
 
     Route::get('crafting/motifs', 'Admin\CraftingController@itemStyles')->name('admin.crafting.itemstyles');
     Route::get('crafting/motifs/{itemStyle}', 'Admin\CraftingController@itemStyle')->name('admin.crafting.item-style.edit');
