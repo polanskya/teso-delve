@@ -9,6 +9,7 @@ use App\Model\CraftingTrait;
 use App\Model\Item;
 use App\Model\ItemStyle;
 use App\Model\UserItem;
+use App\User;
 use Carbon\Carbon;
 use HeppyKarlsson\Meta\Service\MetaService;
 use Illuminate\Support\Facades\Auth;
@@ -19,6 +20,8 @@ class EsoImport
     private $characters = null;
     private $items = null;
     private $itemStyles = null;
+    /** @var User */
+    private $user = null;
 
     public function import($file_path) {
         set_time_limit(120);
@@ -27,6 +30,7 @@ class EsoImport
         $file = fopen($file_path, 'r');
 
         $user = Auth::user();
+        $this->user = $user;
         $user->dumpUploaded_at = Carbon::now();
         $user->save();
 
@@ -50,6 +54,7 @@ class EsoImport
         }
 
         foreach($lines as $line) {
+            $this->setUserLang($line);
             $this->importCharacter($line);
         }
 
@@ -62,6 +67,24 @@ class EsoImport
         }
 
         $this->cleanCharacters();
+    }
+
+    public function setUserLang($line) {
+        $item_start = stripos($line, 'CHARACTER:');
+        if($item_start === false) {
+            return false;
+        }
+
+        $line = str_ireplace('",', '', $line);
+        $line = substr($line, $item_start + 10);
+        $properties = explode(';', $line);
+
+        $lang = isset($properties[18]) ? trim(preg_replace('/\s\s+/', ' ', $properties[18])) : config('constants.default-language');
+
+        if($this->user->lang != $lang) {
+            $this->user->lang = $lang;
+            $this->user->save();
+        }
     }
 
     public function importStyles($line) {
@@ -119,7 +142,6 @@ class EsoImport
             ->where('traitIndex', intval($info[5]))
             ->first();
 
-
         if(is_null($craftingTrait)) {
             $craftingTrait = new CraftingTrait();
             $craftingTrait->characterId = $character->id;
@@ -172,6 +194,9 @@ class EsoImport
         $character->userId = Auth::user()->id;
         $character->deleted_at = null;
         $character->currency = intval($properties[12]);
+        $character->account = $properties[15];
+        $character->server = $properties[14];
+        $character->lang = isset($properties[18]) ? trim(preg_replace('/\s\s+/', ' ', $properties[18])) : config('constants.default-language');
 
         if(isset($properties[13])) {
             $smithingSkills = explode('-', $properties[13]);
@@ -244,6 +269,7 @@ class EsoImport
         }
 
         if(isset($properties[23])) {
+
             $item = Item::where('name', trim($properties[1]))
                 ->where('trait', intval($properties[2]))
                 ->where('quality', intval($properties[5]))
@@ -255,6 +281,7 @@ class EsoImport
                 ->where('itemValue', intval($properties[22]))
                 ->where('level', intval($properties[12]))
                 ->where('championLevel', intval($properties[11]))
+                ->where('lang', isset($properties[26]) ? trim(preg_replace('/\s\s+/', ' ', $properties[26])) : config('constants.default-language'))
                 ->first();
 
             if(!$item) {
@@ -282,6 +309,11 @@ class EsoImport
 
                 if(isset($properties[25]) and intval($properties[25]) != 0) {
                     $itemStyle = $this->itemStyles->where('externalId', intval($properties[25]))->first();
+                    if(is_null($itemStyle)) {
+                        $itemStyle = new ItemStyle();
+                        $itemStyle->externalId = intval($properties[25]);
+                        $itemStyle->save();
+                    }
                     $item->itemStyleId = isset($itemStyle->id) ? $itemStyle->id : null;
                 }
 

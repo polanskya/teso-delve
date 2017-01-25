@@ -18,6 +18,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int classId
  * @property int ridingUnlocked_at
  * @property int externalId
+ * @property null deleted_at
+ * @property mixed id
+ * @property bool isTank
+ * @property bool isHealer
+ * @property bool isDPS
+ * @property string server
+ * @property string account
+ * @property int currency
  */
 class Character extends Model
 {

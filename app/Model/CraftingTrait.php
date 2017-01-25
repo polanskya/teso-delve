@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property Carbon researchDone_at
  * @property boolean isKnown
+ * @property string image
+ * @property string name
+ * @property int traitIndex
+ * @property int researchLineIndex
+ * @property int traitId
+ * @property int craftingTypeEnum
+ * @property int characterId
  */
 class CraftingTrait extends Model
 {

@@ -11,7 +11,7 @@
                 <div>
                     <div>
                         <h1>My characters</h1>
-                        <table class="table table-condensed">
+                        <table class="table table-condensed table-hover">
                             <thead>
                                 <tr>
                                     <th class="min-width"></th>
@@ -28,6 +28,7 @@
                                     <th>Horse training</th>
                                     <th class="text-right">Inventory</th>
                                     <th class="text-right">Gold</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -44,7 +45,7 @@
                                     <td>{{trans('eso.races.'.$character->raceId.'.name')}}</td>
                                     <td>{!! $character->isTank ? '<i class="fa fa-check"></i>' : '' !!}</td>
                                     <td>{!! $character->isHealer ? '<i class="fa fa-check"></i>' : '' !!}</td>
-                                    <td>{!!$character->isDPS ? '<i class="fa fa-check"></i>' : '' !!}</td>
+                                    <td>{!! $character->isDPS ? '<i class="fa fa-check"></i>' : '' !!}</td>
                                     <td>{!! $character->canResearch(\App\Enum\CraftingType::BLACKSMITHING) ? '' : App\Presenter\Date::until($character->nextResearch(\App\Enum\CraftingType::BLACKSMITHING)) !!}</td>
                                     <td>{!! $character->canResearch(\App\Enum\CraftingType::WOODWORKING) ? '' : App\Presenter\Date::until($character->nextResearch(\App\Enum\CraftingType::WOODWORKING)) !!}</td>
                                     <td>{!! $character->canResearch(\App\Enum\CraftingType::CLOTHIER) ? '' : App\Presenter\Date::until($character->nextResearch(\App\Enum\CraftingType::CLOTHIER)) !!}</td>
@@ -55,6 +56,20 @@
                                         @endif
                                     </td>
                                     <td class="text-right">{{number_format($character->currency, 0, '.', ' ')}}</td>
+                                    <td>
+                                        <div class="btn-group hidden">
+                                            <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fa fa-cog"></i>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="javascript: void(0)">Action</a></li>
+                                                <li><a href="javascript: void(0)">Another action</a></li>
+                                                <li><a href="javascript: void(0)">Something else here</a></li>
+                                                <li role="separator" class="divider"></li>
+                                                <li><a href="javascript: void(0)">Separated link</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
                                 </tr>
                             @endforeach
                             <tfoot>
@@ -64,6 +79,7 @@
                                     {{ number_format($characters->sum('currency'), 0, '.', ' ')}}
                                     <img class="icon-size" src="/gfx/gold.png">
                                 </td>
+                                <td></td>
                             </tr>
                             </tfoot>
                             </tbody>

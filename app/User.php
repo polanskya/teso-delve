@@ -9,6 +9,9 @@ use HeppyKarlsson\Meta\Traits\Meta;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @property string lang
+ */
 class User extends Authenticatable
 {
     use Notifiable,
@@ -30,6 +33,10 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password', 'remember_token',
+    ];
+
+    protected $dates = [
+        'seen_at',
     ];
 
     public function items() {

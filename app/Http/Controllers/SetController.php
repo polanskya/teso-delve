@@ -26,6 +26,7 @@ class SetController
             ->toArray();
 
         $sets = Set::with('bonuses')
+            ->where('lang', $user->lang)
             ->orderBy('name');
 
         if($request->has('search')) {
@@ -87,6 +88,7 @@ class SetController
             $favourites = $user->favouriteSets->pluck('setId')->toArray();
             $items = $user->items()->with('character')->orderBy('equipType')->get();
         }
+
         $sets = Set::with('bonuses')->where('setTypeEnum', SetType::MONSTER)->orderBy('name')->get();
 
         return view('sets.monster_sets', compact('sets', 'items', 'favourites', 'user'));

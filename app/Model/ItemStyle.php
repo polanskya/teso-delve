@@ -11,6 +11,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string location
  * @property string description
  * @property string name
+ * @property string material
+ * @property string image
+ * @property int externalId
  */
 class ItemStyle extends Model
 {
