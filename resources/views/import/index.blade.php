@@ -58,9 +58,9 @@
                 <div class="panel panel-default">
                     <div class="panel-body text-center">
                         <h3>Teso Delve addon</h3>
-                        <p class="addon-version">({{$addonVersion}})</p>
+                        <p class="addon-version">({{$addonInfo['version']}})</p>
                         <p>Download TESO Delve addon by clicking on the link below, then install it into your ESO addons folder.</p>
-                        <a href="{{env('TESO_DELVE_ADDON_URL', 'https://github.com/HeppyKarlsson/teso-delve-addon/archive/1.0.0-beta.3.zip')}}" class="btn btn-primary"><i class="fa fa-download" aria-hidden="true" title="Item worn"></i> Download TESO Delve addon</a>
+                        <a href="{{$addonInfo['zipball']}}" class="btn btn-primary"><i class="fa fa-download" aria-hidden="true" title="Item worn"></i> Download TESO Delve addon</a>
                     </div>
                 </div>
             </div>

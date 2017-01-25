@@ -3,7 +3,7 @@
         <h5><a href="{{route('dungeon.show', [$dungeon])}}">{{$dungeon->name}}</a></h5>
         <div class="sets">
             @foreach($dungeon->sets as $set)
-                <a href="{{route('set.show', $set)}}">{{$set->name}}</a>
+                <span class="set-hover" setid="{{$set->id}}"><a href="{{route('set.show', $set)}}">{{$set->name}}</a></span>
             @endforeach
         </div>
     </div>

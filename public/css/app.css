@@ -163,14 +163,6 @@
   max-width: 340px;
 }
 
-#daily-pledges-container {
-  color: white;
-}
-
-#daily-pledges-container img {
-  max-width: 100%;
-}
-
 #daily-pledges-container .daily-pledge {
   margin-bottom: 15px;
 }
