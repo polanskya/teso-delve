@@ -19,7 +19,7 @@
                         <h1>Upload your ESO information</h1>
                         <p>Upload your ESO log file to submit your ESO information, which you can find here:</p>
 
-                        <ul>
+                        <ul class="import-guide">
                             <li>Download and install Eso Delve Addon</li>
                             <li>Start ESO and enable the addon</li>
                             <li>Login on a character and open/close your inventory to export items (or use <strong>/tesodelve</strong> command). <br>It will only be this characters inventory and your bank that will be exported.<br>Which means you'll have to do this on all your characters you wish to import</li>
@@ -63,6 +63,16 @@
                         <a href="{{$addonInfo['zipball']}}" class="btn btn-primary"><i class="fa fa-download" aria-hidden="true" title="Item worn"></i> Download TESO Delve addon</a>
                     </div>
                 </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-body text-center">
+                        <h3>ESOUI.com</h3>
+                        <p>You can now find Teso-Delve addon on esoui, so you can easily update it with the help of minion.</p>
+
+                        <p class="text-center"><a target="_blank" href="http://www.esoui.com/downloads/info1586-Teso-Delve.html">Go to esoui.com</a></p>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

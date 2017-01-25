@@ -18,4 +18,6 @@ Route::group(['prefix' => 'admin', 'middleware' => $middlewares], function () {
     Route::get('generate-slugs', 'Admin\SlugController@generateSlugs')->name('admin.generate-slugs');
 
     Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+
+    Route::get('dungeon/{dungeon}/edit', 'DungeonController@edit')->name('admin.dungeon.edit');
 });

@@ -34,7 +34,6 @@ Route::get('/bank', 'BankController@index')->name('bank.index');
 Route::get('/dungeons', 'DungeonController@index')->name('dungeons.index');
 Route::put('/dungeon/{dungeon}/set', 'DungeonController@addSet')->name('dungeon.addSet')->middleware('auth');
 Route::get('/dungeon/{dungeon}', 'DungeonController@show')->name('dungeon.show');
-Route::get('/dungeon/{dungeon}/edit', 'DungeonController@edit')->name('dungeon.edit');
 Route::post('/dungeon/{dungeon}', 'DungeonController@update')->name('dungeon.update');
 
 Route::get('/zones', 'ZoneController@index')->name('zones.index');

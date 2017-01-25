@@ -19,7 +19,7 @@
                             @if(Auth::id() == 1)
                                 <div class="col-md-12">
                                     <div role="group" aria-label="" class="btn-group pull-right">
-                                        <a href="{{route('dungeon.edit', [$dungeon])}}" class="btn btn-default btn-xs"><i aria-hidden="true" class="fa fa-pencil"></i></a>
+                                        <a href="{{route('admin.dungeon.edit', [$dungeon])}}" class="btn btn-default btn-xs"><i aria-hidden="true" class="fa fa-pencil"></i></a>
                                     </div>
                                     <br>
                                     <hr>

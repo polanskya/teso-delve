@@ -212,6 +212,10 @@
   color: white;
 }
 
+.import-guide li {
+  margin-bottom: 10px;
+}
+
 body {
   background: #1A1A1A;
 }
