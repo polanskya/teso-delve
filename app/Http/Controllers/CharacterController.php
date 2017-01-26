@@ -26,6 +26,25 @@ class CharacterController
         return view('character.show', compact('character', 'equippedItems', 'user'));
     }
 
+    public function delete(Character $character) {
+        if(Auth::id() != $character->userId) {
+            abort(403);
+        }
+
+        $character->delete();
+        return redirect()->back();
+    }
+
+    public function restore($character_id) {
+        $character = Character::onlyTrashed()->find($character_id);
+        if(Auth::id() != $character->userId) {
+            abort(403);
+        }
+
+        $character->restore();
+        return redirect()->back();
+    }
+
     public function index() {
         $user = Auth::user();
         $characters = $user->characters()
@@ -33,7 +52,13 @@ class CharacterController
             ->orderByRaw('level DESC, name')
             ->get();
 
-        return view('character.index', compact('characters'));
+        $removedCharacters = $user->characters()
+            ->with('craftingTraits', 'userItems', 'meta')
+            ->onlyTrashed()
+            ->orderByRaw('level DESC, name')
+            ->get();
+
+        return view('character.index', compact('characters', 'removedCharacters'));
     }
 
     public function itemStyles(Character $character) {

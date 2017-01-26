@@ -22,6 +22,8 @@ Route::get('/export', 'ImportController@export');
 
 Route::get('/esoui/art/icons/{image}', 'EsouiController@image');
 
+Route::get('/character/{character}/delete', 'CharacterController@delete')->name('characters.delete');
+Route::get('/character/{character}/restore', 'CharacterController@restore')->name('characters.restore');
 Route::get('/character/{character}', 'CharacterController@show')->name('characters.show');
 Route::get('/character/{character}/crafting/{craftingTypeEnum}', 'CharacterController@craftingResearch')->name('character.crafting');
 Route::get('/character/{character}/motifs', 'CharacterController@itemStyles')->name('character.itemstyles');

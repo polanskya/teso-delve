@@ -12,13 +12,17 @@ use App\Model\UserItem;
 use App\User;
 use Carbon\Carbon;
 use HeppyKarlsson\Meta\Service\MetaService;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 
 class EsoImport
 {
 
+    /** @var Collection */
     private $characters = null;
+    /** @var Collection */
     private $items = null;
+    /** @var Collection */
     private $itemStyles = null;
     /** @var User */
     private $user = null;
@@ -196,6 +200,7 @@ class EsoImport
         $character->currency = intval($properties[12]);
         $character->account = $properties[15];
         $character->server = $properties[14];
+        $character->deleted_at = null;
         $character->lang = isset($properties[18]) ? trim(preg_replace('/\s\s+/', ' ', $properties[18])) : config('constants.default-language');
 
         if(isset($properties[13])) {
@@ -309,13 +314,14 @@ class EsoImport
                 }
 
                 if(isset($properties[25]) and intval($properties[25]) != 0) {
-                    $itemStyle = $this->itemStyles()->where('externalId', intval($properties[25]))->first();
+                    $itemStyle = $this->itemStyles->where('externalId', intval($properties[25]))->first();
                     if(is_null($itemStyle)) {
                         $itemStyle = new ItemStyle();
                         $itemStyle->externalId = intval($properties[25]);
                         $itemStyle->name = '';
                         $itemStyle->image = '';
                         $itemStyle->save();
+                        $this->itemStyles->add($itemStyle);
                     }
                     $item->itemStyleId = isset($itemStyle->id) ? $itemStyle->id : null;
                 }

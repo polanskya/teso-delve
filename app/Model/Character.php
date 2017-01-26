@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string server
  * @property string account
  * @property int currency
+ * @property mixed|string lang
  */
 class Character extends Model
 {

@@ -13,23 +13,23 @@
                         <h1>My characters</h1>
                         <table class="table table-condensed table-hover">
                             <thead>
-                                <tr>
-                                    <th class="min-width"></th>
-                                    <th class="min-width"></th>
-                                    <th>Name</th>
-                                    <th colspan="2">Level</th>
-                                    <th>Race</th>
-                                    <th>Tank</th>
-                                    <th>Healer</th>
-                                    <th>DPS</th>
-                                    <th>Smith</th>
-                                    <th>Wood</th>
-                                    <th>Cloth</th>
-                                    <th>Horse training</th>
-                                    <th class="text-right">Inventory</th>
-                                    <th class="text-right">Gold</th>
-                                    <th></th>
-                                </tr>
+                            <tr>
+                                <th class="min-width"></th>
+                                <th class="min-width"></th>
+                                <th>Name</th>
+                                <th colspan="2">Level</th>
+                                <th>Race</th>
+                                <th>Tank</th>
+                                <th>Healer</th>
+                                <th>DPS</th>
+                                <th>Smith</th>
+                                <th>Wood</th>
+                                <th>Cloth</th>
+                                <th>Horse training</th>
+                                <th class="text-right">Inventory</th>
+                                <th class="text-right">Gold</th>
+                                <th></th>
+                            </tr>
                             </thead>
                             <tbody>
                             @foreach($characters as $i => $character)
@@ -56,22 +56,19 @@
                                         @endif
                                     </td>
                                     <td class="text-right">{{number_format($character->currency, 0, '.', ' ')}}</td>
-                                    <td>
-                                        <div class="btn-group hidden">
+                                    <td class="text-right">
+                                        <div class="btn-group">
                                             <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <i class="fa fa-cog"></i>
                                             </button>
                                             <ul class="dropdown-menu">
-                                                <li><a href="javascript: void(0)">Action</a></li>
-                                                <li><a href="javascript: void(0)">Another action</a></li>
-                                                <li><a href="javascript: void(0)">Something else here</a></li>
-                                                <li role="separator" class="divider"></li>
-                                                <li><a href="javascript: void(0)">Separated link</a></li>
+                                                <li><a href="{{route('characters.delete', [$character])}}">Delete character</a></li>
                                             </ul>
                                         </div>
                                     </td>
                                 </tr>
                             @endforeach
+                            </tbody>
                             <tfoot>
                             <tr>
                                 <td colspan="14"></td>
@@ -82,9 +79,58 @@
                                 <td></td>
                             </tr>
                             </tfoot>
-                            </tbody>
                         </table>
                     </div>
+
+                    @if($removedCharacters->count() > 0)
+                        <div>
+                            <h5>Removed characters</h5>
+                            <table class="table table-condensed table-hover">
+                                <thead>
+                                <tr>
+                                    <th class="min-width"></th>
+                                    <th class="min-width"></th>
+                                    <th>Name</th>
+                                    <th colspan="2">Level</th>
+                                    <th>Race</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($removedCharacters as $i => $character)
+                                    <tr>
+                                        <td class="min-width"><img class="icon-size" src="/gfx/alliance_{{$character->allianceId}}.png"></td>
+                                        <td class="min-width"><img title="{{trans('eso.classes.'.$character->classId.'.name')}}" class="icon-size" src="/gfx/class_{{$character->classId}}.png"></td>
+                                        <td><a href="{{route('characters.show', [$character->id])}}">{{$character->name}}</a></td>
+                                        @if($character->level >= 50)
+                                            <td class="min-width"><img class="icon-size" src="/gfx/champion_icon.png" class="champion-icon"></td><td>{{$character->championLevel}}</td>
+                                        @else
+                                            <td class="min-width"></td><td>{{$character->level}}</td>
+                                        @endif
+                                        <td>{{trans('eso.races.'.$character->raceId.'.name')}}</td>
+                                        <td class="text-right">
+                                            <div class="btn-group">
+                                                <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fa fa-cog"></i>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="{{route('characters.restore', [$character])}}">Restore character</a></li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="6"></td>
+                                    <td></td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    @endif
+
                 </div>
             </div>
         </div>
