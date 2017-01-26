@@ -84,7 +84,6 @@ class EsoImport
         $properties = explode(';', $line);
 
         $lang = isset($properties[18]) ? trim(preg_replace('/\s\s+/', ' ', $properties[18])) : config('constants.default-language');
-
         if($this->user->lang != $lang) {
             $this->user->lang = $lang;
             $this->user->save();

@@ -1,4 +1,4 @@
 <?php
 return [
-    'defualt-language' => 'en',
+    'default-language' => 'en',
 ];

@@ -8,7 +8,7 @@ TesoDelve =
             {
                 ["a_characters"] = 
                 {
-                    ["8798292063094418"] = "CHARACTER:8798292063094418;Eamon Rylanor;Sorcerer;2;6;0;High Elf;7;3;71974000;1485349359;true-false-false;6228;1-1-1;EU Megaserver;@Heppy;89;120;en",
+                    ["8798292063094418"] = "CHARACTER:8798292063094418;Eamon Rylanor;Sorcerer;2;6;0;High Elf;7;3;71974000;1485349359;true-false-false;6228;1-1-1;EU Megaserver;@Heppy;89;120",
                     ["8798292063158074"] = "CHARACTER:8798292063158074;Davenas Rylanor;Dragonknight;1;3;0;Dark Elf;4;3;71985000;1485350841;true-false-false;9000;1-1-1;EU Megaserver;@Heppy;64;120;en",
                     ["8798292054493698"] = "CHARACTER:8798292054493698;Ji'lezzian;Nightblade;3;14;0;Khajiit;9;3;33199000;1485367077;true-false-false;13979;1-1-1;EU Megaserver;@Heppy;90;120;en",
                     ["8798292054409856"] = "CHARACTER:8798292054409856;Lestat Rylanor;Templar;6;50;375;Imperial;10;3;32634000;1485367181;true-false-true;372094;3-3-1;EU Megaserver;@Heppy;170;120;en",
