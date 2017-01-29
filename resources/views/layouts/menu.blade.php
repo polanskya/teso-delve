@@ -59,7 +59,20 @@
                                     <a href="{{route('zones.index')}}">Zones</a>
                                     <a href="{{route('set.monster')}}">Monster</a>
                                     <a href="{{route('set.craftable')}}">Craftable</a>
-                                    <a href="{{route('dungeons.index')}}">Dungeons</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown">
+                            <a class="dropdown-toggle user-dropdown" data-toggle="dropdown" href="javascript: void(0)" role="button" aria-expanded="false">
+                                <span class="m-r-1">Dungeons</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{{route('dungeons.groups.index')}}">Group dungeons</a>
+                                    <a href="{{route('dungeons.public.index')}}">Public dungeons</a>
+                                    <a href="{{route('dungeons.trials.index')}}">Trials</a>
+                                    <a href="{{route('dungeons.delves.index')}}">Delves</a>
                                 </li>
                             </ul>
                         </li>
@@ -82,8 +95,8 @@
                         </li>
 
                         <li>
-                            <a href="{{route('bank.index')}}" aria-expanded="false">
-                                <span class="m-r-1">Bank</span>
+                            <a href="{{route('inventory.index')}}" aria-expanded="false">
+                                <span class="m-r-1">Inventory</span>
                             </a>
                         </li>
 
@@ -103,7 +116,19 @@
                                     <a href="{{route('zones.index')}}">Zones</a>
                                     <a href="{{route('set.monster')}}">Monster</a>
                                     <a href="{{route('set.craftable')}}">Craftable</a>
-                                    <a href="{{route('dungeons.index')}}">Dungeons</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle user-dropdown" data-toggle="dropdown" href="javascript: void(0)" role="button" aria-expanded="false">
+                                <span class="m-r-1">Dungeons</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{{route('dungeons.groups.index')}}">Group dungeons</a>
+                                    <a href="{{route('dungeons.public.index')}}">Public dungeons</a>
+                                    <a href="{{route('dungeons.trials.index')}}">Trials</a>
+                                    <a href="{{route('dungeons.delves.index')}}">Delves</a>
                                 </li>
                             </ul>
                         </li>

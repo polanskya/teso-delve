@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('meta-title')
-  Edit dungeon {{$dungeon->name}} - @parent
+    Edit dungeon {{$dungeon->name}} - @parent
 @endsection
 
 
@@ -28,8 +28,19 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label for="dungeon[dungeonTypeEnum]" class="control-label col-md-2">Type</label>
+                                    <div class="col-md-10">
+                                        <select class="form-control" name="dungeon[dungeonTypeEnum]">
+                                            @foreach(\App\Enum\DungeonType::all() as $dungeonType)
+                                                <option value="{{$dungeonType}}">{{trans('eso.dungeonType.'.$dungeonType)}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
                                     <label for="dungeon[description]" class="control-label col-md-2">Description</label>
-                                    <div class="col-md-10"><textarea id="dungeon[description]" rows="8" name="dungeon[description]" class="form-control"></textarea></div>
+                                    <div class="col-md-10"><textarea id="dungeon[description]" rows="12" name="dungeon[description]" class="form-control">{{$dungeon->description}}</textarea></div>
                                 </div>
 
                                 <div class="form-group">
@@ -39,7 +50,7 @@
 
                                 <div class="form-group">
                                     <div class="col-md-12 text-right">
-                                        <input type="submit" value="Save set" class="btn btn-primary">
+                                        <input type="submit" value="Update dungeon" class="btn btn-primary">
                                     </div>
                                 </div>
                             </div>

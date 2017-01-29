@@ -12,7 +12,7 @@
            <div class="col-md-3">
                <h4>Contact</h4>
                <p>You can get in touch with us by mailing the following email</p>
-               <p><a href="mailto:tehheppy@gmail.com">tehheppy@gmail.com</a></p>
+               <p><a href="mailto:{{config('constants.mail')}}">{{config('constants.mail')}}</a></p>
            </div>
            <div class="col-md-3">
                <h4>Contribute</h4>

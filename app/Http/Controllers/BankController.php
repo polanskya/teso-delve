@@ -16,7 +16,7 @@ class BankController extends Controller
         $gold = 0;
         $bagSize = Auth::user()->getMeta('bag_' . BagType::BANK);
 
-        return view('inventory.index', compact('bagEnum', 'items', 'gold', 'bagSize'));
+        return view('inventory.list', compact('bagEnum', 'items', 'gold', 'bagSize'));
     }
 
 }

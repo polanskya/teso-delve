@@ -61,6 +61,20 @@ class CharacterController
         return view('character.index', compact('characters', 'removedCharacters'));
     }
 
+    public function indexDeleted() {
+        $user = Auth::user();
+
+        $removedCharacters = $user->characters()
+            ->with('craftingTraits', 'userItems', 'meta')
+            ->onlyTrashed()
+            ->orderByRaw('level DESC, name')
+            ->get();
+
+        $characters = $removedCharacters;
+
+        return view('character.index', compact('characters', 'removedCharacters'));
+    }
+
     public function itemStyles(Character $character) {
         $knownItemStyles = $character->itemStyles;
         $itemStyles = ItemStyle::where('craftable', 1)->get();

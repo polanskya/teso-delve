@@ -12,6 +12,10 @@ body {
   background: #1A1A1A;
 }
 
+body .main-wrap>footer {
+  height: auto;
+}
+
 .max-width {
   max-width: 100%;
 }
@@ -74,6 +78,7 @@ body.eso-background {
 
 .content > .container {
   padding-top: 19px;
+  padding-bottom: 20px;
 }
 
 body .sub-navbar.sub-navbar__header-breadcrumbs {

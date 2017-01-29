@@ -15,7 +15,20 @@
 Auth::routes();
 
 include('ajax.php');
+
+Route::get('/dungeon/public', 'DungeonController@index')->name('dungeons.public.index');
+Route::get('/dungeon/group', 'DungeonController@index')->name('dungeons.groups.index');
+Route::get('/dungeon/trials', 'DungeonController@index')->name('dungeons.trials.index');
+Route::get('/dungeon/delves', 'DungeonController@index')->name('dungeons.delves.index');
+
+Route::group(['middleware' => 'auth'], function () {
+    include('web/inventory.php');
+});
+
 include('admin.php');
+
+
+
 
 Route::get('/import-data', 'ImportController@import');
 Route::get('/export', 'ImportController@export');
@@ -27,6 +40,7 @@ Route::get('/character/{character}/restore', 'CharacterController@restore')->nam
 Route::get('/character/{character}', 'CharacterController@show')->name('characters.show');
 Route::get('/character/{character}/crafting/{craftingTypeEnum}', 'CharacterController@craftingResearch')->name('character.crafting');
 Route::get('/character/{character}/motifs', 'CharacterController@itemStyles')->name('character.itemstyles');
+Route::get('/characters/deleted', 'CharacterController@indexDeleted')->name('characters.index.deleted')->middleware('auth');
 Route::get('/characters', 'CharacterController@index')->name('characters.index')->middleware('auth');
 
 Route::get('/character/{character}/inventory', 'CharacterController@inventory')->name('character.inventory')->middleware('auth');
@@ -37,6 +51,7 @@ Route::get('/dungeons', 'DungeonController@index')->name('dungeons.index');
 Route::put('/dungeon/{dungeon}/set', 'DungeonController@addSet')->name('dungeon.addSet')->middleware('auth');
 Route::get('/dungeon/{dungeon}', 'DungeonController@show')->name('dungeon.show');
 Route::post('/dungeon/{dungeon}', 'DungeonController@update')->name('dungeon.update');
+
 
 Route::get('/zones', 'ZoneController@index')->name('zones.index');
 Route::get('/zone/{zoneId}', 'ZoneController@show')->name('zone.show');
@@ -63,4 +78,3 @@ Route::get('/import', 'ImportController@index')->name('import.index');
 
 Route::get('/home', 'SetController@mySets')->name('home.index')->middleware('auth');
 Route::get('/', 'HomeController@index');
-

@@ -16,7 +16,7 @@ if($user) {
     <td class="min-width">
         <a href="#" class="open-set-row" setId="{{$set->id}}" ><i class="fa fa-chevron-{{$isFavourite ? 'up' : 'down'}}" aria-hidden="true"></i></a>
     </td>
-    <td colspan="2">
+    <td colspan="2" class="nowrap">
         <span class="set-hover" setId="{{$set->id}}">
             <a href="{{route('set.show', [$set])}}"><strong>{{$set->name}}</strong></a>
             @if($user and $setCount > 0)
@@ -37,7 +37,7 @@ if($user) {
         </ul>
     </td>
     <td colspan="1">
-        <div class="btn-group pull-right" role="group" aria-label="...">
+        <div class="btn-group pull-right nowrap" role="group" aria-label="...">
             @if($user)
                 @if(Gate::allows('update', $set))
                     <a href="{{route('set.edit', [$set])}}" class="btn btn-default btn-xs"><i class="fa fa-pencil" aria-hidden="true"></i></a>

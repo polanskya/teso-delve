@@ -166,6 +166,7 @@ return [
         /*
          * Package Service Providers...
          */
+        App\Providers\ComposerServiceProvider::class,
         HeppyKarlsson\EsoImport\ServiceProvider::class,
         Cviebrock\EloquentSluggable\ServiceProvider::class,
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,

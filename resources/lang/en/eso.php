@@ -23,5 +23,11 @@ return [
         \App\Enum\PledgeChest::MAJ_AL_RAGATH => 'Maj-al Ragath',
         \App\Enum\PledgeChest::GLIRION_THE_REDBEARD => 'Glirion the Redbeard',
         \App\Enum\PledgeChest::URGALARG_CHIEF_BANE => 'Urgalarg Chief-bane'
+    ],
+    'dungeonType' => [
+        1 => 'Group dungeon',
+        2 => 'Public dungeon',
+        3 => 'Delve',
+        4 => 'Trial',
     ]
 ];

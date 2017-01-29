@@ -1,14 +1,11 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\Enum\BagType;
 use App\Enum\ItemStyleChapter;
 use App\Http\Controllers\Controller;
 use App\Model\Item;
 use App\Model\ItemStyle;
 use App\Model\ItemStyleChapter as ItemStyleChapterModel;
-use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class CraftingController extends Controller
@@ -17,14 +14,14 @@ class CraftingController extends Controller
     public function itemStyles() {
         $itemStyles = ItemStyle::all();
         $chapters = ItemStyleChapter::order();
-        $motifs = Item::where('type', 8)->orderBy('name')->get();
+        $motifs = Item::where('type', 8)->where('lang', config('constants.default-language'))->orderBy('name')->get();
 
         return view('admin.crafting.itemStyles', compact('itemStyles', 'chapters', 'motifs'));
     }
 
     public function itemStyle(ItemStyle $itemStyle) {
-        $assignedMotifs = \App\Model\ItemStyleChapter::all()->pluck('itemId')->toArray();
-        $motifs = Item::where('type', 8)->orderBy('name')->get();
+        $assignedMotifs = ItemStyleChapterModel::all()->pluck('itemId')->toArray();
+        $motifs = Item::where('type', 8)->where('lang', config('constants.default-language'))->orderBy('name')->get();
         $chapters = $itemStyle->chapters;
         return view('admin.crafting.itemStyle', compact('itemStyle', 'motifs', 'chapters', 'assignedMotifs'));
     }

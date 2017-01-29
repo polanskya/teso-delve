@@ -41,20 +41,20 @@
 
                         <br>
 
-                        <table class="table table-condensed set-table table-hover">
+                        <table class="table table-responsive table-condensed set-table table-hover">
                             <thead>
                             <tr>
                                 <th></th>
-                                <th></th>
+                                <th class="hidden-xs"></th>
                                 <th>Name</th>
-                                <th> @if(Request::get('sortBy') == 'equipType')
+                                <th class="hidden-xs"> @if(Request::get('sortBy') == 'equipType')
                                         <i class="fa fa-sort-{{Request::get('sort')}}"></i>
                                     @endif
                                     <a href="{{route('set.my-sets', ['sortBy' => 'equipType', 'sort' => Request::get('sort') == 'asc' ? 'desc' : 'asc'] + Request::query())}}">Type</a></th>
-                                <th>
+                                <th class="hidden-xs">
                                     Weight
                                 </th>
-                                <th>
+                                <th class="hidden-xs">
                                     @if(Request::get('sortBy') == 'trait')
                                         <i class="fa fa-sort-{{Request::get('sort')}}"></i>
                                     @endif

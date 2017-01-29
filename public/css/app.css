@@ -109,6 +109,10 @@
   margin-top: -5px;
 }
 
+.item-row-icon {
+  max-width: 25px;
+}
+
 .inventory .item_image {
   display: inline-block;
   margin-right: 5px;
@@ -121,6 +125,14 @@
   margin-top: -17px;
   width: 40px;
   text-align: right;
+}
+
+.filter-icons img {
+  max-width: 34px;
+}
+
+.filter-icons .btn {
+  padding: 0px;
 }
 
 .table-grid tbody tr td {
@@ -220,6 +232,10 @@ body {
   background: #1A1A1A;
 }
 
+body .main-wrap > footer {
+  height: auto;
+}
+
 .max-width {
   max-width: 100%;
 }
@@ -277,6 +293,7 @@ body.eso-background {
 
 .content > .container {
   padding-top: 19px;
+  padding-bottom: 20px;
 }
 
 body .sub-navbar.sub-navbar__header-breadcrumbs {

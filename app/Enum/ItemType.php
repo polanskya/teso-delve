@@ -1,12 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Heppy
- * Date: 2016-12-04
- * Time: 15:13
- */
-
-namespace App\Enum;
+<?php namespace App\Enum;
 
 
 class ItemType
@@ -73,4 +65,56 @@ class ItemType
     const WOODWORKING_BOOSTER = 42;
     const WOODWORKING_MATERIAL = 38;
     const WOODWORKING_RAW_MATERIAL = 37;
+
+    static public function consumables() {
+        return [
+            self::POTION,
+            self::FOOD,
+            self::POISON,
+            self::CONTAINER,
+            self::RECIPE,
+            self::DRINK,
+            self::RACIAL_STYLE_MOTIF,
+        ];
+    }
+
+    static public function materials() {
+        return [
+            self::RAW_MATERIAL,
+            self::WOODWORKING_MATERIAL,
+            self::WOODWORKING_RAW_MATERIAL,
+            self::BLACKSMITHING_MATERIAL,
+            self::BLACKSMITHING_RAW_MATERIAL,
+            self::ENCHANTING_RUNE_ASPECT,
+            self::ENCHANTING_RUNE_ESSENCE,
+            self::ENCHANTING_RUNE_POTENCY,
+            self::CLOTHIER_MATERIAL,
+            self::CLOTHIER_RAW_MATERIAL,
+            self::WEAPON_TRAIT,
+            self::ARMOR_TRAIT,
+            self::REAGENT,
+            self::INGREDIENT,
+        ];
+    }
+
+
+    static public function misc() {
+        return [
+            self::WEAPON_BOOSTER,
+            self::TABARD,
+            self::TOOL,
+            self::TROPHY,
+            self::TREASURE,
+            self::SPICE,
+            self::SIEGE,
+            self::LOCKPICK,
+            self::ADDITIVE,
+            self::COLLECTIBLE,
+            self::DISGUISE,
+            self::MOUNT,
+            self::PLUG,
+        ];
+    }
+
+
 };

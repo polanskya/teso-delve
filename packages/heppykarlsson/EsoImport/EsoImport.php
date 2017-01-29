@@ -42,7 +42,6 @@ class EsoImport
         $this->characters = Auth::user()->characters()->with('itemStyles', 'meta')->withTrashed()->get();
         $this->itemStyles = ItemStyle::all();
 
-
         $lines = [];
 
         if($file) {
@@ -199,7 +198,6 @@ class EsoImport
         $character->currency = intval($properties[12]);
         $character->account = $properties[15];
         $character->server = $properties[14];
-        $character->deleted_at = null;
         $character->lang = isset($properties[18]) ? trim(preg_replace('/\s\s+/', ' ', $properties[18])) : config('constants.default-language');
 
         if(isset($properties[13])) {
@@ -228,7 +226,6 @@ class EsoImport
         $character->ridingUnlocked_at = null;
         if(isset($properties[9])) {
             // Calculate when next riding lesson is unlocked
-            $properties = explode(';', $line);
             $seconds = intval($properties[9]) / 1000;
             $nextTraining = intval($properties[10]) + $seconds;
             $character->ridingUnlocked_at = $nextTraining;
@@ -350,6 +347,7 @@ class EsoImport
                 $userItem->equipTypeEnum = $properties[3];
                 $userItem->armorTypeEnum = $properties[6];
                 $userItem->weaponTypeEnum = intval($properties[13]);
+                $userItem->itemTypeEnum = intval($properties[10]);
                 $userItem->count = intval($properties[17]);
 
                 $userItem->isBound = (isset($properties[16]) and stripos($properties[16], 'true') !== false);

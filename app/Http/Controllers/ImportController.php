@@ -19,7 +19,7 @@ class ImportController
         $esoImport->import(storage_path('TesoDelve.lua'));
     }
 
-    public function export() {
+        public function export() {
         $sets = Set::all();
         $setBonuses = SetBonus::all();
         $userFavourites = UserSetFavourite::all();

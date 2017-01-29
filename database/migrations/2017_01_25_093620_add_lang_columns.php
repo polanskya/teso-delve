@@ -14,20 +14,20 @@ class AddLangColumns extends Migration
     public function up()
     {
         Schema::table('sets', function (Blueprint $table) {
-            $table->string('lang', 10)->default(config('constants.defualt-language'))->after('name');
+            $table->string('lang', 10)->default(config('constants.default-language'))->after('name');
         });
 
         Schema::table('users', function (Blueprint $table) {
-            $table->string('lang', 10)->default(config('constants.defualt-language'))->after('email');
+            $table->string('lang', 10)->default(config('constants.default-language'))->after('email');
             $table->dateTime('seen_at')->nullable()->after('dumpUploaded_at');
         });
 
         Schema::table('items', function (Blueprint $table) {
-            $table->string('lang', 10)->default(config('constants.defualt-language'))->after('name');
+            $table->string('lang', 10)->default(config('constants.default-language'))->after('name');
         });
 
         Schema::table('characters', function (Blueprint $table) {
-            $table->string('lang', 10)->default(config('constants.defualt-language'))->after('externalId');
+            $table->string('lang', 10)->default(config('constants.default-language'))->after('externalId');
             $table->string('server')->nullable()->after('lang');
             $table->string('account')->nullable()->after('server');
         });

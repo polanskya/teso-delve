@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int count
  * @property bool isBound
  * @property bool isLocked
+ * @property int itemTypeEnum
  */
 class UserItem extends Model
 {

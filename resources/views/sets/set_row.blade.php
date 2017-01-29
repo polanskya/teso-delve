@@ -28,7 +28,7 @@ if($user) {
         </span>
     </td>
 
-    <td>
+    <td class="hidden-xs">
 
     </td>
     <td colspan="4">

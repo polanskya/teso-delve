@@ -21,4 +21,11 @@ Route::group(['prefix' => 'admin', 'middleware' => $middlewares], function () {
     Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
     Route::get('dungeon/{dungeon}/edit', 'DungeonController@edit')->name('admin.dungeon.edit');
+
+
+    Route::get('boss/create', 'Admin\BossController@create')->name('admin.boss.create');
+    Route::get('boss/{boss}/edit', 'Admin\BossController@edit')->name('admin.boss.edit');
+    Route::get('boss/{boss}/delete', 'Admin\BossController@delete')->name('admin.boss.delete');
+    Route::put('boss/{boss}', 'Admin\BossController@update')->name('admin.boss.update');
+    Route::post('boss', 'Admin\BossController@store')->name('admin.boss.store');
 });

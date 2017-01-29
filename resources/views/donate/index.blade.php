@@ -27,7 +27,7 @@
                     <div class="col-md-12">
                         <h2 id="content">Content</h2>
                         <p>Teso-Delve.com is in it's beginning stages of development, and is currently in need of alot of content. If you're interested in helping out with content for website I'll glady take it!
-                            Contact me at <a href="mailto:tehheppy@gmail.com">tehheppy@gmail.com</a> and we can definetly find something for you to help us with.</p>
+                            Contact me at <a href="mailto:{{config('constants.mail')}}">{{config('constants.mail')}}</a> and we can definetly find something for you to help us with.</p>
 
 
                         <h5>Currently in need of:</h5>
@@ -46,7 +46,7 @@
                         <p>
                             A website really needs alot of images as it makes the website seemed filled with content. Sadly I don't have the time to both develop, maintain,
                             make content and take images all at once therefore I would really appreciate if you'd decide to help me out with images.
-                            There are alot of pages on Teso-Delve.com that really needs images, just look around and send in your contribtion or ask me what's needed on <a href="mailto:tehheppy@gmail.com">tehheppy@gmail.com</a>
+                            There are alot of pages on Teso-Delve.com that really needs images, just look around and send in your contribtion or ask me what's needed on <a href="mailto:{{config('constants.mail')}}">{{config('constants.mail')}}</a>
                         </p>
                     </div>
 

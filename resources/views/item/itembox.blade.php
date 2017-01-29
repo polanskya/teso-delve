@@ -57,7 +57,7 @@
         </div>
         @endif
 
-        @if($item->type == 8 and !is_null($itemStyleChapter))
+        @if(isset($characters) and $item->type == 8 and !is_null($itemStyleChapter))
             <div class="col-md-12 motif-known-by">
                 <h3>Known by</h3>
                 @foreach($characters as $character)
