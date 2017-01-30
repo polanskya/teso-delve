@@ -18,7 +18,7 @@ class CreateDungeonTable extends Migration
             $table->string('name');
             $table->integer('type');
             $table->integer('alliance')->null();
-            $table->integer('groupSize')->default(4);
+            $table->integer('groupSize')->default(4)->nullable();
             $table->integer('zone');
             $table->text('description');
             $table->timestamps();

@@ -20,6 +20,7 @@ Route::get('/dungeon/public', 'DungeonController@index')->name('dungeons.public.
 Route::get('/dungeon/group', 'DungeonController@index')->name('dungeons.groups.index');
 Route::get('/dungeon/trials', 'DungeonController@index')->name('dungeons.trials.index');
 Route::get('/dungeon/delves', 'DungeonController@index')->name('dungeons.delves.index');
+Route::get('/dungeon/arenas', 'DungeonController@index')->name('dungeons.arenas.index');
 
 Route::group(['middleware' => 'auth'], function () {
     include('web/inventory.php');

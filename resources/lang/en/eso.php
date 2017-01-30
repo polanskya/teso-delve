@@ -29,5 +29,6 @@ return [
         2 => 'Public dungeon',
         3 => 'Delve',
         4 => 'Trial',
+        5 => 'Arena',
     ]
 ];

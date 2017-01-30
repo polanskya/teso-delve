@@ -20,6 +20,8 @@ Route::group(['prefix' => 'admin', 'middleware' => $middlewares], function () {
 
     Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
+    Route::get('dungeon/create', 'DungeonController@create')->name('admin.dungeon.create');
+    Route::post('dungeon', 'DungeonController@store')->name('admin.dungeon.store');
     Route::get('dungeon/{dungeon}/edit', 'DungeonController@edit')->name('admin.dungeon.edit');
 
 

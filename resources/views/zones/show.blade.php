@@ -15,16 +15,27 @@
                         <div class="row">
                             <div class="col-md-8">
                                 <h1>{{$zone['name']}}</h1>
-                                <ul class="list-unstyled">
-                                    @foreach($dungeons as $dungeon)
-                                        <li><img src="/gfx/group-instance.png" class="icon-size"> <a href="{{route('dungeon.show', [$dungeon])}}">{{$dungeon->name}}</a></li>
-                                    @endforeach
-                                </ul>
                             </div>
                             <div class="col-md-4">
                                 @if(isset($zone['image']))
-                                    <img src="/gfx/zones/{{$zone['image']}}" class="max-width">
+                                    <a href="/gfx/zones/{{$zone['image']}}" class="thumbnail no-bg">
+                                        <img src="/gfx/zones/{{$zone['image']}}" class="max-width">
+                                    </a>
                                 @endif
+                            </div>
+
+                            <div class="col-md-12">
+                                @foreach($dungeons->groupBy('dungeonTypeEnum') as $dungeonTypeEnum => $dungeons)
+                                    <div class="col-md-2">
+
+                                        <h5><img src="{{config('gfx.dungeonTypes.'.$dungeons->first()->dungeonTypeEnum)}}" class="icon-size"> @lang('eso.dungeonType.'.$dungeonTypeEnum)s</h5>
+                                        <ul class="list-unstyled">
+                                            @foreach($dungeons as $dungeon)
+                                                <li><a href="{{route('dungeon.show', [$dungeon])}}">{{$dungeon->name}}</a></li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
 

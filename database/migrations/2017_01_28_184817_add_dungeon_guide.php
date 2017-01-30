@@ -14,7 +14,8 @@ class AddDungeonGuide extends Migration
     public function up()
     {
         Schema::table('dungeons', function (Blueprint $table) {
-            $table->integer('dungeonTypeEnum')->default(1)->after('zone');
+            $table->dropColumn('type');
+            $table->integer('dungeonTypeEnum')->default(\App\Enum\DungeonType::GROUP_DUNGEON)->after('zone');
         });
 
         Schema::create('bosses', function (Blueprint $table) {
@@ -39,6 +40,7 @@ class AddDungeonGuide extends Migration
     public function down()
     {
         Schema::table('dungeons', function (Blueprint $table) {
+            $table->integer('type');
             $table->dropColumn('dungeonTypeEnum');
         });
 

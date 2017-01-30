@@ -5,6 +5,7 @@ use App\Enum\DungeonType;
 use App\Model\DailyPledges;
 use App\Model\Dungeon;
 use App\Model\Set;
+use App\Objects\Zones;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,6 +27,9 @@ class DungeonController
         elseif($routeName == 'dungeons.delves.index') {
             $dungeonType = DungeonType::DELVE;
         }
+        elseif($routeName == 'dungeons.arenas.index') {
+            $dungeonType = DungeonType::ARENA;
+        }
 
         $dungeons = Dungeon::with('sets', 'bosses')
             ->where('dungeonTypeEnum', $dungeonType)
@@ -36,6 +40,38 @@ class DungeonController
         $pledges = [$pledges->pledge1, $pledges->pledge2, $pledges->pledge3];
 
         return view('dungeon.index', compact('dungeons', 'items', 'dungeonType', 'pledges'));
+    }
+
+    public function store(Request $request) {
+        $data = $request->get('dungeon');
+
+        $dungeon = new Dungeon();
+        $dungeon->name = $data['name'];
+        $dungeon->dungeonTypeEnum = empty($data['dungeonTypeEnum']) ? null : $data['dungeonTypeEnum'];
+        $dungeon->zone = empty($data['zone']) ? null : $data['zone'];
+        $zoneObject = new Zones();
+
+        if(!is_null($dungeon->zone)) {
+            $zone = $zoneObject->getZone($dungeon->zone);
+        }
+
+        $dungeon->alliance = isset($zone) ? $zone['Alliance'] : null;
+        $dungeon->image = $data['image'];
+        $dungeon->description = $data['description'];
+        $dungeon->groupSize = empty($data['groupSize']) ? null : $data['groupSize'];
+        $dungeon->save();
+
+        return redirect()->route('dungeon.show', [$dungeon]);
+    }
+
+    public function create(Request $request) {
+        $dungeon = new Dungeon();
+
+        $dungeon->dungeonTypeEnum = $request->has('dungeonType') ? $request->get('dungeonType') : null;
+        $zones = new Zones();
+        $zones = $zones->getZones();
+
+        return view('dungeon.edit', compact('dungeon', 'zones'));
     }
 
     public function show(Request $request, Dungeon $dungeon)
@@ -72,11 +108,14 @@ class DungeonController
     public function edit(Dungeon $dungeon) {
         $sets = $dungeon->sets;
 
+        $zones = new Zones();
+        $zones = $zones->getZones();
+
         $all_sets = Set::whereNotIn('id', $sets->pluck('id'))
             ->orderBy('name')
             ->get();
 
-        return view('dungeon.edit', compact('dungeon', 'sets', 'all_sets'));
+        return view('dungeon.edit', compact('dungeon', 'sets', 'all_sets', 'zones'));
     }
 
     public function addSet(Request $request, Dungeon $dungeon) {

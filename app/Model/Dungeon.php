@@ -14,6 +14,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property string guide
  * @property string image
  * @property string description
+ * @property null dungeonTypeEnum
+ * @property null zone
+ * @property int groupSize
+ * @property null alliance
  */
 class Dungeon extends Model
 {
@@ -42,7 +46,7 @@ class Dungeon extends Model
 
     public function zone() {
         $zoneObject = new Zones();
-        return $zoneObject->getZone($this->zone);
+        return is_null($this->getAttribute('zone')) ? null : $zoneObject->getZone($this->getAttribute('zone'));
     }
 
 }

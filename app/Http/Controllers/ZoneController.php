@@ -33,7 +33,7 @@ class ZoneController
         }
 
         $zoneSets = ZoneSet::where('zoneId', $zone['id'])->get();
-        $dungeons = Dungeon::where('zone', $zone['id'])->orderBy('type')->get();
+        $dungeons = Dungeon::where('zone', $zone['id'])->orderBy('dungeonTypeEnum')->get();
         $sets = Set::whereIn('id', $zoneSets->pluck('setId'))->get();
 
         return view('zones.show', compact('zone', 'items', 'favourites', 'sets', 'all_sets', 'user', 'dungeons'));

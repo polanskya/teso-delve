@@ -13,8 +13,9 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
 
-                        <form method="post" action="{{route('dungeon.update', [$dungeon])}}" class="form-horizontal">
+                        <form method="post" action="{{$dungeon->exists ? route('dungeon.update', [$dungeon]) : route('admin.dungeon.store')}}" class="form-horizontal">
                             {{csrf_field()}}
+                            {{method_field($dungeon->exists ? 'put' : 'post')}}
 
                             <div class="form-content">
                                 <div class="form-group">
@@ -31,8 +32,21 @@
                                     <label for="dungeon[dungeonTypeEnum]" class="control-label col-md-2">Type</label>
                                     <div class="col-md-10">
                                         <select class="form-control" name="dungeon[dungeonTypeEnum]">
-                                            @foreach(\App\Enum\DungeonType::all() as $dungeonType)
-                                                <option value="{{$dungeonType}}">{{trans('eso.dungeonType.'.$dungeonType)}}</option>
+                                            <option value="">Select type</option>
+                                            @foreach(\App\Enum\DungeonType::constants() as $dungeonType)
+                                                <option {{$dungeonType == $dungeon->dungeonTypeEnum ? 'selected="selected"' : ''}} value="{{$dungeonType}}">{{trans('eso.dungeonType.'.$dungeonType)}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="dungeon[zone]" class="control-label col-md-2">Zone</label>
+                                    <div class="col-md-10">
+                                        <select class="form-control" name="dungeon[zone]">
+                                            <option value="">Select zone</option>
+                                            @foreach($zones as $zone)
+                                                <option {{$dungeon->zone_id == $zone['id'] ? 'selected="selected"' : ''}} value="{{$zone['id']}}">{{$zone['name']}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -55,13 +69,11 @@
                                 </div>
                             </div>
                         </form>
-
-
                     </div>
                 </div>
             </div>
 
-            @if(Auth::id() == 1)
+            @if(Auth::id() == 1 and isset($all_sets))
                 <div class="col-md-3">
                     <div class="panel panel-default">
                         <div class="panel-body">

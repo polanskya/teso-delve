@@ -51,6 +51,10 @@ class Zones
     }
 
     public function getZone($zoneId) {
+        if(!array_key_exists($zoneId, $this->zones)) {
+            return false;
+        }
+
         return $this->zones[$zoneId];
     }
 

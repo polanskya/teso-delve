@@ -73,6 +73,7 @@
                                     <a href="{{route('dungeons.public.index')}}">Public dungeons</a>
                                     <a href="{{route('dungeons.trials.index')}}">Trials</a>
                                     <a href="{{route('dungeons.delves.index')}}">Delves</a>
+                                    <a href="{{route('dungeons.arenas.index')}}">Arenas</a>
                                 </li>
                             </ul>
                         </li>
@@ -129,6 +130,7 @@
                                     <a href="{{route('dungeons.public.index')}}">Public dungeons</a>
                                     <a href="{{route('dungeons.trials.index')}}">Trials</a>
                                     <a href="{{route('dungeons.delves.index')}}">Delves</a>
+                                    <a href="{{route('dungeons.arenas.index')}}">Arenas</a>
                                 </li>
                             </ul>
                         </li>

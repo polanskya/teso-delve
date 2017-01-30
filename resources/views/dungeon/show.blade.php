@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('meta-title')
-    Sets in {{$dungeon->name}} - @parent
+   {{$dungeon->name}} {{ lcfirst(trans('eso.dungeonType.' . $dungeon->dungeonTypeEnum)) }} - @parent
 @endsection
 
 @section('meta-description')
