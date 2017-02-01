@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use App\Jobs\EsoImport\Initialize;
 use App\Model\Dungeon;
 use App\Model\DungeonSet;
 use App\Model\Set;
@@ -51,6 +52,10 @@ class ImportController
     }
 
     public function index() {
+
+        $job = new Initialize(storage_path('dumps/dump_1.lua'), Auth::user());
+        dispatch($job);
+
         $addonVersion = env('TESO_DELVE_ADDON_URL');
         $addonVersion = explode('/', $addonVersion);
         $addonVersion = str_ireplace('.zip', '', array_pop($addonVersion));
