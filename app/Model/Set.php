@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null description
  * @property mixed id
  * @property int setTypeEnum
+ * @property mixed lang
  */
 class Set extends Model
 {

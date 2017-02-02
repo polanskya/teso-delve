@@ -61,6 +61,7 @@ class EsoImport
             $this->importCharacter($line);
         }
 
+
         Auth::user()->load('characters.craftingTraits');
 
         foreach($lines as $line) {
@@ -270,6 +271,8 @@ class EsoImport
         }
 
         if(isset($properties[23])) {
+            $lang = isset($properties[26]) ? trim(preg_replace('/\s\s+/', ' ', $properties[26])) : config('constants.default-language');
+
 
             $item = Item::where('name', trim($properties[1]))
                 ->where('trait', intval($properties[2]))
@@ -283,7 +286,7 @@ class EsoImport
                 ->where('itemValue', intval($properties[22]))
                 ->where('level', intval($properties[12]))
                 ->where('championLevel', intval($properties[11]))
-                ->where('lang', isset($properties[26]) ? trim(preg_replace('/\s\s+/', ' ', $properties[26])) : config('constants.default-language'))
+                ->where('lang', $lang)
                 ->first();
 
             if(!$item) {
@@ -304,6 +307,7 @@ class EsoImport
                 $item->enchant = trim($properties[8]);
                 $item->enchantDescription = $properties[20];
                 $item->itemValue = intval($properties[22]);
+                $item->lang = isset($properties[26]) ? trim(preg_replace('/\s\s+/', ' ', $properties[26])) : config('constants.default-language');
 
                 if(!empty($properties[4])) {
                     $item->setItemSet($properties[4]);

@@ -28,6 +28,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string enchantDescription
  * @property int itemValue
  * @property int itemStyleId
+ * @property mixed lang
  */
 class Item extends Model
 {
@@ -63,11 +64,12 @@ class Item extends Model
 
     public function setItemSet($setName) {
             $setName = trim($setName);
-            $set = Set::where('name', $setName)->first();
+            $set = Set::where('name', $setName)->where('lang', $this->lang)->first();
 
             if (!$set) {
                 $set = new Set();
                 $set->name = $setName;
+                $set->lang = $this->lang;
                 $set->save();
             }
 
