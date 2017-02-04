@@ -63,17 +63,22 @@ class Item extends Model
     }
 
     public function setItemSet($setName) {
-            $setName = trim($setName);
-            $set = Set::where('name', $setName)->where('lang', $this->lang)->first();
+        $setName = trim($setName);
+        $external_id = $setName;
+        if(stripos($setName, '^') !== false) {
+            $setName = substr($setName, 0, stripos($setName, '^'));
+        }
 
-            if (!$set) {
-                $set = new Set();
-                $set->name = $setName;
-                $set->lang = $this->lang;
-                $set->save();
-            }
+        $set = Set::where('external_id', $external_id)->where('lang', $this->lang)->first();
+        if (!$set) {
+            $set = new Set();
+            $set->name = $setName;
+            $set->external_id = $external_id;
+            $set->lang = $this->lang;
+            $set->save();
+        }
 
-            $this->setId = $set->id;
+        $this->setId = $set->id;
     }
 
     public function traitCategory() {

@@ -54,8 +54,14 @@ class SetController
         return view('sets.edit', compact('set', 'dungeonsByAlliance', 'zonesService'));
     }
 
-    public function show(Set $set) {
-        $user = null;
+    public function show($set_slug) {
+        $user = Auth::user();
+        $set = Set::where('slug', $set_slug)->where('lang', $user ? $user->lang : config('constants.default-language'))->first();
+
+        if(!$set) {
+            abort(404);
+        }
+
         $items = null;
         $favourites = null;
         $isFavourite = null;

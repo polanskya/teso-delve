@@ -1,6 +1,4 @@
-<?php
-
-namespace App\Model;
+<?php namespace App\Model;
 
 use HeppyKarlsson\Meta\Traits\Meta;
 use HeppyKarlsson\Sluggify\Traits\Sluggify;
@@ -14,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property mixed id
  * @property int setTypeEnum
  * @property mixed lang
+ * @property string external_id
  */
 class Set extends Model
 {
@@ -30,7 +29,6 @@ class Set extends Model
     protected $fillable = [
 
     ];
-
 
     public function getNameSanitizedAttribute() {
         return str_ireplace("'", '', $this->name);

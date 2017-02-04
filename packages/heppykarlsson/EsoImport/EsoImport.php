@@ -273,8 +273,12 @@ class EsoImport
         if(isset($properties[23])) {
             $lang = isset($properties[26]) ? trim(preg_replace('/\s\s+/', ' ', $properties[26])) : config('constants.default-language');
 
+            $itemName = trim($properties[1]);
+            if(stripos($itemName, '^') !== false) {
+                $itemName = substr($itemName, 0, stripos($itemName, '^'));
+            }
 
-            $item = Item::where('name', trim($properties[1]))
+            $item = Item::where('name', $itemName)
                 ->where('trait', intval($properties[2]))
                 ->where('quality', intval($properties[5]))
                 ->where('equipType', intval($properties[3]))
@@ -292,7 +296,7 @@ class EsoImport
             if(!$item) {
                 $item = new Item();
                 $item->uniqueId = $properties[0];
-                $item->name = trim($properties[1]);
+                $item->name = $itemName;
                 $item->equipType = intval($properties[3]);
                 $item->armorType = intval($properties[6]);
                 $item->quality = intval($properties[5]);

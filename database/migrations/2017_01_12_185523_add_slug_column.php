@@ -14,7 +14,7 @@ class AddSlugColumn extends Migration
     public function up()
     {
         Schema::table('sets', function (Blueprint $table) {
-            $table->string('slug')->nullable()->after('id')->unique();
+            $table->string('slug')->nullable()->after('id');
         });
 
         Schema::table('itemStyles', function (Blueprint $table) {
