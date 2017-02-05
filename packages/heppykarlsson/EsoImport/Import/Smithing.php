@@ -15,10 +15,6 @@ class Smithing
 
         $info = explode(';', $line);
 
-        if($info[9] != 'true') {
-            return true;
-        }
-
         $character = $user->characters->where('externalId', $info[1])->first();
         $smithingType = intval($info[3]);
 

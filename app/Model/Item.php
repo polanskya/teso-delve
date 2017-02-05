@@ -29,6 +29,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int itemValue
  * @property int itemStyleId
  * @property mixed lang
+ * @property string external_id
  */
 class Item extends Model
 {

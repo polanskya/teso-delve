@@ -17,7 +17,14 @@ class AddExternalIdToSets extends Migration
             $table->string('external_id')->nullable()->after('name')->unique();
         });
 
+        Schema::table('items', function (Blueprint $table) {
+            $table->string('external_id')->nullable()->after('name');
+        });
+
         $query = 'UPDATE sets SET external_id=name';
+        DB::update($query);
+
+        $query = 'UPDATE items SET external_id=name';
         DB::update($query);
     }
 
@@ -29,6 +36,10 @@ class AddExternalIdToSets extends Migration
     public function down()
     {
         Schema::table('sets', function (Blueprint $table) {
+            $table->dropColumn('external_id');
+        });
+
+        Schema::table('items', function (Blueprint $table) {
             $table->dropColumn('external_id');
         });
     }

@@ -27,8 +27,14 @@ class Item
         }
 
         if(isset($properties[23])) {
+            $lang = isset($properties[26]) ? trim(preg_replace('/\s\s+/', ' ', $properties[26])) : config('constants.default-language');
+            $external_id = trim($properties[1]);
+            $name = $external_id;
+            if(stripos($name, '^') !== false) {
+                $name = substr($name, 0, stripos($name, '^'));
+            }
 
-            $item = \App\Model\Item::where('name', trim($properties[1]))
+            $item = \App\Model\Item::where('external_id', $external_id)
                 ->where('trait', intval($properties[2]))
                 ->where('quality', intval($properties[5]))
                 ->where('equipType', intval($properties[3]))
@@ -40,13 +46,15 @@ class Item
                 ->where('itemValue', intval($properties[22]))
                 ->where('level', intval($properties[12]))
                 ->where('championLevel', intval($properties[11]))
-                ->where('lang', isset($properties[26]) ? trim(preg_replace('/\s\s+/', ' ', $properties[26])) : config('constants.default-language'))
+                ->where('lang', $lang)
                 ->first();
 
             if(!$item) {
+
                 $item = new \App\Model\Item();
                 $item->uniqueId = $properties[0];
-                $item->name = trim($properties[1]);
+                $item->name = $name;
+                $item->external_id = $external_id;
                 $item->equipType = intval($properties[3]);
                 $item->armorType = intval($properties[6]);
                 $item->quality = intval($properties[5]);
@@ -61,6 +69,7 @@ class Item
                 $item->enchant = trim($properties[8]);
                 $item->enchantDescription = $properties[20];
                 $item->itemValue = intval($properties[22]);
+                $item->lang = $lang;
 
                 if(!empty($properties[4])) {
                     $item->setItemSet($properties[4]);
