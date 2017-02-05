@@ -15,6 +15,7 @@ use HeppyKarlsson\Meta\Service\MetaService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class SetController
 {
@@ -97,7 +98,10 @@ class SetController
             $items = $user->items()->with('character')->orderBy('equipType')->get();
         }
 
-        $sets = Set::with('bonuses')->where('setTypeEnum', SetType::MONSTER)->orderBy('name')->get();
+        $sets = Set::with('bonuses')
+            ->where('setTypeEnum', SetType::MONSTER)
+            ->orderBy('name')
+            ->get();
 
         return view('sets.monster_sets', compact('sets', 'items', 'favourites', 'user'));
     }
@@ -122,19 +126,23 @@ class SetController
             $items = $user->items()->with('character')->orderBy('equipType')->get();
         }
 
-        $all_sets = Set::with('bonuses')
-            ->where('setTypeEnum', SetType::MONSTER)
-            ->orderBy('name')
-            ->get();
+        $sets = Cache::remember('pledge_chest_sets_'.$giverKey, config('cacheTimers.pledge_chest_sets_*'), function() use ($giverKey) {
+            $all_sets = Set::with('bonuses')
+                ->where('setTypeEnum', SetType::MONSTER)
+                ->orderBy('name')
+                ->get();
 
-        $sets = new Collection();
+            $sets = new Collection();
 
-        /** @var Set $set */
-        foreach($all_sets as $set) {
-            if($set->getMeta('monster_chest') == $giverKey) {
-                $sets->add($set);
+            /** @var Set $set */
+            foreach($all_sets as $set) {
+                if($set->getMeta('monster_chest') == $giverKey) {
+                    $sets->add($set);
+                }
             }
-        }
+
+            return $sets;
+        });
 
         return view('sets.monster_sets', compact('sets', 'items', 'favourites', 'user', 'giverKey'));
 
