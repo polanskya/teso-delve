@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('meta-title')
-   Monster sets in Elder Scrolls Online - @parent
+    {{isset($giverKey) ? trans('eso.pledgeChest.'.$giverKey) . ' ' : 'Monster'}} sets in Elder Scrolls Online - @parent
 @endsection
 
 @section('meta-description')
-    Monster sets, helmet drops by end boss in dungeons (veteran) and shoulders comes from Undaunted Chest using pledge key
+    {{isset($giverKey) ? trans('eso.pledgeChest.'.$giverKey) . ' ' : 'Monster'}} sets, helmet drops by end boss in dungeons (veteran) and shoulders comes from Undaunted Chest using pledge key
 @endsection
 
 @section('content')
@@ -15,16 +15,20 @@
             <div class="col-md-12">
                 <div class="">
                     <div class="">
-                        <h1>Monster sets</h1>
+                        @if(isset($giverKey))
+                            <h1>{{trans('eso.pledgeChest.'.$giverKey)}} monster sets</h1>
+                        @else
+                            <h1>Monster sets</h1>
+                        @endif
                         <table class="table table-condensed set-table">
                             <thead>
-                                <tr>
-                                    <th></th>
-                                    <th colspan="2">Name</th>
-                                    <th colspan="2">Helm drop</th>
-                                    <th colspan="2">Shoulder chest</th>
-                                    <th></th>
-                                </tr>
+                            <tr>
+                                <th></th>
+                                <th colspan="2">Name</th>
+                                <th colspan="2">Helm drop</th>
+                                <th colspan="2">Shoulder chest</th>
+                                <th></th>
+                            </tr>
                             </thead>
                             <tbody>
                             @if($user)

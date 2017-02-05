@@ -31,7 +31,7 @@ if($user) {
     </td>
     <td colspan="2">
       @if($set->meta->where('key', 'monster_chest')->first())
-          {{ trans('eso.pledgeChest.' . $set->meta->where('key', 'monster_chest')->first()->value) }}
+            <a href="{{route('set.monster.chest', [str_slug(trans('eso.pledgeChest.' . $set->meta->where('key', 'monster_chest')->first()->value))])}}">{{ trans('eso.pledgeChest.' . $set->meta->where('key', 'monster_chest')->first()->value) }}</a>
       @endif
 
     <td>

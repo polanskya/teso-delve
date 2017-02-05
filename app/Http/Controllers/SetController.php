@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 
+use App\Enum\PledgeChest;
 use App\Enum\SetType;
 use App\Model\Dungeon;
 use App\Model\DungeonSet;
@@ -11,6 +12,7 @@ use App\Model\ZoneSet;
 use App\Objects\Zones;
 use Carbon\Carbon;
 use HeppyKarlsson\Meta\Service\MetaService;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -98,6 +100,44 @@ class SetController
         $sets = Set::with('bonuses')->where('setTypeEnum', SetType::MONSTER)->orderBy('name')->get();
 
         return view('sets.monster_sets', compact('sets', 'items', 'favourites', 'user'));
+    }
+
+    public function monsterChest($chest) {
+        $quest_givers = PledgeChest::constants();
+        $giverKey = null;
+        foreach($quest_givers as $giverName => $value) {
+            $giverKey = ($chest == str_slug(trans('eso.pledgeChest.'.$value)))  ? $value : $giverKey;
+        }
+
+        if(is_null($giverKey)) {
+            abort(404);
+        }
+
+        $user = Auth::user();
+        $favourites = null;
+        $items = null;
+
+        if($user) {
+            $favourites = $user->favouriteSets->pluck('setId')->toArray();
+            $items = $user->items()->with('character')->orderBy('equipType')->get();
+        }
+
+        $all_sets = Set::with('bonuses')
+            ->where('setTypeEnum', SetType::MONSTER)
+            ->orderBy('name')
+            ->get();
+
+        $sets = new Collection();
+
+        /** @var Set $set */
+        foreach($all_sets as $set) {
+            if($set->getMeta('monster_chest') == $giverKey) {
+                $sets->add($set);
+            }
+        }
+
+        return view('sets.monster_sets', compact('sets', 'items', 'favourites', 'user', 'giverKey'));
+
     }
 
     public function craftable() {

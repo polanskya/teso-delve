@@ -5,6 +5,8 @@ namespace App\Enum;
 
 class PledgeChest
 {
+    use ListConstants;
+
     const MAJ_AL_RAGATH = 1;
     const GLIRION_THE_REDBEARD = 2;
     const URGALARG_CHIEF_BANE = 3;

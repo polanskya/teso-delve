@@ -29,8 +29,6 @@ Route::group(['middleware' => 'auth'], function () {
 include('admin.php');
 
 
-
-
 Route::get('/import-data', 'ImportController@import');
 Route::get('/export', 'ImportController@export');
 
@@ -64,6 +62,7 @@ Route::get('/style/{itemStyle}', 'StyleController@show')->name('item-styles.show
 
 Route::get('/my-sets', 'SetController@mySets')->name('set.my-sets')->middleware('auth');
 Route::get('/set/craftable', 'SetController@craftable')->name('set.craftable');
+Route::get('/set/monster/{giver}', 'SetController@monsterChest')->name('set.monster.chest');
 Route::get('/set/monster', 'SetController@monster')->name('set.monster');
 Route::get('/set/{set}', 'SetController@show')->name('set.show');
 Route::post('/set/{set}/update', 'SetController@update')->name('set.update')->middleware('auth');
