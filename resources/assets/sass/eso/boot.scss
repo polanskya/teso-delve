@@ -186,43 +186,6 @@ body.sidebar-disabled #sidebar-switch, body:not(.sidebar-disabled) #top-menu-swi
   display: block;
 }
 
-#importDropzone {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  width: 100%;
-  text-align: center;
-  color: white;
-  min-height: 125px;
-
-  border: lighten(#5c5c5c, 10%);
-  background: lighten(#1A1A1A, 5%);
-  padding: 40px;
-  vertical-align: middle;
-}
-
-.fa {
-  font-size: 14px;
-  color: white;
-}
-
-#export-upload {
-  margin-top: 15px;
-}
-
-.dropzone-message {
-  position: absolute;
-  text-align: center;
-  left: 0px;
-  width: 100%;
-}
-
-.dropzone-message.message-successfull,
-.dropzone-message.message-uploading,
-.dropzone-message.message-failed {
-  margin-top: 7px;
-  display: none;
-}
-
 .alliance-img {
   max-width: 40px;
 }

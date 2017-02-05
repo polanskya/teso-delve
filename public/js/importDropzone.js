@@ -14,8 +14,10 @@ $(document).ready(function() {
                 myDropzone.find('.dropzone-message:visible').fadeOut();
                 myDropzone.find('.dropzone-message.message-uploading').fadeIn();
             },
-            error: function (file) {
+            error: function (file, response) {
+                console.log(response);
                 myDropzone.find('.dropzone-message:visible').fadeOut();
+                myDropzone.find('.dropzone-message.message-failed .error').show().html(response.error);
                 myDropzone.find('.dropzone-message.message-failed').fadeIn();
             }
         });
