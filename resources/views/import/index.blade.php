@@ -47,6 +47,7 @@
 
                             <div class="dropzone-message message-failed">
                                 <p>Uploading failed, please try again.</p>
+                                <p class="error">error</p>
                             </div>
                         </div>
 

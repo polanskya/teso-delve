@@ -16,10 +16,10 @@ class ImportController
 {
 
     public function import(EsoImport $esoImport) {
-        $esoImport->import(storage_path('TesoDelve.lua'));
+        return $esoImport->import(storage_path('TesoDelve.lua'));
     }
 
-        public function export() {
+    public function export() {
         $sets = Set::all();
         $setBonuses = SetBonus::all();
         $userFavourites = UserSetFavourite::all();
@@ -42,15 +42,15 @@ class ImportController
             /** @var $file UploadedFile */
             if($file->getClientOriginalName() == 'TesoDelve.lua') {
                 File::copy($file->getRealPath(), storage_path('dumps/dump_' . Auth::id() . ".lua"));
-                $esoImport->import($file->getRealPath());
+                return $esoImport->import($file->getRealPath());
             }
-            else {
-                abort(404);
-            }
+
+            abort(404);
         }
     }
 
     public function index() {
+
         $addonVersion = env('TESO_DELVE_ADDON_URL');
         $addonVersion = explode('/', $addonVersion);
         $addonVersion = str_ireplace('.zip', '', array_pop($addonVersion));
