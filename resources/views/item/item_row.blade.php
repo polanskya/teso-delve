@@ -1,7 +1,7 @@
 <tr class="{{ isset($set) ? 'set-member-'.$set->id : '' }} {{(isset($hidden) && $hidden) == true ? 'hidden' : ''}}">
     <td class="min-width"><span class="circle quality-{{$item->quality}}"></span></td>
     <td class="min-width hidden-xs"><img class="item-row-icon" src="http://esoicons.uesp.net/{{str_ireplace('.dds', '.png', $item->icon)}}"></td>
-    <td><span class="item-hover" itemId="{{$item->id}}"><a href="{{route('item.show', [$item->id])}}">{{$item->name}}</a></span> {{ $item->pivot->count > 1 ? "(".$item->pivot->count.")" : '' }}</td>
+    <td>@include('item.name')</td>
     <td class="hidden-xs">{{$item->equipType !== 0 ? trans('enums.EquipType.' . $item->equipType) : ''}}</td>
     <td class="hidden-xs">
         {{$item->armorType != null ? trans('enums.ArmorType.' . $item->armorType) : ''}}

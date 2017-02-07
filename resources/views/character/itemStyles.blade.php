@@ -35,7 +35,7 @@
                                     <td class="min-width"><img class="icon-size" title="{{$itemStyle->material}}" src="{{$itemStyle->image}}"></td>
                                     <td class="nowrap"><a href="{{route('item-styles.show', [$itemStyle])}}">{{$itemStyle->name}}</a></td>
                                     @foreach(\App\Enum\ItemStyleChapter::order() as $chapter)
-                                        <td class="text-center"><span class="{{($knownItemStyles->where('itemStyleId', $itemStyle->id)->where('itemStyleChapterEnum', $chapter)->count() > 0) ? 'badge badge-success' : '' }}">&nbsp;</span></td>
+                                        <td class="text-center" title="@lang('enums.styleItemChapter.' . $chapter.'.self')"><span class="{{($knownItemStyles->where('itemStyleId', $itemStyle->id)->where('itemStyleChapterEnum', $chapter)->count() > 0) ? 'badge badge-success' : '' }}">&nbsp;</span></td>
                                     @endforeach
                                 </tr>
                             @endforeach

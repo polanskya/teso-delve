@@ -13,7 +13,7 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
 
-                        <form method="post" action="{{$dungeon->exists ? route('dungeon.update', [$dungeon]) : route('admin.dungeon.store')}}" class="form-horizontal">
+                        <form method="post" action="{{$dungeon->exists ? route('admin.dungeon.update', [$dungeon]) : route('admin.dungeon.store')}}" class="form-horizontal">
                             {{csrf_field()}}
                             {{method_field($dungeon->exists ? 'put' : 'post')}}
 
