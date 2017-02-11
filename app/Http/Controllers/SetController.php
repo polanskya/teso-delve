@@ -172,7 +172,8 @@ class SetController
         return view('sets.craftable', compact('sets', 'items', 'favourites', 'user'));
     }
 
-    public function toggleFavourite(Set $set) {
+    public function toggleFavourite($set) {
+        $set = Set::find($set);
         $user = Auth::user();
         if($user->favouriteSets->contains('setId', $set->id)) {
             $user->favouriteSets()->where('setId', $set->id)->delete();
