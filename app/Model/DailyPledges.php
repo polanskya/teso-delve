@@ -11,6 +11,10 @@ class DailyPledges extends Model
 
     protected $table = 'dailyPledges';
 
+    protected $dates = [
+        'date'
+    ];
+
     protected $fillable = [
 
     ];

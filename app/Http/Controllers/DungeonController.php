@@ -78,21 +78,31 @@ class DungeonController
     {
         $sets = $dungeon->sets;
         $bosses = $dungeon->bosses->sortBy('order');
+        $user = Auth::user();
+
 
         $all_sets = Set::whereNotIn('id', $sets->pluck('id'))
             ->orderBy('name')
+            ->where('lang', $user ? $user->lang : config('constants.default-language'))
             ->get();
+
+        $pledge = DailyPledges::where('date', '>', Carbon::now())
+            ->where(function($query) use ($dungeon) {
+                return $query->orWhere('pledge1', $dungeon->id)
+                    ->orWhere('pledge2', $dungeon->id)
+                    ->orWhere('pledge3', $dungeon->id);
+            })
+            ->orderBy('date')
+            ->first();
 
         $items = null;
         $favourites = null;
-        $user = null;
-        if (Auth::check()) {
-            $items = Auth::user()->items->load('character')->groupBy('setId');
-            $favourites = Auth::user()->favouriteSets->pluck('setId')->toArray();
-            $user = Auth::user();
+        if ($user) {
+            $items = $user->items->load('character')->groupBy('setId');
+            $favourites = $user->favouriteSets->pluck('setId')->toArray();
         }
 
-        return view('dungeon.show', compact('dungeon', 'items', 'favourites', 'sets', 'all_sets', 'user', 'bosses'));
+        return view('dungeon.show', compact('dungeon', 'items', 'favourites', 'sets', 'all_sets', 'user', 'bosses', 'pledge'));
     }
 
     public function update(Dungeon $dungeon, Request $request) {

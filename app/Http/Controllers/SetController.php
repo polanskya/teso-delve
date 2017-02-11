@@ -82,7 +82,6 @@ class SetController
                 ->load('character');
 
             $isFavourite = in_array($set->id, $favourites);
-            return view('sets.show', compact('set', 'items', 'favourites', 'isFavourite', 'user'));
         }
 
         return view('sets.show', compact('set', 'items', 'favourites', 'isFavourite', 'user'));

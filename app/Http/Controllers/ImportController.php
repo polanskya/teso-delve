@@ -50,11 +50,6 @@ class ImportController
     }
 
     public function index() {
-
-        $addonVersion = env('TESO_DELVE_ADDON_URL');
-        $addonVersion = explode('/', $addonVersion);
-        $addonVersion = str_ireplace('.zip', '', array_pop($addonVersion));
-
         $addonInfo = Cache::remember('github_addon_version', config('addon.github.cache-time'), function() {
             $opts = config('addon.github.opts');
             $context = stream_context_create($opts);
@@ -68,7 +63,7 @@ class ImportController
             ];
         });
 
-        return view('import.index', compact('addonVersion', 'addonInfo'));
+        return view('import.index', compact('addonInfo'));
     }
 
 }

@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('meta-title')
-   {{$dungeon->name}} {{ lcfirst(trans('eso.dungeonType.' . $dungeon->dungeonTypeEnum)) }} - @parent
+    {{$dungeon->name}} {{ lcfirst(trans('eso.dungeonType.' . $dungeon->dungeonTypeEnum)) }} - @parent
 @endsection
 
 @section('meta-description')
-    Sets found in {{$dungeon->name}}: {{implode(', ', $dungeon->sets->pluck('name')->toArray())}}
+    {{$dungeon->name}} is a {{$dungeon->groupSize}} man {{lcfirst(trans('eso.dungeonType.'.$dungeon->dungeonTypeEnum))}} in {{$dungeon->zone()['name']}} that drops: {{implode(', ', $dungeon->sets->pluck('name')->toArray())}}
 @endsection
 
 @section('content')
@@ -29,6 +29,10 @@
                                 <h1>{{$dungeon->name}}</h1>
 
                                 <div>
+
+                                    <p>
+                                        {{$dungeon->name}} is a {{$dungeon->groupSize}} man {{lcfirst(trans('eso.dungeonType.'.$dungeon->dungeonTypeEnum))}} in Elder Scrolls Online and can be found in {{$dungeon->zone()['name']}}.
+                                    </p>
                                     {!! nl2br($dungeon->description) !!}
                                 </div>
                             </div>
@@ -38,8 +42,35 @@
                                 @endif
                             </div>
 
-                            @if(Auth::id() == 1)
-                                <div class="col-md-12">
+
+                            <div class="col-md-12">
+
+                                <div class="panel panel-default col-md-3 col-md-offset-9">
+                                    <div class="panel-body">
+                                        @if($pledge)
+                                            <h4>Pledge</h4>
+                                            Pledge issued in {!! App\Presenter\Date::untilDate($pledge->date) !!}
+                                        @endif
+
+                                        @if($dungeon->sets->count() > 0)
+                                            <h4>Sets</h4>
+                                            <ul class="list-unstyled">
+                                                @foreach($dungeon->sets as $set)
+                                                    <li>
+                                                        @if(!$loop->last)
+                                                            @include('sets.name'),
+                                                        @else
+                                                            @include('sets.name')
+                                                        @endif
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        @endif
+
+                                    </div>
+                                </div>
+
+                                @if(Auth::id() == 1)
                                     <div class="panel panel-default col-md-3 col-md-offset-9">
                                         <div class="panel-body">
 
@@ -62,8 +93,8 @@
                                             </form>
                                         </div>
                                     </div>
-                                </div>
-                            @endif
+                                @endif
+                            </div>
 
                         </div>
 
