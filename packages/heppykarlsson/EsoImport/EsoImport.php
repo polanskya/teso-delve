@@ -25,7 +25,7 @@ class EsoImport
                 $this->checkFile($line);
 
                 $this->setUserLang($line);
-                if(stripos($line, 'CHARACTER:') !== false) {
+                if(strpos($line, 'CHARACTER:') !== false) {
                     $characterImport = new Import\Character();
                     $characterImport->process($line, $user);
                 }
@@ -37,12 +37,12 @@ class EsoImport
 
             File::eachRow($file_path, function($line) use($user) {
 
-                if (stripos($line, 'ITEMSTYLE:') !== false) {
+                if (strpos($line, 'ITEMSTYLE:') !== false) {
                     $itemStyleImport = new Import\ItemStyle();
                     $itemStyleImport->process($line, $user);
                 }
 
-                if (stripos($line, 'SMITHING:') !== false) {
+                if (strpos($line, 'SMITHING:') !== false) {
                     $smithingImport = new Import\Smithing();
                     $smithingImport->process($line, $user);
                 }

@@ -29,7 +29,6 @@
                                 <h1>{{$dungeon->name}}</h1>
 
                                 <div>
-
                                     <p>
                                         {{$dungeon->name}} is a {{$dungeon->groupSize}} man {{lcfirst(trans('eso.dungeonType.'.$dungeon->dungeonTypeEnum))}} in Elder Scrolls Online and can be found in {{$dungeon->zone()['name']}}.
                                     </p>
@@ -45,6 +44,7 @@
 
                             <div class="col-md-12">
 
+                                @if($pledge or $duneon->sets->count > 0)
                                 <div class="panel panel-default col-md-3 col-md-offset-9">
                                     <div class="panel-body">
                                         @if($pledge)
@@ -69,6 +69,7 @@
 
                                     </div>
                                 </div>
+                                @endif
 
                                 @if(Auth::id() == 1)
                                     <div class="panel panel-default col-md-3 col-md-offset-9">
