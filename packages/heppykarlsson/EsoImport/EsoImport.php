@@ -3,6 +3,7 @@
 use App\Model\UserItem;
 use App\User;
 use Carbon\Carbon;
+use HeppyKarlsson\EsoImport\Exception\DumpValidation;
 use Illuminate\Support\Facades\Auth;
 
 class EsoImport
@@ -21,6 +22,7 @@ class EsoImport
 
         try {
             File::eachRow($file_path, function($line) use($user) {
+                $this->checkFile($line);
 
                 $this->setUserLang($line);
                 if(stripos($line, 'CHARACTER:') !== false) {
@@ -45,14 +47,14 @@ class EsoImport
                     $smithingImport->process($line, $user);
                 }
 
-                if (stripos($line, 'ITEM:') !== false) {
+                if (strpos($line, 'ITEM:') !== false) {
                     $itemImport = new Import\Item();
                     $itemImport->process($line, $user);
                 }
 
             });
 
-        } catch(\Exception $e) {
+        } catch(DumpValidation $e) {
             return response()->json(['upload' => 'error', 'error' => $e->getMessage()], 400);
         }
 
@@ -61,7 +63,7 @@ class EsoImport
 
     public function checkFile($line) {
         if(stripos($line, 'local function loadTesoDelve(') !== false) {
-            throw new \Exception('Import failed, you have accidently uploaded the TesoDelve file from Addons folder instead of SavedVariables');
+            throw new DumpValidation('Import failed, it looks like you have accidently uploaded the TesoDelve file from Addons folder instead of SavedVariables');
         }
     }
 

@@ -8,7 +8,7 @@ class Item
 {
 
     public function process($line, $user) {
-        $item_start = stripos($line, 'ITEM:');
+        $item_start = strpos($line, 'ITEM:');
         if($item_start === false) {
             return false;
         }
