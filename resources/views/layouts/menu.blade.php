@@ -111,11 +111,9 @@
                                 <span class="m-r-1">Guilds</span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li>
-                                    @foreach(Auth::user()->guilds as $guild)
-                                        <a href="{{route('guilds.show', [$guild])}}">{{$guild->name}}</a>
-                                    @endforeach
-                                </li>
+                                @foreach(Auth::user()->guilds as $guild)
+                                    <li><a href="{{route('guilds.show', [$guild])}}">{{$guild->name}}</a></li>
+                                @endforeach
                             </ul>
                         </li>
                     @else

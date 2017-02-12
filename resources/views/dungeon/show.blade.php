@@ -44,7 +44,7 @@
 
                             <div class="col-md-12">
 
-                                @if($pledge or $duneon->sets->count > 0)
+                                @if($pledge or $dungeon->sets->count > 0)
                                 <div class="panel panel-default col-md-3 col-md-offset-9">
                                     <div class="panel-body">
                                         @if($pledge)
