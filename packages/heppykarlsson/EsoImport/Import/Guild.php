@@ -14,7 +14,7 @@ class Guild
     public function process($line, $user) {
         $guildInfo = explode(';', $line);
 
-        if(count($guildInfo) != 8) {
+        if(count($guildInfo) < 8) {
             return false;
         }
 
