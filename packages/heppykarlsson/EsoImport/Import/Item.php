@@ -26,6 +26,10 @@ class Item
             $character = null;
         }
 
+        if(isset($bagType) and $bagType == BagType::VIRTUAL) {
+            $character = null;
+        }
+
         if(isset($properties[23])) {
             $lang = isset($properties[26]) ? trim(preg_replace('/\s\s+/', ' ', $properties[26])) : config('constants.default-language');
             $external_id = trim($properties[1]);

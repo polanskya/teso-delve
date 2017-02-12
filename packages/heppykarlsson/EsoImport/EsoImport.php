@@ -4,6 +4,8 @@ use App\Model\UserItem;
 use App\User;
 use Carbon\Carbon;
 use HeppyKarlsson\EsoImport\Exception\DumpValidation;
+use HeppyKarlsson\EsoImport\Import\Guild;
+use HeppyKarlsson\EsoImport\Import\GuildMember;
 use Illuminate\Support\Facades\Auth;
 
 class EsoImport
@@ -30,6 +32,11 @@ class EsoImport
                     $characterImport->process($line, $user);
                 }
 
+                if(Guild::check($line)) {
+                    $guildImport = new Guild();
+                    $guildImport->process($line, $user);
+                }
+
             });
 
             $user->load('characters');
@@ -40,6 +47,11 @@ class EsoImport
                 if (strpos($line, 'ITEMSTYLE:') !== false) {
                     $itemStyleImport = new Import\ItemStyle();
                     $itemStyleImport->process($line, $user);
+                }
+
+                if(GuildMember::check($line)) {
+                    $member = new GuildMember();
+                    $member->process($line, $user);
                 }
 
                 if (strpos($line, 'SMITHING:') !== false) {

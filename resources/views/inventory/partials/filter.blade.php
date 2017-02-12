@@ -48,6 +48,7 @@
                 <a href="{{$filterRoute}}?{{http_build_query(['filter' => 'misc'] + $filterQuery)}}" class="btn {{$filter == 'misc' ? 'btn-primary' : 'btn-default'}}" title="Miscellaneous"><img src="/gfx/icons/ON-icon-Inventory-Miscellaneous.png"></a>
                 <a href="{{$filterRoute}}?{{http_build_query(['filter' => 'junk'] + $filterQuery)}}" class="btn {{$filter == 'junk' ? 'btn-primary' : 'btn-default'}}" title="Junk"><img src="/gfx/icons/ON-icon-Inventory-Junk.png"></a>
                 <a href="{{$filterRoute}}?{{http_build_query(['filter' => 'bank'] + $filterQuery)}}" class="btn {{$filter == 'bank' ? 'btn-primary' : 'btn-default'}}" title="In bank"><img src="/gfx/icons/ON-icon-Bank.png"></a>
+                <a href="{{$filterRoute}}?{{http_build_query(['filter' => 'craftingBag'] + $filterQuery)}}" class="btn {{$filter == 'craftingBag' ? 'btn-primary' : 'btn-default'}}" title="In crafting bag"><img src="/gfx/icons/ON-icon-Inventory-Materials.png"></a>
             </div>
         </div>
 

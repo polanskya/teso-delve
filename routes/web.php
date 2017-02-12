@@ -24,6 +24,7 @@ Route::get('/dungeon/arenas', 'DungeonController@index')->name('dungeons.arenas.
 
 Route::group(['middleware' => 'auth'], function () {
     include('web/inventory.php');
+    include('web/guilds.php');
 });
 
 include('admin.php');

@@ -22,12 +22,13 @@ class UserController extends Controller
 
     public function downloadLua(User $user) {
         $storage = storage_path('dumps/');
-        if(File::exists($storage."dump_$user->id.lua")) {
-            abort(404);
+        $file = $storage."dump_$user->id.lua";
+
+        if(!File::exists($file)) {
+            abort(403);
         }
 
-        File::copy($storage . "dump_$user->id.lua", $storage.'TesoDelve.lua');
-        return response()->download($storage."TesoDelve.lua");
+        return response()->download($file);
     }
 
 }

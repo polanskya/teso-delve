@@ -14,7 +14,7 @@ class InventoryController extends Controller
 
         $filter = $request->get('filter');
         $name = $request->get('name');
-        $bagEnum = [BagType::BACKPACK, BagType::WORN, BagType::BANK];
+        $bagEnum = [BagType::BACKPACK, BagType::WORN, BagType::BANK, BagType::VIRTUAL];
 
         $characters = null;
         if(intval($request->get('character')) != 0) {
@@ -27,6 +27,10 @@ class InventoryController extends Controller
 
         if($filter == 'bank') {
             $bagEnum = [BagType::BANK];
+        }
+
+        if($filter == 'craftingBag') {
+            $bagEnum = [BagType::VIRTUAL];
         }
 
         $userItems = UserItem::with('item')->where('userId', $user->id)

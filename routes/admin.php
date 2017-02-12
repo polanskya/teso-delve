@@ -6,6 +6,7 @@ $middlewares = [
 ];
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => $middlewares], function () {
+
     Route::get('users', 'Admin\UserController@index')->name('users.index');
     Route::get('ghost/{user}', 'Admin\UserController@ghost')->name('users.ghost');
     Route::get('download-dump/{user}', 'Admin\UserController@downloadLua')->name('users.download-dump');
@@ -30,4 +31,5 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => $middleware
     Route::get('boss/{boss}/delete', 'Admin\BossController@delete')->name('boss.delete');
     Route::put('boss/{boss}', 'Admin\BossController@update')->name('boss.update');
     Route::post('boss', 'Admin\BossController@store')->name('boss.store');
+
 });

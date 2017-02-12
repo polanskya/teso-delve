@@ -3,6 +3,8 @@
 namespace App;
 
 use App\Model\Character;
+use App\Model\Guild;
+use App\Model\GuildMember;
 use App\Model\Item;
 use App\Model\UserSetFavourite;
 use HeppyKarlsson\Meta\Traits\Meta;
@@ -42,6 +44,10 @@ class User extends Authenticatable
     public function items() {
         return $this->belongsToMany(Item::class, 'user_items', 'userId', 'itemId')
             ->withPivot('characterId', 'uniqueId', 'bagEnum', 'slotId', 'traitEnum', 'traitDescription', 'enchant', 'enchantDescription', 'equipTypeEnum', 'armorTypeEnum', 'weaponTypeEnum', 'isLocked', 'isBound', 'isJunk', 'count');
+    }
+
+    public function guilds() {
+        return $this->hasManyThrough(Guild::class, GuildMember::class, 'user_id', 'id', 'guild_id');
     }
 
     public function favouriteSets() {

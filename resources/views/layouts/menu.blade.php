@@ -106,7 +106,18 @@
                                 <span class="m-r-1">Styles & Motifs</span>
                             </a>
                         </li>
-
+                        <li class="dropdown">
+                            <a class="dropdown-toggle user-dropdown" data-toggle="dropdown" href="javascript: void(0)" role="button" aria-expanded="false">
+                                <span class="m-r-1">Guilds</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    @foreach(Auth::user()->guilds as $guild)
+                                        <a href="{{route('guilds.show', [$guild])}}">{{$guild->name}}</a>
+                                    @endforeach
+                                </li>
+                            </ul>
+                        </li>
                     @else
                         <li class="dropdown">
                             <a class="dropdown-toggle user-dropdown" data-toggle="dropdown" href="javascript: void(0)" role="button" aria-expanded="false">
@@ -516,11 +527,8 @@
                 @endif
             </div>
 
-
         </div>
     </div>
     <!-- END Navbar -->
-
-
 
 </nav>
