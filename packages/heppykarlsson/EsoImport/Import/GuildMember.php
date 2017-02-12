@@ -15,7 +15,7 @@ class GuildMember
     public function process($line, $user) {
         $memberInfo = explode(';', $line);
 
-        if(count($memberInfo) < 12) {
+        if(count($memberInfo) < 11) {
             return false;
         }
 
