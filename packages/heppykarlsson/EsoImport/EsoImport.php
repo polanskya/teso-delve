@@ -68,7 +68,7 @@ class EsoImport
     }
 
     public function setUserLang($line) {
-        $item_start = stripos($line, 'CHARACTER:');
+        $item_start = strpos($line, 'CHARACTER:');
         if($item_start === false) {
             return false;
         }
