@@ -12,12 +12,7 @@
 
             <div class="col-md-8"><p>{!! \App\Presenter\StringPresenter::ColorReplace($guild->description) !!}</p></div>
             <div class="col-md-4">
-                <div class="panel panel-default ">
-                    <div class="panel-body">
-                        <h4>Motd</h4>
-                        {!! \App\Presenter\StringPresenter::ColorReplace($guild->motd) !!}
-                    </div>
-                </div>
+
             </div>
 
             <div class="col-md-12">

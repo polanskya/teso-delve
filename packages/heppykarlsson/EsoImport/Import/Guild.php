@@ -30,7 +30,6 @@ class Guild
         $guild->name = $name;
         $guild->world = $world;
         $guild->description = $guildInfo[2];
-        $guild->motd = $guildInfo[3];
         $guild->founded_at = Carbon::parse($guildInfo[4]);
         $guild->save();
     }

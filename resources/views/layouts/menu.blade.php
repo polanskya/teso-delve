@@ -106,16 +106,18 @@
                                 <span class="m-r-1">Styles & Motifs</span>
                             </a>
                         </li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle user-dropdown" data-toggle="dropdown" href="javascript: void(0)" role="button" aria-expanded="false">
-                                <span class="m-r-1">Guilds</span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                @foreach(Auth::user()->guilds as $guild)
-                                    <li><a href="{{route('guilds.show', [$guild])}}">{{$guild->name}}</a></li>
-                                @endforeach
-                            </ul>
-                        </li>
+                        @if(Auth::id() == 1)
+                            <li class="dropdown">
+                                <a class="dropdown-toggle user-dropdown" data-toggle="dropdown" href="javascript: void(0)" role="button" aria-expanded="false">
+                                    <span class="m-r-1">Guilds</span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    @foreach(Auth::user()->guilds as $guild)
+                                        <li><a href="{{route('guilds.show', [$guild])}}">{{$guild->name}}</a></li>
+                                    @endforeach
+                                </ul>
+                            </li>
+                        @endif
                     @else
                         <li class="dropdown">
                             <a class="dropdown-toggle user-dropdown" data-toggle="dropdown" href="javascript: void(0)" role="button" aria-expanded="false">
