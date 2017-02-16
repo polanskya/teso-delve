@@ -9,7 +9,12 @@ class GuildMember
 
     static public function check($line)
     {
-        return strpos($line, 'GUILDMEMBER:;') !== false;
+        if(strpos($line, 'GUILDMEMBER:;--;') === false) {
+            return false;
+        }
+
+        $data = explode(';--;', $line);
+        return count($data) == 11;
     }
 
     public function process($line, $user) {

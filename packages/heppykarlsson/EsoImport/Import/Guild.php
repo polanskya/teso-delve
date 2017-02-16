@@ -8,7 +8,12 @@ class Guild
 
     static public function check($line)
     {
-        return strpos($line, 'GUILD:;') !== false;
+        if(strpos($line, 'GUILD:;--;') === false) {
+            return false;
+        }
+
+        $data = explode(";--;", $line);
+        return count($data) == 9;
     }
 
     public function process($line, $user) {
