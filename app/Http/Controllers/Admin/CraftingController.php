@@ -1,7 +1,13 @@
 <?php namespace App\Http\Controllers\Admin;
 
+use App\Enum\ArmorType;
+use App\Enum\CraftingItemsLevels;
+use App\Enum\CraftingType;
+use App\Enum\EquipType;
 use App\Enum\ItemStyleChapter;
+use App\Enum\WeaponType;
 use App\Http\Controllers\Controller;
+use App\Model\CraftingItem;
 use App\Model\Item;
 use App\Model\ItemStyle;
 use App\Model\ItemStyleChapter as ItemStyleChapterModel;
@@ -21,9 +27,19 @@ class CraftingController extends Controller
 
     public function itemStyle(ItemStyle $itemStyle) {
         $assignedMotifs = ItemStyleChapterModel::all()->pluck('itemId')->toArray();
-        $motifs = Item::where('type', 8)->where('lang', config('constants.default-language'))->orderBy('name')->get();
+
+        $motifs = Item::where('type', 8)
+            ->where('lang', config('constants.default-language'))
+            ->orderBy('name')
+            ->get();
+
         $chapters = $itemStyle->chapters;
-        return view('admin.crafting.itemStyle', compact('itemStyle', 'motifs', 'chapters', 'assignedMotifs'));
+
+        $items = Item::where('itemStyleId', $itemStyle->id)
+            ->take(50)
+            ->get();
+
+        return view('admin.crafting.itemStyle', compact('itemStyle', 'motifs', 'chapters', 'assignedMotifs', 'items'));
     }
 
     public function uploadImages(Request $request, ItemStyle $itemStyle) {
@@ -85,5 +101,38 @@ class CraftingController extends Controller
         return redirect()->back();
     }
 
+    public function populateCraftingItems() {
+        CraftingItem::where('id', '>', 0)->delete();
 
+        $smithingTypes = CraftingType::smithing();
+        $craftingItemsLevel = new CraftingItemsLevels();
+        $levels = $craftingItemsLevel->levels();
+        foreach($smithingTypes as $smithingType) {
+
+            foreach(WeaponType::craftingType($smithingType) as $weaponType) {
+                foreach($levels as $level) {
+                    $craftingItem = new CraftingItem();
+                    $craftingItem->weaponTypeEnum = $weaponType;
+                    $craftingItem->level = $level[0];
+                    $craftingItem->championLevel = $level[1];
+                    $craftingItem->smithingTypeEnum = $smithingType;
+                    $craftingItem->save();
+                }
+            }
+
+            foreach(ArmorType::craftingType($smithingType) as $armorType) {
+                foreach(EquipType::armors() as $equipType) {
+                    foreach($levels as $level) {
+                        $craftingItem = new CraftingItem();
+                        $craftingItem->armorTypeEnum = $armorType;
+                        $craftingItem->equipTypeEnum = $equipType;
+                        $craftingItem->level = $level[0];
+                        $craftingItem->championLevel = $level[1];
+                        $craftingItem->smithingTypeEnum = $smithingType;
+                        $craftingItem->save();
+                    }
+                }
+            }
+        }
+    }
 }

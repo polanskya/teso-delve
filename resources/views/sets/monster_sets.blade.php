@@ -25,8 +25,8 @@
                             <tr>
                                 <th></th>
                                 <th colspan="2">Name</th>
-                                <th colspan="2">Helm drop</th>
-                                <th colspan="2">Shoulder chest</th>
+                                <th colspan="2">Dungeon</th>
+                                <th colspan="2">Undaunted chest</th>
                                 <th></th>
                             </tr>
                             </thead>

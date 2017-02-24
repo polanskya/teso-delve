@@ -9,8 +9,11 @@ use App\Model\Character;
 use App\Model\ItemStyle;
 use App\Model\Set;
 use App\Model\UserItem;
+use App\Repository\CraftingRepository;
 use HeppyKarlsson\Meta\Model\Meta;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class CharacterController
 {
@@ -82,25 +85,26 @@ class CharacterController
         return view('character.itemStyles', compact('character', 'knownItemStyles', 'itemStyles'));
     }
 
-    public function craftingResearch(Character $character, $caftingTypeEnum) {
+    public function craftingResearch(Character $character, $craftingTypeEnum, CraftingRepository $craftingRepository) {
         $user = Auth::user();
-
-        $equippedItems = $character->items()
-            ->where('user_items.bagEnum', BagType::WORN)
-            ->with('set.bonuses')
-            ->get();
+        $characters = new Collection([$character]);
+        if($user and Auth::id() == $character->userId) {
+            $user = Auth::user();
+            $characters = $user->characters;
+        }
+        $researchGrid = $craftingRepository->researchGrid($user, $craftingTypeEnum, $character);
 
         $craftingTraits = $character->craftingTraits()
-            ->where('craftingTypeEnum', $caftingTypeEnum)
+            ->where('craftingTypeEnum', $craftingTypeEnum)
             ->get();
 
-        $researchLineIndex = $craftingTraits->groupBy('researchLineIndex');
+        $traitsGrouped = $craftingTraits->groupBy('researchLineIndex');
 
         $craftableSets = Set::where('setTypeEnum', SetType::CRAFTED)
             ->with('meta')
             ->get();
 
-        return view('character.crafting', compact('character', 'equippedItems', 'user', 'craftingTraits', 'researchLineIndex', 'craftableSets', 'caftingTypeEnum'));
+        return view('character.crafting', compact('character', 'researchGrid', 'craftableSets', 'craftingTypeEnum', 'craftingTraits', 'traitsGrouped', 'characters'));
     }
 
     public function inventory(Character $character, $bagEnum = null) {

@@ -27,6 +27,9 @@ class CraftingTrait extends Model
 
     public $timestamps = false;
 
+    public function character() {
+        return $this->belongsTo(Character::class, 'characterId');
+    }
 
     public function isResearched() {
         if(!is_null($this->researchDone_at)) {

@@ -42,10 +42,10 @@
                                 <hr>
                             </div>
                             <div class="col-md-6">
-                                <span class="text-white">{{$userItems->count()}}</span> items
+                                Matched <span class="text-white">{{$userItems->total()}}</span> items
                             </div>
                             <div class="col-md-6 text-right text-white">
-
+                                {!! $userItems->links() !!}
                             </div>
                         </div>
                     </div>

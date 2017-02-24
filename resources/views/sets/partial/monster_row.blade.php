@@ -26,7 +26,7 @@ if($user) {
     </td>
     <td colspan="2">
         @if($set->dungeons->first())
-            {{$set->dungeons->first()->name}}
+            <a href="{{route('dungeon.show', [$set->dungeons->first()])}}">{{$set->dungeons->first()->name}}</a>
         @endif
     </td>
     <td colspan="2">
@@ -41,9 +41,9 @@ if($user) {
                     <a href="{{route('set.edit', [$set])}}" class="btn btn-default btn-xs"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                 @endif
                 @if($isFavourite)
-                    <a href="{{route('set.favourite', [$set])}}" class="btn btn-default btn-xs setFavourite" data-toggle="tooltip" title="Toggle as favourite set"><i class="fa fa-star text-legendary favouriteIcon" aria-hidden="true"></i></a>
+                    <a href="{{route('set.favourite', [$set->id])}}" class="btn btn-default btn-xs setFavourite" data-toggle="tooltip" title="Toggle as favourite set"><i class="fa fa-star text-legendary favouriteIcon" aria-hidden="true"></i></a>
                 @else
-                    <a href="{{route('set.favourite', [$set])}}" class="btn btn-default btn-xs setFavourite" data-toggle="tooltip" title="Toggle as favourite set"><i class="fa fa-star-o favouriteIcon" aria-hidden="true"></i></a>
+                    <a href="{{route('set.favourite', [$set->id])}}" class="btn btn-default btn-xs setFavourite" data-toggle="tooltip" title="Toggle as favourite set"><i class="fa fa-star-o favouriteIcon" aria-hidden="true"></i></a>
                 @endif
             @endif
         </div>

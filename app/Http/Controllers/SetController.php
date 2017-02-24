@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 
+use App\Enum\DungeonType;
 use App\Enum\PledgeChest;
 use App\Enum\SetType;
 use App\Model\Dungeon;
@@ -19,6 +20,25 @@ use Illuminate\Support\Facades\Cache;
 
 class SetController
 {
+
+    public function index() {
+        $data = Cache::remember('sets-list-data', 0, function() {
+            $sets = Set::where('lang', config('constants.default-language'))
+                ->with(['meta', 'zones', 'bonuses', 'dungeons'])
+                ->orderBy('name')
+                ->get();
+
+            $monsterSets = $sets->where('setTypeEnum', SetType::MONSTER)->values();
+            $craftedSets = $sets->where('setTypeEnum', SetType::CRAFTED)->values();
+            $dungeonSets = $sets->where('setTypeEnum', SetType::DUNGEON)->values();
+            $zoneSets = $sets->where('setTypeEnum', SetType::ZONE)->values();
+            $sets = $sets->whereIn('setTypeEnum', [null])->values();
+
+            return compact('monsterSets', 'craftedSets', 'dungeonSets', 'zoneSets', 'sets');
+        });
+
+        return view('sets.index', $data);
+    }
 
     public function mySets(Request $request) {
         $user = Auth::user();
@@ -42,7 +62,7 @@ class SetController
         $items = $user->items()
             ->orderBy($request->has('sortBy') ? $request->get('sortBy') : 'equipType', $request->has('sort') ? $request->get('sort') : 'asc')
             ->when($characterId, function($query) use ($characterId) {
-               return $query->where('user_items.characterId', $characterId);
+                return $query->where('user_items.characterId', $characterId);
             })
             ->get()
             ->groupBy('setId');
@@ -52,8 +72,12 @@ class SetController
 
     public function edit(Set $set) {
         $zonesService = new Zones();
-        $dungeonsByAlliance = Dungeon::all()->groupBy('alliance');
+        $dungeonsByAlliance = Dungeon::whereIn('dungeonTypeEnum', [DungeonType::TRIAL, DungeonType::GROUP_DUNGEON, DungeonType::ARENA])
+            ->get()
+            ->groupBy('alliance');
+
         $set->load('bonuses', 'dungeons', 'zones');
+
         return view('sets.edit', compact('set', 'dungeonsByAlliance', 'zonesService'));
     }
 

@@ -22,4 +22,16 @@ class EquipType
     const SHOULDERS = 4;
     const TWO_HAND = 6;
     const WAIST = 8;
+
+    static public function armors() {
+        return [
+            self::HEAD,
+            self::SHOULDERS,
+            self::FEET,
+            self::HAND,
+            self::LEGS,
+            self::WAIST,
+            self::CHEST,
+        ];
+    }
 }

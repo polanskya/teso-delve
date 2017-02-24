@@ -2,10 +2,12 @@
 
 use App\Model\Character;
 use App\Model\Guild as GuildModel;
+use App\Model\Guild;
 use Carbon\Carbon;
 
 class GuildMember
 {
+    const EXPLODE_COUNT = 12;
 
     static public function check($line)
     {
@@ -14,31 +16,42 @@ class GuildMember
         }
 
         $data = explode(';--;', $line);
-        return count($data) == 11;
+
+        return count($data) == self::EXPLODE_COUNT;
     }
 
-    public function process($line, $user) {
-        $memberInfo = explode(';', $line);
+    public function process($line, $user, &$guilds) {
+        $memberInfo = explode(';--;', $line);
 
-        if(count($memberInfo) < 11) {
+        if(count($memberInfo) < self::EXPLODE_COUNT) {
             return false;
         }
 
         $name = trim($memberInfo[1]);
         $world = trim($memberInfo[9]);
 
-        $guild = GuildModel::where('name', $name)->where('world', $world)->first();
+        if(isset($guilds[$world][$name])) {
+            $guild = $guilds[$world][$name];
+        }
+        else {
+            $guild = Guild::where('name', $name)
+                ->where('world', $world)
+                ->first();
+
+            $guilds[$guild->world][$guild->name] = $guild;
+        }
+
         if(is_null($guild)) {
             return false;
         }
 
-        $guildMember = \App\Model\GuildMember::where('guild_id', $guild->id)->where('accountName', $memberInfo[3])->first();
         $character = Character::where('account', $memberInfo[3])->first();
 
-        if(is_null($guildMember)) {
-            $guildMember = new \App\Model\GuildMember();
-        }
+        $guildMember = $guild->members
+            ->where('accountName', $memberInfo[3])
+            ->first();
 
+        $guildMember = is_null($guildMember) ? new \App\Model\GuildMember() : $guildMember;
         $guildMember->accountName = $memberInfo[3];
         $guildMember->guild_id = $guild->id;
         $guildMember->note = $memberInfo[4];

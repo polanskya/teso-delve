@@ -37,22 +37,6 @@ class Character
         $character->server = $properties[14];
         $character->lang = isset($properties[18]) ? trim(preg_replace('/\s\s+/', ' ', $properties[18])) : config('constants.default-language');
 
-        if(isset($properties[13])) {
-            $smithingSkills = explode('-', $properties[13]);
-
-            if($character->getMeta('max_smithing_' . CraftingType::BLACKSMITHING) != intval($smithingSkills[1])) {
-                $character->setMeta('max_smithing_' . CraftingType::BLACKSMITHING, intval($smithingSkills[1]));
-            }
-
-            if($character->getMeta('max_smithing_' . CraftingType::CLOTHIER) != intval($smithingSkills[1])) {
-                $character->setMeta('max_smithing_' . CraftingType::CLOTHIER, intval($smithingSkills[1]));
-            }
-
-            if($character->getMeta('max_smithing_' . CraftingType::WOODWORKING) != intval($smithingSkills[2])) {
-                $character->setMeta('max_smithing_' . CraftingType::WOODWORKING, intval($smithingSkills[2]));
-            }
-        }
-
         if(isset($properties[11])) {
             $roles = explode('-', $properties[11]);
             $character->isDPS = $roles[0] == 'true';
@@ -68,15 +52,33 @@ class Character
             $character->ridingUnlocked_at = $nextTraining;
         }
 
-        if(isset($properties[16])) {
-            $character->setMeta('bag_' . BagType::BACKPACK, intval($properties[16]));
-            $currentBank = $user->getMeta('bag_' . BagType::BANK);
-            if(intval($currentBank) != intval($properties[17])) {
-                $user->setMeta('bag_' . BagType::BANK, intval($properties[17]));
+        $character->save();
+
+        if(isset($properties[19])) {
+            $ridingSkills = explode('-', $properties[19]);
+            foreach($ridingSkills as $key => $ridingSkill) {
+                $character->setMeta('ridingskill-'. $key, intval($ridingSkill));
             }
         }
 
-        $character->save();
+        if(isset($properties[16])) {
+            $character->setMeta('bag_' . BagType::BACKPACK, intval($properties[16]));
+            $user->setMeta('bag_' . BagType::BANK, intval($properties[17]));
+        }
+
+        if(isset($properties[20])) {
+            $attributes = explode('-', $properties[20]);
+            foreach($attributes as $key => $attribute) {
+                $character->setMeta('character-attribute-'.$key, intval($attribute));
+            }
+        }
+
+        if(isset($properties[13])) {
+            $smithingSkills = explode('-', $properties[13]);
+            $character->setMeta('max_smithing_' . CraftingType::BLACKSMITHING, intval($smithingSkills[1]));
+            $character->setMeta('max_smithing_' . CraftingType::CLOTHIER, intval($smithingSkills[1]));
+            $character->setMeta('max_smithing_' . CraftingType::WOODWORKING, intval($smithingSkills[2]));
+        }
 
         return true;
     }

@@ -19,6 +19,7 @@
                 </div>
             @endif
 
+
             <div class="col-md-12 m-t-3 m-b-3">
                 <div class="row text-center">
                     <div class="col-md-3">
@@ -49,6 +50,36 @@
 
             <div class="col-md-12">
                 <a href="/gfx/my-sets.png" class="thumbnail no-bg"><img src="/gfx/my-sets.png"></a>
+            </div>
+
+
+            <div class="col-md-12 m-t-3 m-b-3">
+                <div class="row text-center">
+                    <div class="col-md-3">
+                        <h4>{{ Carbon\Carbon::now()->diffInDays(Carbon\Carbon::create(2017, 06, 06, 12)) }} days until ESO:Morrowind</h4>
+                        <p>Countdown in days until the release of next chapter of ESO "Morrowind"</p>
+                    </div>
+
+                    <div class="col-md-3">
+                        <h4>Travel to Vvardenfell!</h4>
+                        <p>Travel to the new zone in ESO Vvardenfell, previously experienced in the game TES: Morrowind.</p>
+                    </div>
+
+                    <div class="col-md-3">
+                        <h4>New Class!</h4>
+                        <p>
+                            Morrowind introduces the first new class in ESO since launch: <strong>The Warden</strong>!
+                        </p>
+                    </div>
+
+                    <div class="col-md-3">
+                        <h4>4v4v4 Battlegrounds!</h4>
+                        <p>
+                            The long awaited battlegrounds finally comes to ESO for small-scale PvP action. Both ranked and unranked.
+                        </p>
+                    </div>
+
+                </div>
             </div>
 
             <div id="daily-pledges-container" class="col-md-12">
@@ -84,12 +115,12 @@
                     </div>
 
                     <div class="col-md-3">
-                        <h4>{{$motifCount}}</h4>
+                        <h4>{{number_format($motifCount)}}</h4>
                         <p>Motifs learnt across all characters</p>
                     </div>
 
                     <div class="col-md-3">
-                        <h4>{{$itemCount}}</h4>
+                        <h4>{{number_format($itemCount)}}</h4>
                         <p>Items found in ESO sofar</p>
                     </div>
                 </div>

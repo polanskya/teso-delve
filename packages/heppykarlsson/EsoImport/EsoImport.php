@@ -1,5 +1,6 @@
 <?php namespace HeppyKarlsson\EsoImport;
 
+use App\Model\ItemStyle;
 use App\Model\UserItem;
 use App\User;
 use Carbon\Carbon;
@@ -12,59 +13,81 @@ class EsoImport
 {
     /** @var User */
     private $user = null;
+    private $itemStyles = null;
+    private $userItems = null;
+    private $guilds = [];
 
     public function import($file_path) {
         set_time_limit(120);
-        UserItem::where('userId', Auth::id())->delete();
+        ini_set('memory_limit','32M');
+
+        $updateStart = Carbon::now();
+
+        $this->itemStyles = ItemStyle::all();
 
         $user = Auth::user();
         $this->user = $user;
         $user->dumpUploaded_at = Carbon::now();
         $user->save();
 
+        $user->load('characters.meta');
+
         try {
-            File::eachRow($file_path, function($line) use($user) {
+            File::eachRow($file_path, function($line) use ($user) {
                 $this->checkFile($line);
 
                 $this->setUserLang($line);
                 if(strpos($line, 'CHARACTER:') !== false) {
                     $characterImport = new Import\Character();
                     $characterImport->process($line, $user);
+                    return true;
                 }
 
                 if(Guild::check($line)) {
                     $guildImport = new Guild();
                     $guildImport->process($line, $user);
+                    return true;
                 }
-
             });
 
             $user->load('characters');
             $user->load('characters.craftingTraits');
+            $user->load('characters.meta');
+            $user->load('characters.itemStyles');
+            $user->load('guilds.members');
+            $user->load('userItems');
+            $user->load('meta');
+            $this->userItems = $user->userItems->groupBy('characterId');
 
             File::eachRow($file_path, function($line) use($user) {
 
                 if (strpos($line, 'ITEMSTYLE:') !== false) {
                     $itemStyleImport = new Import\ItemStyle();
-                    $itemStyleImport->process($line, $user);
+                    $itemStyleImport->process($line, $user, $this->itemStyles);
+                    return true;
                 }
 
                 if(GuildMember::check($line)) {
                     $member = new GuildMember();
-                    $member->process($line, $user);
+                    $member->process($line, $user, $this->guilds);
+                    return true;
                 }
 
                 if (strpos($line, 'SMITHING:') !== false) {
                     $smithingImport = new Import\Smithing();
                     $smithingImport->process($line, $user);
+                    return true;
                 }
 
                 if (strpos($line, 'ITEM:') !== false) {
                     $itemImport = new Import\Item();
-                    $itemImport->process($line, $user);
+                    $itemImport->process($line, $user, $this->itemStyles, $this->userItems);
+                    return true;
                 }
 
             });
+
+            UserItem::where('userId', $user->id)->where('updated_at', '<', $updateStart)->delete();
 
         } catch(DumpValidation $e) {
             return response()->json(['upload' => 'error', 'error' => $e->getMessage()], 400);

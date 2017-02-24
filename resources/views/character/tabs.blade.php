@@ -18,7 +18,7 @@
 </div>
 
 <ul class="nav nav-tabs">
-    <li role="presentation" class="{{ $routeName == 'characters.show' ? 'active' : '' }}"><a href="{{route('characters.show', [$character->id])}}">Gear</a></li>
+    <li role="presentation" class="{{ $routeName == 'characters.show' ? 'active' : '' }}"><a href="{{route('characters.show', [$character->id])}}">Character</a></li>
     <li role="presentation" class="{{ $routeName == 'character.inventory' ? 'active' : '' }}"><a href="{{route('character.inventory', [$character->id])}}">Inventory</a></li>
     <li role="presentation" class="disabled"><a>Skills</a></li>
     <li role="presentation" class="disabled"><a>Champion points</a></li>

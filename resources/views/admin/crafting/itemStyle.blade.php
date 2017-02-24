@@ -12,7 +12,7 @@
     <div class="container">
         <div class="row-fluid">
 
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <div>
                     <div>
                         <h1>{{$itemStyle->name}}</h1>
@@ -25,6 +25,13 @@
                                     <label for="itemStyle[name]" class="control-label col-md-2">Name</label>
                                     <div class="col-md-10">
                                         <input type="text" name="itemStyle[name]" value="{{$itemStyle->name}}" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="itemStyle[externalId]" class="control-label col-md-2">External id</label>
+                                    <div class="col-md-10">
+                                        <input type="text" name="itemStyle[externalId]" value="{{$itemStyle->externalId}}" class="form-control" disabled="disabled">
                                     </div>
                                 </div>
 
@@ -74,6 +81,16 @@
                                     <div class="col-md-12">
                                         <h3>Upload style images</h3>
                                         <div url="{{route('admin.crafting.item-style.upload-images', [$itemStyle])}}" id="importDropzone"></div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table class="table table-condensed">
+                                            @foreach($items as $item)
+                                                @include('item.item_row')
+                                            @endforeach
+                                        </table>
                                     </div>
                                 </div>
 

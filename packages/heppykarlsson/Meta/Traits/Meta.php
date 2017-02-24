@@ -16,13 +16,20 @@ trait Meta
     }
 
     public function setMeta($key, $value) {
-        $meta = $this->meta()->where('key', $key)->first();
+        $meta = $this->meta->where('key', $key)->first();
+
         if(is_null($meta)) {
             $meta = new MetaModel();
         }
+
+        if($meta->value == $value) {
+            return true;
+        }
+
         $meta->key = $key;
         $meta->value = $value;
         $this->meta()->save($meta);
+        return true;
     }
 
 }

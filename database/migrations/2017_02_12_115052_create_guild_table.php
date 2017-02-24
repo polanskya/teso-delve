@@ -18,8 +18,8 @@ class CreateGuildTable extends Migration
             $table->string('world');
             $table->string('name');
             $table->string('slug');
-            $table->text('description');
-            $table->text('motd');
+            $table->text('description')->nullable()->default(null);
+            $table->text('motd')->nullable()->default(null);
             $table->dateTime('founded_at');
             $table->timestamps();
         });

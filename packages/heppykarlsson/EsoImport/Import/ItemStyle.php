@@ -7,25 +7,30 @@ use App\Model\ItemStyle as ItemStyleModel;
 class ItemStyle
 {
 
-    public function process($line, $user) {
+    public function process($line, $user, $itemStyles) {
         if(stripos($line, 'ITEMSTYLE:') === false) {
             return false;
         }
 
         $data = explode(';', $line);
         $externalId = intval($data[5]);
-        $itemStyle = ItemStyleModel::where('externalId', $externalId)->first();
+        $itemStyle = $itemStyles->where('externalId', $externalId)->first();
 
         if(is_null($itemStyle)) {
             $itemStyle = new ItemStyleModel();
             $itemStyle->externalId = $externalId;
-            $itemStyle->name = '';
-            $itemStyle->image = $data[4];
-            $itemStyle->material = $data[3];
-            $itemStyle->save();
+            $itemStyle->name = ' ';
+            $itemStyles->add($itemStyle);
         }
 
-        $character = $user->characters->where('externalId', $data[1])->first();
+        $itemStyle->image = $data[4];
+        $itemStyle->material = $data[3];
+        $itemStyle->save();
+
+        $character = $user->characters
+            ->where('externalId', $data[1])
+            ->first();
+
         if(is_null($character)) {
             return true;
         }
@@ -35,14 +40,26 @@ class ItemStyle
 
         foreach($chapterKnown as $key => $known) {
             if(stripos($known, 'true') !== false) {
-                $characterItemStyle = CharacterItemStyle::firstOrNew([
-                    'characterId' => $character->id,
-                    'itemStyleId' => $itemStyle->id,
-                    'itemStyleChapterEnum' => $chapters[$key],
-                    'isKnown' => 1,
-                ]);
+                $characterItemStyle = $character->itemStyles
+                    ->where('characterId', $character->id)
+                    ->where('itemStyleId', $itemStyle->id)
+                    ->where('itemStyleChapterEnum', $chapters[$key])
+                    ->first();
 
-                $characterItemStyle->save();
+                if(is_null($characterItemStyle)) {
+                    $characterItemStyle = new CharacterItemStyle();
+                    $characterItemStyle->characterId = $character->id;
+                    $characterItemStyle->itemStyleId = $itemStyle->id;
+                    $characterItemStyle->itemStyleChapterEnum = $chapters[$key];
+                    $characterItemStyle->isKnown = 1;
+                    $characterItemStyle->save();
+                }
+                else {
+                    if($characterItemStyle->isKnown != 0) {
+                        $characterItemStyle->isKnown = 1;
+                        $characterItemStyle->save();
+                    }
+                }
             }
         }
     }

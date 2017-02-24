@@ -3,24 +3,28 @@
 use App\Enum\BagType;
 use App\Model\ItemStyle;
 use App\Model\UserItem;
+use Illuminate\Support\Facades\Auth;
 
 class Item
 {
 
-    public function process($line, $user) {
+    public function process($line, $user, $itemStyles, $userItems) {
         $item_start = strpos($line, 'ITEM:');
         if($item_start === false) {
             return false;
         }
 
+
         $line = str_ireplace('",', '', $line);
         $line = substr($line, $item_start + 5);
 
-        $properties = explode(';', $line);
 
+        $properties = explode(';', $line);
         $bagType = isset($properties[15]) ? intval($properties[15]) : null;
 
-        $character = $user->characters->where('externalId', intval($properties[14]))->first();
+        $character = $user->characters
+            ->where('externalId', intval($properties[14]))
+            ->first();
 
         if(isset($bagType) and $bagType === BagType::BANK) {
             $character = null;
@@ -80,13 +84,16 @@ class Item
                 }
 
                 if(isset($properties[25]) and intval($properties[25]) != 0) {
-                    $itemStyle = ItemStyle::where('externalId', intval($properties[25]))->first();
+                    $itemStyle = $itemStyles->where('externalId', intval($properties[25]))->first();
+
                     if(is_null($itemStyle)) {
                         $itemStyle = new ItemStyle();
                         $itemStyle->externalId = intval($properties[25]);
                         $itemStyle->name = '';
                         $itemStyle->image = '';
                         $itemStyle->save();
+                        $itemStyles->add($itemStyle);
+
                     }
                     $item->itemStyleId = isset($itemStyle->id) ? $itemStyle->id : null;
                 }
@@ -95,7 +102,19 @@ class Item
             }
 
             if($item) {
-                $userItem = new UserItem();
+                $userItemsList = $userItems->get($character ? $character->id : null);
+                $userItem = null;
+                if(!is_null($userItemsList)) {
+                    $userItem = $userItemsList
+                        ->where('userId', $user->id)
+                        ->where('itemId', $item->id)
+                        ->where('characterId', $character ? $character->id : null)
+                        ->where('bagEnum', $bagType)
+                        ->where('uniqueId', $properties[0])
+                        ->first();
+                }
+
+                $userItem = is_null($userItem) ? new UserItem() : $userItem;
                 $userItem->userId = $user->id;
                 $userItem->itemId = $item->id;
                 $userItem->characterId = $character ? $character->id : null;
@@ -109,7 +128,7 @@ class Item
                 $userItem->slotId = intval($properties[23]);
 
                 if(isset($properties[25]) and intval($properties[25]) != 0) {
-                    $itemStyle = ItemStyle::where('externalId', intval($properties[25]))->first();
+                    $itemStyle = $itemStyles->where('externalId', intval($properties[25]))->first();
                     $userItem->itemStyleId = isset($itemStyle->id) ? $itemStyle->id : null;
                 }
 

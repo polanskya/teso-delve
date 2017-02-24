@@ -42,7 +42,7 @@ class StyleController
 
         $weapons = Cache::remember('weapons-examples-' . $itemStyle->id, 120, function () use ($itemStyle) {
             $items = Item::where('itemStyleId', $itemStyle->id)->get();
-            return $items->where('weaponType', '!=', 0)->groupBy('weaponType');
+            return $items->where('weaponType', '!=', 0)->sortBy('weaponType')->groupBy('weaponType');
         });
 
         $images = [];

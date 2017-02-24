@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\CheckForMaintenanceMode;
+use App\Http\Middleware\CheckForWWWSubdomain;
 use App\Http\Middleware\LastSeenMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -33,6 +34,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             LastSeenMiddleware::class,
+            CheckForWWWSubdomain::class,
         ],
 
         'api' => [

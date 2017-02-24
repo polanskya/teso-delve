@@ -33,9 +33,9 @@
                                 <hr>
 
                                 @foreach($armors as $armorType => $armorsList)
-                                    <h4>{{trans('enums.ArmorType.' . $armorType)}}</h4>
+                                    <h4>{{trans('enums.ArmorType.' . $armorType)}} i</h4>
                                     <ul class="list-inline">
-                                        @foreach($armorsList->groupBy('equipType') as $armorsListByEquipType)
+                                        @foreach($armorsList->sortBy('equipType')->groupBy('equipType') as $key => $armorsListByEquipType)
                                             <li>@include('item.worn_image', ['equippedItem' => $armorsListByEquipType->first(), 'qualityBackground' => false])</li>
                                         @endforeach
                                     </ul>

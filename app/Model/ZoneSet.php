@@ -16,6 +16,10 @@ class ZoneSet extends Model
         return $zones->getZone($this->zoneId);
     }
 
+    public function sets() {
+        return $this->hasOne(Set::class, 'id', 'setId');
+    }
+
     public function getNameAttribute() {
         return $this->getZoneInfo()['name'];
     }

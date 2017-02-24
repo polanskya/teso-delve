@@ -113,8 +113,47 @@
                                 </div>
 
                                 <div class="row">
+                                    <div class="col-sm-3 text-bold">Horse skills:</div>
+                                    <div class="col-sm-8">
+                                        <span class="title" data-toggle="tooltip" data-placement="top" title="Speed">{{$character->getMeta('ridingskill-0')}}</span> /
+                                        <span class="title" data-toggle="tooltip" data-placement="top" title="Endurance">{{$character->getMeta('ridingskill-2')}}</span> /
+                                        <span class="title" data-toggle="tooltip" data-placement="top" title="Storage">{{$character->getMeta('ridingskill-4')}}</span></div>
+                                </div>
+
+                                <div class="row">
                                     <div class="col-sm-3 text-bold">Horse training:</div>
                                     <div class="col-sm-8">{{$character->ridingUnlocked_at < time() ? 'Available now' : date('Y-m-d H:i:s', $character->ridingUnlocked_at)}}</div>
+                                </div>
+
+                                <div class="row character-attributes">
+                                    <h3 class="col-sm-12">Attributes</h3>
+                                    <div class="col-sm-2 text-center">
+                                        Magicka
+                                        <div class="progress h-9">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                                <span class="sr-only">20% Complete</span>
+                                            </div>
+                                        </div>
+                                        <span class="text-white">{{$character->getMeta('character-attribute-0')}}</span>
+                                    </div>
+                                    <div class="col-sm-2 text-center">
+                                        Health
+                                        <div class="progress h-9">
+                                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                                <span class="sr-only">20% Complete</span>
+                                            </div>
+                                        </div>
+                                        <span class="text-white">{{$character->getMeta('character-attribute-1')}}</span>
+                                    </div>
+                                    <div class="col-sm-2 text-center">
+                                        Stamina
+                                        <div class="progress h-9">
+                                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                                <span class="sr-only">20% Complete</span>
+                                            </div>
+                                        </div>
+                                        <span class="text-white">{{$character->getMeta('character-attribute-2')}}</span>
+                                    </div>
                                 </div>
 
                                 <h3>Set bonuses</h3>
@@ -135,6 +174,8 @@
                                     @endif
                                 @endforeach
                             </div>
+
+
 
 
                             <div class="col-md-12">

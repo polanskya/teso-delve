@@ -14,7 +14,8 @@
 
 Auth::routes();
 
-include('ajax.php');
+include('web/ajax.php');
+include('web/sitemaps.php');
 
 Route::get('/dungeon/public', 'DungeonController@index')->name('dungeons.public.index');
 Route::get('/dungeon/group', 'DungeonController@index')->name('dungeons.groups.index');
@@ -22,13 +23,13 @@ Route::get('/dungeon/trials', 'DungeonController@index')->name('dungeons.trials.
 Route::get('/dungeon/delves', 'DungeonController@index')->name('dungeons.delves.index');
 Route::get('/dungeon/arenas', 'DungeonController@index')->name('dungeons.arenas.index');
 
+include('web/sets.php');
+
 Route::group(['middleware' => 'auth'], function () {
     include('web/inventory.php');
     include('web/guilds.php');
+    include('admin.php');
 });
-
-include('admin.php');
-
 
 Route::get('/import-data', 'ImportController@import');
 Route::get('/export', 'ImportController@export');
@@ -58,14 +59,6 @@ Route::get('/zone/{zoneId}', 'ZoneController@show')->name('zone.show');
 Route::get('/styles', 'StyleController@index')->name('item-styles.index');
 Route::get('/style/{itemStyle}', 'StyleController@show')->name('item-styles.show');
 
-
-Route::get('/my-sets', 'SetController@mySets')->name('set.my-sets')->middleware('auth');
-Route::get('/set/craftable', 'SetController@craftable')->name('set.craftable');
-Route::get('/set/monster/{giver}', 'SetController@monsterChest')->name('set.monster.chest');
-Route::get('/set/monster', 'SetController@monster')->name('set.monster');
-Route::get('/set/{set}', 'SetController@show')->name('set.show');
-Route::post('/set/{set}/update', 'SetController@update')->name('set.update')->middleware('auth');
-Route::get('/set/{set}/edit', 'SetController@edit')->name('set.edit')->middleware('auth');
 
 Route::get('/contribute', 'ContributeController@index')->name('contribute');
 Route::get('/about', 'AboutController@index')->name('about');

@@ -44,7 +44,7 @@
 
                             <div class="col-md-12">
 
-                                @if($pledge or $dungeon->sets->count() > 0)
+                                @if($pledge or $sets->count() > 0)
                                 <div class="panel panel-default col-md-3 col-md-offset-9">
                                     <div class="panel-body">
                                         @if($pledge)
@@ -52,16 +52,12 @@
                                             Pledge issued in {!! App\Presenter\Date::untilDate($pledge->date) !!}
                                         @endif
 
-                                        @if($dungeon->sets->count() > 0)
+                                        @if($sets->count() > 0)
                                             <h4>Sets</h4>
                                             <ul class="list-unstyled">
-                                                @foreach($dungeon->sets as $set)
+                                                @foreach($sets as $set)
                                                     <li>
-                                                        @if(!$loop->last)
-                                                            @include('sets.name'),
-                                                        @else
-                                                            @include('sets.name')
-                                                        @endif
+                                                        @include('sets.name'),
                                                     </li>
                                                 @endforeach
                                             </ul>
@@ -145,6 +141,12 @@
                                                         <div role="group" aria-label="" class="btn-group pull-right">
                                                             <a href="{{route('admin.boss.edit', [$boss])}}" class="btn btn-default btn-xs"><i aria-hidden="true" class="fa fa-pencil"></i></a>
                                                         </div>
+                                                    @endif
+                                                </div>
+
+                                                <div class="col-md-12">
+                                                    @if(!empty($boss->description))
+                                                        {!! $boss->description !!}
                                                     @endif
                                                 </div>
 

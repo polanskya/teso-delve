@@ -2,9 +2,11 @@
 
 
 use App\Enum\DungeonType;
+use App\Enum\SetType;
 use App\Model\DailyPledges;
 use App\Model\Dungeon;
 use App\Model\Set;
+use App\Model\ZoneSet;
 use App\Objects\Zones;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -77,9 +79,17 @@ class DungeonController
     public function show(Request $request, Dungeon $dungeon)
     {
         $sets = $dungeon->sets;
+
+        if(in_array($dungeon->dungeonTypeEnum, [DungeonType::DELVE, DungeonType::PUBLIC_DUNGEON])) {
+
+            $sets = ZoneSet::where('zoneId', $dungeon->zone)
+                ->with('sets')
+                ->get()
+                ->pluck('sets');
+        }
+
         $bosses = $dungeon->bosses->sortBy('order');
         $user = Auth::user();
-
 
         $all_sets = Set::whereNotIn('id', $sets->pluck('id'))
             ->orderBy('name')

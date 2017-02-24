@@ -10,7 +10,7 @@
         <div class="row-fluid">
             <h1 class="col-md-12">{{$guild->name}} <small>{{$guild->world}}</small></h1>
 
-            <div class="col-md-8"><p>{!! \App\Presenter\StringPresenter::ColorReplace($guild->description) !!}</p></div>
+            <div class="col-md-8">Founded: {{$guild->founded_at->format('Y-m-d')}}</div>
             <div class="col-md-4">
 
             </div>

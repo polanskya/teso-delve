@@ -99,6 +99,20 @@
   margin-bottom: 0px;
 }
 
+.character-attributes .progress {
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+
+.popover-content ul {
+  padding-left: 0px;
+  list-style-type: none;
+}
+
+.popover-content ul li {
+  margin-left: 0px;
+}
+
 .item-icon.size-40 {
   max-width: 40px;
 }
@@ -141,6 +155,10 @@
 
 .valign-middle {
   vertical-align: middle !important;
+}
+
+.valign-bottom {
+  vertical-align: bottom !important;
 }
 
 .itemstyle-armor {
@@ -226,6 +244,10 @@
 
 .import-guide li {
   margin-bottom: 10px;
+}
+
+.fa-gray {
+  color: #5c5c5c !important;
 }
 
 #importDropzone {

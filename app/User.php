@@ -6,6 +6,7 @@ use App\Model\Character;
 use App\Model\Guild;
 use App\Model\GuildMember;
 use App\Model\Item;
+use App\Model\UserItem;
 use App\Model\UserSetFavourite;
 use HeppyKarlsson\Meta\Traits\Meta;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -46,8 +47,13 @@ class User extends Authenticatable
             ->withPivot('characterId', 'uniqueId', 'bagEnum', 'slotId', 'traitEnum', 'traitDescription', 'enchant', 'enchantDescription', 'equipTypeEnum', 'armorTypeEnum', 'weaponTypeEnum', 'isLocked', 'isBound', 'isJunk', 'count');
     }
 
+    public function userItems() {
+        return $this->hasMany(UserItem::class, 'userId');
+    }
+
     public function guilds() {
-        return $this->hasManyThrough(Guild::class, GuildMember::class, 'user_id', 'id', 'guild_id');
+        return $this->belongsToMany(Guild::class, 'guild_members')
+          ->withPivot('rank', 'note', 'accountName');
     }
 
     public function favouriteSets() {

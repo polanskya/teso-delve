@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use App\Enum\CraftingType;
+use App\User;
 use Carbon\Carbon;
 use HeppyKarlsson\Meta\Traits\Meta;
 use Illuminate\Database\Eloquent\Model;
@@ -46,6 +47,10 @@ class Character extends Model
     protected $fillable = [
 
     ];
+
+    public function user() {
+        return $this->belongsTo(User::class, 'userId');
+    }
 
     public function craftingTraits() {
         return $this->hasMany(CraftingTrait::class, 'characterId');

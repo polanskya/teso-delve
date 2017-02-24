@@ -56,6 +56,7 @@
                                 </li>
                                 <li role="separator" class="divider"></li>
                                 <li>
+                                    <a href="{{route('set.index')}}">All sets</a>
                                     <a href="{{route('zones.index')}}">Zones</a>
                                     <a href="{{route('set.monster')}}">Monster</a>
                                     <a href="{{route('set.craftable')}}">Craftable</a>
@@ -125,6 +126,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
+                                    <a href="{{route('set.index')}}">All sets</a>
                                     <a href="{{route('zones.index')}}">Zones</a>
                                     <a href="{{route('set.monster')}}">Monster</a>
                                     <a href="{{route('set.craftable')}}">Craftable</a>
