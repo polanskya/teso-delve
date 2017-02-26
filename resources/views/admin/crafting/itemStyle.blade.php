@@ -56,6 +56,17 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group">
+                                    <label for="itemStyle[craftable]" class="control-label col-md-2">Material</label>
+                                    <div class="col-md-10">
+                                        @if(!empty($itemStyle->material))
+                                            <img src="{{$itemStyle->image}}" title="{{$itemStyle->material}}" class="icon-size-40">
+                                            <br>
+                                            <p>{{$itemStyle->material}}</p>
+                                        @endif
+                                    </div>
+                                </div>
+
                                 <hr>
 
                                 <div class="row">

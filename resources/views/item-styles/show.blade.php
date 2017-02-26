@@ -53,12 +53,24 @@
                             </div>
 
                             <div class="motifs-list col-md-4">
-                                @if($itemStyle->chapters->count() > 0)
-                                    <h4>Motifs</h4>
-                                    @foreach($itemStyle->chapters as $chapter)
-                                        @include('item.worn_image', ['equippedItem' => $chapter->item])
-                                    @endforeach
-                                @endif
+                                <div class="row">
+                                    @if($itemStyle->chapters->count() > 0)
+                                        <div class="col-md-12">
+                                            <h4>Motifs</h4>
+                                            @foreach($itemStyle->chapters as $chapter)
+                                                @include('item.worn_image', ['equippedItem' => $chapter->item])
+                                            @endforeach
+                                        </div>
+                                    @endif
+
+                                    @if(!empty($itemStyle->material))
+                                        <div class="col-md-12">
+                                            <h4>Material</h4>
+                                            <img src="{{$itemStyle->image}}" title="{{$itemStyle->material}}" class="icon-size-40">
+                                            <p>{{$itemStyle->material}}</p>
+                                        </div>
+                                    @endif
+                                </div>
                             </div>
                         </div>
 

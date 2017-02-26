@@ -78,6 +78,22 @@ class ItemType
         ];
     }
 
+    static public function material($craftingTypeEnum) {
+        if($craftingTypeEnum == CraftingType::BLACKSMITHING) {
+            return self::BLACKSMITHING_MATERIAL;
+        }
+
+        if($craftingTypeEnum == CraftingType::CLOTHIER) {
+            return self::CLOTHIER_MATERIAL;
+        }
+
+        if($craftingTypeEnum == CraftingType::WOODWORKING) {
+            return self::WOODWORKING_MATERIAL;
+        }
+
+        throw new \Exception('No material found for: ' . $craftingTypeEnum);
+    }
+
     static public function materials() {
         return [
             self::RAW_MATERIAL,

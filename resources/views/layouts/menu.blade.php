@@ -471,6 +471,9 @@
                                         <a href="{{route('admin.users.index')}}">Users</a>
                                     </li>
                                     <li>
+                                        <a href="{{route('admin.crafting-table.edit', [\App\Enum\CraftingType::BLACKSMITHING])}}">Crafting table</a>
+                                    </li>
+                                    <li>
                                         <a href="{{route('admin.generate-slugs')}}">Generate slugs</a>
                                     </li>
                                 </ul>

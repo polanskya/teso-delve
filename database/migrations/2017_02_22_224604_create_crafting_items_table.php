@@ -16,9 +16,7 @@ class CreateCraftingItemsTable extends Migration
         Schema::create('crafting_items', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('smithingTypeEnum');
-            $table->integer('weaponTypeEnum')->nullable();
-            $table->integer('armorTypeEnum')->nullable();
-            $table->integer('equipTypeEnum')->nullable();
+            $table->integer('researchLineIndex')->nullable();
             $table->integer('level');
             $table->integer('championLevel')->nullable();
             $table->string('name')->nullable();
