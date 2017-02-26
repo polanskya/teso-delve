@@ -1,4 +1,3 @@
-<?php set_time_limit(30); ?>
 <tr>
     <td class="text-nowrap">
         @if($championLevel != null)
