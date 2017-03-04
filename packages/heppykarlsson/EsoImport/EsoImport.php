@@ -14,12 +14,10 @@ class EsoImport
     /** @var User */
     private $user = null;
     private $itemStyles = null;
-    private $userItems = null;
-    private $guilds = [];
 
     public function import($file_path) {
         set_time_limit(120);
-        ini_set('memory_limit','32M');
+        ini_set('memory_limit','64M');
 
         $updateStart = Carbon::now();
 
@@ -43,35 +41,34 @@ class EsoImport
                     return true;
                 }
 
-                if(Guild::check($line)) {
-                    $guildImport = new Guild();
-                    $guildImport->process($line, $user);
-                    return true;
-                }
+//                if(Guild::check($line)) {
+//                    $guildImport = new Guild();
+//                    $guildImport->process($line, $user);
+//                    return true;
+//                }
             });
 
             $user->load('characters');
             $user->load('characters.craftingTraits');
             $user->load('characters.meta');
             $user->load('characters.itemStyles');
-            $user->load('guilds.members');
-            $user->load('userItems');
+//            $user->load('guilds.members');
+//            $user->load('userItems');
             $user->load('meta');
-            $this->userItems = $user->userItems->groupBy('characterId');
+//            $this->userItems = $user->userItems->groupBy('characterId');
 
             File::eachRow($file_path, function($line) use($user) {
-
                 if (strpos($line, 'ITEMSTYLE:') !== false) {
                     $itemStyleImport = new Import\ItemStyle();
                     $itemStyleImport->process($line, $user, $this->itemStyles);
                     return true;
                 }
 
-                if(GuildMember::check($line)) {
-                    $member = new GuildMember();
-                    $member->process($line, $user, $this->guilds);
-                    return true;
-                }
+//                if(GuildMember::check($line)) {
+//                    $member = new GuildMember();
+//                    $member->process($line, $user, $this->guilds);
+//                    return true;
+//                }
 
                 if (strpos($line, 'SMITHING:') !== false) {
                     $smithingImport = new Import\Smithing();
@@ -81,7 +78,7 @@ class EsoImport
 
                 if (strpos($line, 'ITEM:') !== false) {
                     $itemImport = new Import\Item();
-                    $itemImport->process($line, $user, $this->itemStyles, $this->userItems);
+                    $itemImport->process($line, $user, $this->itemStyles);
                     return true;
                 }
 

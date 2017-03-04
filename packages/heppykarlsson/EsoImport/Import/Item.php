@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 class Item
 {
 
-    public function process($line, $user, $itemStyles, $userItems) {
+    public function process($line, $user, $itemStyles) {
         $item_start = strpos($line, 'ITEM:');
         if($item_start === false) {
             return false;
@@ -102,17 +102,12 @@ class Item
             }
 
             if($item) {
-                $userItemsList = $userItems->get($character ? $character->id : null);
-                $userItem = null;
-                if(!is_null($userItemsList)) {
-                    $userItem = $userItemsList
-                        ->where('userId', $user->id)
-                        ->where('itemId', $item->id)
-                        ->where('characterId', $character ? $character->id : null)
-                        ->where('bagEnum', $bagType)
-                        ->where('uniqueId', $properties[0])
-                        ->first();
-                }
+                $userItem = $user->userItems()->where('userId', $user->id)
+                    ->where('itemId', $item->id)
+                    ->where('characterId', $character ? $character->id : null)
+                    ->where('bagEnum', $bagType)
+                    ->where('uniqueId', $properties[0])
+                    ->first();
 
                 $userItem = is_null($userItem) ? new UserItem() : $userItem;
                 $userItem->userId = $user->id;
