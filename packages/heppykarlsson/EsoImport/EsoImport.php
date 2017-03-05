@@ -5,8 +5,8 @@ use App\Model\UserItem;
 use App\User;
 use Carbon\Carbon;
 use HeppyKarlsson\EsoImport\Exception\DumpValidation;
-use HeppyKarlsson\EsoImport\Import\Guild;
-use HeppyKarlsson\EsoImport\Import\GuildMember;
+use HeppyKarlsson\EsoImport\Import\Character;
+use HeppyKarlsson\EsoImport\Import\Jobs\Inventory\Initialize;
 use Illuminate\Support\Facades\Auth;
 
 class EsoImport
@@ -93,6 +93,29 @@ class EsoImport
         return response()->json(['upload' => 'success']);
     }
 
+    public function jobImport($file_path) {
+        $user = Auth::user();
+
+        File::eachRow($file_path, function($line) use ($user) {
+
+            if(Character::check($line)) {
+                $this->checkFile($line);
+
+                $character = new Character();
+                $character->process($line, $user);
+                return true;
+            }
+
+            return true;
+        });
+
+        $job = new Initialize($file_path, $user);
+        $job->onQueue('invinitialize');
+        dispatch($job);
+
+        return 'works';
+    }
+
     public function checkFile($line) {
         if(stripos($line, 'local function loadTesoDelve(') !== false) {
             throw new DumpValidation('Import failed, it looks like you have accidently uploaded the TesoDelve file from Addons folder instead of SavedVariables');
@@ -115,4 +138,5 @@ class EsoImport
             $this->user->save();
         }
     }
+
 }

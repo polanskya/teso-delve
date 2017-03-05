@@ -8,6 +8,17 @@ use Carbon\Carbon;
 class Smithing
 {
 
+    static public function check($line)
+    {
+        if(strpos($line, 'SMITHING:') === false) {
+            return false;
+        }
+
+        $explode = explode(';', $line);
+
+        return $explode[9] == 'true';
+    }
+
     public function process($line, $user) {
         if(stripos($line, 'SMITHING:') === false) {
             return false;
