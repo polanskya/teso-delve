@@ -16,6 +16,19 @@ class ImportController
 {
 
     public function import(EsoImport $esoImport) {
+
+//        $content = file_get_contents(storage_path('killCounter.json'));
+        $content = file_get_contents(storage_path('MM00Data.lua'));
+        $content = str_replace('["', '"', $content);
+        $content = str_replace('"]', '"', $content);
+        $content = str_replace('[', '"', $content);
+        $content = str_replace(']', '"', $content);
+        $content = str_replace(' =', ': ', $content);
+        $content = trim(preg_replace('/\s\s+/', ' ', $content));
+        $content = str_ireplace(', }', ' }', $content);
+        $json = json_decode($content, true);
+        dd(array_chunk($json['Default']['MasterMerchant']['$AccountWide']['SalesData'], 50)[0]);
+
         $path = storage_path('TesoDelve.lua');
         $return = $esoImport->jobImport($path);
 //        $return = $esoImport->import($path);
