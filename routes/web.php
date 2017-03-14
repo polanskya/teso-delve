@@ -32,6 +32,7 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::get('/import-data', 'ImportController@import');
+Route::get('/import-mm', 'ImportController@mastermerchant');
 Route::get('/export', 'ImportController@export');
 
 Route::get('/esoui/art/icons/{image}', 'EsouiController@image');

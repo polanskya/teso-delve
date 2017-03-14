@@ -2,37 +2,68 @@
 
 use App\Model\Dungeon;
 use App\Model\DungeonSet;
+use App\Model\Item;
+use App\Model\ItemSale;
 use App\Model\Set;
 use App\Model\SetBonus;
 use App\Model\UserSetFavourite;
 use HeppyKarlsson\EsoImport\EsoImport;
+use HeppyKarlsson\MMImport\ImportService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Carbon\Carbon;
 
 class ImportController
 {
 
     public function import(EsoImport $esoImport) {
 
-//        $content = file_get_contents(storage_path('killCounter.json'));
-        $content = file_get_contents(storage_path('MM00Data.lua'));
-        $content = str_replace('["', '"', $content);
-        $content = str_replace('"]', '"', $content);
-        $content = str_replace('[', '"', $content);
-        $content = str_replace(']', '"', $content);
-        $content = str_replace(' =', ': ', $content);
-        $content = trim(preg_replace('/\s\s+/', ' ', $content));
-        $content = str_ireplace(', }', ' }', $content);
-        $json = json_decode($content, true);
-        dd(array_chunk($json['Default']['MasterMerchant']['$AccountWide']['SalesData'], 50)[0]);
-
         $path = storage_path('TesoDelve.lua');
-        $return = $esoImport->jobImport($path);
-//        $return = $esoImport->import($path);
+        $return = $esoImport->import($path);
+//        $return = $esoImport->jobImport($path);
         return 'works';
+    }
+
+    public function mastermerchant() {
+
+        /**
+         *
+         * function MasterMerchant.makeIndexFromLink(itemLink)
+        local levelReq = GetItemLinkRequiredLevel(itemLink)
+        local vetReq = 0
+        if GetAPIVersion() >= 100015 then
+        vetReq = GetItemLinkRequiredChampionPoints(itemLink) / 10
+        else
+        vetReq = GetItemLinkRequiredVeteranRank(itemLink)
+        end
+        local itemQuality = GetItemLinkQuality(itemLink)
+        local itemTrait = GetItemLinkTraitInfo(itemLink)
+        --Add final number in the link to handle item differences like 2 and 3 buff potions
+        local theLastNumber = string.match(itemLink, '|H.-:item:.-:(%d-)|h') or 0
+
+        local index = levelReq .. ':' .. vetReq .. ':' .. itemQuality .. ':' .. itemTrait .. ':' .. theLastNumber
+
+        return index
+        end
+         */
+//        $content = file_get_contents(storage_path('killCounter.json'));
+
+
+
+        $files = scandir(storage_path('app/mm-data'));
+
+        $mmService = new ImportService();
+        foreach($files as $file) {
+            if(stripos($file, '.lua') === false) {
+                continue;
+            }
+
+            $mmService->import(storage_path('app/mm-data/'.$file));
+        }
+
     }
 
     public function export() {

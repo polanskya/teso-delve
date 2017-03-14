@@ -117,7 +117,7 @@
   max-width: 40px;
 }
 
-.item_image .fa {
+.item_image > .item-hover > .fa {
   position: absolute;
   margin-left: -5px;
   margin-top: -5px;
@@ -133,20 +133,20 @@
   margin-bottom: 5px;
 }
 
-.inventory .slot-count {
-  position: absolute;
-  color: white;
-  margin-top: -17px;
-  width: 40px;
-  text-align: right;
-}
-
 .filter-icons img {
   max-width: 34px;
 }
 
 .filter-icons .btn {
   padding: 0px;
+}
+
+.slot-count {
+  position: absolute;
+  margin-top: 23px;
+  width: 38px;
+  text-align: right;
+  font-weight: bold;
 }
 
 .table-grid tbody tr td {
