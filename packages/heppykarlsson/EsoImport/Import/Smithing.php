@@ -16,6 +16,10 @@ class Smithing
 
         $explode = explode(';', $line);
 
+        if($explode[2] !== 'nil') {
+            return true;
+        }
+
         return $explode[9] == 'true';
     }
 
@@ -35,7 +39,7 @@ class Smithing
             ->where('traitIndex', intval($info[5]))
             ->first();
 
-        if(is_null($craftingTrait)) {
+        if(is_null($craftingTrait) and ($info[9] == 'true' or $info[2] !== 'nil')) {
             $craftingTrait = new CraftingTrait();
             $craftingTrait->characterId = $character->id;
             $craftingTrait->craftingTypeEnum = $smithingType;
@@ -48,7 +52,7 @@ class Smithing
             $craftingTrait->save();
         }
 
-        if(isset($info[13]) and $info[2] !== 'nil') {
+        if(isset($craftingTrait) and isset($info[13]) and $info[2] !== 'nil') {
             $researchDone = intval($info[13]) + intval($info[2]);
             $craftingTrait->researchDone_at = Carbon::createFromTimestamp($researchDone);
             $craftingTrait->save();

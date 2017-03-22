@@ -30,15 +30,17 @@ class Initialize implements ShouldQueue
     protected $smithingCount = 0;
     protected $itemStylesCount = 0;
     protected $itemsCount = 0;
+    protected $charactersCount = 0;
 
     /** @var ImportGroup  */
     private $importGroup = null;
     private $per_group = 500;
 
-    public function __construct($file, $user)
+    public function __construct($file, $user, $characters)
     {
         $this->file = $file;
         $this->user_id = $user->id;
+        $this->charactersCount = $characters;
     }
 
     public function handle()
@@ -55,7 +57,7 @@ class Initialize implements ShouldQueue
         $importGroup->guid = bcrypt($this->file . Carbon::now() . $this->user_id . rand(0, 100000));
         $importGroup->user_id = $user->id;
         $importGroup->items = 0;
-        $importGroup->characters = 0;
+        $importGroup->characters = $this->charactersCount;
         $importGroup->smithing = 0;
         $importGroup->itemStyles = 0;
         $importGroup->file = $this->file;
@@ -83,9 +85,6 @@ class Initialize implements ShouldQueue
         $this->pushItemStyles();
         $this->pushSmithing();
 
-        $importGroup->items = $this->itemsCount;
-        $importGroup->smithing = $this->smithingCount;
-        $importGroup->itemStyles = $this->itemStylesCount;
         $importGroup->job_ids = json_encode($this->job_ids);
         $importGroup->save();
 
@@ -93,7 +92,6 @@ class Initialize implements ShouldQueue
     }
 
     public function addSmithing($line) {
-        $this->smithingCount++;
 
         $now = Carbon::now();
 
@@ -107,13 +105,12 @@ class Initialize implements ShouldQueue
             'updated_at' => $now,
         ]);
 
-        if(count($this->items) >= $this->per_group) {
+        if(count($this->smithing) >= $this->per_group) {
             $this->pushSmithing();
         }
     }
 
     public function addItem($line) {
-        $this->itemsCount++;
 
         $now = Carbon::now();
 
@@ -133,7 +130,6 @@ class Initialize implements ShouldQueue
     }
 
     public function addItemStyle($line) {
-        $this->itemStylesCount++;
 
         $now = Carbon::now();
 

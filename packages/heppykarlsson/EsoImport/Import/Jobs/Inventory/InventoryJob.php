@@ -11,9 +11,11 @@ class InventoryJob
         $importGroup = ImportGroup::where('guid', $this->importGroup_guid)->first();
         $job_ids = json_decode($importGroup->job_ids);
 
-        $count = DB::table('jobs')->whereIn('id', $job_ids)->count();
+        if(!is_array($job_ids)) {
+            return true;
+        }
 
-        Log::info('count: ' . $count);
+        $count = DB::table('jobs')->whereIn('id', $job_ids)->count();
 
         if($count == 1) {
             $job = new Finalize($this->importGroup_guid, $this->user_id, $importGroup->created_at);

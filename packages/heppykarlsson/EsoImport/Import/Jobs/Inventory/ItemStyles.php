@@ -1,5 +1,6 @@
 <?php namespace HeppyKarlsson\EsoImport\Import\Jobs\Inventory;
 
+use App\Model\ImportGroup;
 use App\Model\ImportRow;
 use App\User;
 use HeppyKarlsson\EsoImport\Import\ItemStyle;
@@ -36,6 +37,7 @@ class ItemStyles extends InventoryJob implements ShouldQueue
 
         }
 
+        ImportGroup::where('guid', $this->importGroup_guid)->increment('itemStyles', $importRows->count());
         ImportRow::whereIn('guid', $this->row_guids)->delete();
         $this->DoneCheck();
         return true;

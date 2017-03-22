@@ -1,10 +1,13 @@
 <?php namespace HeppyKarlsson\EsoImport\Import\Jobs\Inventory;
 
+use App\Model\ImportGroup;
 use App\Model\ImportRow;
 use App\Model\ItemStyle;
 use App\User;
+use Carbon\Carbon;
 use HeppyKarlsson\EsoImport\Import\Item;
 use Illuminate\Bus\Queueable;
+use Log;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
@@ -28,15 +31,19 @@ class Items extends InventoryJob implements ShouldQueue
     {
         $importRows = ImportRow::whereIn('guid', $this->item_guids)->get();
 
+        $start = Carbon::now();
+
         $itemImport = new Item();
         $user = User::find($this->user_id);
         $itemStyles = ItemStyle::all();
 
         foreach($importRows as $importRow) {
             $itemImport->process($importRow->row, $user, $itemStyles);
-
         }
 
+        Log::info('Items process time: ' . Carbon::now()->diffInSeconds($start));
+
+        ImportGroup::where('guid', $this->importGroup_guid)->increment('items', $importRows->count());
         ImportRow::whereIn('guid', $this->item_guids)->delete();
 
         $this->DoneCheck();

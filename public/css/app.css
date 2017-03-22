@@ -275,7 +275,7 @@
   vertical-align: middle;
 }
 
-.fa {
+#importDropzone .fa {
   font-size: 14px;
   color: white;
 }
@@ -299,6 +299,11 @@
 .dropzone-message.message-uploading {
   margin-top: 7px;
   display: none;
+}
+
+.admin-wrap > .content {
+  margin-top: 50px;
+  padding-top: 25px;
 }
 
 body {

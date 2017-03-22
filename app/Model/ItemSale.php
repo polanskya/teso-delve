@@ -4,6 +4,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class ItemSale extends Model
 {
+    public $timestamps = true;
+
+    public $dates = [
+        'sold_at'
+    ];
+
+    public function guild() {
+        return $this->belongsTo(Guild::class);
+    }
 
     public function guid() {
 

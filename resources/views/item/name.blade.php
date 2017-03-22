@@ -1,4 +1,4 @@
-<span class="item-hover" itemId="{{$item->id}}"><a href="{{route('item.show', [$item->id])}}" class="quality-text-{{$item->quality}}">{{$item->name}}</a></span>
+<span class="item-hover" itemId="{{$item->slug}}"><a href="{{route('item.show', [$item])}}" class="quality-text-{{$item->quality}}">{{ucfirst($item->name)}}</a></span>
 @if(isset($item->pivot) and $item->pivot->count > 1)
     <span title="Amount: {{$item->pivot->count}}">Amount: {{ $item->pivot->count > 1 ? $item->pivot->count : '' }}</span>
 @elseif(isset($userItem) and $item->count > 1)

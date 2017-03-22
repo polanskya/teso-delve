@@ -3,26 +3,21 @@
 use App\Model\Item;
 use App\Model\ItemSale;
 use Carbon\Carbon;
+use HeppyKarlsson\LuaJson\LuaJson;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Auth;
 
 class ImportService
 {
-    private $per_job = 1000;
+    private $per_job = 2000;
     private $sales = [];
 
     public function import($file) {
         set_time_limit(30);
-        $content = file_get_contents($file);
-        $content = str_replace('["', '"', $content);
-        $content = str_replace('"]', '"', $content);
-        $content = str_replace('[', '"', $content);
-        $content = str_replace(']', '"', $content);
-        $content = str_replace(' =', ': ', $content);
-        $content = trim(preg_replace('/\s\s+/', ' ', $content));
-        $content = str_ireplace(', }', ' }', $content);
-        $first_match = stripos($content, '{');
-        $content = substr($content, $first_match);
-        $json = json_decode($content, true);
+        $json = LuaJson::toJson(file_get_contents($file));
+
+        $now = Carbon::now()->subWeek(2);
 
         foreach($json['Default']['MasterMerchant']['$AccountWide']['SalesData'] as $link_id => $salesData) {
             $sales = [];
@@ -36,12 +31,18 @@ class ImportService
                         ];
 
 
-                    $sales[] = $sale;
+                    $time = Carbon::createFromTimestamp($sale['timestamp']);
+
+                    if($time->gt($now)) {
+                        $sales[] = $sale;
+                    }
                 }
             }
 
             $this->addSales($sales);
         }
+
+        File::delete($file);
     }
     public function importBAK($file) {
         set_time_limit(30);
@@ -77,6 +78,8 @@ class ImportService
                 $itemSales = $itemSales->pluck('guid');
 
                 foreach($salesInfo['sales'] as $sale) {
+                    $sold_at = Carbon::createFromTimestamp($sale['timestamp']);
+
                     set_time_limit(10);
                     $itemSale = new ItemSale();
                     $itemSale->item_id = $item->id;
@@ -84,7 +87,8 @@ class ImportService
                     $itemSale->price_ea = $sale['price'] / $sale['quant'];
                     $itemSale->external_id = $sale['id'];
                     $itemSale->quantity = $sale['quant'];
-                    $itemSale->sold_at = Carbon::createFromTimestamp($sale['timestamp']);
+                    $itemSale->sold_at = $sold_at;
+                    $itemSale->week = $sold_at->year .'-'. $sold_at->weekOfYear;
                     $itemSale->buyer = $sale['buyer'];
                     $itemSale->seller = $sale['seller'];
                     $itemSale->itemLink = $sale['itemLink'];
@@ -111,7 +115,7 @@ class ImportService
         $this->sales = array_merge($this->sales, $sales);
 
         if(count($this->sales) > $this->per_job) {
-            $job = new Sales($this->sales);
+            $job = new Sales($this->sales, Auth::id());
             dispatch($job);
             $this->sales = [];
         }

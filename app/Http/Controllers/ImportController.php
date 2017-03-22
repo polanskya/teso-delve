@@ -2,19 +2,17 @@
 
 use App\Model\Dungeon;
 use App\Model\DungeonSet;
-use App\Model\Item;
-use App\Model\ItemSale;
+use App\Model\ImportGroup;
 use App\Model\Set;
 use App\Model\SetBonus;
 use App\Model\UserSetFavourite;
+use App\Repository\GithubRepository;
 use HeppyKarlsson\EsoImport\EsoImport;
 use HeppyKarlsson\MMImport\ImportService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Carbon\Carbon;
 
 class ImportController
 {
@@ -22,36 +20,12 @@ class ImportController
     public function import(EsoImport $esoImport) {
 
         $path = storage_path('TesoDelve.lua');
-        $return = $esoImport->import($path);
-//        $return = $esoImport->jobImport($path);
+//        $return = $esoImport->import($path);
+        $return = $esoImport->jobImport($path);
         return 'works';
     }
 
     public function mastermerchant() {
-
-        /**
-         *
-         * function MasterMerchant.makeIndexFromLink(itemLink)
-        local levelReq = GetItemLinkRequiredLevel(itemLink)
-        local vetReq = 0
-        if GetAPIVersion() >= 100015 then
-        vetReq = GetItemLinkRequiredChampionPoints(itemLink) / 10
-        else
-        vetReq = GetItemLinkRequiredVeteranRank(itemLink)
-        end
-        local itemQuality = GetItemLinkQuality(itemLink)
-        local itemTrait = GetItemLinkTraitInfo(itemLink)
-        --Add final number in the link to handle item differences like 2 and 3 buff potions
-        local theLastNumber = string.match(itemLink, '|H.-:item:.-:(%d-)|h') or 0
-
-        local index = levelReq .. ':' .. vetReq .. ':' .. itemQuality .. ':' .. itemTrait .. ':' .. theLastNumber
-
-        return index
-        end
-         */
-//        $content = file_get_contents(storage_path('killCounter.json'));
-
-
 
         $files = scandir(storage_path('app/mm-data'));
 
@@ -92,25 +66,30 @@ class ImportController
                 return $esoImport->import($file->getRealPath());
             }
 
-            abort(404);
+            $fileName = $file->getClientOriginalName();
+            if(substr($fileName, 0, 2) == "MM" and stripos($fileName, 'Data.lua') !== false) {
+                $newFile = storage_path('app/mm-data/' . Auth::id() . "-" . $fileName);
+                File::copy($file->getRealPath(), $newFile);
+
+                $mmService = new ImportService();
+                $mmService->import($newFile);
+                return 'MM uploaded';
+            }
         }
+
+        abort(404);
     }
 
     public function index() {
-        $addonInfo = Cache::remember('github_addon_version', config('addon.github.cache-time'), function() {
-            $opts = config('addon.github.opts');
-            $context = stream_context_create($opts);
 
-            $result = file_get_contents(config('addon.github.repo-url'), null, $context);
-            $result = json_decode($result);
+        $githubRepository = new GithubRepository();
+        $addonInfo = $githubRepository->info();
 
-            return [
-                'version' => $result->tag_name,
-                'zipball' => $result->zipball_url,
-            ];
-        });
+        $importGroup = ImportGroup::where('user_id', Auth::id())
+            ->orderBy('created_at', 'desc')
+            ->first();
 
-        return view('import.index', compact('addonInfo'));
+        return view('import.index', compact('addonInfo', 'importGroup'));
     }
 
 }

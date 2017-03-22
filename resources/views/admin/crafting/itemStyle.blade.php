@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('stylesheet')
     <link href="/css/app.css" rel="stylesheet">
@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="row-fluid">
 
             <div class="col-md-12">

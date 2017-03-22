@@ -1,6 +1,5 @@
 <?php namespace App\Http\Controllers;
 
-
 use App\Model\Item;
 use App\Model\ItemStyle;
 use Illuminate\Database\Eloquent\Collection;

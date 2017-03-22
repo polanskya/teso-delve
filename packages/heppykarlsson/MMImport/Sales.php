@@ -1,33 +1,35 @@
 <?php namespace HeppyKarlsson\MMImport;
 
-use App\Model\ImportRow;
 use App\Model\ItemSale;
-use App\Model\ItemStyle;
 use App\User;
 use Carbon\Carbon;
-use HeppyKarlsson\EsoImport\Import\Item;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Database\QueryException;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\App;
 
 class Sales implements ShouldQueue
 {
     use InteractsWithQueue, Queueable, SerializesModels;
 
     private $sales;
+    private $user_id;
 
-    public function __construct($sales)
+    public function __construct($sales, $user_id)
     {
         $this->sales = $sales;
+        $this->user_id = $user_id;
     }
 
     public function handle()
     {
         $inserts = [];
         $guids = [];
+
+        $user = User::find($this->user_id);
+        $guilds = $user->guilds->keyBy('name');
+
         foreach ($this->sales as $sale) {
             set_time_limit(10);
 
@@ -37,7 +39,8 @@ class Sales implements ShouldQueue
                 ->where('level', $itemKey[0])
                 ->where('championLevel', $itemKey[1] * 10)
                 ->where('quality', $itemKey[2])
-                ->where('trait', $itemKey[3]);
+                ->where('trait', $itemKey[3])
+                ->where('lang', App::getLocale());
 
             $item = $query->first();
 
@@ -45,6 +48,7 @@ class Sales implements ShouldQueue
                 continue;
             }
 
+            $sold_at = $sold_at = Carbon::createFromTimestamp($sale['timestamp']);
             $itemSale = new ItemSale();
             $itemSale->item_id = $item->id;
             $itemSale->price = $sale['price'];
@@ -60,12 +64,23 @@ class Sales implements ShouldQueue
 
 
             $itemSale->quantity = $sale['quant'];
-            $itemSale->sold_at = Carbon::createFromTimestamp($sale['timestamp']);
+            $itemSale->sold_at = $sold_at;
+            $itemSale->week = $sold_at->year . "" . substr('0'.$sold_at->weekOfYear, -2);
             $itemSale->buyer = $sale['buyer'];
             $itemSale->item_key = $sale['item_key'];
             $itemSale->seller = $sale['seller'];
             $itemSale->itemLink = $sale['itemLink'];
             $itemSale->isKiosk = $sale['wasKiosk'];
+
+            $itemSale->created_at = Carbon::now();
+            $itemSale->updated_at = Carbon::now();
+
+            $itemSale->guild_id = null;
+            if($guilds->has($sale['guild'])) {
+                $guild = $guilds->get($sale['guild']);
+                $itemSale->guild_id = $guild->id;
+            }
+
             $itemSale->guid();
 
             $guids[] = $itemSale->guid;
@@ -73,6 +88,7 @@ class Sales implements ShouldQueue
         }
 
         $used_guids = ItemSale::whereIn('guid', $guids)->select('guid')->get();
+
         $used_guids = $used_guids->keyBy('guid')->toArray();
 
         $inserts = array_diff_key($inserts, $used_guids);
@@ -85,21 +101,5 @@ class Sales implements ShouldQueue
 
         return true;
     }
-
-    /*
-     * SELECT I.id, itemSale.* FROM item_sales AS itemSale
-
-LEFT JOIN items AS I
-	ON itemSale.level=I.level
-	AND itemSale.championLevel=I.championLevel
-	AND itemSale.quality=I.quality
-	AND itemSale.trait=I.trait
-	AND I.itemLink LIKE CONCAT('|H0:item:', itemSale.link_id, ':%')
-	and I.itemLink LIKE CONCAT('%:', itemSale.itemLink_last, '|h|h')
-
-WHERE item_id IS NULL
-
-LIMIT 1000
-     */
 
 }

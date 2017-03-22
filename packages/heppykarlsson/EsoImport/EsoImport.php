@@ -6,6 +6,7 @@ use App\User;
 use Carbon\Carbon;
 use HeppyKarlsson\EsoImport\Exception\DumpValidation;
 use HeppyKarlsson\EsoImport\Import\Character;
+use HeppyKarlsson\EsoImport\Import\Guild;
 use HeppyKarlsson\EsoImport\Import\Jobs\Inventory\Initialize;
 use Illuminate\Support\Facades\Auth;
 
@@ -41,11 +42,11 @@ class EsoImport
                     return true;
                 }
 
-//                if(Guild::check($line)) {
-//                    $guildImport = new Guild();
-//                    $guildImport->process($line, $user);
-//                    return true;
-//                }
+                if(Guild::check($line)) {
+                    $guildImport = new Guild();
+                    $guildImport->process($line, $user);
+                    return true;
+                }
             });
 
             $user->load('characters');
@@ -95,21 +96,29 @@ class EsoImport
 
     public function jobImport($file_path) {
         $user = Auth::user();
+        $characters = 0;
 
-        File::eachRow($file_path, function($line) use ($user) {
+        File::eachRow($file_path, function($line) use ($user, &$characters) {
 
             if(Character::check($line)) {
                 $this->checkFile($line);
 
                 $character = new Character();
                 $character->process($line, $user);
+                $characters++;
+                return true;
+            }
+
+            if(Guild::check($line)) {
+                $guild = new Guild();
+                $guild->process($line, $user);
                 return true;
             }
 
             return true;
         });
 
-        $job = new Initialize($file_path, $user);
+        $job = new Initialize($file_path, $user, $characters);
         $job->onQueue('invinitialize');
         dispatch($job);
 
