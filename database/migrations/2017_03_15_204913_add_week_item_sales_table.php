@@ -14,7 +14,7 @@ class AddWeekItemSalesTable extends Migration
     public function up()
     {
         Schema::table('item_sales', function (Blueprint $table) {
-            $table->integer('week', 10)->nullable()->after('sold_at');
+            $table->integer('week', 10)->after('sold_at');
         });
     }
 
