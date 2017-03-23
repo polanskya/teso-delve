@@ -23,6 +23,7 @@ Route::get('/dungeon/trials', 'DungeonController@index')->name('dungeons.trials.
 Route::get('/dungeon/delves', 'DungeonController@index')->name('dungeons.delves.index');
 Route::get('/dungeon/arenas', 'DungeonController@index')->name('dungeons.arenas.index');
 
+include('web/items.php');
 include('web/sets.php');
 
 Route::group(['middleware' => 'auth'], function () {
@@ -32,6 +33,7 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::get('/import-data', 'ImportController@import');
+Route::get('/import-mm', 'ImportController@mastermerchant');
 Route::get('/export', 'ImportController@export');
 
 Route::get('/esoui/art/icons/{image}', 'EsouiController@image');
@@ -65,7 +67,7 @@ Route::get('/about', 'AboutController@index')->name('about');
 
 Route::get('/item/{item}', 'ItemController@show')->name('item.show');
 
-Route::post('/import-data', 'ImportController@upload')->name('import.upload');
+Route::post('/import-tesodelve', 'ImportController@upload')->name('import.upload');
 Route::get('/import', 'ImportController@index')->name('import.index');
 
 Route::get('/home', 'SetController@mySets')->name('home.index')->middleware('auth');

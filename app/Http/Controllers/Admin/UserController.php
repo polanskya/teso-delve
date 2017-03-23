@@ -2,6 +2,7 @@
 
 use App\Enum\BagType;
 use App\Http\Controllers\Controller;
+use App\Model\Role\Role;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -11,7 +12,10 @@ class UserController extends Controller
 {
 
     public function index() {
-        $users = User::with('characters')->get();
+        $users = User::with(['characters', 'roles'])->get();
+
+        $user = Auth::user();
+
         return view('admin.users.index', compact('users'));
     }
 

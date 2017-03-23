@@ -25,12 +25,14 @@
   background: lighten(#1A1A1A, 5%);
   padding: 40px;
   vertical-align: middle;
+
+
+  .fa {
+    font-size: 14px;
+    color: white;
+  }
 }
 
-.fa {
-  font-size: 14px;
-  color: white;
-}
 
 #export-upload {
   margin-top: 15px;

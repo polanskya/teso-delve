@@ -33,7 +33,7 @@
                                 <hr>
 
                                 @foreach($armors as $armorType => $armorsList)
-                                    <h4>{{trans('enums.ArmorType.' . $armorType)}} i</h4>
+                                    <h4>{{trans('enums.ArmorType.' . $armorType)}}</h4>
                                     <ul class="list-inline">
                                         @foreach($armorsList->sortBy('equipType')->groupBy('equipType') as $key => $armorsListByEquipType)
                                             <li>@include('item.worn_image', ['equippedItem' => $armorsListByEquipType->first(), 'qualityBackground' => false])</li>
@@ -66,8 +66,12 @@
                                     @if(!empty($itemStyle->material))
                                         <div class="col-md-12">
                                             <h4>Material</h4>
-                                            <img src="{{$itemStyle->image}}" title="{{$itemStyle->material}}" class="icon-size-40">
-                                            <p>{{$itemStyle->material}}</p>
+                                            @if(!is_null($itemStyle->material_id))
+                                                @include('item.image', ['item' => isset($userMaterial) ? $userMaterial : $itemStyle->materialItem])
+                                            @else
+                                                <img src="{{$itemStyle->image}}" title="{{$itemStyle->material}}" class="icon-size-40">
+                                                <p>{{$itemStyle->material}}</p>
+                                            @endif
                                         </div>
                                     @endif
                                 </div>

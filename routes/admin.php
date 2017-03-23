@@ -7,6 +7,8 @@ $middlewares = [
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => $middlewares], function () {
 
+    Route::get('', 'Admin\AdminController@index')->name('index');
+
     Route::get('users', 'Admin\UserController@index')->name('users.index');
     Route::get('ghost/{user}', 'Admin\UserController@ghost')->name('users.ghost');
     Route::get('download-dump/{user}', 'Admin\UserController@downloadLua')->name('users.download-dump');
@@ -37,5 +39,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => $middleware
 
     Route::get('crafting-table/{smithingType}', 'Admin\CraftingController@craftingTable')->name('crafting-table.edit');
     Route::post('crafting-table/{smithingType}', 'Admin\CraftingController@updateCraftingTable')->name('crafting-table.update');
+
+
+    include('web/admin/roles.php');
+
 
 });

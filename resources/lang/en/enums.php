@@ -48,6 +48,9 @@ return [
         4 => '2h Sword',
     ],
     'Trait' => [
+        '' => [
+            15 => 'Training'
+        ],
         1 => /* Weapon */ [
             'name' => 'Weapon',
             0 => 'None',
@@ -86,6 +89,10 @@ return [
             24 => 'Ornate',
             23 => 'Robust',
         ]
+    ],
+    'bags' => [
+        App\Enum\BagType::VIRTUAL => 'Crafting bag',
+        App\Enum\BagType::BANK => 'Bank',
     ],
     'styleItemChapter' => [
         \App\Enum\ItemStyleChapter::ALL => ['image' => null, 'self' => 'All'],

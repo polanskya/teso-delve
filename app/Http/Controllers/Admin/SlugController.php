@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Controller;
 use App\Model\Dungeon;
+use App\Model\Item;
 use App\Model\ItemStyle;
 use App\Model\Set;
 use Carbon\Carbon;
@@ -10,6 +11,11 @@ class SlugController extends Controller
 {
 
     public function generateSlugs() {
+
+        foreach(Item::whereNull('slug')->orWhere('slug', '')->get(['id', 'name']) as $item) {
+            $item->updated_at = Carbon::now();
+            $item->save();
+        }
 
         foreach(Set::all() as $set) {
             $set->updated_at = Carbon::now();

@@ -28,6 +28,12 @@
                                 Having trouble finding your log? Find your Addon folder and it'll be a folder next to it.</li>
                         </ul>
 
+                        @if(isset($importGroup) and !is_null($importGroup) and false)
+                            @include('import.import-group')
+
+                            @include('import.import-group-alternative')
+                        @endif
+
                         <div id="importDropzone" url="{{route('import.upload')}}" class="{{Auth::check() ? '' : 'dropzoneDisabled'}}">
                             <div class="dropzone-message message-default">
                                 @if(Auth::check())

@@ -6,6 +6,12 @@ use App\Enum\CraftingType;
 class Character
 {
 
+    static public function check($line)
+    {
+        return strpos($line, 'CHARACTER:') !== false;
+    }
+
+
     public function process($line, $user) {
         $item_start = stripos($line, 'CHARACTER:');
         if($item_start === false) {
