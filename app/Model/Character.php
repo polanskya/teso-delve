@@ -1,8 +1,5 @@
-<?php
+<?php namespace App\Model;
 
-namespace App\Model;
-
-use App\Enum\CraftingType;
 use App\User;
 use Carbon\Carbon;
 use HeppyKarlsson\Meta\Traits\Meta;
@@ -64,6 +61,22 @@ class Character extends Model
         }
 
         return $this->craftingTraits->where('researchDone_at', '>', Carbon::now())->where('craftingTypeEnum', $craftingType)->count() < $value;
+    }
+
+    public function maxHorseTraining() {
+        if(intval($this->getMeta('ridingskill-0')) < intval($this->getMeta('ridingskill-1'))) {
+            return false;
+        }
+
+        if(intval($this->getMeta('ridingskill-2')) < intval($this->getMeta('ridingskill-3'))) {
+            return false;
+        }
+
+        if(intval($this->getMeta('ridingskill-4')) < intval($this->getMeta('ridingskill-5'))) {
+            return false;
+        }
+
+        return true;
     }
 
     public function nextResearch($craftingType) {

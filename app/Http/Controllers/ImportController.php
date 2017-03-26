@@ -20,8 +20,8 @@ class ImportController
     public function import(EsoImport $esoImport) {
 
         $path = storage_path('TesoDelve.lua');
-//        $return = $esoImport->import($path);
-        $return = $esoImport->jobImport($path);
+        $return = $esoImport->import($path);
+//        $return = $esoImport->jobImport($path);
         return 'works';
     }
 

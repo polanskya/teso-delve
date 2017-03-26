@@ -55,7 +55,13 @@
                                     <td>{!! $character->canResearch(\App\Enum\CraftingType::BLACKSMITHING) ? '' : App\Presenter\Date::until($character->nextResearch(\App\Enum\CraftingType::BLACKSMITHING)) !!}</td>
                                     <td>{!! $character->canResearch(\App\Enum\CraftingType::WOODWORKING) ? '' : App\Presenter\Date::until($character->nextResearch(\App\Enum\CraftingType::WOODWORKING)) !!}</td>
                                     <td>{!! $character->canResearch(\App\Enum\CraftingType::CLOTHIER) ? '' : App\Presenter\Date::until($character->nextResearch(\App\Enum\CraftingType::CLOTHIER)) !!}</td>
-                                    <td class="min-width nowrap">{!! $character->ridingUnlocked_at < time() ? '<span title="'.Carbon\Carbon::createFromTimestamp($character->ridingUnlocked_at).'">Available</span>' : App\Presenter\Date::until(Carbon\Carbon::createFromTimestamp($character->ridingUnlocked_at)) !!}</td>
+                                    <td class="min-width nowrap">
+                                        @if($character->maxHorseTraining())
+                                            Max
+                                        @else
+                                            {!! $character->ridingUnlocked_at < time() ? '<span title="'.Carbon\Carbon::createFromTimestamp($character->ridingUnlocked_at).'">Available</span>' : App\Presenter\Date::until(Carbon\Carbon::createFromTimestamp($character->ridingUnlocked_at)) !!}
+                                        @endif
+                                    </td>
                                     <td class="text-right">
                                         @if(intval($character->getMeta('bag_' . App\Enum\BagType::BACKPACK)) != 0)
                                             <span title="Free inventory space">{{ intval($character->getMeta('bag_' . App\Enum\BagType::BACKPACK)) - $character->userItems->where('bagEnum', \App\Enum\BagType::BACKPACK)->count() }}</span>

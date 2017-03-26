@@ -34,8 +34,7 @@ class Sales implements ShouldQueue
             set_time_limit(10);
 
             $itemKey = explode(':', $sale['item_key']);
-            $query = \App\Model\Item::where('itemLink', 'LIKE', '|H0:item:'.$sale['link_id'].":%")
-                ->where('itemLink', 'LIKE', '%:'.$itemKey[4].'|h|h')
+            $query = \App\Model\Item::where('itemLink', 'LIKE', '|H0:item:'.$sale['link_id'].":%:".$itemKey[4]."|h|h")
                 ->where('level', $itemKey[0])
                 ->where('championLevel', $itemKey[1] * 10)
                 ->where('quality', $itemKey[2])
