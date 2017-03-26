@@ -33,6 +33,12 @@
                 </a>
             </li>
 
+            <li class="">
+                <a href="{{route('admin.generate-slugs')}}" title="">
+                    <i class="fa fa-lg fa-question"></i><span class="nav-label">Generate slugs</span>
+                </a>
+            </li>
+
         </ul>
     </div>
 </aside>

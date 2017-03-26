@@ -27,7 +27,7 @@
                             <tr>
                                 <td class="min-width">{{$user->id}}</td>
                                 <td>
-                                    <a href="" class="text-white">{{$user->name}}</a>
+                                    <a href="{{route('admin.users.edit', [$user])}}" class="text-white">{{$user->name}}</a>
                                     <p>{{implode(', ', $user->roles->pluck('display_name')->toArray())}}</p>
                                 </td>
                                 <td>{{$user->email}}</td>

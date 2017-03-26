@@ -22,7 +22,7 @@
                                 </tr>
                                 @foreach($role->permissions as $permission)
                                     <tr>
-                                        <td><i class="fa fa-fw fa-angle-right"></i> {{$permission->display_name}}</td>
+                                        <td><i class="fa fa-fw fa-angle-right"></i> {{$permission->display_name}} ({{$permission->name}})</td>
                                         <td></td>
                                     </tr>
                                 @endforeach

@@ -58,16 +58,18 @@ class ImportController
 
     public function upload(Request $request, EsoImport $esoImport) {
         $files = $request->files->all();
+        $user = Auth::user();
 
         foreach($files as $file) {
             /** @var $file UploadedFile */
-            if($file->getClientOriginalName() == 'TesoDelve.lua') {
+            $fileName = $file->getClientOriginalName();
+
+            if($fileName == 'TesoDelve.lua') {
                 File::copy($file->getRealPath(), storage_path('dumps/dump_' . Auth::id() . ".lua"));
                 return $esoImport->import($file->getRealPath());
             }
 
-            $fileName = $file->getClientOriginalName();
-            if(substr($fileName, 0, 2) == "MM" and stripos($fileName, 'Data.lua') !== false) {
+            if(substr($fileName, 0, 2) == "MM" and stripos($fileName, 'Data.lua') !== false and $user->hasPermission('upload-mm')) {
                 $newFile = storage_path('app/mm-data/' . Auth::id() . "-" . $fileName);
                 File::copy($file->getRealPath(), $newFile);
 

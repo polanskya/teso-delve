@@ -2,7 +2,7 @@
 
 $middlewares = [
     'auth',
-    \App\Http\Middleware\Admin::class,
+    'role:admin'
 ];
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => $middlewares], function () {
@@ -10,6 +10,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => $middleware
     Route::get('', 'Admin\AdminController@index')->name('index');
 
     Route::get('users', 'Admin\UserController@index')->name('users.index');
+    Route::get('user/{user}', 'Admin\UserController@edit')->name('users.edit');
+    Route::post('user/{user}', 'Admin\UserController@update')->name('users.update');
+
     Route::get('ghost/{user}', 'Admin\UserController@ghost')->name('users.ghost');
     Route::get('download-dump/{user}', 'Admin\UserController@downloadLua')->name('users.download-dump');
 

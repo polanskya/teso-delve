@@ -17,7 +17,7 @@ class ImportService
         set_time_limit(30);
         $json = LuaJson::toJson(file_get_contents($file));
 
-        $now = Carbon::now()->subWeek(2);
+        $now = Carbon::now()->subDays(config('eso.mm-import.days-back'));
 
         foreach($json['Default']['MasterMerchant']['$AccountWide']['SalesData'] as $link_id => $salesData) {
             $sales = [];
