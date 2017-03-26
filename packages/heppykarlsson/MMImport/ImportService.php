@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ImportService
 {
-    private $per_job = 2000;
+    private $per_job = 500;
     private $sales = [];
 
     public function import($file) {
