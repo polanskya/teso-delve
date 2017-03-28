@@ -12,8 +12,9 @@ class SlugController extends Controller
 
     public function generateSlugs() {
 
-        foreach(Item::whereNull('slug')->orWhere('slug', '')->get(['id', 'name']) as $item) {
+        foreach(Item::get(['id', 'name']) as $item) {
             $item->updated_at = Carbon::now();
+            $item->generateSlug();
             $item->save();
         }
 
