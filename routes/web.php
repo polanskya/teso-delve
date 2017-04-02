@@ -25,6 +25,7 @@ Route::get('/dungeon/arenas', 'DungeonController@index')->name('dungeons.arenas.
 
 include('web/items.php');
 include('web/sets.php');
+include('web/character.php');
 
 Route::group(['middleware' => 'auth'], function () {
     include('web/inventory.php');
@@ -37,16 +38,6 @@ Route::get('/import-mm', 'ImportController@mastermerchant');
 Route::get('/export', 'ImportController@export');
 
 Route::get('/esoui/art/icons/{image}', 'EsouiController@image');
-
-Route::get('/character/{character}/delete', 'CharacterController@delete')->name('characters.delete');
-Route::get('/character/{character}/restore', 'CharacterController@restore')->name('characters.restore');
-Route::get('/character/{character}', 'CharacterController@show')->name('characters.show');
-Route::get('/character/{character}/crafting/{craftingTypeEnum}', 'CharacterController@craftingResearch')->name('character.crafting');
-Route::get('/character/{character}/motifs', 'CharacterController@itemStyles')->name('character.itemstyles');
-Route::get('/characters/deleted', 'CharacterController@indexDeleted')->name('characters.index.deleted')->middleware('auth');
-Route::get('/characters', 'CharacterController@index')->name('characters.index')->middleware('auth');
-
-Route::get('/character/{character}/inventory', 'CharacterController@inventory')->name('character.inventory')->middleware('auth');
 
 Route::get('/bank', 'BankController@index')->name('bank.index');
 

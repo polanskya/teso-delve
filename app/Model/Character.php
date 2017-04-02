@@ -41,6 +41,11 @@ class Character extends Model
         return $this->hasMany(UserItem::class, 'characterId');
     }
 
+    public function abilities() {
+        return $this->belongsToMany(Ability::class)
+            ->withPivot(['rank', 'morphRank', 'progression', 'skillpoints', 'created_at', 'updated_at']);
+    }
+
     protected $fillable = [
 
     ];
@@ -103,5 +108,6 @@ class Character extends Model
 
         return $roles;
     }
+
 
 }

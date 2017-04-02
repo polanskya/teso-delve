@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-
+<div class="container">
     <div class="row m-t-1">
 
         <!-- START Revenue -->
@@ -15,7 +15,7 @@
                     </div>
                     <div class="col-md-6">
                         <h1 class="m-t-0 m-b-0 f-w-300">{{$data['users_activity']}}</h1>
-                        <p class="text-white">Seen last 24 hrs</p>
+                        <p class="text-white">Online 24 hrs</p>
                     </div>
                 </div>
             </div>
@@ -61,4 +61,18 @@
 
     </div>
 
+
+    <div class="row">
+        <div class="col-md-6">
+            @include('admin.dashboard.partials.users-table')
+
+        </div>
+        <div class="col-md-6">
+            @include('admin.dashboard.partials.jobs-table')
+        </div>
+        <div class="col-md-12">
+            @include('admin.dashboard.partials.errors-table')
+        </div>
+    </div>
+</div>
 @endsection

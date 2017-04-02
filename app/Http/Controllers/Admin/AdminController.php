@@ -3,11 +3,11 @@
 use App\Http\Controllers\Controller;
 use App\Model\Character;
 use App\Model\ItemSale;
-use App\Model\Role\Permission;
-use App\Model\Role\Role;
+use App\Model\Job;
 use App\User;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Rap2hpoutre\LaravelLogViewer\LaravelLogViewer;
 
 class AdminController extends Controller
 {
@@ -30,7 +30,20 @@ class AdminController extends Controller
             'sales_activity' => ItemSale::where('created_at', '>=', $seenAt)->count(),
         ];
 
-        return view('admin.index', compact('data'));
+
+        $jobs = Job::all();
+
+        $users = User::where('seen_at', '>=', $seenAt)->orderBy('seen_at', 'desc')->take(20)->get();
+
+        $user = Auth::user();
+        /** @var $user User */
+        $last_logs_watched = Carbon::parse($user->getMeta('admin_logs_last'));
+        $user->setMeta('admin_logs_last', Carbon::now());
+
+        $logs = LaravelLogViewer::all();
+        $logs = array_slice($logs, 0, 20);
+
+        return view('admin.index', compact('data', 'jobs', 'users', 'logs', 'last_logs_watched'));
     }
 
 }

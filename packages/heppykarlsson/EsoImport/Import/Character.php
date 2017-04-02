@@ -58,8 +58,12 @@ class Character
             $character->ridingUnlocked_at = $nextTraining;
         }
 
-        $character->save();
+        if(isset($properties[22])) {
+            $character->skillpoints = intval($properties[21]);
+            $character->skyshards = intval($properties[22]);
+        }
 
+        $character->save();
 
         if(isset($properties[19])) {
             $ridingSkills = explode('-', $properties[19]);

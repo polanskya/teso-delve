@@ -1,10 +1,13 @@
 <?php namespace HeppyKarlsson\EsoImport;
 
+use App\Model\AbilityCharacter;
 use App\Model\ItemStyle;
+use App\Model\SkillLine;
 use App\Model\UserItem;
 use App\User;
 use Carbon\Carbon;
 use HeppyKarlsson\EsoImport\Exception\DumpValidation;
+use HeppyKarlsson\EsoImport\Import\Ability;
 use HeppyKarlsson\EsoImport\Import\Character;
 use HeppyKarlsson\EsoImport\Import\Guild;
 use HeppyKarlsson\EsoImport\Import\Jobs\Inventory\Initialize;
@@ -18,7 +21,7 @@ class EsoImport
 
     public function import($file_path) {
         set_time_limit(120);
-        ini_set('memory_limit','64M');
+        ini_set('memory_limit','12M');
 
         $updateStart = Carbon::now();
 
@@ -58,7 +61,9 @@ class EsoImport
             $user->load('meta');
 //            $this->userItems = $user->userItems->groupBy('characterId');
 
-            File::eachRow($file_path, function($line) use($user) {
+            $skills = SkillLine::all();
+
+            File::eachRow($file_path, function($line) use($user, $skills) {
                 if (strpos($line, 'ITEMSTYLE:') !== false) {
                     $itemStyleImport = new Import\ItemStyle();
                     $itemStyleImport->process($line, $user, $this->itemStyles);
@@ -70,6 +75,12 @@ class EsoImport
 //                    $member->process($line, $user, $this->guilds);
 //                    return true;
 //                }
+
+                if(Ability::check($line)) {
+                    $ability = new Ability();
+                    $ability->process($line, $user, $skills);
+                    return true;
+                }
 
                 if (strpos($line, 'SMITHING:') !== false) {
                     $smithingImport = new Import\Smithing();
@@ -85,7 +96,12 @@ class EsoImport
 
             });
 
-            UserItem::where('userId', $user->id)->where('updated_at', '<', $updateStart)->delete();
+            UserItem::where('userId', $user->id)->where('updated_at', '<', $updateStart)
+                ->delete();
+
+            AbilityCharacter::whereIn('character_id', $user->characters->pluck('id')->toArray())
+                ->where('updated_at', '<', $updateStart)
+                ->delete();
 
         } catch(DumpValidation $e) {
             return response()->json(['upload' => 'error', 'error' => $e->getMessage()], 400);

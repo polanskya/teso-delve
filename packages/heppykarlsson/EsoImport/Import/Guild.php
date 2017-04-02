@@ -46,10 +46,11 @@ class Guild
         $member = $guild->members()->where('user_id', $user->id)->first();
 
         if(is_null($member)) {
+            $character = $user->characters()->first();
             $gm = new GuildMember();
             $gm->guild_id = $guild->id;
             $gm->user_id = $user->id;
-            $gm->accountName = $user->characters()->first()->account;
+            $gm->accountName = $character ? $character->account : '-';
             $gm->rank = 4;
             $gm->lastSeen_at = Carbon::now();
             $gm->note = '';

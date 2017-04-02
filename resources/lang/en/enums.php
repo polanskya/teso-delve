@@ -150,4 +150,14 @@ return [
         3 => 'Dungeon set',
         4 => 'Crafted set',
     ],
+    'Skilltypes' => [
+        \App\Enum\SkilltypeEnum::CLASS_SKILL => 'Class',
+        \App\Enum\SkilltypeEnum::WEAPON => 'Weapon',
+        \App\Enum\SkilltypeEnum::ARMOR => 'Armor',
+        \App\Enum\SkilltypeEnum::WORLD => 'World',
+        \App\Enum\SkilltypeEnum::AVA => 'Alliance war',
+        \App\Enum\SkilltypeEnum::GUILD => 'Guild',
+        \App\Enum\SkilltypeEnum::RACIAL => 'Racial',
+        \App\Enum\SkilltypeEnum::TRADESKILL => 'Craft',
+    ]
 ];
