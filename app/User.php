@@ -41,6 +41,7 @@ class User extends Authenticatable
 
     protected $dates = [
         'seen_at',
+        'dumpUploaded_at'
     ];
 
     public function items() {

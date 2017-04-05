@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Controller;
 use App\Model\Character;
+use App\Model\Item;
 use App\Model\ItemSale;
 use App\Model\Job;
 use App\User;
@@ -28,12 +29,25 @@ class AdminController extends Controller
 
             'total_sales' => ItemSale::count(),
             'sales_activity' => ItemSale::where('created_at', '>=', $seenAt)->count(),
+            'itemsCount' => Item::where('created_at', '>=', $seenAt)->count(),
         ];
 
 
         $jobs = Job::all();
 
-        $users = User::where('seen_at', '>=', $seenAt)->orderBy('seen_at', 'desc')->take(20)->get();
+        $users = User::where('seen_at', '>=', $seenAt)
+            ->orderBy('seen_at', 'desc')
+            ->where('id', '!=', Auth::id())
+            ->take(20)
+            ->get();
+
+        $dumpUsers = User::where('seen_at', '>=', $seenAt)
+            ->orderBy('dumpUploaded_at', 'desc')
+            ->with('characters')
+            ->where('id', '!=', Auth::id())
+            ->take(20)
+            ->get();
+
 
         $user = Auth::user();
         /** @var $user User */
@@ -43,7 +57,7 @@ class AdminController extends Controller
         $logs = LaravelLogViewer::all();
         $logs = array_slice($logs, 0, 20);
 
-        return view('admin.index', compact('data', 'jobs', 'users', 'logs', 'last_logs_watched'));
+        return view('admin.index', compact('data', 'jobs', 'users', 'logs', 'last_logs_watched', 'dumpUsers'));
     }
 
 }

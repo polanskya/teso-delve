@@ -67,7 +67,9 @@
                                         <div class="col-md-12">
                                             <h4>Material</h4>
                                             @if(!is_null($itemStyle->material_id))
-                                                @include('item.image', ['item' => isset($userMaterial) ? $userMaterial : $itemStyle->materialItem])
+                                                <a href="{{route('item.show', [$itemStyle->materialItem])}}">
+                                                    @include('item.image', ['item' => isset($userMaterial) ? $userMaterial : $itemStyle->materialItem])
+                                                </a>
                                             @else
                                                 <img src="{{$itemStyle->image}}" title="{{$itemStyle->material}}" class="icon-size-40">
                                                 <p>{{$itemStyle->material}}</p>

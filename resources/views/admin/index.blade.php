@@ -39,8 +39,14 @@
             <div class="panel panel-default b-a-0 bg-gray-dark bg-warning-i">
                 <div class="panel-heading b-b-0">Uploads</div>
                 <div class="panel-body text-center p-t-0">
+                    <div class="col-md-6">
                     <h1 class="m-t-0 m-b-0 f-w-300">{{$data['dumps_activity']}}</h1>
                     <p class="text-white">Last 24 hrs</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h1 class="m-t-0 m-b-0 f-w-300">{{$data['itemsCount']}}</h1>
+                        <p class="text-white">New items</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -65,12 +71,14 @@
     <div class="row">
         <div class="col-md-6">
             @include('admin.dashboard.partials.users-table')
-
+        </div>
+        <div class="col-md-6">
+            @include('admin.dashboard.partials.dump-users', ['users' => $dumpUsers])
         </div>
         <div class="col-md-6">
             @include('admin.dashboard.partials.jobs-table')
         </div>
-        <div class="col-md-12">
+        <div class="col-md-6">
             @include('admin.dashboard.partials.errors-table')
         </div>
     </div>
