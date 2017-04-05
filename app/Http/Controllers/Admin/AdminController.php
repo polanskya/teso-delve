@@ -41,8 +41,7 @@ class AdminController extends Controller
             ->take(20)
             ->get();
 
-        $dumpUsers = User::where('seen_at', '>=', $seenAt)
-            ->orderBy('dumpUploaded_at', 'desc')
+        $dumpUsers = User::orderBy('dumpUploaded_at', 'desc')
             ->whereNotNull('dumpUploaded_at')
             ->with('characters')
             ->where('id', '!=', Auth::id())
