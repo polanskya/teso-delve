@@ -20,7 +20,7 @@
                 @foreach($users as $user)
                     <tr>
                         <td class="text-white">{{$user->name}}</td>
-                        <td class="text-right">{{$user->dumpUploaded_at->format('Y-m-d')}}</td>
+                        <td class="text-right">{{$user->dumpUploaded_at ? $user->dumpUploaded_at->format('Y-m-d') : null}}</td>
                         <td class="text-right">{{$user->characters->count()}}</td>
                     </tr>
                 @endforeach
