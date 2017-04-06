@@ -80,7 +80,7 @@ class ItemController
         $user = Auth::user();
         if($user) {
             $userItems = $user->items()->where('itemId', $item->id)->get();
-            if ($userItems) {
+            if ($userItems->count() > 0) {
                 $item = $userItems->first();
 
                 $item->pivot->count = $userItems->pluck('pivot')->sum('count');
