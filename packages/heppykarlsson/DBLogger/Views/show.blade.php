@@ -21,7 +21,7 @@
                         <hr>
                         <dl class="dl-horizontal">
                             <dt class="text-left"><div class="text-left">User</div></dt>
-                            <dd class="text-left text-white">{{$log->user->name}}</dd>
+                            <dd class="text-left text-white">{{$log->user->name or 'None'}}</dd>
                             <dt class="text-left"><div class="text-left">Code</div></dt>
                             <dd class="text-left text-white"><span>{{$log->code}}</span></dd>
                             <dt class="text-left"><div class="text-left">Severity</div></dt>
