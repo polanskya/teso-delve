@@ -7,6 +7,7 @@ use App\Model\ItemSale;
 use App\Model\Job;
 use App\User;
 use Carbon\Carbon;
+use HeppyKarlsson\DBLogger\Model\Log;
 use Illuminate\Support\Facades\Auth;
 use Rap2hpoutre\LaravelLogViewer\LaravelLogViewer;
 
@@ -35,6 +36,9 @@ class AdminController extends Controller
 
         $jobs = Job::all();
 
+//        $now = null;
+//        $now->format('Y-m-d');
+
         $users = User::where('seen_at', '>=', $seenAt)
             ->orderBy('seen_at', 'desc')
             ->where('id', '!=', Auth::id())
@@ -50,11 +54,13 @@ class AdminController extends Controller
 
         $user = Auth::user();
         /** @var $user User */
-        $last_logs_watched = Carbon::parse($user->getMeta('admin_logs_last'));
+
+        $last_logs_watched = $user->getMeta('admin_logs_last');
+        $last_logs_watched = is_null($last_logs_watched) ? $last_logs_watched : Carbon::parse($last_logs_watched);
+
         $user->setMeta('admin_logs_last', Carbon::now());
 
-        $logs = LaravelLogViewer::all();
-        $logs = array_slice($logs, 0, 20);
+        $logs = Log::take(20)->orderBy('created_at', 'desc')->get();
 
         return view('admin.index', compact('data', 'jobs', 'users', 'logs', 'last_logs_watched', 'dumpUsers'));
     }

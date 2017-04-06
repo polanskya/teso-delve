@@ -3,11 +3,12 @@
 use App\Model\Guild as GuildModel;
 use App\Model\GuildMember;
 use Carbon\Carbon;
+use HeppyKarlsson\DBLogger\Facade\DBLogger;
+use Symfony\Component\Debug\Exception\FatalThrowableError;
 
 class Guild
 {
     const EXPLODE_COUNT = 10;
-
 
     static public function check($line)
     {
@@ -21,6 +22,7 @@ class Guild
     }
 
     public function process($line, $user) {
+
         $guildInfo = explode(';--;', $line);
 
         if(count($guildInfo) != self::EXPLODE_COUNT) {
@@ -57,5 +59,6 @@ class Guild
             $gm->save();
         }
 
+        return true;
     }
 }

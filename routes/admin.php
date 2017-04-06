@@ -24,7 +24,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => $middleware
 
 
     Route::get('generate-slugs', 'Admin\SlugController@generateSlugs')->name('generate-slugs');
+
     Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+
+    Route::get('errors', '\HeppyKarlsson\DBLogger\Controller\ErrorController@index')->name('errors.index');
+    Route::get('error/{log}', '\HeppyKarlsson\DBLogger\Controller\ErrorController@show')->name('error.show');
+
 
     Route::get('dungeon/create', 'DungeonController@create')->name('dungeon.create');
     Route::post('dungeon', 'DungeonController@store')->name('dungeon.store');

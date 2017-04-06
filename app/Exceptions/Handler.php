@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use HeppyKarlsson\DBLogger\Facade\DBLogger;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
@@ -32,6 +33,11 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $exception)
     {
+
+        if(!$exception instanceof \HeppyKarlsson\DBLogger\Exception\Exception) {
+            DBLogger::save($exception);
+        }
+
         parent::report($exception);
     }
 
