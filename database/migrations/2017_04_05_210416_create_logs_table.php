@@ -23,6 +23,7 @@ class CreateLogsTable extends Migration
             $table->string('route')->nullable();
             $table->string('method', 20)->nullable();
             $table->string('url', 1000)->nullable();
+            $table->string('session')->nullable();
             $table->string('referer', 1000)->nullable();
 
             $table->string('file', 1000)->nullable();

@@ -37,7 +37,7 @@
                                 <td class="min-width nowrap">{{$user->seen_at}}</td>
                                 <td class="text-right v-a-m min-width nowrap">
                                     <div class="dropdown">
-                                        <a href="#" class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="fa fa-bars m-r-1"></i></a>
+                                        <a href="#" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="fa fa-bars"></i></a>
                                         <ul class="dropdown-menu dropdown-menu-right">
                                             @permission('ghost-users')
                                                 <li><a href="{{route('admin.users.ghost', [$user->id])}}">Ghost</a></li>

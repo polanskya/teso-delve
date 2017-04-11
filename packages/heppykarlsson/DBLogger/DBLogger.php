@@ -9,13 +9,18 @@ class DBLogger {
 
     public function save(\Throwable $exception) {
 
-        $request = request();
+        if($exception instanceof \HeppyKarlsson\DBLogger\Exception\Exception) {
+            return false;
+        }
+
+            $request = request();
         $log = new Log();
 
         try {
             $log->error = $exception->getMessage();
             $log->route = Route::currentRouteName();
             $log->url = $request->path();
+            $log->session = session()->getId();
             $log->method = $request->method();
             $log->user_id = Auth::id();
             $log->referer = $request->header('referer');
@@ -25,14 +30,17 @@ class DBLogger {
             $log->code = $exception->getCode();
             $log->exception = get_class($exception);
 
-            $trace = $exception->getTrace();
-            $log->trace = json_encode($trace);
+            $traces = $exception->getTrace();
+            foreach($traces as &$trace) {
+                unset($trace['args']);
+            }
+
+            $log->trace = json_encode($traces);
 
             $log->save();
         }
-        catch(\Exception $e) {
-            throw new Exception('Database error: ' . $e->getMessage());
-            return false;
+        catch(\Throwable $e) {
+            throw new Exception($e->getMessage());
         }
 
         return true;

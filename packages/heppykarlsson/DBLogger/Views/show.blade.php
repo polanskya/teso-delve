@@ -5,35 +5,67 @@
     <div class="container">
         <div class="row">
 
+            <div class="col-md-12">
+                <h1>{{$log->error}}</h1>
+            </div>
+
             <!-- START System Monitoring -->
             <div class="col-md-5">
 
                 <div class="panel panel-default b-a-0">
                     <div class="panel-heading">Error</div>
                     <div class="panel-body">
-                        <p class="text-white">
-                        /{{$log->url}}
-                        </p>
 
-                        <p class="text-white">
-                            {{$log->error}}
-                        </p>
-                        <hr>
-                        <dl class="dl-horizontal">
-                            <dt class="text-left"><div class="text-left">User</div></dt>
-                            <dd class="text-left text-white">{{$log->user->name or 'None'}}</dd>
-                            <dt class="text-left"><div class="text-left">Code</div></dt>
-                            <dd class="text-left text-white"><span>{{$log->code}}</span></dd>
-                            <dt class="text-left"><div class="text-left">Severity</div></dt>
-                            <dd class="text-left text-white"><span>{{$log->severity}}</span></dd>
-                        </dl>
+                        <table class="table table-condensed m-b-0">
+                            <tbody>
 
-                        <dl class="dl-horizontal text-left">
-                            <dt class="text-left"><div class="text-left">Route</div></dt>
-                            <dd class="text-left text-white"><span>{{$log->route}}</span></dd>
-                            <dt class="text-left"><div class="text-left">Referer</div></dt>
-                            <dd class="text-left text-white"><span>{{$log->referer}}</span></dd>
-                        </dl>
+                            <tr>
+                                <td class="v-a-m b-t-0">
+                                    Occured at<br><span class="text-white">{{$log->created_at}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="v-a-m">
+                                    User<br><span class="text-white">{{$log->user->name or '-'}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="v-a-m">
+                                    Session<br><span class="text-white">{{$log->session or '-'}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="v-a-m">
+                                    Code<br><span class="text-white">{{$log->code or '-'}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="v-a-m">
+                                    Severity<br><span class="text-white">{{$log->severity or '-'}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="v-a-m">
+                                    URL<br><span class="text-white">{{$log->url or '-'}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="v-a-m">
+                                    Route<br><span class="text-white">{{$log->route or '-'}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="v-a-m">
+                                    Referer<br><span class="text-white">{{$log->referer or '-'}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="v-a-m">
+                                    Exception<br><span class="text-white">{{$log->exception or '-'}}</span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

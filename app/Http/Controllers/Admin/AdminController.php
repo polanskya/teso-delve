@@ -65,4 +65,9 @@ class AdminController extends Controller
         return view('admin.index', compact('data', 'jobs', 'users', 'logs', 'last_logs_watched', 'dumpUsers'));
     }
 
+    public function generateError() {
+        $now = null;
+        $now->format('Y-m-d');
+    }
+
 }

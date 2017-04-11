@@ -15,17 +15,27 @@
                 </a>
             </li>
 
+            @role('super-admin')
             <li class="">
                 <a href="{{route('admin.role.index')}}" title="">
-                    <i class="fa fa-lg fa-question"></i><span class="nav-label">Roles</span>
+                    <i class="fa fa-lg fa-key"></i><span class="nav-label">Roles</span>
                 </a>
             </li>
+            @endrole
 
             <li class="">
                 <a href="{{route('admin.crafting.itemstyles')}}" title="">
                     <i class="fa fa-lg fa-question"></i><span class="nav-label">Styles & Motifs</span>
                 </a>
             </li>
+
+            <li class="">
+                <a href="{{route('admin.errors.index')}}" title="">
+                    <i class="fa fa-lg fa-exclamation-circle"></i><span class="nav-label">Errors</span>
+                </a>
+            </li>
+
+            <li><hr></li>
 
             <li class="">
                 <a href="{{route('admin.crafting-table.edit', [\App\Enum\CraftingType::BLACKSMITHING])}}" title="">

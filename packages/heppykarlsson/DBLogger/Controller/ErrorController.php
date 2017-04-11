@@ -3,12 +3,13 @@
 use App\Http\Controllers\Controller;
 use HeppyKarlsson\DBLogger\Model\Log;
 use HeppyKarlsson\EsoImport\File;
+use DB;
 
 class ErrorController extends Controller
 {
     public function index() {
 
-        $logs = Log::paginate();
+        $logs = Log::orderBy('created_at', 'desc')->paginate();
 
         return view('DBLogger::index', compact('logs'));
     }
@@ -18,11 +19,11 @@ class ErrorController extends Controller
         $lines = [];
         File::eachRow($log->file, function($line, $rowNumber) use ($log, &$lines) {
 
-            if($rowNumber < ($log->row - 10)) {
+            if($rowNumber < ($log->row - 11)) {
                 return false;
             }
 
-            if($rowNumber > ($log->row + 10)) {
+            if($rowNumber > ($log->row + 11)) {
                 return false;
             }
 
@@ -35,6 +36,11 @@ class ErrorController extends Controller
         });
 
         return view('DBLogger::show', compact('log', 'lines'));
+    }
+
+    public function truncate() {
+        DB::table('logs')->truncate();
+        return redirect()->route('admin.errors.index');
     }
 
 }

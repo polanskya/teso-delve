@@ -33,10 +33,7 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $exception)
     {
-
-        if(!$exception instanceof \HeppyKarlsson\DBLogger\Exception\Exception) {
-            DBLogger::save($exception);
-        }
+        DBLogger::save($exception);
 
         parent::report($exception);
     }
