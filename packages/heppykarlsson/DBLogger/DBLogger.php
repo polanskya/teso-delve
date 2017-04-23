@@ -27,7 +27,7 @@ class DBLogger {
             $log->file = $exception->getFile();
             $log->row = $exception->getLine();
             $log->severity = method_exists($exception, 'getSeverity') ? $exception->getSeverity() : null;
-            $log->code = $exception->getCode();
+            $log->code = intval($exception->getCode());
             $log->exception = get_class($exception);
 
             $traces = $exception->getTrace();

@@ -95,6 +95,14 @@ class Item extends Model
         $this->setId = $set->id;
     }
 
+    public function materialStyle() {
+        return $this->hasOne(ItemStyle::class, 'material_id');
+    }
+
+    public function itemStyleChapter() {
+        return $this->belongsToMany(ItemStyle::class, 'itemStyle_chapter', 'itemId', 'itemStyleId');
+    }
+
     public function traitCategory() {
 
         if($this->type == ItemType::WEAPON and $this->equipType == EquipType::OFF_HAND) {

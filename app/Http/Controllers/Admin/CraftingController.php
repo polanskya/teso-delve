@@ -69,7 +69,7 @@ class CraftingController extends Controller
         $itemStyle->location = $data['location'];
         $itemStyle->isHidden = isset($data['isHidden']);
         $itemStyle->craftable = isset($data['craftable']);
-        $itemStyle->material_id = isset($data['material_id']) ? $data['material_id'] : null;
+        $itemStyle->material_id = !empty($data['material_id']) ? $data['material_id'] : null;
 
         foreach($data['chapter'] as $chapterEnum => $itemId) {
             if(intval($itemId) === 0) {

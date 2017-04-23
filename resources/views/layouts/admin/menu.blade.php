@@ -1,5 +1,4 @@
-<aside class="navbar-default sidebar affix-top ps-container ps-theme-default" data-ps-id="3d6dc09e-5e86-c431-bb09-02b47bcfec96">
-
+<aside class="navbar-default sidebar affix-top ps-container ps-theme-default">
 
     <div class="sidebar-content">
         <div class="sidebar-default-visible text-muted small text-uppercase sidebar-section p-y-2">
@@ -8,6 +7,12 @@
 
         <!-- START Tree Sidebar Common -->
         <ul class="side-menu">
+
+            <li class="">
+                <a href="{{route('admin.index')}}" title="">
+                    <i class="fa fa-lg fa-home"></i><span class="nav-label">Dashboard</span>
+                </a>
+            </li>
 
             <li class="">
                 <a href="{{route('admin.users.index')}}" title="">

@@ -7,9 +7,17 @@ class AbilityService
 
     public function create($data, $skillLine) {
         $ability = new Ability();
+
+        $name = $data[7];
+        if(stripos($name, '^') !== false) {
+            $name = explode('^', $data[7]);
+            $name = $name[0];
+        }
+
         $ability->index = $data[6];
-        $ability->name = $data[7];
+        $ability->name = $name;
         $ability->image = $data[8];
+        $ability->lang = $data[31];
         $ability->skill_line_id = $skillLine->id;
         $ability->isPassive = $data[10] == 'true';
         $ability->description = $data[19];
@@ -25,6 +33,7 @@ class AbilityService
         $ability->isChanneled = $castInfo[0] == 'true';
         $ability->castTime = $castInfo[1];
         $ability->channelTime = $castInfo[2];
+        $ability->externalName = $data[7];
 
         $ability->target = $data[21];
 

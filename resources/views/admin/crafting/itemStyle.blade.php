@@ -100,7 +100,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <h3>Upload style images</h3>
-                                        <div url="{{route('admin.crafting.item-style.upload-images', [$itemStyle])}}" id="importDropzone"></div>
+                                        <div url="{{route('admin.crafting.item-style.upload-images', [$itemStyle])}}" id="importDropzone" class=" panel panel-default no-bg b-a-2 b-gray b-dashed m-b-0"></div>
                                     </div>
                                 </div>
 

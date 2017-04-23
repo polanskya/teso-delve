@@ -9,6 +9,7 @@ use App\Model\Set;
 use App\Model\SkillLine;
 use App\Repository\CraftingRepository;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
 class CharacterController
@@ -45,13 +46,15 @@ class CharacterController
     }
 
     public function skills(Character $character, SkillLine $skillLine) {
-        $skilltypes = SkillLine::all()
+        $skilltypes = SkillLine::where('lang', App::getLocale())
+            ->get()
             ->groupBy('skilltypeEnum');
 
         $showSkillLine = $skillLine;
 
         $abilities = $showSkillLine->abilities()
             ->whereNull('parent_id')
+            ->where('lang', App::getLocale())
             ->with('morphs')
             ->orderBy('index')
             ->orderBy('morph')
@@ -107,6 +110,7 @@ class CharacterController
             $user = Auth::user();
             $characters = $user->characters;
         }
+
         $researchGrid = $craftingRepository->researchGrid($user, $craftingTypeEnum, $character);
 
         $craftingTraits = $character->craftingTraits()

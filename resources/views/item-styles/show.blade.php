@@ -78,6 +78,8 @@
                                     @endif
                                 </div>
                             </div>
+
+
                         </div>
 
                         @foreach($images as $weight => $genders)
@@ -95,6 +97,46 @@
                                 @endforeach
                             </div>
                         @endforeach
+
+                        @if(isset($characters))
+                            <div class="row">
+                                <div class="col-md-12 m-t-3">
+                                    <div class="panel panel-default no-bg b-gray-dark">
+                                        <div class="panel-heading">
+                                           <h2 class="panel-title">Known by</h2>
+                                        </div>
+                                        <div>
+                                            <table class="table table-condensed table-bordered m-b-0">
+                                                <thead>
+                                                <tr>
+                                                    <th>Character</th>
+                                                    @foreach(\App\Enum\ItemStyleChapter::order() as $chapter)
+                                                        <th>{{trans('enums.styleItemChapter.'.$chapter.'.self')}}</th>
+                                                    @endforeach
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach($characters as $character)
+                                                    <tr>
+                                                        <td><a href="{{route('characters.show', [$character])}}">{{$character->name}}</a></td>
+                                                        @foreach(\App\Enum\ItemStyleChapter::order() as $chapter)
+                                                            @if($character->itemStyles->where('itemStyleChapterEnum', $chapter)->first())
+                                                                <td class="text-center text-white"><i class="fa fa-check"></i></td>
+                                                            @else
+                                                                <td></td>
+                                                            @endif
+                                                        @endforeach
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+
+
                     </div>
                 </div>
             </div>

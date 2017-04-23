@@ -18,6 +18,22 @@
                 </div>
 
                 <h1>{{ucfirst($item->name)}}</h1>
+                <p>
+                    @if($item->materialStyle)
+                        This item is used when crafting items of the <a href="{{route('item-styles.show', $item->materialStyle)}}">{{$item->materialStyle->name}}</a> style.
+                    @endif
+
+                    @if($item->set)
+                        {{$item->name}} is apart of the <a href="{{route('set.show', [$item->set])}}">{{$item->set->name}}</a> {{strtolower(trans('enums.SetType.'.$item->set->setTypeEnum))}}.
+                    @endif
+
+                    @if($item->type == \App\Enum\ItemType::RACIAL_STYLE_MOTIF)
+                        {{$item->name}} is a chapter motif for the <a href="{{route('item-styles.show', [$item->itemStyleChapter->first()])}}">{{$item->itemStyleChapter->first()->name}}</a> style.
+                    @elseif(Lang::has('item.type.'.$item->type))
+                        {{trans('item.type.'.$item->type, ['name' => $item->name])}}
+                    @endif
+
+                </p>
             </div>
         </div>
 
