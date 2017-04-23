@@ -36,11 +36,8 @@ class AdminController extends Controller
 
         $jobs = Job::all();
 
-//        $now = null;
-//        $now->format('Y-m-d');
 
-        $users = User::where('seen_at', '>=', $seenAt)
-            ->orderBy('seen_at', 'desc')
+        $users = User::orderBy('seen_at', 'desc')
             ->where('id', '!=', Auth::id())
             ->take(20)
             ->get();
