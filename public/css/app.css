@@ -241,8 +241,7 @@
 }
 
 .no-margin {
-  margin-top: 0px !important;
-  margin-bottom: 0px !important;
+  margin: 0px !important;
 }
 
 .margin-top-19 {
@@ -263,6 +262,11 @@
 
 .width-120 {
   max-width: 120px;
+}
+
+.row-no-padding > [class*="col-"] {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 .addon-version {
@@ -286,7 +290,6 @@
   color: white;
   min-height: 125px;
   border: #767676;
-  background: #272727;
   padding: 40px;
   vertical-align: middle;
 }
@@ -317,8 +320,11 @@
   display: none;
 }
 
+.admin-wrap {
+  margin-top: 40px;
+}
+
 .admin-wrap > .content {
-  margin-top: 50px;
   padding-top: 25px;
 }
 

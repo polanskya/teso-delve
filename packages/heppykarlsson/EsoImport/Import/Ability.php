@@ -22,10 +22,16 @@ class Ability
             return false;
         }
 
-        $skillLine = $skillLines->where('name', $data[4])->where('skilltypeEnum', $data[2])->first();
+        $skillLine = $skillLines->where('externalName', $data[4])
+            ->where('skilltypeEnum', $data[2])
+            ->where('lang', $data[31])
+            ->first();
+
         if(is_null($skillLine)) {
             $skillLine = new SkillLine();
             $skillLine->name = $data[4];
+            $skillLine->externalName = $data[4];
+            $skillLine->lang = $data[31];
             $skillLine->skilltypeEnum = $data[2];
             $skillLine->classEnum = $data[2] == SkilltypeEnum::CLASS_SKILL ? $character->classId : null;
             $skillLine->raceEnum = $data[2] == SkilltypeEnum::RACIAL ? $character->raceId : null;
@@ -34,7 +40,9 @@ class Ability
             $skillLines->push($skillLine);
         }
 
-        $ability = \App\Model\Ability::where('name', $data[7])->first();
+        $ability = \App\Model\Ability::where('externalName', $data[7])
+            ->where('lang', $data[31])
+            ->first();
 
         if(is_null($ability)) {
             $abilityService = new AbilityService();

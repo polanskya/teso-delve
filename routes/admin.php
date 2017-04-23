@@ -8,12 +8,13 @@ $middlewares = [
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => $middlewares], function () {
 
     Route::get('', 'Admin\AdminController@index')->name('index');
+    Route::get('generate-error', 'Admin\AdminController@generateError')->name('generate-error');
 
     Route::get('users', 'Admin\UserController@index')->name('users.index');
     Route::get('user/{user}', 'Admin\UserController@edit')->name('users.edit');
     Route::post('user/{user}', 'Admin\UserController@update')->name('users.update');
 
-    Route::get('ghost/{user}', 'Admin\UserController@ghost')->name('users.ghost');
+    Route::get('ghost/{user}', 'Admin\UserController@ghost')->name('users.ghost')->middleware(['role:super-admin']);
     Route::get('download-dump/{user}', 'Admin\UserController@downloadLua')->name('users.download-dump');
 
     Route::get('crafting/motifs', 'Admin\CraftingController@itemStyles')->name('crafting.itemstyles');
@@ -24,7 +25,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => $middleware
 
 
     Route::get('generate-slugs', 'Admin\SlugController@generateSlugs')->name('generate-slugs');
+
     Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+
+    Route::get('errors', '\HeppyKarlsson\DBLogger\Controller\ErrorController@index')->name('errors.index');
+    Route::get('errors/truncate', '\HeppyKarlsson\DBLogger\Controller\ErrorController@truncate')->name('errors.truncate')->middleware(['role:super-admin']);
+    Route::get('error/{log}', '\HeppyKarlsson\DBLogger\Controller\ErrorController@show')->name('error.show');
+
 
     Route::get('dungeon/create', 'DungeonController@create')->name('dungeon.create');
     Route::post('dungeon', 'DungeonController@store')->name('dungeon.store');

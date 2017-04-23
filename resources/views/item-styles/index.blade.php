@@ -44,7 +44,7 @@
                                             <a href="{{route('item.show', [$itemStyle->materialItem])}}">
                                                 @include('item.image', ['item' => $userMaterials->has($itemStyle->material_id) ? $userMaterials->get($itemStyle->material_id) : $itemStyle->materialItem])
                                             </a>
-                                        @else
+                                        @elseif(!empty($itemStyle->image))
                                             <img src="{{$itemStyle->image}}" class="icon-size-40" title="{{$itemStyle->material}}">
                                         @endif
                                         <p>{{$itemStyle->material}}</p>

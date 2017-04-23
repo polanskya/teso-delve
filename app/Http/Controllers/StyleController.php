@@ -55,6 +55,15 @@ class StyleController
                 ->first();
         }
 
+
+        $characters = null;
+        if($user) {
+            $characters = $user->characters()->with(['itemStyles' => function($query) use($itemStyle) {
+                $query->where('itemStyleId', $itemStyle->id);
+            }])->get();
+        }
+
+
         $armors = Cache::remember('armor-examples-' . $itemStyle->id, 120, function () use ($itemStyle) {
             $items = Item::where('itemStyleId', $itemStyle->id)->get();
             return $items->where('armorType', '!=', 0)->groupBy('armorType');
@@ -76,7 +85,7 @@ class StyleController
             }
         }
 
-        return view('item-styles.show', compact('itemStyle', 'images', 'armors', 'weapons', 'userMaterial'));
+        return view('item-styles.show', compact('itemStyle', 'images', 'armors', 'weapons', 'userMaterial', 'characters'));
     }
 
 }

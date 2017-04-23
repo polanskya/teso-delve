@@ -6,6 +6,7 @@ use App\Model\SkillLine;
 use App\Model\UserItem;
 use App\User;
 use Carbon\Carbon;
+use HeppyKarlsson\DBLogger\Facade\DBLogger;
 use HeppyKarlsson\EsoImport\Exception\DumpValidation;
 use HeppyKarlsson\EsoImport\Import\Ability;
 use HeppyKarlsson\EsoImport\Import\Character;
@@ -21,7 +22,7 @@ class EsoImport
 
     public function import($file_path) {
         set_time_limit(120);
-        ini_set('memory_limit','12M');
+        ini_set('memory_limit','24M');
 
         $updateStart = Carbon::now();
 
@@ -35,21 +36,29 @@ class EsoImport
         $user->load('characters.meta');
 
         try {
+
             File::eachRow($file_path, function($line) use ($user) {
-                $this->checkFile($line);
+                try {
+                    $this->checkFile($line);
 
-                $this->setUserLang($line);
-                if(strpos($line, 'CHARACTER:') !== false) {
-                    $characterImport = new Import\Character();
-                    $characterImport->process($line, $user);
-                    return true;
+                    $this->setUserLang($line);
+                    if(strpos($line, 'CHARACTER:') !== false) {
+                        $characterImport = new Import\Character();
+                        $characterImport->process($line, $user);
+                        return true;
+                    }
+
+                    if(Guild::check($line)) {
+                        $guildImport = new Guild();
+                        $guildImport->process($line, $user);
+                        return true;
+                    }
+                }
+                catch(\Throwable $e) {
+                    // Log and move on to next line
+                    DBLogger::save($e);
                 }
 
-                if(Guild::check($line)) {
-                    $guildImport = new Guild();
-                    $guildImport->process($line, $user);
-                    return true;
-                }
             });
 
             $user->load('characters');
@@ -64,11 +73,13 @@ class EsoImport
             $skills = SkillLine::all();
 
             File::eachRow($file_path, function($line) use($user, $skills) {
-                if (strpos($line, 'ITEMSTYLE:') !== false) {
-                    $itemStyleImport = new Import\ItemStyle();
-                    $itemStyleImport->process($line, $user, $this->itemStyles);
-                    return true;
-                }
+                try {
+
+                    if (strpos($line, 'ITEMSTYLE:') !== false) {
+                        $itemStyleImport = new Import\ItemStyle();
+                        $itemStyleImport->process($line, $user, $this->itemStyles);
+                        return true;
+                    }
 
 //                if(GuildMember::check($line)) {
 //                    $member = new GuildMember();
@@ -76,24 +87,27 @@ class EsoImport
 //                    return true;
 //                }
 
-                if(Ability::check($line)) {
-                    $ability = new Ability();
-                    $ability->process($line, $user, $skills);
-                    return true;
-                }
+                    if (Ability::check($line)) {
+                        $ability = new Ability();
+                        $ability->process($line, $user, $skills);
+                        return true;
+                    }
 
-                if (strpos($line, 'SMITHING:') !== false) {
-                    $smithingImport = new Import\Smithing();
-                    $smithingImport->process($line, $user);
-                    return true;
-                }
+                    if (strpos($line, 'SMITHING:') !== false) {
+                        $smithingImport = new Import\Smithing();
+                        $smithingImport->process($line, $user);
+                        return true;
+                    }
 
-                if (strpos($line, 'ITEM:') !== false) {
-                    $itemImport = new Import\Item();
-                    $itemImport->process($line, $user, $this->itemStyles);
-                    return true;
+                    if (strpos($line, 'ITEM:') !== false) {
+                        $itemImport = new Import\Item();
+                        $itemImport->process($line, $user, $this->itemStyles);
+                        return true;
+                    }
                 }
-
+                catch (\Throwable $e) {
+                    DBLogger::save($e);
+                }
             });
 
             UserItem::where('userId', $user->id)->where('updated_at', '<', $updateStart)

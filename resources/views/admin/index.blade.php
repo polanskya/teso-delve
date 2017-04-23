@@ -78,7 +78,7 @@
         <div class="col-md-6">
             @include('admin.dashboard.partials.jobs-table')
         </div>
-        <div class="col-md-6">
+        <div class="col-md-12">
             @include('admin.dashboard.partials.errors-table')
         </div>
     </div>
