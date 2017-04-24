@@ -40,8 +40,8 @@
                         </tbody>
                         <tfoot>
                         <tr>
-                            <td colspan="2">Total: {{$logs->total()}} </td>
-                            <td class="text-right" colspan="3">{{$logs->links()}}</td>
+                            <td colspan="3">Total: {{$logs->total()}} </td>
+                            <td class="text-right" colspan="2">{{$logs->links()}}</td>
                         </tr>
                         </tfoot>
                     </table>

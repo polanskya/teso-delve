@@ -6,4 +6,20 @@
   }
 
 
+  .navigation .sidebar {
+    background: #1A1A1A;
+  }
+
+}
+
+
+@media (max-width: 480px) {
+
+  .admin-wrap {
+
+    > .content {
+      margin-left: 0px;
+    }
+
+  }
 }

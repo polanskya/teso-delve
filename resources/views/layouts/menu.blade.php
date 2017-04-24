@@ -6,15 +6,15 @@
                 TESO Delve
             </a>
             <sup class="betaLogo label label-danger">Beta</sup>
-            <button class="action-right-sidebar-toggle navbar-toggle collapsed active" data-target="#navdbar" data-toggle="collapse" type="button" data-original-title="" title="">
-                <i class="fa fa-fw fa-align-right text-white"></i>
-            </button>
+
             <button class="navbar-toggle collapsed" data-target="#navbar" data-toggle="collapse" type="button">
-                <i class="fa fa-fw fa-user text-white"></i>
-            </button>
-            <button class="action-sidebar-open navbar-toggle collapsed" type="button">
                 <i class="fa fa-fw fa-bars text-white"></i>
             </button>
+            @if(Auth::check())
+                <button class="action-sidebar-open navbar-toggle collapsed" type="button">
+                    <i class="fa fa-fw fa-bars text-white"></i>
+                </button>
+            @endif
         </div>
 
         <div class="collapse navbar-collapse" id="navbar">
@@ -451,25 +451,25 @@
                     </li>
 
                     @role('admin')
-                        <li class="dropdown">
-                            <a href="{{route('admin.index')}}">
-                                <span class="m-r-1">Admin</span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="{{route('admin.crafting.itemstyles')}}">Styles & Motifs</a>
-                                </li>
-                                <li>
-                                    <a href="{{route('admin.users.index')}}">Users</a>
-                                </li>
-                                <li>
-                                    <a href="{{route('admin.crafting-table.edit', [\App\Enum\CraftingType::BLACKSMITHING])}}">Crafting table</a>
-                                </li>
-                                <li>
-                                    <a href="{{route('admin.generate-slugs')}}">Generate slugs</a>
-                                </li>
-                            </ul>
-                        </li>
+                    <li class="dropdown">
+                        <a href="{{route('admin.index')}}">
+                            <span class="m-r-1">Admin</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="{{route('admin.crafting.itemstyles')}}">Styles & Motifs</a>
+                            </li>
+                            <li>
+                                <a href="{{route('admin.users.index')}}">Users</a>
+                            </li>
+                            <li>
+                                <a href="{{route('admin.crafting-table.edit', [\App\Enum\CraftingType::BLACKSMITHING])}}">Crafting table</a>
+                            </li>
+                            <li>
+                                <a href="{{route('admin.generate-slugs')}}">Generate slugs</a>
+                            </li>
+                        </ul>
+                    </li>
                     @endrole
 
                     <li class="dropdown">

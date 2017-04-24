@@ -1,4 +1,4 @@
-<aside class="navbar-default sidebar affix-top ps-container ps-theme-default">
+<aside class="navbar-default sidebar affix-top ps-container ps-theme-default hidden-xs">
 
     <div class="sidebar-content">
         <div class="sidebar-default-visible text-muted small text-uppercase sidebar-section p-y-2">
