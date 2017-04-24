@@ -20,17 +20,17 @@
                             <tbody>
 
                             <tr>
-                                <td class="v-a-m b-t-0">
+                                <td class="v-a-m b-t-0" colspan="2">
                                     Occured at<br><span class="text-white">{{$log->created_at}}</span>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="v-a-m">
+                                <td class="v-a-m" colspan="2">
                                     User<br><span class="text-white">{{$log->user->name or '-'}}</span>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="v-a-m">
+                                <td class="v-a-m" colspan="2">
                                     Session<br><span class="text-white">{{$log->session or '-'}}</span>
                                 </td>
                             </tr>
@@ -38,29 +38,30 @@
                                 <td class="v-a-m">
                                     IP<br><span class="text-white">{{$log->ip or '-'}}</span>
                                 </td>
+                                <td class="text-right"><a href="{{route('admin.ban.index')}}?ip={{$log->ip}}" class="btn btn-danger" title="Ban IP"><i class="fa fa-gavel"></i></a></td>
                             </tr>
                             <tr>
-                                <td class="v-a-m">
+                                <td class="v-a-m" colspan="2">
                                     Severity<br><span class="text-white">{{$log->severity or '-'}}</span>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="v-a-m">
+                                <td class="v-a-m" colspan="2">
                                     URL<br><span class="text-white">{{$log->url or '-'}}</span>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="v-a-m">
+                                <td class="v-a-m" colspan="2">
                                     Route<br><span class="text-white">{{$log->route or '-'}}</span>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="v-a-m">
+                                <td class="v-a-m" colspan="2">
                                     Referer<br><span class="text-white">{{$log->referer or '-'}}</span>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="v-a-m">
+                                <td class="v-a-m" colspan="2">
                                     Exception<br><span class="text-white">{{$log->exception or '-'}}</span>
                                 </td>
                             </tr>

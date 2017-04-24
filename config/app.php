@@ -172,6 +172,7 @@ return [
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
         Laratrust\LaratrustServiceProvider::class,
         HeppyKarlsson\DBLogger\ServiceProvider::class,
+        HeppyKarlsson\BanHammer\ServiceProvider::class,
 
 
         /*
