@@ -40,6 +40,13 @@
                 </a>
             </li>
 
+            <li class="">
+                <a href="{{route('admin.ban.index')}}" title="">
+                    <i class="fa fa-lg fa-gavel"></i><span class="nav-label">Bans</span>
+                </a>
+            </li>
+
+
             <li><hr></li>
 
             <li class="">
