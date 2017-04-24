@@ -1,4 +1,4 @@
-<?php namespace HeppyKarlsson\DBLogger;
+<?php namespace HeppyKarlsson\BanHammer;
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider AS Default_ServiceProvider;
@@ -13,15 +13,15 @@ class ServiceProvider extends Default_ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__.'/Views', 'DBLogger');
+        $this->publishes([
+            __DIR__.'/Config/banhammer.php' => config_path('banhammer.php'),
+        ]);
+
+        $this->loadViewsFrom(__DIR__.'/Views', 'BanHammer');
     }
 
     public function register() {
 
-        App::bind('DBLogger', function()
-        {
-            return new DBLogger();
-        });
 
     }
 }

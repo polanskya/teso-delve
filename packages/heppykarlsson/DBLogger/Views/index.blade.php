@@ -10,6 +10,7 @@
                         <tr>
                             <th class="small text-muted text-uppercase"><strong></strong></th>
                             <th class="small text-muted text-uppercase"><strong>User</strong></th>
+                            <th class="small text-muted text-uppercase"><strong>IP</strong></th>
                             <th class="small text-muted text-uppercase"><strong>Error</strong></th>
                             <th class="small text-muted text-uppercase"><strong>Request</strong></th>
                             <th class="small text-muted text-uppercase text-right"><strong>Occured at</strong></th>
@@ -23,6 +24,8 @@
                                 <td class="text-white">
                                     {{$log->user->name or '-'}}
                                 </td>
+                                </td>
+                                <td class="text-right min-width nowrap text-white">{{$log->ip}}</td>
                                 <td>
                                     <a href="{{route('admin.error.show', [$log])}}" class="text-white">{{empty($log->error) ? 'error' : $log->error}}</a><br>{{$log->file}}:{{$log->row}}</td>
                                 <td>{{$log->route}}<br>/{{$log->url}}</td>
@@ -37,8 +40,8 @@
                         </tbody>
                         <tfoot>
                         <tr>
-                            <td colspan="2">Total: {{$logs->total()}} </td>
-                            <td class="text-right" colspan="3">{{$logs->links()}}</td>
+                            <td colspan="3">Total: {{$logs->total()}} </td>
+                            <td class="text-right" colspan="2">{{$logs->links()}}</td>
                         </tr>
                         </tfoot>
                     </table>

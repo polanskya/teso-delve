@@ -1,4 +1,4 @@
-<aside class="navbar-default sidebar affix-top ps-container ps-theme-default">
+<aside class="navbar-default sidebar affix-top ps-container ps-theme-default hidden-xs">
 
     <div class="sidebar-content">
         <div class="sidebar-default-visible text-muted small text-uppercase sidebar-section p-y-2">
@@ -39,6 +39,13 @@
                     <i class="fa fa-lg fa-exclamation-circle"></i><span class="nav-label">Errors</span>
                 </a>
             </li>
+
+            <li class="">
+                <a href="{{route('admin.ban.index')}}" title="">
+                    <i class="fa fa-lg fa-gavel"></i><span class="nav-label">Bans</span>
+                </a>
+            </li>
+
 
             <li><hr></li>
 

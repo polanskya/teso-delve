@@ -32,6 +32,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => $middleware
     Route::get('errors/truncate', '\HeppyKarlsson\DBLogger\Controller\ErrorController@truncate')->name('errors.truncate')->middleware(['role:super-admin']);
     Route::get('error/{log}', '\HeppyKarlsson\DBLogger\Controller\ErrorController@show')->name('error.show');
 
+    Route::get('bans', '\HeppyKarlsson\BanHammer\Controller\BanhammerController@index')->name('ban.index');
+    Route::get('ban/{ip}/delete', '\HeppyKarlsson\BanHammer\Controller\BanhammerController@delete')->name('ban.delete');
+    Route::post('ban', '\HeppyKarlsson\BanHammer\Controller\BanhammerController@store')->name('ban.store');
+
+
+
 
     Route::get('dungeon/create', 'DungeonController@create')->name('dungeon.create');
     Route::post('dungeon', 'DungeonController@store')->name('dungeon.store');
