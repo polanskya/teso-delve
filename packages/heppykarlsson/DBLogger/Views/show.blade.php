@@ -36,7 +36,7 @@
                             </tr>
                             <tr>
                                 <td class="v-a-m">
-                                    Code<br><span class="text-white">{{$log->code or '-'}}</span>
+                                    IP<br><span class="text-white">{{$log->ip or '-'}}</span>
                                 </td>
                             </tr>
                             <tr>

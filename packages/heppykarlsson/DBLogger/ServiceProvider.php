@@ -13,7 +13,7 @@ class ServiceProvider extends Default_ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__.'/views', 'DBLogger');
+        $this->loadViewsFrom(__DIR__.'/Views', 'DBLogger');
     }
 
     public function register() {

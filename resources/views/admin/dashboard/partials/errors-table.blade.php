@@ -9,6 +9,7 @@
                 <tr>
                     <th class="small text-muted text-uppercase"><strong></strong></th>
                     <th class="small text-muted text-uppercase"><strong>User</strong></th>
+                    <th class="small text-muted text-uppercase"><strong>IP</strong></th>
                     <th class="small text-muted text-uppercase"><strong>Error</strong></th>
                     <th class="small text-muted text-uppercase"><strong>Request</strong></th>
                     <th class="small text-muted text-uppercase text-right"><strong>Occured at</strong></th>
@@ -24,9 +25,8 @@
                                 <i class="fa fa-exclamation-circle text-danger"></i>
                             @endif
                         </td>
-                        <td class="text-white">
-                            {{$log->user->name or '-'}}
-                        </td>
+                        <td class="text-white">{{$log->user->name or '-'}} </td>
+                        <td class="text-white">{{$log->ip or '-'}}</td>
                         <td>
                             <a href="{{route('admin.error.show', [$log])}}" class="text-white">{{empty($log->error) ? 'error' : $log->error}}</a><br>{{$log->file}}:{{$log->row}}</td>
                         <td>{{$log->route}}<br>/{{$log->url}}</td>

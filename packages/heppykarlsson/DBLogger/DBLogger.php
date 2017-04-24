@@ -2,6 +2,7 @@
 
 use HeppyKarlsson\DBLogger\Exception\Exception;
 use HeppyKarlsson\DBLogger\Model\Log;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -13,16 +14,18 @@ class DBLogger {
             return false;
         }
 
-            $request = request();
+        $request = request();
         $log = new Log();
 
         try {
+
             $log->error = $exception->getMessage();
             $log->route = Route::currentRouteName();
             $log->url = $request->path();
             $log->session = session()->getId();
             $log->method = $request->method();
             $log->user_id = Auth::id();
+            $log->ip = $request->ip();
             $log->referer = $request->header('referer');
             $log->file = $exception->getFile();
             $log->row = $exception->getLine();
