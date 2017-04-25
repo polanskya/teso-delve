@@ -29,7 +29,7 @@
             <h4>Links</h4>
                <ul class="list-unstyled">
                    <li><a href="http://www.eso-database.com" target="_blank">Eso-Database</a></li>
-                   <li><a href="http://www.eso-leaderboards.com" target="_blank">Eso-Leaderboards</a></li>
+                   <li><a href="http://www.esoleaderboards.com" target="_blank">EsoLeaderboards</a></li>
                    <li><a href="http://www.deltiasgaming.com" target="_blank">Deltiasgaming</a></li>
                    <li><a href="http://www.alcasthq.com" target="_blank">AlcastHQ</a></li>
                </ul>
