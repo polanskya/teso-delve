@@ -21,4 +21,8 @@ class GuildMember extends Model
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
+    public function presentNote() {
+        return str_ireplace(['\n', '\r'], ['<br>', ''], $this->note);
+    }
+
 }

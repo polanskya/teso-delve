@@ -23,10 +23,12 @@ class InventoryFilterComposer
      */
     public function compose(View $view)
     {
-        $route = Route::getCurrentRoute()->getPath();
-        $query = $this->request->query();
-        $user = Auth::user();
 
+        $request = request();
+        $route = route($request->route()->getName(), $request->route()->parameters());
+        $query = $this->request->query();
+
+        $user = Auth::user();
         $accounts = $user->characters->pluck('account')->unique();
 
         $view->with('accounts', $accounts);

@@ -18,16 +18,12 @@ class Guild
 
         $data = explode(";--;", $line);
 
-        return count($data) == self::EXPLODE_COUNT;
+        return count($data) >= self::EXPLODE_COUNT;
     }
 
     public function process($line, $user) {
 
         $guildInfo = explode(';--;', $line);
-
-        if(count($guildInfo) != self::EXPLODE_COUNT) {
-            return false;
-        }
 
         $name = trim($guildInfo[1]);
         $world = trim($guildInfo[6]);
@@ -38,21 +34,23 @@ class Guild
 
         if(is_null($guild)) {
             $guild = new GuildModel();
-
             $guild->name = $name;
             $guild->world = $world;
             $guild->founded_at = Carbon::parse($guildInfo[4]);
-            $guild->save();
         }
+
+        $guild->guild_master = isset($guildInfo[10]) ? $guildInfo[10] : null;
+        $guild->kiosk_name = isset($guildInfo[9]) ? $guildInfo[9] : null;
+        $guild->alliance_id = isset($guildInfo[11]) ? $guildInfo[11] : 1;
+        $guild->save();
 
         $member = $guild->members()->where('user_id', $user->id)->first();
 
         if(is_null($member)) {
-            $character = $user->characters()->first();
             $gm = new GuildMember();
             $gm->guild_id = $guild->id;
             $gm->user_id = $user->id;
-            $gm->accountName = $character ? $character->account : '-';
+            $gm->accountName = $guildInfo[7];
             $gm->rank = 4;
             $gm->lastSeen_at = Carbon::now();
             $gm->note = '';

@@ -21,6 +21,7 @@ class ImportService
 
         foreach($json['Default']['MasterMerchant']['$AccountWide']['SalesData'] as $link_id => $salesData) {
             $sales = [];
+
             foreach($salesData as $itemKey => $salesInfo) {
 
                 foreach($salesInfo['sales'] as $sale) {
@@ -41,6 +42,8 @@ class ImportService
 
             $this->addSales($sales);
         }
+
+        $this->dispatch();
 
         File::delete($file);
     }
@@ -110,14 +113,23 @@ class ImportService
             }
         }
     }
+    private function dispatch() {
+        if(count($this->sales) == 0) {
+            return true;
+        }
+
+
+        $job = new Sales($this->sales, Auth::id());
+        dispatch($job);
+        $this->sales = [];
+    }
+
     public function addSales($sales) {
 
         $this->sales = array_merge($this->sales, $sales);
 
         if(count($this->sales) > $this->per_job) {
-            $job = new Sales($this->sales, Auth::id());
-            dispatch($job);
-            $this->sales = [];
+            $this->dispatch();
         }
 
     }

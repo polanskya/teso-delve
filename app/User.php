@@ -62,8 +62,13 @@ class User extends Authenticatable
         return $this->hasMany(UserSetFavourite::class, 'userId');
     }
 
-    public function characters() {
+    public function characters()
+    {
         return $this->hasMany(Character::class, 'userId');
+    }
+
+    public function accounts() {
+        return $this->characters->pluck('account')->unique();
     }
 
 }

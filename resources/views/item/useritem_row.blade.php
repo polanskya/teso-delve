@@ -24,10 +24,10 @@ $item = $userItem->item;
         @endif
     </td>
     <td class="text-right item-icons nowrap">
-        <i class="fa fa-male {{ $userItem->bagEnum == \App\Enum\BagType::WORN ? '' : 'color-inactive' }}" aria-hidden="true" data-toggle="tooltip" title="Item is worn"></i>
-        <i class="fa fa-link {{ $userItem->isBound ? '' : 'color-inactive' }}" aria-hidden="true" data-toggle="tooltip" title="Item is bound"></i>
-        <i class="fa fa-bank {{ $userItem->bagEnum == \App\Enum\BagType::BANK ? '' : 'color-inactive' }}" aria-hidden="true" data-toggle="tooltip" title="Item in bank"></i>
-        <i class="fa fa-lock {{ $userItem->isLocked ? '' : 'color-inactive' }}" aria-hidden="true" data-toggle="tooltip" title="Item is locked"></i>
-        <i class="fa fa-trash-o {{ $userItem->isJunk ? '' : 'color-inactive' }}" aria-hidden="true" data-toggle="tooltip" title="Item is marked as junk"></i>
+        <i class="fa fa-male {{ $userItem->bagEnum == \App\Enum\BagType::WORN ? 'active' : 'color-inactive' }}" aria-hidden="true" data-toggle="tooltip" title="Item is worn"></i>
+        <i class="fa fa-link {{ $userItem->isBound ? 'active' : 'color-inactive' }}" aria-hidden="true" data-toggle="tooltip" title="Item is bound"></i>
+        <i class="fa fa-bank {{ $userItem->bagEnum == \App\Enum\BagType::BANK ? 'active' : 'color-inactive' }}" aria-hidden="true" data-toggle="tooltip" title="Item in bank"></i>
+        <i class="fa fa-lock {{ $userItem->isLocked ? 'active' : 'color-inactive' }}" aria-hidden="true" data-toggle="tooltip" title="Item is locked"></i>
+        <i class="fa fa-trash-o {{ $userItem->isJunk ? 'active' : 'color-inactive' }}" aria-hidden="true" data-toggle="tooltip" title="Item is marked as junk"></i>
     </td>
 </tr>

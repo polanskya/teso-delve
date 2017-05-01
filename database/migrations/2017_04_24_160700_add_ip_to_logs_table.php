@@ -14,7 +14,7 @@ class AddIpToLogsTable extends Migration
     public function up()
     {
         Schema::table('logs', function (Blueprint $table) {
-            $table->string('ip', 5*4)->nullable();
+            $table->string('ip', 5*4)->nullable()->after('user_id');
         });
     }
 

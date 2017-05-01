@@ -1,5 +1,6 @@
 <?php namespace HeppyKarlsson\EsoImport;
 
+use App\Jobs\EsoImport\Guild as GuildJob;
 use App\Model\AbilityCharacter;
 use App\Model\ItemStyle;
 use App\Model\SkillLine;
@@ -11,6 +12,8 @@ use HeppyKarlsson\EsoImport\Exception\DumpValidation;
 use HeppyKarlsson\EsoImport\Import\Ability;
 use HeppyKarlsson\EsoImport\Import\Character;
 use HeppyKarlsson\EsoImport\Import\Guild;
+use HeppyKarlsson\EsoImport\Import\GuildMember;
+use HeppyKarlsson\EsoImport\Import\GuildRank;
 use HeppyKarlsson\EsoImport\Import\Jobs\Inventory\Initialize;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,6 +37,8 @@ class EsoImport
         $user->save();
 
         $user->load('characters.meta');
+        $user->guilds()->detach();
+
 
         try {
 
@@ -54,6 +59,10 @@ class EsoImport
                         return true;
                     }
                 }
+                catch(DumpValidation $dumpValidation) {
+                    // Throw further up as the file is not valid.
+                    throw $dumpValidation;
+                }
                 catch(\Throwable $e) {
                     // Log and move on to next line
                     DBLogger::save($e);
@@ -61,18 +70,18 @@ class EsoImport
 
             });
 
+ 
             $user->load('characters');
             $user->load('characters.craftingTraits');
             $user->load('characters.meta');
             $user->load('characters.itemStyles');
-//            $user->load('guilds.members');
-//            $user->load('userItems');
             $user->load('meta');
-//            $this->userItems = $user->userItems->groupBy('characterId');
+
+            $importService = new ImportService();
 
             $skills = SkillLine::all();
 
-            File::eachRow($file_path, function($line) use($user, $skills) {
+            File::eachRow($file_path, function($line) use($user, $skills, $importService) {
                 try {
 
                     if (strpos($line, 'ITEMSTYLE:') !== false) {
@@ -80,12 +89,6 @@ class EsoImport
                         $itemStyleImport->process($line, $user, $this->itemStyles);
                         return true;
                     }
-
-//                if(GuildMember::check($line)) {
-//                    $member = new GuildMember();
-//                    $member->process($line, $user, $this->guilds);
-//                    return true;
-//                }
 
                     if (Ability::check($line)) {
                         $ability = new Ability();
@@ -100,17 +103,22 @@ class EsoImport
                     }
 
                     if (strpos($line, 'ITEM:') !== false) {
-                        $itemImport = new Import\Item();
-                        $itemImport->process($line, $user, $this->itemStyles);
+                        $importService->item($line, $user->id);
                         return true;
                     }
                 }
+                catch(DumpValidation $dumpValidation) {
+                    // Throw further up as the file is not valid.
+                    throw $dumpValidation;
+                }
                 catch (\Throwable $e) {
+                    // Log and move on to next line
                     DBLogger::save($e);
                 }
             });
 
-            UserItem::where('userId', $user->id)->where('updated_at', '<', $updateStart)
+            UserItem::where('userId', $user->id)
+                ->where('updated_at', '<', $updateStart)
                 ->delete();
 
             AbilityCharacter::whereIn('character_id', $user->characters->pluck('id')->toArray())
@@ -122,6 +130,54 @@ class EsoImport
         }
 
         return response()->json(['upload' => 'success']);
+    }
+
+    public function importGuild($file) {
+        $user = Auth::user();
+
+        file::eachRow($file, function($line) use ($user) {
+            try {
+                if (Guild::check($line)) {
+                    $guild = new Guild();
+                    $guild->process($line, $user);
+                    return true;
+                }
+            }
+            catch(\Throwable $e) {
+                // Log and move on to next line
+                DBLogger::save($e);
+            }
+        });
+
+        $guilds = $user->guilds()
+            ->with('ranks')
+            ->get();
+
+        $guildJob = new GuildJob($user->id, $guilds->pluck('id')->toArray());
+
+        file::eachRow($file, function($line) use ($user, $guildJob, $guilds) {
+            try {
+
+                if(GuildMember::check($line)) {
+                    $guildJob->member($line);
+                    return true;
+                }
+
+                if(GuildRank::check($line)) {
+                    $guildJob->rank($line);
+                    return true;
+                }
+            }
+            catch(\Throwable $e) {
+                // Log and move on to next line
+                DBLogger::save($e);
+            }
+
+        });
+
+        dispatch($guildJob);
+
+        return true;
     }
 
     public function jobImport($file_path) {

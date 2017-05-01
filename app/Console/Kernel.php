@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Jobs\Sitemap\Items;
+use App\Jobs\Sitemap\Sitemap;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -24,8 +26,17 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+
+        $schedule->call(function() {
+            $sitemap = new Sitemap();
+            dispatch($sitemap);
+
+            $items = new Items();
+            dispatch($items);
+        })->dailyAt('00:01');
+
+
+
     }
 
     /**
