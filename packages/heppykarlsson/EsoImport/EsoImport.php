@@ -27,7 +27,7 @@ class EsoImport
         set_time_limit(120);
         ini_set('memory_limit','24M');
 
-        $updateStart = Carbon::now();
+        $updateStart = Carbon::now()->subSecond(5);
 
         $this->itemStyles = ItemStyle::all();
 
@@ -70,7 +70,7 @@ class EsoImport
 
             });
 
- 
+
             $user->load('characters');
             $user->load('characters.craftingTraits');
             $user->load('characters.meta');
@@ -116,6 +116,8 @@ class EsoImport
                     DBLogger::save($e);
                 }
             });
+
+            $importService->executeItems($user->id);
 
             UserItem::where('userId', $user->id)
                 ->where('updated_at', '<', $updateStart)

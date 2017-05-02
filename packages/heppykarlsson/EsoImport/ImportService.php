@@ -13,12 +13,12 @@ class ImportService
         $this->items[] = $line;
 
         if(count($this->items) > $this::ITEM_COUNT) {
-            $this->exceuteItems($user_id);
+            $this->executeItems($user_id);
 
         }
     }
 
-    public function exceuteItems($user_id) {
+    public function executeItems($user_id) {
         $items = $this->items;
         $this->items = [];
         if(count($items) == 0) {

@@ -80,7 +80,11 @@ class ItemRepository
 
         if($this->save) {
             $userItem->save();
+            return $userItem;
         }
+
+        $userItem->created_at = Carbon::now();
+        $userItem->updated_at = $userItem->created_at;
 
         return $userItem;
     }
@@ -108,17 +112,19 @@ class ItemRepository
         $item->enchantDescription = $data[20];
         $item->itemValue = intval($data[22]);
         $item->lang = $lang;
+        $item->setId = null;
+        $item->itemStyleId = null;
 
-        if(!empty($properties[4])) {
-            $item->setItemSet($properties[4]);
+        if(!empty($data[4])) {
+            $item->setItemSet($data[4]);
         }
 
-        if(isset($properties[25]) and intval($properties[25]) != 0) {
-            $itemStyle = $itemStyles->where('externalId', intval($properties[25]))->first();
+        if(isset($data[25]) and intval($data[25]) != 0) {
+            $itemStyle = $itemStyles->where('externalId', intval($data[25]))->first();
 
             if(is_null($itemStyle)) {
                 $itemStyle = new ItemStyle();
-                $itemStyle->externalId = intval($properties[25]);
+                $itemStyle->externalId = intval($data[25]);
                 $itemStyle->name = '';
                 $itemStyle->image = '';
                 $itemStyle->save();
@@ -128,10 +134,9 @@ class ItemRepository
             $item->itemStyleId = isset($itemStyle->id) ? $itemStyle->id : null;
         }
 
-
-
         if($this->save) {
             $item->save();
+            return $item;
         }
 
         $item->created_at = Carbon::now();

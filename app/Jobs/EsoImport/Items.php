@@ -9,6 +9,7 @@ use App\Model\ItemStyle;
 use App\Model\UserItem;
 use App\Repository\ItemRepository;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Collection;
@@ -26,6 +27,9 @@ class Items implements ShouldQueue
     private $importGroup_id;
 
     private $lang;
+    /**
+     * @var ItemRepository
+     */
     private $itemRepository;
     private $orderedLines;
     private $itemStyles;
@@ -71,15 +75,27 @@ class Items implements ShouldQueue
         $this->createItems();
         $this->matchItems();
 
-
         $this->matchUserItems();
         $this->createUserItems();
-        $this->matchUserItems();
 
+        $this->updateUserItems();
 
         $itemSlugs = new ItemSlugs();
         dispatch($itemSlugs);
     }
+
+    private function updateUserItems() {
+
+        foreach($this->orderedLines->where('userItem_id', '!=', null) as $data) {
+            $newUi = $this->itemRepository->userItem($data, $this->user_id, $this->itemStyles, $this->characters);
+            $newUi->id = $data['userItem_id'];
+            $newUi->exists = true;
+            $newUi->updated_at = Carbon::now();
+            $newUi->save();
+        }
+
+    }
+
 
     private function createUserItems() {
 
@@ -98,7 +114,7 @@ class Items implements ShouldQueue
     private function matchUserItems() {
 
 
-        UserItem::where('userId', $this->user_id)->chunk(500, function ($userItems) {
+        UserItem::where('userId', $this->user_id)->chunk(750, function ($userItems) {
             $userItems = $userItems->groupBy('itemId');
 
             foreach ($this->orderedLines->where('item_id', '!=', null)->where('userItem_id', null) as $key => $line) {
