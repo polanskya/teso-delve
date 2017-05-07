@@ -82,8 +82,12 @@ class SetController
     }
 
     public function show($set_slug) {
+
         $user = Auth::user();
-        $set = Set::where('slug', $set_slug)->where('lang', $user ? $user->lang : config('constants.default-language'))->first();
+
+        $set = Set::where('slug', $set_slug)
+            ->where('lang', $user ? $user->lang : config('constants.default-language'))
+            ->first();
 
         if(!$set) {
             abort(404);
@@ -95,15 +99,16 @@ class SetController
 
         if(Auth::check()) {
             $user = Auth::user();
-            $user->load('items', 'favouriteSets');
+            $user->load('favouriteSets');
 
             $favourites = $user->favouriteSets
                 ->pluck('setId')
                 ->toArray();
 
-            $items = $user->items
+            $items = $user->items()
                 ->where('setId', $set->id)
-                ->load('character');
+                ->with('character')
+                ->get();
 
             $isFavourite = in_array($set->id, $favourites);
         }
