@@ -44,7 +44,12 @@
                                 <ul>
                                     @if($set->setTypeEnum == \App\Enum\SetType::DUNGEON or $set->setTypeEnum == \App\Enum\SetType::MONSTER)
                                         @foreach($set->dungeons as $dungeon)
-                                            <li><a href="{{route('dungeon.show', [$dungeon])}}">{{$dungeon->name}}</a></li>
+                                            <li>
+                                                <a href="{{route('dungeon.show', [$dungeon])}}">{{$dungeon->name}}</a>
+                                                @if($loop->last)
+                                                    @include('sets.settype_drop')
+                                                @endif
+                                            </li>
                                         @endforeach
                                     @elseif($set->setTypeEnum == \App\Enum\SetType::CRAFTED)
                                         <li>Craftable: {{$set->getMeta('crafting_traits_needed')}} traits
@@ -57,11 +62,14 @@
 
                                     @else
                                         @foreach($set->zones as $zoneId => $zone)
-                                            <li><a href="{{route('zone.show', [$zone->getZoneInfo()['slug']])}}">{{$zone->getZoneInfo()['name']}}</a></li>
+                                            <li>
+                                                <a href="{{route('zone.show', [$zone->getZoneInfo()['slug']])}}">{{$zone->getZoneInfo()['name']}}</a>
+                                                @include('sets.settype_drop')
+                                            </li>
                                         @endforeach
                                     @endif
 
-                                    @include('sets.settype_drop')
+
                                 </ul>
 
 

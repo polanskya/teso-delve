@@ -42,6 +42,16 @@
                             </tr>
                             <tr>
                                 <td class="v-a-m" colspan="2">
+                                    User agent<br><span class="text-white">{{$log->user_agent or '-'}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="v-a-m" colspan="2">
+                                    Method<br><span class="text-white">{{$log->method or '-'}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="v-a-m" colspan="2">
                                     Severity<br><span class="text-white">{{$log->severity or '-'}}</span>
                                 </td>
                             </tr>

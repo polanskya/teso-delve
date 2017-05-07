@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use HeppyKarlsson\BanHammer\BanHammer;
 use HeppyKarlsson\DBLogger\Facade\DBLogger;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -34,6 +35,7 @@ class Handler extends ExceptionHandler
     public function report(Exception $exception)
     {
         DBLogger::save($exception);
+        BanHammer::scan($exception);
 
         parent::report($exception);
     }

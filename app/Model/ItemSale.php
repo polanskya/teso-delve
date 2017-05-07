@@ -1,9 +1,13 @@
 <?php namespace App\Model;
 
+use App\Traits\EloquentGetTableNameTrait;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class ItemSale extends Model
 {
+    use EloquentGetTableNameTrait;
+
     public $timestamps = true;
 
     public $dates = [
@@ -12,6 +16,15 @@ class ItemSale extends Model
 
     public function guild() {
         return $this->belongsTo(Guild::class);
+    }
+
+    public function scopeBetween($query, Carbon $start, Carbon $end) {
+        return $query->where('sold_at', '>=', $start)
+            ->where('sold_at', '<=', $end);
+    }
+
+    public function item() {
+        return $this->belongsTo(Item::class);
     }
 
     public function guid() {

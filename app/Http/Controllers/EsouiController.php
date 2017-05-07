@@ -6,6 +6,11 @@ use DBLogger;
 class EsouiController
 {
 
+    public function guildRank($image) {
+        $url = 'guildranks/'.$image;
+        $this->image($url);
+    }
+
     public function image($image) {
 
         $dir = 'esoui/art/icons';

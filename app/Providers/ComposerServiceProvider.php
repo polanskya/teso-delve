@@ -17,6 +17,7 @@ class ComposerServiceProvider extends ServiceProvider
     {
         // Using class based composers...
         View::composer('inventory.partials.filter', InventoryFilterComposer::class);
+        View::composer('guild.partials.filter', InventoryFilterComposer::class);
     }
 
     /**

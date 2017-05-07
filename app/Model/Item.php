@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\Traits\EloquentGetTableNameTrait;
 use App\Enum\EquipType;
 use App\Enum\ItemType;
 use HeppyKarlsson\Sluggify\Traits\Sluggify;
@@ -35,6 +36,7 @@ use Illuminate\Database\Eloquent\Model;
 class Item extends Model
 {
     use Sluggify;
+    use EloquentGetTableNameTrait;
 
     protected $fillable = [
         'uniqueId',
@@ -83,7 +85,10 @@ class Item extends Model
             $setName = substr($setName, 0, stripos($setName, '^'));
         }
 
-        $set = Set::where('external_id', $external_id)->where('lang', $this->lang)->first();
+        $set = Set::where('external_id', $external_id)
+            ->where('lang', $this->lang)
+            ->first();
+
         if (!$set) {
             $set = new Set();
             $set->name = $setName;

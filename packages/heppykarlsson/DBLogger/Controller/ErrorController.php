@@ -9,7 +9,7 @@ class ErrorController extends Controller
 {
     public function index() {
 
-        $logs = Log::orderBy('created_at', 'desc')->paginate();
+        $logs = Log::orderBy('created_at', 'desc')->paginate(75);
 
         return view('DBLogger::index', compact('logs'));
     }
@@ -19,11 +19,11 @@ class ErrorController extends Controller
         $lines = [];
         File::eachRow($log->file, function($line, $rowNumber) use ($log, &$lines) {
 
-            if($rowNumber < ($log->row - 11)) {
+            if($rowNumber < ($log->row - 12)) {
                 return false;
             }
 
-            if($rowNumber > ($log->row + 11)) {
+            if($rowNumber > ($log->row + 12)) {
                 return false;
             }
 

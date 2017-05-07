@@ -7,7 +7,7 @@ use Carbon\Carbon;
 
 class GuildMember
 {
-    const EXPLODE_COUNT = 12;
+    const EXPLODE_COUNT = 11;
 
     static public function check($line)
     {
@@ -21,44 +21,37 @@ class GuildMember
     }
 
     public function process($line, $user, &$guilds) {
+        set_time_limit(5);
         $memberInfo = explode(';--;', $line);
 
-        if(count($memberInfo) < self::EXPLODE_COUNT) {
-            return false;
-        }
-
         $name = trim($memberInfo[1]);
-        $world = trim($memberInfo[9]);
+        $world = trim($memberInfo[8]);
 
-        if(isset($guilds[$world][$name])) {
-            $guild = $guilds[$world][$name];
-        }
-        else {
-            $guild = Guild::where('name', $name)
-                ->where('world', $world)
-                ->first();
+        $guild = $guilds->where('world', $world)
+            ->where('name', $name)
+            ->first();
 
-            $guilds[$guild->world][$guild->name] = $guild;
-        }
 
         if(is_null($guild)) {
             return false;
         }
 
-        $character = Character::where('account', $memberInfo[3])->first();
+        $character = Character::where('account', $memberInfo[2])->first();
 
         $guildMember = $guild->members
-            ->where('accountName', $memberInfo[3])
+            ->where('accountName', $memberInfo[2])
             ->first();
 
+        $ranks = $guild->ranks->count();
+
         $guildMember = is_null($guildMember) ? new \App\Model\GuildMember() : $guildMember;
-        $guildMember->accountName = $memberInfo[3];
+        $guildMember->accountName = $memberInfo[2];
         $guildMember->guild_id = $guild->id;
         $guildMember->note = $memberInfo[4];
         $guildMember->account_id = null;
-        $guildMember->rank = $memberInfo[5];
+        $guildMember->rank = 1 + ($ranks - $memberInfo[5]);
         $guildMember->user_id = isset($character) ? $character->userId : null;
-        $guildMember->lastSeen_at = intval($memberInfo[7]) !== 0 ? Carbon::createFromTimestamp(intval($memberInfo[8]) - intval($memberInfo[7])) : Carbon::createFromTimestamp(intval($memberInfo[8]));
+        $guildMember->lastSeen_at = intval($memberInfo[6]) !== 0 ? Carbon::createFromTimestamp(intval($memberInfo[7]) - intval($memberInfo[6])) : Carbon::createFromTimestamp(intval($memberInfo[7]));
         $guildMember->save();
     }
 }

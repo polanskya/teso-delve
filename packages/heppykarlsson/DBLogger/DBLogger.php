@@ -19,10 +19,12 @@ class DBLogger {
 
         try {
 
+
             $log->error = $exception->getMessage();
             $log->route = Route::currentRouteName();
             $log->url = $request->path();
             $log->session = session()->getId();
+            $log->user_agent = $request->header('User-Agent');
             $log->method = $request->method();
             $log->user_id = Auth::id();
             $log->ip = $request->ip();
@@ -32,6 +34,7 @@ class DBLogger {
             $log->severity = method_exists($exception, 'getSeverity') ? $exception->getSeverity() : null;
             $log->code = intval($exception->getCode());
             $log->exception = get_class($exception);
+
 
             $traces = $exception->getTrace();
             foreach($traces as &$trace) {

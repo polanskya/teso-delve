@@ -1,4 +1,26 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+@media (min-width: 768px) {
+  .dl-horizontal dt {
+    width: 100px;
+  }
+  .dl-horizontal dd {
+    margin-left: 120px;
+  }
+}
+
+.popover {
+  min-width: 250px;
+}
+
+.fa.active {
+  color: white;
+}
+
+.scroll-245 {
+  max-height: 245px;
+  overflow-y: scroll;
+}
+
 .quality-text-5 {
   color: #EECA2A !important;
 }
@@ -78,6 +100,17 @@
 .quality-0 {
   background: white !important;
   border: 1px solid #e6e6e6 !important;
+}
+
+.guild-members .guild-rank {
+  margin-top: -6px;
+  margin-bottom: -5px;
+  max-width: 32px;
+  opacity: 0.3;
+}
+
+#guild-dashboard .sales-tables table tr td {
+  height: 36px;
 }
 
 .character-name {

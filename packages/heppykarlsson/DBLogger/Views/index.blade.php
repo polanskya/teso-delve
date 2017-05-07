@@ -27,7 +27,7 @@
                                 </td>
                                 <td class="text-right min-width nowrap text-white">{{$log->ip}}</td>
                                 <td>
-                                    <a href="{{route('admin.error.show', [$log])}}" class="text-white">{{empty($log->error) ? 'error' : $log->error}}</a><br>{{$log->file}}:{{$log->row}}</td>
+                                    <a href="{{route('admin.error.show', [$log])}}" class="text-white">{{empty($log->error) ? 'error' : $log->error}}</a><br>{{$log->exception}}</td>
                                 <td>{{$log->route}}<br>/{{$log->url}}</td>
                                 <td class="text-right min-width nowrap">{{$log->created_at}}</td>
                                 <td class="text-right min-widht nowrap">

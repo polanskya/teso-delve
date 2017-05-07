@@ -25,6 +25,10 @@ class ImportController
         $path = storage_path('TesoDelve.lua');
         $return = $esoImport->import($path);
 //        $return = $esoImport->jobImport($path);
+
+//        $path = storage_path('TesoDelveGuild.lua');
+//        $return = $esoImport->importGuild($path);
+
         return 'works';
     }
 
@@ -85,6 +89,12 @@ class ImportController
                 $mmService = new ImportService();
                 $mmService->import($newFile);
                 return 'MM uploaded';
+            }
+
+            if($fileName == 'TesoDelveGuild.lua') {
+                File::copy($file->getRealPath(), storage_path('dumps/dumpGuild_' . Auth::id() . ".lua"));
+                $esoImport->importGuild($file->getRealPath());
+                return 'Guilds imported';
             }
         }
 

@@ -28,6 +28,8 @@ include('web/sets.php');
 include('web/character.php');
 
 Route::group(['middleware' => 'auth'], function () {
+    Route::post('/import-tesodelve', 'ImportController@upload')->name('import.upload');
+
     include('web/inventory.php');
     include('web/guilds.php');
     include('admin.php');
@@ -37,6 +39,7 @@ Route::get('/import-data', 'ImportController@import');
 Route::get('/import-mm', 'ImportController@mastermerchant');
 Route::get('/export', 'ImportController@export');
 
+Route::get('/esoui/art/icons/guildranks/{image}', 'EsouiController@guildRank');
 Route::get('/esoui/art/icons/{image}', 'EsouiController@image');
 
 Route::get('/bank', 'BankController@index')->name('bank.index');
@@ -58,7 +61,6 @@ Route::get('/about', 'AboutController@index')->name('about');
 
 Route::get('/item/{item}', 'ItemController@show')->name('item.show');
 
-Route::post('/import-tesodelve', 'ImportController@upload')->name('import.upload');
 Route::get('/import', 'ImportController@index')->name('import.index');
 
 Route::get('/home', 'SetController@mySets')->name('home.index')->middleware('auth');

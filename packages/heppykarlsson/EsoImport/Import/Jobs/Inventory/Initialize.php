@@ -45,7 +45,6 @@ class Initialize implements ShouldQueue
 
     public function handle()
     {
-        $start = Carbon::now();
 
         $this->items = new Collection();
         $this->itemStyles = new Collection();

@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\User;
 use HeppyKarlsson\Sluggify\Traits\Sluggify;
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,6 +23,18 @@ class Guild extends Model
 
     public function members() {
         return $this->hasMany(GuildMember::class);
+    }
+
+    public function presentMotd() {
+        return str_ireplace(['\n', '\r'], ['<br>', ''], $this->motd);
+    }
+
+    public function presentDescription() {
+        return str_ireplace(['\n', '\r'], ['<br>', ''], $this->description);
+    }
+
+    public function ranks() {
+        return $this->hasMany(GuildRank::class);
     }
 
 }

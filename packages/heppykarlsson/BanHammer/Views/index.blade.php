@@ -22,7 +22,7 @@
                                 <td class="text-right"><input type="submit" value="Ban!" class="btn btn-primary"></td>
                             </tr>
                             @foreach($bans as $id => $ip)
-                                <tr><td class="text-white">{{$ip}}</td><td class="text-right"><a href="{{route('admin.ban.delete', [$id])}}" class="btn btn-default btn-xs"><i class="fa fa-trash" ></i></a></td></tr>
+                                <tr><td class="text-white">{{$ip}}</td><td class="text-right"><a href="{{route('admin.ban.delete', [$ip])}}" class="btn btn-default btn-xs"><i class="fa fa-trash" ></i></a></td></tr>
                             @endforeach
                             </tbody>
                             <tfoot>

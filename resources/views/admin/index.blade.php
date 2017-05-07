@@ -1,5 +1,9 @@
 @extends('layouts.admin')
 
+@section('meta-title')
+    Admin dashboard - @parent
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row m-t-1">

@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\CheckForMaintenanceMode;
 use App\Http\Middleware\CheckForWWWSubdomain;
+use App\Http\Middleware\GuildMember;
 use App\Http\Middleware\LastSeenMiddleware;
 use HeppyKarlsson\BanHammer\Middleware\BanHammer;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -62,5 +63,6 @@ class Kernel extends HttpKernel
         'role' => \Laratrust\Middleware\LaratrustRole::class,
         'permission' => \Laratrust\Middleware\LaratrustPermission::class,
         'ability' => \Laratrust\Middleware\LaratrustAbility::class,
+        'guild.member' => GuildMember::class,
     ];
 }
