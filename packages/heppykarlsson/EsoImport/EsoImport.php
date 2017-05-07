@@ -137,7 +137,7 @@ class EsoImport
     public function importGuild($file) {
         $user = Auth::user();
 
-        file::eachRow($file, function($line) use ($user) {
+        File::eachRow($file, function($line) use ($user) {
             try {
                 if (Guild::check($line)) {
                     $guild = new Guild();
@@ -157,7 +157,7 @@ class EsoImport
 
         $guildJob = new GuildJob($user->id, $guilds->pluck('id')->toArray());
 
-        file::eachRow($file, function($line) use ($user, $guildJob, $guilds) {
+        File::eachRow($file, function($line) use ($user, $guildJob, $guilds) {
             try {
 
                 if(GuildMember::check($line)) {
