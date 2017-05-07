@@ -105,7 +105,7 @@
                             <span class="m-r-1">Styles & Motifs</span>
                         </a>
                     </li>
-                    @if(Auth::id() == 1)
+                    @permission('guilds')
                         <li class="dropdown">
                             <a class="dropdown-toggle user-dropdown" data-toggle="dropdown" href="javascript: void(0)" role="button" aria-expanded="false">
                                 <span class="m-r-1">Guilds</span>
@@ -116,7 +116,7 @@
                                 @endforeach
                             </ul>
                         </li>
-                    @endif
+                    @endpermission
                 @else
                     <li class="dropdown">
                         <a class="dropdown-toggle user-dropdown" data-toggle="dropdown" href="javascript: void(0)" role="button" aria-expanded="false">

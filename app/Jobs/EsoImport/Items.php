@@ -8,15 +8,12 @@ use App\Model\Item;
 use App\Model\ItemStyle;
 use App\Model\UserItem;
 use App\Repository\ItemRepository;
-use App\User;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\DB;
 
 class Items implements ShouldQueue
 {
