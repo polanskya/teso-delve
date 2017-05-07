@@ -43,8 +43,13 @@
                                     <tbody>
                                     @foreach($sales as $sale)
                                         <tr>
-                                            <td class="min-width hidden-xs"><img class="item-row-icon" src="{{$sale->item->icon}}"></td>
-                                            <td>@include('item.name', ['item' => $sale->item])</td>
+                                            @if($sale->item)
+                                                <td class="min-width hidden-xs"><img class="item-row-icon" src="{{$sale->item->icon}}"></td>
+                                                <td>@include('item.name', ['item' => $sale->item])</td>
+                                            @else
+                                                <td></td>
+                                                <td>Unknown item</td>
+                                            @endif
                                             <td class="text-white">{{$sale->seller}}</td>
                                             <td class="text-white">{{$sale->buyer}}</td>
                                             <td class="text-right">{{number_format($sale->quantity)}}</td>
@@ -56,7 +61,7 @@
                                     </tbody>
                                     <tfoot>
                                     <tr>
-                                        <td colspan="8" class="text-right">{{$sales->links()}}</td>
+                                        <td colspan="8" class="tex.t-right">{{$sales->links()}}</td>
                                     </tr>
                                     </tfoot>
                                 </table>

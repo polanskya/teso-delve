@@ -193,7 +193,7 @@ class GuildController extends Controller
                 Item::getColumnName('name') . ' as itemName',
                 Item::getColumnName('type') .  ' as itemType'
             )
-            ->join(Item::getTableName(), ItemSale::getColumnName('item_id'), '=', Item::getColumnName('id'))
+            ->leftJoin(Item::getTableName(), ItemSale::getColumnName('item_id'), '=', Item::getColumnName('id'))
             ->when($request->get('seller'), function($query) use($request) {
                 return $query->where('seller', $request->get('seller'));
             })

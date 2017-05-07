@@ -43,13 +43,9 @@ class Sales implements ShouldQueue
 
             $item = $query->first();
 
-            if(is_null($item)) {
-                continue;
-            }
-
             $sold_at = $sold_at = Carbon::createFromTimestamp($sale['timestamp']);
             $itemSale = new ItemSale();
-            $itemSale->item_id = $item->id;
+            $itemSale->item_id = is_null($item) ? null : $item->id;
             $itemSale->price = $sale['price'];
             $itemSale->price_ea = $sale['price'] / $sale['quant'];
             $itemSale->external_id = $sale['id'];
@@ -86,9 +82,12 @@ class Sales implements ShouldQueue
             $inserts[$itemSale->guid] = $itemSale->getAttributes();
         }
 
-        $used_guids = ItemSale::whereIn('guid', $guids)->select('guid')->get();
+        $used_guids = ItemSale::whereIn('guid', $guids)
+            ->select('guid')
+            ->get();
 
-        $used_guids = $used_guids->keyBy('guid')->toArray();
+        $used_guids = $used_guids->keyBy('guid')
+            ->toArray();
 
         $inserts = array_diff_key($inserts, $used_guids);
 

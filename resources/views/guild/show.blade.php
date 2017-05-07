@@ -160,8 +160,13 @@
                                     @foreach($biggestSales as $bigSale)
                                         <tr>
                                             <td class="text-white"><a href="{{route('guilds.sales', [$guild])}}?seller={{$bigSale->seller}}">{{$bigSale->seller}}</a></td>
-                                            <td class="min-width hidden-xs"><img class="item-row-icon" src="{{$bigSale->item->icon}}"></td>
-                                            <td>@include('item.name', ['item' => $bigSale->item])</td>
+                                            @if(is_null($bigSale->item))
+                                                <td></td>
+                                                <td>-</td>
+                                            @else
+                                                <td class="min-width hidden-xs"><img class="item-row-icon" src="{{$bigSale->item->icon}}"></td>
+                                                <td>@include('item.name', ['item' => $bigSale->item])</td>
+                                            @endif
                                             <td class="text-right">{{number_format($bigSale->quantity)}}</td>
                                             <td class="text-right quality-text-5">{{number_format($bigSale->price)}}</td>
                                         </tr>
