@@ -7,7 +7,7 @@ class ImportService
     private $items = [];
     private $dispatch = false;
 
-    const ITEM_COUNT = 750;
+    const ITEM_COUNT = 500;
 
     public function item($line, $user_id) {
         $this->items[] = $line;
