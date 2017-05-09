@@ -31,7 +31,8 @@ class ImportService
     }
 
     public function executeSmithing() {
-        $this->smithings->handle();
+        dispatch($this->smithings);
+        $this->smithings = null;
     }
 
     public function executeItems($user_id) {
