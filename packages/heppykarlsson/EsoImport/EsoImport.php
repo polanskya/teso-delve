@@ -25,7 +25,7 @@ class EsoImport
 
     public function import($file_path) {
         set_time_limit(120);
-        ini_set('memory_limit','24M');
+        ini_set('memory_limit', env('IMPORT_MAX_MEMORY', 24).'M');
 
         $updateStart = Carbon::now()->subSecond(5);
 
