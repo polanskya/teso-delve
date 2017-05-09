@@ -23,6 +23,9 @@ class Items implements ShouldQueue
     private $user_id;
     private $importGroup_id;
 
+    private $userItemsChunk = 750;
+    private $itemsChunk = 1500;
+
     private $lang;
     /**
      * @var ItemRepository
@@ -51,6 +54,7 @@ class Items implements ShouldQueue
      */
     public function handle()
     {
+        set_time_limit(120);
         $this->lang = App::getLocale();
         $this->itemRepository = new ItemRepository(false);
         $this->itemStyles = ItemStyle::all();
@@ -64,7 +68,11 @@ class Items implements ShouldQueue
             $data['userItem_id'] = null;
             $data['arr_key'] = $id;
 
-            $this->lang = explode('"', $data[ItemPosition::LANG])[0];
+            $lang = App::getLocale();
+            if(isset($data[ItemPosition::LANG])) {
+                $lang = explode('"', $data[ItemPosition::LANG])[0];
+            }
+            $this->lang = $lang;
             $this->orderedLines->put($data['arr_key'], $data);
         }
 
@@ -111,7 +119,7 @@ class Items implements ShouldQueue
     private function matchUserItems() {
 
 
-        UserItem::where('userId', $this->user_id)->chunk(750, function ($userItems) {
+        UserItem::where('userId', $this->user_id)->chunk($this->userItemsChunk, function ($userItems) {
             $userItems = $userItems->groupBy('itemId');
 
             foreach ($this->orderedLines->where('item_id', '!=', null)->where('userItem_id', null) as $key => $line) {
@@ -164,9 +172,10 @@ class Items implements ShouldQueue
 
 
         Item::whereIn('external_id', $names)
+
             ->where('lang', $this->lang)
             ->orderBy('external_id')
-            ->chunk(2000, function ($items) use ($lines) {
+            ->chunk($this->itemsChunk, function ($items) use ($lines) {
                 $itemsGrouped = $items->groupBy('external_id');
 
                 foreach ($lines as $id => $line) {

@@ -70,25 +70,16 @@ class EsoImport
 
             });
 
-
             $user->load('characters');
-            $user->load('characters.craftingTraits');
-            $user->load('characters.meta');
-            $user->load('characters.itemStyles');
             $user->load('meta');
+            $user->load('characters.itemStyles');
 
-            $importService = new ImportService();
+            $importService = new ImportService($user->id);
 
             $skills = SkillLine::all();
 
             File::eachRow($file_path, function($line) use($user, $skills, $importService) {
                 try {
-
-                    if (strpos($line, 'ITEMSTYLE:') !== false) {
-                        $itemStyleImport = new Import\ItemStyle();
-                        $itemStyleImport->process($line, $user, $this->itemStyles);
-                        return true;
-                    }
 
                     if (Ability::check($line)) {
                         $ability = new Ability();
@@ -96,9 +87,14 @@ class EsoImport
                         return true;
                     }
 
+                    if (strpos($line, 'ITEMSTYLE:') !== false) {
+                        $itemStyleImport = new Import\ItemStyle();
+                        $itemStyleImport->process($line, $user, $this->itemStyles);
+                        return true;
+                    }
+
                     if (strpos($line, 'SMITHING:') !== false) {
-                        $smithingImport = new Import\Smithing();
-                        $smithingImport->process($line, $user);
+                        $importService->smithing($line);
                         return true;
                     }
 
@@ -122,6 +118,38 @@ class EsoImport
             UserItem::where('userId', $user->id)
                 ->where('updated_at', '<', $updateStart)
                 ->delete();
+
+            $importService->executeSmithing();
+
+//            $user = User::find($user->id);
+//            $user->load('characters.craftingTraits');
+//            $user->load('characters.meta');
+
+//            File::eachRow($file_path, function($line) use($user, $skills, $importService) {
+//                try {
+//
+//                    if (Ability::check($line)) {
+//                        $ability = new Ability();
+//                        $ability->process($line, $user, $skills);
+//                        return true;
+//                    }
+//
+//                    if (strpos($line, 'SMITHING:') !== false) {
+//                        $smithingImport = new Import\Smithing();
+//                        $smithingImport->process($line, $user);
+//                        return true;
+//                    }
+//                }
+//                catch(DumpValidation $dumpValidation) {
+//                    // Throw further up as the file is not valid.
+//                    throw $dumpValidation;
+//                }
+//                catch (\Throwable $e) {
+//                    // Log and move on to next line
+//                    DBLogger::save($e);
+//                }
+//            });
+
 
             AbilityCharacter::whereIn('character_id', $user->characters->pluck('id')->toArray())
                 ->where('updated_at', '<', $updateStart)

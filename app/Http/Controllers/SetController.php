@@ -67,6 +67,9 @@ class SetController
             ->get()
             ->groupBy('setId');
 
+
+
+
         return view('sets.my_sets', compact('sets', 'items', 'favourites', 'user'));
     }
 

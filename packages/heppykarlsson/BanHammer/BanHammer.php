@@ -70,6 +70,18 @@ class BanHammer
                 self::autoBan($request->ip());
             }
 
+            if(stripos($path, 'wp-admin') !== false) {
+                self::autoBan($request->ip());
+            }
+
+            if(stripos($path, 'wp-login') !== false) {
+                self::autoBan($request->ip());
+            }
+
+            if(stripos($path, 'wp-admin') !== false) {
+                self::autoBan($request->ip());
+            }
+
             if(stripos($path, 'cgi-bin/php') !== false) {
                 self::autoBan($request->ip());
             }
