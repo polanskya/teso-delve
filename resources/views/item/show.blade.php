@@ -27,7 +27,7 @@
                         {{$item->name}} is apart of the <a href="{{route('set.show', [$item->set])}}">{{$item->set->name}}</a> {{strtolower(trans('enums.SetType.'.$item->set->setTypeEnum))}}.
                     @endif
 
-                    @if($item->type == \App\Enum\ItemType::RACIAL_STYLE_MOTIF)
+                    @if($item->type == \App\Enum\ItemType::RACIAL_STYLE_MOTI and !is_null($item->itemStyleChapter->first()))
                         {{$item->name}} is a chapter motif for the <a href="{{route('item-styles.show', [$item->itemStyleChapter->first()])}}">{{$item->itemStyleChapter->first()->name}}</a> style.
                     @elseif(Lang::has('item.type.'.$item->type))
                         {{trans('item.type.'.$item->type, ['name' => $item->name])}}
