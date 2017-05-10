@@ -88,9 +88,7 @@ class SetController
 
         $user = Auth::user();
 
-        $set = Set::where('slug', $set_slug)
-            ->where('lang', $user ? $user->lang : config('constants.default-language'))
-            ->first();
+        $set = Set::where('slug', $set_slug)->first();
 
         if(!$set) {
             abort(404);
@@ -100,8 +98,7 @@ class SetController
         $favourites = null;
         $isFavourite = null;
 
-        if(Auth::check()) {
-            $user = Auth::user();
+        if($user) {
             $user->load('favouriteSets');
 
             $favourites = $user->favouriteSets
