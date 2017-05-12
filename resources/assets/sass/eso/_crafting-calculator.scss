@@ -1,0 +1,177 @@
+#crafting-calculator {
+
+  .research-line {
+    width: 100px;
+    display: inline-block;
+  }
+
+  .material {
+    display: inline-block;
+    width: 250px;
+  }
+
+  .temper {
+    width: 200px;
+    display: inline-block;
+  }
+
+  .trait {
+    width: 200px;
+    display: inline-block;
+  }
+
+  .item-style {
+    width: 200px;
+    display: inline-block;
+  }
+
+  .crafting-box {
+    border: 1px solid darken(#262626, 5%);
+    margin-bottom: 5px;
+    padding: 5px;
+    padding-left: 0px;
+    padding-right: 0px;
+    background: #1A1A1A;
+
+    .image {
+      float: left;
+      min-height: 32px;
+    }
+
+    .big-image {
+      max-width: 72px;
+      margin-bottom: 5px;
+    }
+
+    .name {
+      font-weight:bold;
+      text-transform: capitalize;
+      color: lighten(#5c5c5c, 10%);
+      margin-left: 5px;
+    }
+
+    .description {
+      margin-left: 5px;
+    }
+
+    img {
+      max-width:32px;
+      margin-left: 5px;
+    }
+
+    &:hover {
+      background: lighten(#1A1A1A, 5%);
+      cursor: pointer;
+    }
+
+    &.active {
+      background: #262626;
+      border: 1px solid darken(#262626, 5%);
+
+      .name {
+        color: white;
+      }
+
+      .material-count {
+        display: block;
+
+      }
+
+    }
+
+  }
+
+  .temper {
+    height: 49px;
+  }
+
+  .material {
+
+
+    .material-count {
+      border: 1px solid darken(#262626, 5%);
+      display: none;
+      font-size: 16px;
+      margin-right: 5px;
+      background: #1A1A1A;
+      padding: 4px;
+      cursor: default;
+
+      .crafting-items {
+        display: inline;
+
+        ul {
+          display: inline;
+        }
+
+        .crafting-item {
+          display: none;
+
+          &.active {
+            display: inline;
+          }
+        }
+      }
+
+      span {
+        cursor: default;
+      }
+
+      .value {
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+
+    }
+
+
+
+  }
+
+}
+
+
+#item-preview {
+  border: 1px solid #EECA2A !important;
+
+  .item-icon {
+    margin-top: -15px;
+  }
+
+  .item-stat, .champion-level, .level {
+    font-family: Georgia, "Times New Roman", Times, serif;
+    color: white;
+    font-size: 16px;
+  }
+
+  .item-stat {
+    text-align: right;
+  }
+
+  .level {
+    text-align: left;
+    img {
+      max-width: 20px;
+    }
+  }
+
+  .trait-name {
+    font-weight:bold;
+    color: white;
+  }
+
+  .set-name {
+    font-weight: bold;
+    color: white;
+    margin-top: 15px;
+  }
+
+}
+
+#item-cost {
+
+  img {
+    max-height: 18px;
+  }
+
+}

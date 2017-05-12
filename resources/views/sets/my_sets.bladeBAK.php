@@ -69,7 +69,19 @@
                             </tr>
                             </thead>
                             <tbody>
-                                {!! $setsView !!}
+                            @if($user)
+                                @foreach($sets->whereIn('id', $favourites) as $set)
+                                    @include('sets.set_row')
+                                @endforeach
+                            @endif
+
+                            @foreach($sets as $set)
+                                @if($user and in_array($set->id, $favourites))
+                                    @continue
+                                @endif
+
+                                @include('sets.set_row')
+                            @endforeach
                             </tbody>
                         </table>
                     </div>

@@ -42,11 +42,11 @@ class ItemRepository
             ->where('externalId', intval($data[ItemPosition::CHARACTER_EXTERNAL_ID]))
             ->first();
 
-        if(isset($bagType) and $bagType === BagType::BANK) {
+        if($bagType == BagType::BANK) {
             $character = null;
         }
 
-        if(isset($bagType) and $bagType == BagType::VIRTUAL) {
+        if($bagType == BagType::VIRTUAL) {
             $character = null;
         }
 

@@ -26,6 +26,7 @@ Route::get('/dungeon/arenas', 'DungeonController@index')->name('dungeons.arenas.
 include('web/items.php');
 include('web/sets.php');
 include('web/character.php');
+include('web/crafting.php');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::post('/import-tesodelve', 'ImportController@upload')->name('import.upload');

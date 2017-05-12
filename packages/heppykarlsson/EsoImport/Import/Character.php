@@ -86,7 +86,7 @@ class Character
 
         if(isset($properties[13])) {
             $smithingSkills = explode('-', $properties[13]);
-            $character->setMeta('max_smithing_' . CraftingType::BLACKSMITHING, intval($smithingSkills[1]));
+            $character->setMeta('max_smithing_' . CraftingType::BLACKSMITHING, intval($smithingSkills[0]));
             $character->setMeta('max_smithing_' . CraftingType::CLOTHIER, intval($smithingSkills[1]));
             $character->setMeta('max_smithing_' . CraftingType::WOODWORKING, intval($smithingSkills[2]));
         }
