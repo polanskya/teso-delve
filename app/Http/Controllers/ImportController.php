@@ -15,6 +15,7 @@ use HeppyKarlsson\MMImport\ImportService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ImportController
@@ -71,11 +72,13 @@ class ImportController
 
     public function upload(Request $request, EsoImport $esoImport) {
         $files = $request->files->all();
+        $fileNames = [];
         $user = Auth::user();
 
         foreach($files as $file) {
             /** @var $file UploadedFile */
             $fileName = $file->getClientOriginalName();
+            $fileNames[] = $fileName;
 
             if($fileName == 'TesoDelve.lua') {
                 File::copy($file->getRealPath(), storage_path('dumps/dump_' . Auth::id() . ".lua"));
@@ -98,7 +101,8 @@ class ImportController
             }
         }
 
-        abort(404);
+        Log::info('User tried to upload: ' . implode(', ', $fileNames));
+        abort(404, 'None of the uploaded file\'s were recognized: "' . implode(',', $fileNames) . '"');
     }
 
     public function index() {

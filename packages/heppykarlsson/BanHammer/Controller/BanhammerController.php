@@ -3,7 +3,6 @@
 use App\Http\Controllers\Controller;
 use HeppyKarlsson\BanHammer\BanHammer;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 
 class BanhammerController extends Controller
 {
