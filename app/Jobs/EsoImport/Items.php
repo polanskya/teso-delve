@@ -82,8 +82,8 @@ class Items implements ShouldQueue
 
         $this->matchUserItems();
         $this->createUserItems();
-
         $this->updateUserItems();
+
 
         $itemSlugs = new ItemSlugs();
         dispatch($itemSlugs);
@@ -166,10 +166,26 @@ class Items implements ShouldQueue
         Item::insert($new_items->toArray());
     }
 
+    private function updateFlavor($data, $item) {
+        if($item->flavor != null) {
+            return true;
+        }
+
+        if(!isset($data[29])) {
+            return true;
+        }
+
+        if($data[29] == "") {
+            return true;
+        }
+
+        $item->flavor = $data[29];
+        $item->save();
+    }
+
     private function matchItems() {
         $lines = $this->orderedLines;
         $names = $lines->where('item_id', null)->pluck(ItemPosition::NAME);
-
 
         Item::whereIn('external_id', $names)
 
@@ -188,6 +204,7 @@ class Items implements ShouldQueue
 
                     if (!is_null($item)) {
                         $line['item_id'] = $item->id;
+                        $this->updateFlavor($line, $item);
                         $this->orderedLines->put($line['arr_key'], $line + ['item_id' => $item->id]);
                     }
 
