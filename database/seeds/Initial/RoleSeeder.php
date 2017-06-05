@@ -36,7 +36,7 @@ class RoleSeeder extends Seeder
         $user = \App\User::find(1);
 
         $user->roles()->attach(1);
-        $user->roles()->attach(3);
+        $user->roles()->attach(2);
 
     }
 }

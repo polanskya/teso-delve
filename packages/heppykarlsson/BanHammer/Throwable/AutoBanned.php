@@ -3,4 +3,6 @@
 
 class AutoBanned extends \Exception {
 
+    protected $code = 2001;
+
 }
