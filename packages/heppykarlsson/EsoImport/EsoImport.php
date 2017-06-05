@@ -25,7 +25,7 @@ class EsoImport
 
     public function import($file_path) {
         set_time_limit(120);
-        ini_set('memory_limit','24M');
+        ini_set('memory_limit', env('IMPORT_MAX_MEMORY', 24).'M');
 
         $updateStart = Carbon::now()->subSecond(5);
 
@@ -70,23 +70,18 @@ class EsoImport
 
             });
 
-
             $user->load('characters');
-            $user->load('characters.craftingTraits');
-            $user->load('characters.meta');
             $user->load('characters.itemStyles');
-            $user->load('meta');
+            $user->load('characters.abilities');
 
-            $importService = new ImportService();
-
+            $importService = new ImportService($user->id);
             $skills = SkillLine::all();
 
             File::eachRow($file_path, function($line) use($user, $skills, $importService) {
                 try {
 
-                    if (strpos($line, 'ITEMSTYLE:') !== false) {
-                        $itemStyleImport = new Import\ItemStyle();
-                        $itemStyleImport->process($line, $user, $this->itemStyles);
+                    if (strpos($line, 'SMITHING:') !== false) {
+                        $importService->smithing($line);
                         return true;
                     }
 
@@ -96,20 +91,31 @@ class EsoImport
                         return true;
                     }
 
-                    if (strpos($line, 'SMITHING:') !== false) {
-                        $smithingImport = new Import\Smithing();
-                        $smithingImport->process($line, $user);
+                    if (strpos($line, 'ITEMSTYLE:') !== false) {
+                        $itemStyleImport = new Import\ItemStyle();
+                        $itemStyleImport->process($line, $user, $this->itemStyles);
                         return true;
                     }
+
+                }
+                catch (\Throwable $e) {
+                    // Log and move on to next line
+                    DBLogger::save($e);
+                }
+            });
+
+            $importService->executeSmithing();
+
+            $user = User::find($user->id);
+            $user->load('meta');
+
+            File::eachRow($file_path, function($line) use($user, $skills, $importService) {
+                try {
 
                     if (strpos($line, 'ITEM:') !== false) {
                         $importService->item($line, $user->id);
                         return true;
                     }
-                }
-                catch(DumpValidation $dumpValidation) {
-                    // Throw further up as the file is not valid.
-                    throw $dumpValidation;
                 }
                 catch (\Throwable $e) {
                     // Log and move on to next line

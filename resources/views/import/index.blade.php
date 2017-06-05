@@ -20,7 +20,7 @@
                         <p>Upload your ESO log file to submit your ESO information, which you can find here:</p>
 
                         <ul class="import-guide">
-                            <li>Download and install Eso Delve Addon</li>
+                            <li>Download and install TESO Delve Addon</li>
                             <li>Start ESO and enable the addon</li>
                             <li>Login on a character and open/close your inventory to export items (or use <strong>/tesodelve</strong> command). <br>It will only be this characters inventory and your bank that will be exported.<br>Which means you'll have to do this on all your characters you wish to import</li>
                             <li>Logout or run command /reloadui to write to your log file <br>(ESO only writes to file when reloading UI)</li>

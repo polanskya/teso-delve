@@ -15,4 +15,8 @@ class UserSetFavourite extends Model
     protected $table = 'userSet_favourite';
 
     public $timestamps = false;
+
+    public function set() {
+        return $this->belongsTo(Set::class, 'setId');
+    }
 }

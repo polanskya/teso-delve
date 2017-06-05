@@ -1,3 +1,7 @@
+<?php
+    $ghostUser = $currentUser->hasPermission('ghost-users');
+?>
+
 @extends('layouts.admin')
 
 @section('content')
@@ -39,9 +43,9 @@
                                     <div class="dropdown">
                                         <a href="#" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="fa fa-bars"></i></a>
                                         <ul class="dropdown-menu dropdown-menu-right">
-                                            @permission('ghost-users')
+                                            @if($ghostUser)
                                                 <li><a href="{{route('admin.users.ghost', [$user->id])}}">Ghost</a></li>
-                                            @endpermission
+                                            @endif
                                             <li><a href="{{route('admin.users.download-dump', [$user->id])}}">Download .lua</a></li>
                                         </ul>
                                     </div>

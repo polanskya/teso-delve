@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use HeppyKarlsson\Meta\Service\MetaService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
@@ -42,32 +43,56 @@ class SetController
 
     public function mySets(Request $request) {
         $user = Auth::user();
-        $user->load('favouriteSets', 'items.set');
 
-        $favourites = $user->favouriteSets
-            ->pluck('setId')
-            ->toArray();
+        $setsView = "";
+        $favouriteSets = $user->favouriteSets->pluck('setId')->toArray();
+        $setName = $request->has('search') ? $request->get('search') : null;
 
-        $sets = Set::with('bonuses')
-            ->where('lang', $user->lang)
-            ->orderBy('name');
 
-        if($request->has('search')) {
-            $sets->where('name', 'like', '%'.$request->get('search').'%');
-        }
+        Set::whereIn('id', $favouriteSets)
+            ->orderBy('name')
+            ->when($setName, function($query) use($setName) {
+                return $query->where('name', 'LIKE', '%'.$setName.'%');
+            })
+            ->chunk(125, function($sets) use($user, &$setsView, $request) {
+                $setsView .= $this->generateMySets($sets, $user, true, $request);
+            });
 
-        $sets = $sets->get();
 
+        Set::where('lang', $user->lang)
+            ->when($setName, function($query) use($setName) {
+                return $query->where('name', 'like', '%'.$setName.'%');
+            })
+            ->orderBy('name')
+            ->whereNotIn('id', $favouriteSets)
+            ->chunk(125, function($sets) use($user, &$setsView, $request) {
+                $setsView .= $this->generateMySets($sets, $user, false, $request);
+            });
+
+        return view('sets.my_sets', compact('setsView', 'user'));
+    }
+
+    private function generateMySets($sets, $user, $isFavourite, $request) {
+        $set_ids = $sets->pluck('id');
+        $setsView = "";
         $characterId = $request->get('characterId');
+
         $items = $user->items()
             ->orderBy($request->has('sortBy') ? $request->get('sortBy') : 'equipType', $request->has('sort') ? $request->get('sort') : 'asc')
             ->when($characterId, function($query) use ($characterId) {
                 return $query->where('user_items.characterId', $characterId);
             })
+            ->whereIn('setId', $set_ids)
             ->get()
             ->groupBy('setId');
 
-        return view('sets.my_sets', compact('sets', 'items', 'favourites', 'user'));
+        $sets->each(function($set) use ($items, &$setsView, $user, $isFavourite)  {
+            $setItems = $items->has($set->id) ? $items->get($set->id) : collect([]);
+            $setsView .= view('sets.partial.set_row', compact('set', 'user', 'setItems', 'isFavourite'));
+        });
+
+
+        return $setsView;
     }
 
     public function edit(Set $set) {
@@ -82,8 +107,10 @@ class SetController
     }
 
     public function show($set_slug) {
+
         $user = Auth::user();
-        $set = Set::where('slug', $set_slug)->where('lang', $user ? $user->lang : config('constants.default-language'))->first();
+
+        $set = Set::where('slug', $set_slug)->first();
 
         if(!$set) {
             abort(404);
@@ -93,17 +120,17 @@ class SetController
         $favourites = null;
         $isFavourite = null;
 
-        if(Auth::check()) {
-            $user = Auth::user();
-            $user->load('items', 'favouriteSets');
+        if($user) {
+            $user->load('favouriteSets');
 
             $favourites = $user->favouriteSets
                 ->pluck('setId')
                 ->toArray();
 
-            $items = $user->items
+            $items = $user->items()
                 ->where('setId', $set->id)
-                ->load('character');
+                ->with('character')
+                ->get();
 
             $isFavourite = in_array($set->id, $favourites);
         }

@@ -5,6 +5,7 @@ use App\Enum\CraftingType;
 use App\Enum\ItemStyleChapter;
 use App\Enum\ItemType;
 use App\Http\Controllers\Controller;
+use App\Jobs\CraftingTable;
 use App\Model\CraftingItem;
 use App\Model\CraftingTrait;
 use App\Model\Item;
@@ -170,6 +171,13 @@ class CraftingController extends Controller
         return redirect()->back();
     }
 
+    public function seed() {
+
+       $craftingTable = new CraftingTable();
+       $craftingTable->handle();
+
+    }
+
     public function populateCraftingItems() {
         CraftingItem::where('id', '>', 0)->delete();
 
@@ -177,8 +185,8 @@ class CraftingController extends Controller
         $craftingItemsLevel = new CraftingItemsLevels();
         $levels = $craftingItemsLevel->levels();
 
-        $craftingTrait = CraftingTrait::select('craftingTypeEnum', 'researchLineIndex', 'image', 'name')
-            ->distinct()
+        $craftingTrait = CraftingTrait::select('craftingTypeEnum', 'researchLineIndex', 'image')
+            ->groupBy('craftingTypeEnum', 'researchLineIndex', 'image')
             ->get();
 
         $researchLineIndexes = $craftingTrait->groupBy('craftingTypeEnum');

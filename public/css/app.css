@@ -210,6 +210,164 @@
   vertical-align: bottom !important;
 }
 
+#crafting-calculator .research-line {
+  width: 100px;
+  display: inline-block;
+}
+
+#crafting-calculator .material {
+  display: inline-block;
+  width: 250px;
+}
+
+#crafting-calculator .temper {
+  width: 200px;
+  display: inline-block;
+}
+
+#crafting-calculator .trait {
+  width: 200px;
+  display: inline-block;
+}
+
+#crafting-calculator .item-style {
+  width: 200px;
+  display: inline-block;
+}
+
+#crafting-calculator .crafting-box {
+  border: 1px solid #191919;
+  margin-bottom: 5px;
+  padding: 5px;
+  padding-left: 0px;
+  padding-right: 0px;
+  background: #1A1A1A;
+}
+
+#crafting-calculator .crafting-box .image {
+  float: left;
+  min-height: 32px;
+}
+
+#crafting-calculator .crafting-box .big-image {
+  max-width: 72px;
+  margin-bottom: 5px;
+}
+
+#crafting-calculator .crafting-box .name {
+  font-weight: bold;
+  text-transform: capitalize;
+  color: #767676;
+  margin-left: 5px;
+}
+
+#crafting-calculator .crafting-box .description {
+  margin-left: 5px;
+}
+
+#crafting-calculator .crafting-box img {
+  max-width: 32px;
+  margin-left: 5px;
+}
+
+#crafting-calculator .crafting-box:hover {
+  background: #272727;
+  cursor: pointer;
+}
+
+#crafting-calculator .crafting-box.active {
+  background: #262626;
+  border: 1px solid #191919;
+}
+
+#crafting-calculator .crafting-box.active .name {
+  color: white;
+}
+
+#crafting-calculator .crafting-box.active .material-count {
+  display: block;
+}
+
+#crafting-calculator .temper {
+  height: 49px;
+}
+
+#crafting-calculator .material .material-count {
+  border: 1px solid #191919;
+  display: none;
+  font-size: 16px;
+  margin-right: 5px;
+  background: #1A1A1A;
+  padding: 4px;
+  cursor: default;
+}
+
+#crafting-calculator .material .material-count .crafting-items {
+  display: inline;
+}
+
+#crafting-calculator .material .material-count .crafting-items ul {
+  display: inline;
+}
+
+#crafting-calculator .material .material-count .crafting-items .crafting-item {
+  display: none;
+}
+
+#crafting-calculator .material .material-count .crafting-items .crafting-item.active {
+  display: inline;
+}
+
+#crafting-calculator .material .material-count span {
+  cursor: default;
+}
+
+#crafting-calculator .material .material-count .value {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+#item-preview {
+  border: 1px solid #EECA2A !important;
+}
+
+#item-preview .item-icon {
+  margin-top: -15px;
+}
+
+#item-preview .item-stat, #item-preview .champion-level, #item-preview .level {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  color: white;
+  font-size: 16px;
+}
+
+#item-preview .item-stat {
+  text-align: right;
+}
+
+#item-preview .level {
+  text-align: left;
+}
+
+#item-preview .level img {
+  max-width: 20px;
+}
+
+#item-preview .trait-name {
+  font-weight: bold;
+  color: white;
+}
+
+#item-preview .set-name {
+  font-weight: bold;
+  color: white;
+  margin-top: 15px;
+}
+
+#item-cost img {
+  max-height: 18px;
+}
+
 .itemstyle-armor {
   clear: both;
 }

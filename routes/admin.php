@@ -52,6 +52,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => $middleware
     Route::post('boss', 'Admin\BossController@store')->name('boss.store');
 
     Route::get('crafting/crafting-items/populate', 'Admin\CraftingController@populateCraftingItems')->name('crafting.crafting-items.populate');
+    Route::get('crafting/crafting-items/seed', 'Admin\CraftingController@seed')->name('crafting.crafting-items.seed');
 
     Route::get('crafting-table/{smithingType}', 'Admin\CraftingController@craftingTable')->name('crafting-table.edit');
     Route::post('crafting-table/{smithingType}', 'Admin\CraftingController@updateCraftingTable')->name('crafting-table.update');

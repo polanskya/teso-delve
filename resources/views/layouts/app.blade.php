@@ -81,6 +81,7 @@
 <script src="/js/set-rows.js"></script>
 <script src="/js/set.js"></script>
 <script src="/js/items.js"></script>
+<script src="/js/es6.js"></script>
 @yield('javascript')
 
 </body>

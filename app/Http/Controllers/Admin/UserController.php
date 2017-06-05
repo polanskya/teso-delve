@@ -12,7 +12,9 @@ class UserController extends Controller
 
     public function index() {
         $users = User::with(['characters', 'roles'])->get();
-        return view('admin.users.index', compact('users'));
+        $currentUser = Auth::user();
+
+        return view('admin.users.index', compact('users', 'currentUser'));
     }
 
     public function ghost(User $user) {
