@@ -16,6 +16,10 @@
   color: white;
 }
 
+.auto-size {
+  max-width: 100%;
+}
+
 .scroll-245 {
   max-height: 245px;
   overflow-y: scroll;
@@ -429,6 +433,15 @@
   padding-left: 5px;
   padding-top: 10px;
   padding-bottom: 10px;
+}
+
+.server-status {
+  margin-bottom: 4px;
+}
+
+.startpage-login .checkbox {
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 .no-margin {

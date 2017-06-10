@@ -23,6 +23,8 @@ Route::get('/dungeon/trials', 'DungeonController@index')->name('dungeons.trials.
 Route::get('/dungeon/delves', 'DungeonController@index')->name('dungeons.delves.index');
 Route::get('/dungeon/arenas', 'DungeonController@index')->name('dungeons.arenas.index');
 
+Route::get('/search', 'SearchController@search')->name('search.search');
+
 include('web/items.php');
 include('web/sets.php');
 include('web/character.php');
@@ -38,6 +40,10 @@ Route::group(['middleware' => 'auth'], function () {
 
 Route::get('/import-data', 'ImportController@import');
 Route::get('/import-mm', 'ImportController@mastermerchant');
+Route::get('/import-auto', 'ImportController@auto')->name('import.auto');
+Route::get('/import', 'ImportController@index')->name('import.index');
+
+
 Route::get('/export', 'ImportController@export');
 
 Route::get('/esoui/art/icons/guildranks/{image}', 'EsouiController@guildRank');
@@ -62,7 +68,6 @@ Route::get('/about', 'AboutController@index')->name('about');
 
 Route::get('/item/{item}', 'ItemController@show')->name('item.show');
 
-Route::get('/import', 'ImportController@index')->name('import.index');
 
 Route::get('/home', 'SetController@mySets')->name('home.index')->middleware('auth');
 Route::get('/', 'HomeController@index');

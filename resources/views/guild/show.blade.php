@@ -75,7 +75,7 @@
                                     <div class="panel-heading">Your sales <small class="pull-right text-gray-lighter">{{$dates['start']->format('Y-m-d')}} - {{$dates['end']->format('Y-m-d')}}</small></div>
                                     <div class="panel-body">
                                         <h2 class="m-t-0 f-w-300">{{ number_format($mySales['price']) }}</h2>
-                                        @include('number.arrow-compare', ['numberOne' => $mySales['priceCompare'], 'numberTwo' => $mySales['price'], $subText = 'between ' . $dates['startCompare']->format('Y-m') . " - " . $dates['endCompare']->format('Y-m')])
+                                        @include('number.arrow-compare', ['numberOne' => $mySales['priceCompare'], 'numberTwo' => $mySales['price'], $subText = 'between ' . $dates['startCompare']->format('Y-m-d') . " - " . $dates['endCompare']->format('Y-m-d')])
                                     </div>
                                 </div>
                             </div>
@@ -84,7 +84,7 @@
                                     <div class="panel-heading">Your sales <small class="pull-right text-gray-lighter">{{$dates['start']->format('Y-m-d')}} - {{$dates['end']->format('Y-m-d')}}</small></div>
                                     <div class="panel-body">
                                         <h2 class="m-t-0 f-w-300">{{ number_format($mySales['sales']) }}</h2>
-                                        @include('number.arrow-compare', ['numberOne' => $mySales['salesCompare'], 'numberTwo' => $mySales['sales'], $subText = 'between ' . $dates['startCompare']->format('Y-m') . " - " . $dates['endCompare']->format('Y-m')])
+                                        @include('number.arrow-compare', ['numberOne' => $mySales['salesCompare'], 'numberTwo' => $mySales['sales'], $subText = 'between ' . $dates['startCompare']->format('Y-m-d') . " - " . $dates['endCompare']->format('Y-m-d')])
                                     </div>
                                 </div>
                             </div>
@@ -93,7 +93,7 @@
                                     <div class="panel-heading">Total sold <small class="pull-right text-gray-lighter">{{$dates['start']->format('Y-m-d')}} - {{$dates['end']->format('Y-m-d')}}</small></div>
                                     <div class="panel-body">
                                         <h2 class="m-t-0 f-w-300">{{number_format($salesSum)}}</h2>
-                                        @include('number.arrow-compare', ['numberOne' => $salesSumMonth, 'numberTwo' => $salesSum, $subText = 'between ' . $dates['startCompare']->format('Y-m') . " - " . $dates['endCompare']->format('Y-m')])
+                                        @include('number.arrow-compare', ['numberOne' => $salesSumMonth, 'numberTwo' => $salesSum, $subText = 'between ' . $dates['startCompare']->format('Y-m-d') . " - " . $dates['endCompare']->format('Y-m-d')])
                                     </div>
                                 </div>
                             </div>
@@ -102,7 +102,7 @@
                                     <div class="panel-heading">Sales count <small class="pull-right text-gray-lighter">{{$dates['start']->format('Y-m-d')}} - {{$dates['end']->format('Y-m-d')}}</small></div>
                                     <div class="panel-body">
                                         <h2 class="m-t-0 f-w-300">{{number_format($salesCount['active'])}}</h2>
-                                        @include('number.arrow-compare', ['numberOne' => $salesCount['compare'], 'numberTwo' => $salesCount['active'], $subText = 'between ' . $dates['startCompare']->format('Y-m') . " - " . $dates['endCompare']->format('Y-m')])
+                                        @include('number.arrow-compare', ['numberOne' => $salesCount['compare'], 'numberTwo' => $salesCount['active'], $subText = 'between ' . $dates['startCompare']->format('Y-m-d') . " - " . $dates['endCompare']->format('Y-m-d')])
                                     </div>
                                 </div>
                             </div>
@@ -111,7 +111,7 @@
                                     <div class="panel-heading">Guild trader sales <small class="pull-right text-gray-lighter">{{$dates['start']->format('Y-m-d')}} - {{$dates['end']->format('Y-m-d')}}</small></div>
                                     <div class="panel-body">
                                         <h2 class="m-t-0 f-w-300">{{number_format($traderSales['active'])}}</h2>
-                                        @include('number.arrow-compare', ['numberOne' => $traderSales['compare'], 'numberTwo' => $traderSales['active'], $subText = 'between ' . $dates['startCompare']->format('Y-m') . " - " . $dates['endCompare']->format('Y-m')])
+                                        @include('number.arrow-compare', ['numberOne' => $traderSales['compare'], 'numberTwo' => $traderSales['active'], $subText = 'between ' . $dates['startCompare']->format('Y-m-d') . " - " . $dates['endCompare']->format('Y-m-d')])
                                     </div>
                                 </div>
                             </div>

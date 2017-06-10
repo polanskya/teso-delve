@@ -5,127 +5,226 @@
 @endsection
 
 @section('content')
+
+
+
     <div class="container">
         <div class="row">
 
 
             @if(!Auth::check())
-                <div class="col-md-6 col-md-offset-3">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            @include('auth.login_startpage')
+                <div class="col-md-6">
+                    <div class="row text-center">
+                        <div class="col-md-6">
+                            <h4>Keep track of your Gear</h4>
+                            <p>
+                                Teso-Delve.com gathers all your gear and gives you a simple overview of all your gear and where you can find it.
+                            </p>
+                        </div>
+
+                        <div class="col-md-6">
+                            <h4>Crafting timers</h4>
+                            <p>
+                                Keep track of your crafting timers, at what time locally can I start another research again?
+                            </p>
+                        </div>
+
+                        <div class="col-md-6">
+                            <h4>Star sets</h4>
+                            <p>Star sets so you easily can see what sets you're collecting in a dungeon/zone</p>
+                        </div>
+
+                        <div class="col-md-6">
+                            <h4>Character details</h4>
+                            <p>See a list of your characters with misc information like horse training, free inventory space, roles </p>
                         </div>
                     </div>
                 </div>
+
+                <div class="col-md-6">
+                    @include('auth.login_startpage')
+                </div>
+
+
+                <div class="col-md-12">
+                    <a href="/gfx/my-sets.png" class="thumbnail no-bg"><img src="/gfx/my-sets.png"></a>
+                </div>
+
             @endif
 
+        </div>
 
-            <div class="col-md-12 m-t-3 m-b-3">
-                <div class="row text-center">
-                    <div class="col-md-3">
-                        <h4>Keep track of your Gear</h4>
-                        <p>
-                            Teso-Delve.com gathers all your gear and gives you a simple overview of all your gear and where you can find it.
-                        </p>
-                    </div>
+    </div>
 
-                    <div class="col-md-3">
-                        <h4>Crafting timers</h4>
-                        <p>
-                            Keep track of your crafting timers, at what time locally can I start another research again?
-                        </p>
-                    </div>
-
-                    <div class="col-md-3">
-                        <h4>Star sets</h4>
-                        <p>Star sets so you easily can see what sets you're collecting in a dungeon/zone</p>
-                    </div>
-
-                    <div class="col-md-3">
-                        <h4>Character details</h4>
-                        <p>See a list of your characters with misc information like horse training, free inventory space, roles </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-12">
-                <a href="/gfx/my-sets.png" class="thumbnail no-bg"><img src="/gfx/my-sets.png"></a>
-            </div>
+    <div class="container">
+        <div class="row">
 
 
-            <div class="col-md-12 m-t-3 m-b-3">
-                <div class="row text-center">
-                    <div class="col-md-3">
-                        <h4>{{ Carbon\Carbon::now()->diffInDays(Carbon\Carbon::create(2017, 06, 06, 12)) }} days until ESO:Morrowind</h4>
-                        <p>Countdown in days until the release of next chapter of ESO "Morrowind"</p>
-                    </div>
+            <div class="col-md-4">
 
-                    <div class="col-md-3">
-                        <h4>Travel to Vvardenfell!</h4>
-                        <p>Travel to the new zone in ESO Vvardenfell, previously experienced in the game TES: Morrowind.</p>
-                    </div>
-
-                    <div class="col-md-3">
-                        <h4>New Class!</h4>
-                        <p>
-                            Morrowind introduces the first new class in ESO since launch: <strong>The Warden</strong>!
-                        </p>
-                    </div>
-
-                    <div class="col-md-3">
-                        <h4>4v4v4 Battlegrounds!</h4>
-                        <p>
-                            The long awaited battlegrounds finally comes to ESO for small-scale PvP action. Both ranked and unranked.
-                        </p>
-                    </div>
-
-                </div>
-            </div>
-
-            <div id="daily-pledges-container" class="col-md-12">
-                @foreach($dailyPledges as $key => $dailyPledge)
-                    <div class="daily-day-{{$key}}">
-                        <div class="row">
-                            <h3 class="col-md-8">{{$key == 0 ? 'Todays pledges' : 'Tomorrows pledges' }}</h3>
-                            <ul class="pager col-md-4 hidden">
-                                <li class="previous"><a href="javascript: void(0)" class="show-pledge" day="0"><span aria-hidden="true">←</span></a></li>
-                                <li class="next"><a href="javascript: void(0)" class="show-pledge" day="0"><span aria-hidden="true">→</span></a></li>
-                            </ul>
+                @if(config('eso.search'))
+                    <form method="get" action="{{route('search.search')}}">
+                        <div class="input-group">
+                            <input type="text" name="s" class="form-control" aria-label="..." placeholder="Search...">
+                            <div class="input-group-btn">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                            </div>
                         </div>
+                    </form>
+                    <br>
+                @endif
 
-                        <div class="row">
-                            @include('dungeon.pledge-box', ['dungeon' => $dailyPledge->firstPledge])
-                            @include('dungeon.pledge-box', ['dungeon' => $dailyPledge->secondPledge])
-                            @include('dungeon.pledge-box', ['dungeon' => $dailyPledge->thirdPledge])
+                <div class="list-group">
+                    <a href="{{route('set.index')}}" class="list-group-item">Sets</a>
+                    <a href="{{route('item-styles.index')}}" class="list-group-item">Styles & Motifs</a>
+                    <a href="{{route('dungeons.groups.index')}}" class="list-group-item">Group dungeons</a>
+                    <a href="{{route('dungeons.public.index')}}" class="list-group-item">Public dungeons</a>
+                    <a href="{{route('dungeons.trials.index')}}" class="list-group-item">Trials</a>
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+                <div class="row">
+
+                    <div class="col-lg-6 col-md-6">
+                        <div class="panel panel-default b-a-0 bg-primary-i">
+                            <div class="panel-heading b-b-0">Users</div>
+                            <div class="panel-body text-center p-t-0">
+                                <h1 class="m-t-0 m-b-0 f-w-300">{{ number_format($information['users']) }}</h1>
+                            </div>
                         </div>
                     </div>
-                @endforeach
+
+                    <div class="col-lg-6 col-md-6">
+                        <div class="panel panel-default b-a-0 bg-success-i">
+                            <div class="panel-heading b-b-0">Sets</div>
+                            <div class="panel-body text-center p-t-0">
+                                <h1 class="m-t-0 m-b-0 f-w-300">{{ $information['sets']}}</h1>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6">
+                        <div class="panel panel-default b-a-0 bg-danger-i">
+                            <div class="panel-heading b-b-0">Characters</div>
+                            <div class="panel-body text-center p-t-0">
+                                <h1 class="m-t-0 m-b-0 f-w-300">{{ $information['characters']}}</h1>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6">
+                        <div class="panel panel-default b-a-0 bg-warning-i">
+                            <div class="panel-heading b-b-0">Items</div>
+                            <div class="panel-body text-center p-t-0">
+                                <h1 class="m-t-0 m-b-0 f-w-300">{{ $information['items']}}</h1>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6">
+                        <div class="panel panel-default b-a-0 bg-gray-darker">
+                            <div class="panel-heading b-b-0">Styles</div>
+                            <div class="panel-body text-center p-t-0">
+                                <h1 class="m-t-0 m-b-0 f-w-300">{{ $information['styles']}}</h1>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6">
+                        <div class="panel panel-default b-a-0 bg-curious-blue-i">
+                            <div class="panel-heading b-b-0">Dungeons</div>
+                            <div class="panel-body text-center p-t-0">
+                                <h1 class="m-t-0 m-b-0 f-w-300">{{ $information['dungeons']}}</h1>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
             </div>
 
-            <div class="col-md-12 m-t-3 m-b-3">
-                <div class="row text-center">
-                    <div class="col-md-3">
-                        <h4>{{$information['sets']}}</h4>
-                        <p>Total sets recorded</p>
-                    </div>
+            <div class="col-md-4">
+                <div class="panel panel-default no-bg b-l-2 {{ $statuses['all'] ? 'b-l-success' : 'b-l-danger' }} b-t-gray b-r-gray b-b-gray">
+                    <div class="panel-heading">Server status</div>
+                    <div class="panel-body">
 
-                    <div class="col-md-3">
-                        <h4>{{$information['characters']}}</h4>
-                        <p>Characters using Teso-Delve.com</p>
+                        <table class="table table-hover table-striped server-status">
+                            <tbody>
+                            @foreach($statuses['servers'] as $server => $status)
+                                <tr>
+                                    <td class="text-white">{{$server}}</td>
+                                    <td class="text-right">
+                                        @if($status == 'UP')
+                                            <i class="fa fa-fw fa-arrow-circle-up text-success"></i>
+                                        @else
+                                            <i class="fa fa-fw fa-arrow-circle-down text-danger"></i>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
                     </div>
-
-                    <div class="col-md-3">
-                        <h4>{{number_format($information['motifs'])}}</h4>
-                        <p>Motifs learnt across all characters</p>
-                    </div>
-
-                    <div class="col-md-3">
-                        <h4>{{number_format($information['items'])}}</h4>
-                        <p>Items found in ESO sofar</p>
+                    <div class="panel-footer text-right">
+                        Last updated: {{$statuses['date']->format('Y-m-d H:i:s')}}
                     </div>
                 </div>
             </div>
 
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="container">
+
+            <div class="row">
+                <div id="daily-pledges-container" class="col-md-12">
+                    @foreach($dailyPledges as $key => $dailyPledge)
+                        <div class="daily-day-{{$key}}">
+                            <div class="row">
+                                <h3 class="col-md-8">{{$key == 0 ? 'Todays pledges' : 'Tomorrows pledges' }}</h3>
+                                <ul class="pager col-md-4 hidden">
+                                    <li class="previous"><a href="javascript: void(0)" class="show-pledge" day="0"><span aria-hidden="true">←</span></a></li>
+                                    <li class="next"><a href="javascript: void(0)" class="show-pledge" day="0"><span aria-hidden="true">→</span></a></li>
+                                </ul>
+                            </div>
+
+                            <div class="row">
+                                @include('dungeon.pledge-box', ['dungeon' => $dailyPledge->firstPledge])
+                                @include('dungeon.pledge-box', ['dungeon' => $dailyPledge->secondPledge])
+                                @include('dungeon.pledge-box', ['dungeon' => $dailyPledge->thirdPledge])
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-3">
+                <h4>{{$information['sets']}}</h4>
+                <p>Total sets recorded</p>
+            </div>
+
+            <div class="col-md-3">
+                <h4>{{$information['characters']}}</h4>
+                <p>Characters using Teso-Delve.com</p>
+            </div>
+
+            <div class="col-md-3">
+                <h4>{{number_format($information['users'])}}</h4>
+                <p>Registered users</p>
+            </div>
+
+            <div class="col-md-3">
+                <h4>{{number_format($information['items'])}}</h4>
+                <p>Items found in ESO sofar</p>
+            </div>
         </div>
     </div>
 @endsection

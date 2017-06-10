@@ -32,6 +32,10 @@ class ImportController
         return 'works';
     }
 
+    public function auto() {
+
+    }
+
     public function mastermerchant() {
 
         $files = scandir(storage_path('app/mm-data'));
