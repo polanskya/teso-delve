@@ -8,33 +8,44 @@ class ServerService
 
     public function serverStatus() {
 
-        $statuses = Cache::remember('eso_server_status', config('eso.server-status.cache'), function() {
+        try {
 
-            $contents = file_get_contents(config('eso.server-status.url'));
-            $servers = json_decode($contents);
+            $statuses = Cache::remember('eso_server_status', config('eso.server-status.cache'), function() {
 
+                $contents = file_get_contents(config('eso.server-status.url'));
+                $servers = json_decode($contents);
+
+                $statuses = [
+                    'all' => true,
+                    'servers' => [],
+                    'date' => Carbon::now(),
+                    'error' => false,
+                ];
+
+                foreach($servers->zos_platform_response->response as $server => $status) {
+                    $server = str_ireplace(['The Elder Scrolls Online ', '(', ')'], ['', '', ''], $server);
+
+                    if($server == 'PTS') {
+                        continue;
+                    }
+
+                    $statuses['servers'][$server] = $status;
+
+                    if($status !== 'UP') {
+                        $statuses['all'] = false;
+                    }
+                }
+
+                return $statuses;
+            });
+
+        }
+        catch(\Exception $e) {
             $statuses = [
-                'all' => true,
-                'servers' => [],
-                'date' => Carbon::now(),
+                'error' => true
             ];
 
-            foreach($servers->zos_platform_response->response as $server => $status) {
-                $server = str_ireplace(['The Elder Scrolls Online ', '(', ')'], ['', '', ''], $server);
-
-                if($server == 'PTS') {
-                    continue;
-                }
-
-                $statuses['servers'][$server] = $status;
-
-                if($status !== 'UP') {
-                    $statuses['all'] = false;
-                }
-            }
-
-            return $statuses;
-        });
+        }
 
         return $statuses;
     }

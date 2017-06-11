@@ -180,29 +180,36 @@
             </div>
 
             <div class="col-md-4">
-                <div class="panel panel-default no-bg b-l-2 {{ $statuses['all'] ? 'b-l-success' : 'b-l-danger' }} b-t-gray b-r-gray b-b-gray">
+                <div class="panel panel-default no-bg b-l-2 {{ (!$statuses['error'] and $statuses['all'])  ? 'b-l-success' : 'b-l-danger' }} b-t-gray b-r-gray b-b-gray">
                     <div class="panel-heading">Server status</div>
                     <div class="panel-body">
 
                         <table class="table table-hover table-striped server-status">
                             <tbody>
-                            @foreach($statuses['servers'] as $server => $status)
-                                <tr>
-                                    <td class="text-white">{{$server}}</td>
-                                    <td class="text-right">
-                                        @if($status == 'UP')
-                                            <i class="fa fa-fw fa-arrow-circle-up text-success"></i>
-                                        @else
-                                            <i class="fa fa-fw fa-arrow-circle-down text-danger"></i>
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
+                            @if($statuses['error'])
+                                <tr><td class="text-center">Unable to acquire current server status.</td></tr>
+                            @else
+                                @foreach($statuses['servers'] as $server => $status)
+                                    <tr>
+                                        <td class="text-white">{{$server}}</td>
+                                        <td class="text-right">
+                                            @if($status == 'UP')
+                                                <i class="fa fa-fw fa-arrow-circle-up text-success"></i>
+                                            @else
+                                                <i class="fa fa-fw fa-arrow-circle-down text-danger"></i>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+
+                            @endif
                             </tbody>
                         </table>
                     </div>
                     <div class="panel-footer text-right">
-                        Last updated: {{$statuses['date']->format('Y-m-d H:i:s')}}
+                        @if(!$statuses['error'])
+                            Last updated: {{$statuses['date']->format('Y-m-d H:i:s')}}
+                        @endif
                     </div>
                 </div>
             </div>
