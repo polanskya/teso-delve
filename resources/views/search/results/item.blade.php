@@ -28,6 +28,7 @@ $url = route('item.show', [$result], true);
                     @if($result->set)
                         part of the <a href="{{ route('set.show', [$result]) }}">{{ $result->set->name }}</a> set.
                     @endif
+
                 </p>
             </div>
         </div>

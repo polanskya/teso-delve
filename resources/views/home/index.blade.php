@@ -46,8 +46,41 @@
                 </div>
 
 
-                <div class="col-md-12">
-                    <a href="/gfx/my-sets.png" class="thumbnail no-bg"><img src="/gfx/my-sets.png"></a>
+                <div class="col-md-12 m-t-3">
+                    <div id="start-carousel" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+
+                            <ol class="carousel-indicators">
+                                <li data-target="#start-carousel" data-slide-to="0" class="active"></li>
+                                <li data-target="#start-carousel" data-slide-to="1"></li>
+                                <li data-target="#start-carousel" data-slide-to="2"></li>
+                            </ol>
+
+                            <div class="item active">
+                                <img src="/gfx/my-sets.png">
+                            </div>
+
+                            <div class="item">
+                                <img src="/gfx/characters.png">
+                            </div>
+
+                            <div class="item">
+                                <img src="/gfx/lestat.png">
+                            </div>
+                        </div>
+
+                        <!-- Left and right controls -->
+                        <a class="left carousel-control" href="#start-carousel" data-slide="prev">
+                            <span class="fa fa-chevron-left v-a-m"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="right carousel-control" href="#start-carousel" data-slide="next">
+                            <span class="fa fa-chevron-right"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+
+
                 </div>
 
             @endif
@@ -177,10 +210,10 @@
         </div>
     </div>
 
-    <div class="container-fluid">
+    <div class="container-fluid m-b-3">
         <div class="container">
 
-            <div class="row">
+            <div class="row m-b-3">
                 <div id="daily-pledges-container" class="col-md-12">
                     @foreach($dailyPledges as $key => $dailyPledge)
                         <div class="daily-day-{{$key}}">
@@ -204,28 +237,5 @@
         </div>
     </div>
 
-    <div class="container">
-        <div class="row text-center">
-            <div class="col-md-3">
-                <h4>{{$information['sets']}}</h4>
-                <p>Total sets recorded</p>
-            </div>
-
-            <div class="col-md-3">
-                <h4>{{$information['characters']}}</h4>
-                <p>Characters using Teso-Delve.com</p>
-            </div>
-
-            <div class="col-md-3">
-                <h4>{{number_format($information['users'])}}</h4>
-                <p>Registered users</p>
-            </div>
-
-            <div class="col-md-3">
-                <h4>{{number_format($information['items'])}}</h4>
-                <p>Items found in ESO sofar</p>
-            </div>
-        </div>
-    </div>
 @endsection
 
