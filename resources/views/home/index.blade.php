@@ -57,15 +57,15 @@
                             </ol>
 
                             <div class="item active">
-                                <img src="/gfx/my-sets.png">
+                                <a href="/gfx/my-sets.png" class="thumbnail no-bg m-b-0"><img src="/gfx/my-sets.png"></a>
                             </div>
 
                             <div class="item">
-                                <img src="/gfx/characters.png">
+                                <a href="/gfx/my-sets.png" class="thumbnail no-bg no-bg m-b-0"><img src="/gfx/characters.png"></a>
                             </div>
 
                             <div class="item">
-                                <img src="/gfx/lestat.png">
+                                <a href="/gfx/my-sets.png" class="thumbnail no-bg no-bg m-b-0"><img src="/gfx/lestat.png"></a>
                             </div>
                         </div>
 
