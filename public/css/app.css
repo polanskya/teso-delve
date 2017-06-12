@@ -605,6 +605,11 @@ body.eso-background {
   min-height: 80vh;
 }
 
+.spin-search-box {
+  max-width: 225px;
+  margin-top: 3px;
+}
+
 #app.panels {
   padding-top: 90px;
 }

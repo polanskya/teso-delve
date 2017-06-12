@@ -133,7 +133,7 @@
                         <div class="panel panel-default b-a-0 bg-success-i">
                             <div class="panel-heading b-b-0">Sets</div>
                             <div class="panel-body text-center p-t-0">
-                                <h1 class="m-t-0 m-b-0 f-w-300">{{ $information['sets']}}</h1>
+                                <h1 class="m-t-0 m-b-0 f-w-300">{{ number_format($information['sets'])}}</h1>
                             </div>
                         </div>
                     </div>
@@ -142,7 +142,7 @@
                         <div class="panel panel-default b-a-0 bg-danger-i">
                             <div class="panel-heading b-b-0">Characters</div>
                             <div class="panel-body text-center p-t-0">
-                                <h1 class="m-t-0 m-b-0 f-w-300">{{ $information['characters']}}</h1>
+                                <h1 class="m-t-0 m-b-0 f-w-300">{{ number_format($information['characters'])}}</h1>
                             </div>
                         </div>
                     </div>
@@ -151,7 +151,7 @@
                         <div class="panel panel-default b-a-0 bg-warning-i">
                             <div class="panel-heading b-b-0">Items</div>
                             <div class="panel-body text-center p-t-0">
-                                <h1 class="m-t-0 m-b-0 f-w-300">{{ $information['items']}}</h1>
+                                <h1 class="m-t-0 m-b-0 f-w-300">{{ number_format($information['items'])}}</h1>
                             </div>
                         </div>
                     </div>
@@ -160,7 +160,7 @@
                         <div class="panel panel-default b-a-0 bg-gray-darker">
                             <div class="panel-heading b-b-0">Styles</div>
                             <div class="panel-body text-center p-t-0">
-                                <h1 class="m-t-0 m-b-0 f-w-300">{{ $information['styles']}}</h1>
+                                <h1 class="m-t-0 m-b-0 f-w-300">{{ number_format($information['styles'])}}</h1>
                             </div>
                         </div>
                     </div>
@@ -169,7 +169,7 @@
                         <div class="panel panel-default b-a-0 bg-curious-blue-i">
                             <div class="panel-heading b-b-0">Dungeons</div>
                             <div class="panel-body text-center p-t-0">
-                                <h1 class="m-t-0 m-b-0 f-w-300">{{ $information['dungeons']}}</h1>
+                                <h1 class="m-t-0 m-b-0 f-w-300">{{ number_format($information['dungeons'])}}</h1>
                             </div>
                         </div>
                     </div>
