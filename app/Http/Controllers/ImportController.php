@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use App\Jobs\EsoImport\AutoImport;
 use App\Model\Dungeon;
 use App\Model\DungeonSet;
 use App\Model\ImportGroup;
@@ -10,9 +11,12 @@ use App\Model\Set;
 use App\Model\SetBonus;
 use App\Model\UserSetFavourite;
 use App\Repository\GithubRepository;
+use App\User;
 use HeppyKarlsson\EsoImport\EsoImport;
+use HeppyKarlsson\Meta\Model\Meta;
 use HeppyKarlsson\MMImport\ImportService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
@@ -25,12 +29,50 @@ class ImportController
 
         $path = storage_path('TesoDelve.lua');
         $return = $esoImport->import($path);
-//        $return = $esoImport->jobImport($path);
 
 //        $path = storage_path('TesoDelveGuild.lua');
 //        $return = $esoImport->importGuild($path);
 
         return 'works';
+    }
+
+    public function auto(Request $request, EsoImport $esoImport) {
+        $files = $request->files->all();
+        $fileNames = [];
+
+        $metainformation = Meta::where('value', $request->get('key'))
+            ->where('key', 'user_upload_key')
+            ->where('metable_type', 'App\User')
+            ->first();
+
+        if(is_null($metainformation)) {
+            abort(Response::HTTP_UNAUTHORIZED, 'Key was invalid');
+        }
+
+        $user = User::findOrFail($metainformation->metable_id);
+
+        foreach($files as $file) {
+            /** @var $file UploadedFile */
+            $fileName = $file->getClientOriginalName();
+            $fileNames[] = $fileName;
+
+            if($fileName == 'TesoDelve.lua') {
+                $new_file = storage_path('dumps/dump_' . Auth::id() . ".lua");
+                File::copy($file->getRealPath(), $new_file);
+
+                $import = new AutoImport($new_file, $user->id);
+                dispatch($import);
+                return response('File uploaded successfully');
+            }
+        }
+
+        Log::info('Auto upload files: ' . implode(', ', $fileNames));
+        abort(404, 'None of the uploaded file\'s were recognized: "' . implode(',', $fileNames) . '"');
+    }
+
+    public function autoShow() {
+
+        return view('import.import-auto.show');
     }
 
     public function mastermerchant() {
@@ -82,7 +124,7 @@ class ImportController
 
             if($fileName == 'TesoDelve.lua') {
                 File::copy($file->getRealPath(), storage_path('dumps/dump_' . Auth::id() . ".lua"));
-                return $esoImport->import($file->getRealPath());
+                return $esoImport->import($file->getRealPath(), $user);
             }
 
             if(substr($fileName, 0, 2) == "MM" and stripos($fileName, 'Data.lua') !== false and $user->hasPermission('upload-mm')) {

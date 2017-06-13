@@ -20,9 +20,9 @@ class GuildController extends Controller
         $start = Carbon::now()->firstOfMonth();
         $dates = [
             'start' => $start->copy()->firstOfMonth(),
-            'end' => $start->copy()->lastOfMonth(),
+            'end' => $now,
             'startCompare' => $start->copy()->subMonth()->firstOfMonth(),
-            'endCompare' => $start->copy()->subMonth()->lastOfMonth(),
+            'endCompare' => $now->copy()->subMonth(),
         ];
 
         $startDate = $dates['start'];

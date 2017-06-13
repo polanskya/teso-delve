@@ -16,6 +16,10 @@
   color: white;
 }
 
+.auto-size {
+  max-width: 100%;
+}
+
 .scroll-245 {
   max-height: 245px;
   overflow-y: scroll;
@@ -431,6 +435,23 @@
   padding-bottom: 10px;
 }
 
+.server-status {
+  margin-bottom: 4px;
+}
+
+.startpage-login .checkbox {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.carousel-control span {
+  position: absolute;
+  top: 50%;
+  z-index: 5;
+  display: inline-block;
+  margin-top: -10px;
+}
+
 .no-margin {
   margin: 0px !important;
 }
@@ -582,6 +603,11 @@ body.eso-background {
 
 #app > .content {
   min-height: 80vh;
+}
+
+.spin-search-box {
+  max-width: 225px;
+  margin-top: 3px;
 }
 
 #app.panels {

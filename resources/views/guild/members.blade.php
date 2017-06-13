@@ -81,7 +81,7 @@
                             @endforeach
                             </tbody>
                             <tfoot>
-                            <tr><td colspan="5" class="text-right">Total members: {{$guild->members->count()}}</td></tr>
+                            <tr><td colspan="9" class="text-right">Total members: {{$guild->members->count()}}</td></tr>
                             </tfoot>
                         </table>
                     </div>

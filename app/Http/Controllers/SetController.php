@@ -225,7 +225,7 @@ class SetController
     public function toggleFavourite($set) {
         $set = Set::find($set);
         $user = Auth::user();
-        if($user->favouriteSets->contains('setId', $set->id)) {
+        if($user->favouriteSets()->get()->contains('setId', $set->id)) {
             $user->favouriteSets()->where('setId', $set->id)->delete();
         }
         else {

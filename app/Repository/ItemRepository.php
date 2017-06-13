@@ -114,6 +114,11 @@ class ItemRepository
         $item->lang = $lang;
         $item->setId = null;
         $item->itemStyleId = null;
+        $item->flavor = null;
+
+        if(isset($data[29])) {
+            $item->flavor = $data[29];
+        }
 
         if(!empty($data[4])) {
             $item->setItemSet($data[4]);

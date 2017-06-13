@@ -9,6 +9,7 @@
 @import "crafting-calculator";
 @import "item-styles";
 @import "dungeon";
+@import "start";
 @import "margins";
 @import "import";
 @import "admin";
@@ -71,6 +72,11 @@ body.eso-background {
 
   min-height: 80vh;
 
+}
+
+.spin-search-box {
+  max-width: 225px;
+  margin-top: 3px;
 }
 
 #app.panels {

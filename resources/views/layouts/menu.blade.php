@@ -450,6 +450,20 @@
 
                     </li>
 
+                    <li class="spin-search-box hidden-xs active text-right">
+                        <form method="get" action="{{route('search.search')}}">
+                            <div class="input-group input-group-sm pull-right p-10 m-t-15">
+                                <input type="text" class="form-control" name="s" value="{{Request::get('s')}}" placeholder="Search for...">
+                                <span class="input-group-btn">
+                            <button class="btn btn-primary" type="button">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                            </div>
+                        </form>
+                    </li>
+
+
                     @role('admin')
                     <li class="dropdown">
                         <a href="{{route('admin.index')}}">
@@ -484,6 +498,8 @@
                             </li>
                             <li role="separator" class="divider"></li>
                             <li>
+                                <a href="{{ route('user.settings.edit') }}">Settings</a>
+
                                 <a href="{{ url('/logout') }}"
                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -502,10 +518,17 @@
             @else
                 <ul class="nav navbar-nav navbar-right">
 
-                    <li class="dropdown">
-                        <a href="{{route('contribute')}}" aria-expanded="false">
-                            <span class="m-r-1">Contribute</span>
-                        </a>
+                    <li class="spin-search-box hidden-xs active text-right">
+                        <form method="get" action="{{route('search.search')}}">
+                            <div class="input-group input-group-sm pull-right p-10 m-t-15">
+                                <input type="text" class="form-control" name="s" value="{{Request::get('s')}}" placeholder="Search for...">
+                                <span class="input-group-btn">
+                            <button class="btn btn-primary" type="button">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                            </div>
+                        </form>
                     </li>
 
                     <li>
