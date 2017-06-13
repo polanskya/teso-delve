@@ -498,6 +498,8 @@
                             </li>
                             <li role="separator" class="divider"></li>
                             <li>
+                                <a href="{{ route('user.settings.edit') }}">Settings</a>
+
                                 <a href="{{ url('/logout') }}"
                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

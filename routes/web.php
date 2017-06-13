@@ -35,12 +35,14 @@ Route::group(['middleware' => 'auth'], function () {
 
     include('web/inventory.php');
     include('web/guilds.php');
+    include('web/user.php');
     include('admin.php');
 });
 
 Route::get('/import-data', 'ImportController@import');
 Route::get('/import-mm', 'ImportController@mastermerchant');
-Route::get('/import-auto', 'ImportController@auto')->name('import.auto');
+Route::post('/import-auto', 'ImportController@auto')->name('import.auto');
+Route::get('/import-auto', 'ImportController@autoShow')->name('import.auto.show');
 Route::get('/import', 'ImportController@index')->name('import.index');
 
 
