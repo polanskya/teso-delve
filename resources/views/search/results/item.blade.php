@@ -26,7 +26,7 @@ $url = route('item.show', [$result], true);
                 <p class="m-t-1">
                     {{ $result->name }}
                     @if($result->set)
-                        part of the <a href="{{ route('set.show', [$result]) }}">{{ $result->set->name }}</a> set.
+                        part of the <a href="{{ route('set.show', [$result->set]) }}">{{ $result->set->name }}</a> set.
                     @endif
 
                 </p>
