@@ -27,7 +27,8 @@
         "psr-4": {
             "App\\": "app/",
             "HeppyKarlsson\\": "packages/heppykarlsson"
-        }
+        },
+        "files": ["app/Helpers/helpers.php"]
     },
     "autoload-dev": {
         "classmap": [

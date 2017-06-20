@@ -36,7 +36,7 @@ class Guild
             $guild = new GuildModel();
             $guild->name = $name;
             $guild->world = $world;
-            $guild->founded_at = Carbon::parse($guildInfo[4]);
+            $guild->founded_at = carbon($guildInfo[4]);
         }
 
         $guild->guild_master = isset($guildInfo[10]) ? $guildInfo[10] : null;
