@@ -1,7 +1,9 @@
 <?php namespace App\Http\Controllers;
 
+use App\Enum\SetType;
 use App\Model\Item;
 use App\Model\ItemStyle;
+use App\Model\Set;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -10,11 +12,23 @@ class StyleController
 {
 
     public function index() {
-        $itemStyles = ItemStyle::where('isHidden', 0)->orderBy('name')->get();
+        $itemStyles = ItemStyle::where('isHidden', 0)
+            ->with('materialItem')
+            ->orderBy('name')
+            ->get();
 
         $helmets = Cache::remember('example-style-helmets', 60*12, function() {
             $helmets_sorted = new Collection();
-            $helmets = Item::where('equipType', 1)->whereNotNull('itemStyleId')->get();
+
+            $sets = Set::whereIn('setTypeEnum', [SetType::CRAFTED, SetType::DUNGEON, SetType::ZONE])
+                ->select('id')
+                ->get('id');
+
+            $helmets = Item::where('equipType', 1)
+                ->whereNotNull('itemStyleId')
+                ->whereIn('setId', $sets->pluck('id'))
+                ->get();
+
             foreach($helmets->groupBy('itemStyleId') as $itemStyleId => $helmetPerStyle) {
                 $helmetsItemStyle = new Collection();
 
@@ -55,7 +69,6 @@ class StyleController
                 ->first();
         }
 
-
         $characters = null;
         if($user) {
             $characters = $user->characters()->with(['itemStyles' => function($query) use($itemStyle) {
@@ -63,14 +76,23 @@ class StyleController
             }])->get();
         }
 
+        $sets = Set::whereIn('setTypeEnum', [SetType::CRAFTED, SetType::DUNGEON, SetType::ZONE])
+            ->select('id')
+            ->get('id');
 
-        $armors = Cache::remember('armor-examples-' . $itemStyle->id, 120, function () use ($itemStyle) {
-            $items = Item::where('itemStyleId', $itemStyle->id)->get();
+        $armors = Cache::remember('armor-examples-' . $itemStyle->id, 120, function () use ($itemStyle, $sets) {
+            $items = Item::where('itemStyleId', $itemStyle->id)
+                ->whereIn('setId', $sets->pluck('id'))
+                ->get();
+
             return $items->where('armorType', '!=', 0)->groupBy('armorType');
         });
 
-        $weapons = Cache::remember('weapons-examples-' . $itemStyle->id, 120, function () use ($itemStyle) {
-            $items = Item::where('itemStyleId', $itemStyle->id)->get();
+        $weapons = Cache::remember('weapons-examples-' . $itemStyle->id, 120, function () use ($itemStyle, $sets) {
+            $items = Item::where('itemStyleId', $itemStyle->id)
+                ->whereIn('setId', $sets->pluck('id'))
+                ->get();
+
             return $items->where('weaponType', '!=', 0)->sortBy('weaponType')->groupBy('weaponType');
         });
 
