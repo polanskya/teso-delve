@@ -8,10 +8,20 @@ if(!function_exists('carbon')) {
         $format = 'Y-m-d';
 
         if(stripos($date, '/') !== false) {
+            $explode = explode('/', $date);
             $format = 'd/m/y';
+
+            if(strlen($explode[2]) == 4) {
+                $format = 'd/m/Y';
+            }
         }
 
-        return Carbon::createFromFormat($format, $date);
+        try {
+            return Carbon::createFromFormat($format, $date);
+        }
+        catch(Exception $e) {
+            throw new Exception('Carbon unable to parse: ' . $date . " (format: " . $format . ")");
+        }
     }
 
 }
