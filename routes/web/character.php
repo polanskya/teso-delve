@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Support\Facades\Route;
 
 
 Route::get('/character/{character}/delete', 'CharacterController@delete')->name('characters.delete');
