@@ -56,9 +56,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => $middleware
 
     Route::get('crafting-table/{smithingType}', 'Admin\CraftingController@craftingTable')->name('crafting-table.edit');
     Route::post('crafting-table/{smithingType}', 'Admin\CraftingController@updateCraftingTable')->name('crafting-table.update');
+    Route::get('info', function()
+    {
+        phpinfo();
+       # return Redirect::to('web/admin/info.php');
+        #include('web/admin/info.php');
+    });
 
+#    Route::get("info","info");
 
     include('web/admin/roles.php');
+   
 
 
 });
