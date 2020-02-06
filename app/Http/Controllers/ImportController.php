@@ -44,7 +44,7 @@ class ImportController
 
         $metainformation = Meta::where('value', $request->get('key'))
             ->where('key', 'user_upload_key')
-            ->where('metable_type', 'App\User')
+            ->where('metable_type', \App\User::class)
             ->first();
 
         if (is_null($metainformation)) {

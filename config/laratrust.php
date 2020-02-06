@@ -21,7 +21,7 @@ return [
     |
     */
     'user_models' => [
-        'users' => 'App\User',
+        'users' => App\User::class,
     ],
 
     /*
@@ -33,7 +33,7 @@ return [
     | the role if it is in a different namespace.
     |
     */
-    'role' => 'App\Model\Role\Role',
+    'role' => App\Model\Role\Role::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -54,7 +54,7 @@ return [
     | Update the permission if it is in a different namespace.
     |
     */
-    'permission' => 'App\Model\Role\Permission',
+    'permission' => App\Model\Role\Permission::class,
 
     /*
     |--------------------------------------------------------------------------
