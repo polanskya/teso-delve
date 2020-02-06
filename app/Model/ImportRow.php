@@ -14,14 +14,13 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ImportRow extends Model
 {
-
     protected $primaryKey = 'guid';
     protected $table = 'import_row';
 
     public $incrementing = false;
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
-
 }

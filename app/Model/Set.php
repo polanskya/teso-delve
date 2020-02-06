@@ -1,4 +1,6 @@
-<?php namespace App\Model;
+<?php
+
+namespace App\Model;
 
 use HeppyKarlsson\Meta\Traits\Meta;
 use HeppyKarlsson\Sluggify\Traits\Sluggify;
@@ -21,7 +23,7 @@ class Set extends Model
 
     protected $sluggify = [
         'slugs' => [
-            'slug' => 'name'
+            'slug' => 'name',
         ],
         'routeKey' => 'slug',
     ];
@@ -30,20 +32,23 @@ class Set extends Model
 
     ];
 
-    public function getNameSanitizedAttribute() {
+    public function getNameSanitizedAttribute()
+    {
         return str_ireplace("'", '', $this->name);
     }
 
-    public function bonuses() {
-       return $this->hasMany(SetBonus::class, 'setId');
+    public function bonuses()
+    {
+        return $this->hasMany(SetBonus::class, 'setId');
     }
 
-    public function dungeons() {
+    public function dungeons()
+    {
         return $this->belongsToMany(Dungeon::class, 'dungeon_sets', 'setId', 'dungeonId');
     }
 
-    public function zones() {
+    public function zones()
+    {
         return $this->hasMany(ZoneSet::class, 'setId');
     }
-
 }

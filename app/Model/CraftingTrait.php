@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property Carbon researchDone_at
- * @property boolean isKnown
+ * @property bool isKnown
  * @property string image
  * @property string name
  * @property int traitIndex
@@ -18,7 +18,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 class CraftingTrait extends Model
 {
-
     protected $table = 'craftingTraits';
 
     protected $dates = [
@@ -27,13 +26,15 @@ class CraftingTrait extends Model
 
     public $timestamps = false;
 
-    public function character() {
+    public function character()
+    {
         return $this->belongsTo(Character::class, 'characterId');
     }
 
-    public function isResearched() {
-        if(!is_null($this->researchDone_at)) {
-            if($this->researchDone_at < Carbon::now()) {
+    public function isResearched()
+    {
+        if (! is_null($this->researchDone_at)) {
+            if ($this->researchDone_at < Carbon::now()) {
                 $this->isKnown = 1;
                 $this->save();
             }
@@ -42,12 +43,12 @@ class CraftingTrait extends Model
         return $this->isKnown;
     }
 
-    public function isResearching() {
-        if($this->isResearched())  {
+    public function isResearching()
+    {
+        if ($this->isResearched()) {
             return false;
         }
 
-        return !is_null($this->researchDone_at) and $this->researchDone_at > Carbon::now();
+        return ! is_null($this->researchDone_at) and $this->researchDone_at > Carbon::now();
     }
-
 }

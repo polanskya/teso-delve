@@ -1,15 +1,16 @@
-<?php namespace App\Traits;
+<?php
+
+namespace App\Traits;
 
 trait EloquentGetTableNameTrait
 {
-
     public static function getTableName()
     {
-        return ((new self)->getTable());
+        return (new self)->getTable();
     }
 
-    public static function getColumnName($column) {
-        return self::getTableName() . "." . $column;
+    public static function getColumnName($column)
+    {
+        return self::getTableName().'.'.$column;
     }
-
 }

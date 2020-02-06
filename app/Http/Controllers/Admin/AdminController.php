@@ -1,4 +1,6 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php
+
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Model\Character;
@@ -15,8 +17,8 @@ class AdminController extends Controller
 {
     const SEEN_AT_DAYS = 1;
 
-
-    public function index() {
+    public function index()
+    {
         $seenAt = Carbon::now()->subDays(self::SEEN_AT_DAYS);
 
         $data = [
@@ -33,9 +35,7 @@ class AdminController extends Controller
             'itemsCount' => Item::where('created_at', '>=', $seenAt)->count(),
         ];
 
-
         $jobs = Job::all();
-
 
         $users = User::orderBy('seen_at', 'desc')
             ->where('id', '!=', Auth::id())
@@ -51,7 +51,6 @@ class AdminController extends Controller
 
         $user = Auth::user();
         /** @var $user User */
-
         $last_logs_watched = $user->getMeta('admin_logs_last');
         $last_logs_watched = is_null($last_logs_watched) ? $last_logs_watched : Carbon::parse($last_logs_watched);
 
@@ -62,9 +61,9 @@ class AdminController extends Controller
         return view('admin.index', compact('data', 'jobs', 'users', 'logs', 'last_logs_watched', 'dumpUsers'));
     }
 
-    public function generateError() {
+    public function generateError()
+    {
         $now = null;
         $now->format('Y-m-d');
     }
-
 }

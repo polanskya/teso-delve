@@ -1,5 +1,6 @@
-<?php namespace App\Http\Controllers;
+<?php
 
+namespace App\Http\Controllers;
 
 use App\Model\Dungeon;
 use App\Model\Item;
@@ -18,26 +19,27 @@ use Illuminate\Support\Facades\DB;
 
 class ItemController
 {
-
-    public function index() {
-
+    public function index()
+    {
     }
 
-    public function showItemById($id) {
+    public function showItemById($id)
+    {
         $item = Item::find($id);
-        if(empty($item->slug)) {
+        if (empty($item->slug)) {
             return $this->show($item);
         }
 
         return redirect()->route('item.show', [$item], 301);
     }
 
-    public function show(Item $item) {
+    public function show(Item $item)
+    {
         $user = Auth::user();
         $items = new Collection();
         $userItems = null;
 
-        if($user) {
+        if ($user) {
             $userItems = $user->items()->where('itemId', $item->id)->get();
             if ($userItems->count() > 0) {
                 $item = $userItems->first();
@@ -61,7 +63,7 @@ class ItemController
 
         $priceComparison = new PriceCompareWeek($item);
 
-        $sales = Cache::remember('item_sales_'.$item->id, 60, function() use($item) {
+        $sales = Cache::remember('item_sales_'.$item->id, 60, function () use ($item) {
             return $item->sales()
                 ->with('guild')
                 ->take(250)
@@ -72,13 +74,14 @@ class ItemController
         return view('item.show', compact('item', 'favourites', 'items', 'set', 'priceComparison', 'sales', 'userItems', 'characters'));
     }
 
-    public function ajaxShow(Item $item) {
+    public function ajaxShow(Item $item)
+    {
         $set = $item->set;
         $items = new Collection();
         $itemStyleChapter = ItemStyleChapter::where('itemId', $item->id)->first();
 
         $user = Auth::user();
-        if($user) {
+        if ($user) {
             $userItems = $user->items()->where('itemId', $item->id)->get();
             if ($userItems->count() > 0) {
                 $item = $userItems->first();
@@ -97,5 +100,4 @@ class ItemController
 
         return view('item.itembox', compact('item', 'set', 'items', 'characters', 'itemStyleChapter', 'priceComparison'));
     }
-
 }

@@ -1,8 +1,9 @@
-<?php namespace App\Enum;
+<?php
+
+namespace App\Enum;
 
 class SkilltypeEnum
 {
-
     const ARMOR = 3;
     const AVA = 6;
     const CHAMPION = 9;
@@ -12,5 +13,4 @@ class SkilltypeEnum
     const TRADESKILL = 8;
     const WEAPON = 2;
     const WORLD = 4;
-
 }

@@ -1,4 +1,6 @@
-<?php namespace App\Http\Controllers;
+<?php
+
+namespace App\Http\Controllers;
 
 use App\Enum\ItemType;
 use App\Model\Guild;
@@ -12,8 +14,8 @@ use Illuminate\Support\Facades\DB;
 
 class GuildController extends Controller
 {
-
-    public function show(Guild $guild) {
+    public function show(Guild $guild)
+    {
         $guild->load('members.user.characters');
         $now = Carbon::now();
 
@@ -47,7 +49,7 @@ class GuildController extends Controller
             ->count();
 
         $salesCountCompare = ItemSale::where('guild_id', $guild->id)
-            ->between($startCompare,  $endCompare)
+            ->between($startCompare, $endCompare)
             ->count();
 
         $salesCount = [
@@ -95,7 +97,7 @@ class GuildController extends Controller
 
         $myAccountSales = collect();
         $myAccountSalesCompare = collect();
-        foreach($user->accounts() as $account) {
+        foreach ($user->accounts() as $account) {
             $myAccountSales->push($accountSales->get($account));
             $myAccountSalesCompare->push($accountSalesCompare->get($account));
         }
@@ -139,7 +141,8 @@ class GuildController extends Controller
         return view('guild.show', $data);
     }
 
-    public function members(Guild $guild) {
+    public function members(Guild $guild)
+    {
         $user = Auth::user();
 
         $start = Carbon::now()->firstOfMonth();
@@ -166,12 +169,13 @@ class GuildController extends Controller
         return view('guild.members', compact('guild', 'user', 'accountSales', 'members', 'ranks'));
     }
 
-    public function bank(Guild $guild) {
+    public function bank(Guild $guild)
+    {
         return view('guild.coming-soon', compact('guild'));
     }
 
-    public function sales(Request $request, Guild $guild) {
-
+    public function sales(Request $request, Guild $guild)
+    {
         $start = Carbon::now()->firstOfMonth();
         $dates = [
             'start' => $start->copy()->firstOfMonth(),
@@ -190,44 +194,43 @@ class GuildController extends Controller
             ->orderBy('sold_at', 'desc')
             ->select(
                 ItemSale::getColumnName('*'),
-                Item::getColumnName('name') . ' as itemName',
-                Item::getColumnName('type') .  ' as itemType'
+                Item::getColumnName('name').' as itemName',
+                Item::getColumnName('type').' as itemType'
             )
             ->leftJoin(Item::getTableName(), ItemSale::getColumnName('item_id'), '=', Item::getColumnName('id'))
-            ->when($request->get('seller'), function($query) use($request) {
+            ->when($request->get('seller'), function ($query) use ($request) {
                 return $query->where('seller', $request->get('seller'));
             })
-            ->when($request->get('buyer'), function($query) use($request) {
+            ->when($request->get('buyer'), function ($query) use ($request) {
                 return $query->where('buyer', $request->get('seller'));
             })
-            ->when($filter == 'weapon', function($query) {
+            ->when($filter == 'weapon', function ($query) {
                 return $query->where(Item::getColumnName('type'), ItemType::WEAPON);
             })
-            ->when($filter == 'armor', function($query) {
+            ->when($filter == 'armor', function ($query) {
                 return $query->where(Item::getColumnName('type'), ItemType::ARMOR);
             })
-            ->when($filter == 'consumable', function($query) {
+            ->when($filter == 'consumable', function ($query) {
                 return $query->whereIn(Item::getColumnName('type'), ItemType::consumables());
             })
-            ->when($filter == 'material', function($query) {
+            ->when($filter == 'material', function ($query) {
                 return $query->whereIn(Item::getColumnName('type'), ItemType::materials());
             })
-            ->when($filter == 'misc', function($query) {
+            ->when($filter == 'misc', function ($query) {
                 return $query->whereIn(Item::getColumnName('type'), ItemType::misc());
             })
-            ->when(!empty($request->get('name')), function($query) use ($request) {
+            ->when(! empty($request->get('name')), function ($query) use ($request) {
                 return $query->where(Item::getColumnName('name'), 'LIKE', '%'.$request->get('name').'%');
             })
             ->paginate(200);
 
         $sales->appends($request->all());
 
-
         return view('guild.sales', compact('guild', 'dates', 'sales', 'members'));
     }
 
-    public function ranks(Guild $guild) {
+    public function ranks(Guild $guild)
+    {
         return view('guild.coming-soon', compact('guild'));
     }
-
 }

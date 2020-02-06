@@ -1,4 +1,6 @@
-<?php namespace App\Jobs\EsoImport;
+<?php
+
+namespace App\Jobs\EsoImport;
 
 use App\User;
 use HeppyKarlsson\EsoImport\EsoImport;
@@ -10,7 +12,6 @@ use Illuminate\Queue\SerializesModels;
 class AutoImport implements ShouldQueue
 {
     use InteractsWithQueue, Queueable, SerializesModels;
-
 
     protected $file = null;
     protected $user_id = null;
@@ -37,5 +38,4 @@ class AutoImport implements ShouldQueue
         $user = User::findOrFail($this->user_id);
         $esoImport->import($this->file, $user);
     }
-
 }

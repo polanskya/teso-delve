@@ -16,7 +16,8 @@ class UserSetFavourite extends Model
 
     public $timestamps = false;
 
-    public function set() {
+    public function set()
+    {
         return $this->belongsTo(Set::class, 'setId');
     }
 }

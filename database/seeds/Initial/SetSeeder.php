@@ -12,7 +12,6 @@ class SetSeeder extends Seeder
      */
     public function run()
     {
-
         $sets = file_get_contents(storage_path('dump/sets.json'));
         $setBonuses = file_get_contents(storage_path('dump/setBonuses.json'));
         $userFavourites = file_get_contents(storage_path('dump/userFavourites.json'));
@@ -20,20 +19,19 @@ class SetSeeder extends Seeder
         $sets = json_decode($sets);
         $setBonuses = json_decode($setBonuses);
         $userFavourites = json_decode($userFavourites);
-        foreach($sets as $set) {
-           # print($set->lang);
-            if ($set->lang=='en') {
-               # print("insetin " + $set);
+        foreach ($sets as $set) {
+            // print($set->lang);
+            if ($set->lang == 'en') {
+                // print("insetin " + $set);
                 DB::table('sets')->insert((array) $set);
             }
         }
 
-        foreach($setBonuses as $bonus) {
+        foreach ($setBonuses as $bonus) {
             DB::table('set_bonuses')->insert((array) $bonus);
         }
-        foreach($userFavourites as $favourite) {
+        foreach ($userFavourites as $favourite) {
             DB::table('userSet_favourite')->insert((array) $favourite);
         }
-
     }
 }

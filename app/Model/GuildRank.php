@@ -12,6 +12,4 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class GuildRank extends Model
 {
-
-
 }

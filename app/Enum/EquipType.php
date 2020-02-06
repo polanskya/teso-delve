@@ -1,4 +1,6 @@
-<?php namespace App\Enum;
+<?php
+
+namespace App\Enum;
 
 class EquipType
 {
@@ -23,7 +25,8 @@ class EquipType
     const TWO_HAND = 6;
     const WAIST = 8;
 
-    static public function armors() {
+    public static function armors()
+    {
         return [
             self::HEAD,
             self::SHOULDERS,

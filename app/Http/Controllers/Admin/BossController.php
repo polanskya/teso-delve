@@ -1,4 +1,6 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php
+
+namespace App\Http\Controllers\Admin;
 
 use App\Enum\BagType;
 use App\Enum\ItemStyleChapter;
@@ -16,12 +18,12 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class BossController extends Controller
 {
-
-    public function create(Request $request) {
+    public function create(Request $request)
+    {
         $dungeon_id = null;
         $zone_id = null;
 
-        if($request->has('dungeon_id')) {
+        if ($request->has('dungeon_id')) {
             $dungeon_id = $request->get('dungeon_id');
         }
 
@@ -33,7 +35,8 @@ class BossController extends Controller
         return view('admin.boss.create', compact('boss', 'zone_id', 'dungeon_id', 'dungeons', 'zones'));
     }
 
-    public function edit(Boss $boss) {
+    public function edit(Boss $boss)
+    {
         $dungeon_id = $boss->dungeon_id;
         $zone_id = $boss->zone_id;
 
@@ -44,12 +47,15 @@ class BossController extends Controller
         return view('admin.boss.create', compact('boss', 'zone_id', 'dungeon_id', 'dungeons', 'zones'));
     }
 
-    public function delete(Boss $boss) {
+    public function delete(Boss $boss)
+    {
         $boss->delete();
+
         return redirect()->back();
     }
 
-    public function update(Boss $boss, Request $request) {
+    public function update(Boss $boss, Request $request)
+    {
         $data = $request->get('boss');
 
         $boss->name = $data['name'];
@@ -63,7 +69,9 @@ class BossController extends Controller
 
         return redirect()->back();
     }
-    public function store(Request $request) {
+
+    public function store(Request $request)
+    {
         $data = $request->get('boss');
 
         $boss = new Boss();
@@ -78,5 +86,4 @@ class BossController extends Controller
 
         return redirect()->back();
     }
-
 }

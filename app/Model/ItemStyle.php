@@ -1,4 +1,6 @@
-<?php namespace App\Model;
+<?php
+
+namespace App\Model;
 
 use HeppyKarlsson\Sluggify\Traits\Sluggify;
 use Illuminate\Database\Eloquent\Model;
@@ -26,12 +28,13 @@ class ItemStyle extends Model
 
     public $table = 'itemStyles';
 
-    public function chapters() {
+    public function chapters()
+    {
         return $this->hasMany(ItemStyleChapter::class, 'itemStyleId');
     }
 
-    public function materialItem() {
+    public function materialItem()
+    {
         return $this->hasOne(Item::class, 'id', 'material_id');
     }
-
 }

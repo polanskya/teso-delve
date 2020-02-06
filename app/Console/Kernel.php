@@ -26,17 +26,13 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-
-        $schedule->call(function() {
+        $schedule->call(function () {
             $sitemap = new Sitemap();
             dispatch($sitemap);
 
             $items = new Items();
             dispatch($items);
         })->dailyAt('00:01');
-
-
-
     }
 
     /**

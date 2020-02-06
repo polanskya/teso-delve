@@ -1,4 +1,6 @@
-<?php namespace App\Jobs;
+<?php
+
+namespace App\Jobs;
 
 use App\Model\Item;
 use Carbon\Carbon;
@@ -11,7 +13,6 @@ class ItemSlugs implements ShouldQueue
 {
     use InteractsWithQueue, Queueable, SerializesModels;
 
-
     /**
      * Execute the job.
      *
@@ -22,10 +23,9 @@ class ItemSlugs implements ShouldQueue
         $items = Item::whereNull('slug')->get();
         $updated_at = Carbon::now();
 
-        foreach($items as $item) {
+        foreach ($items as $item) {
             $item->updated_at = $updated_at;
             $item->save();
         }
     }
-
 }

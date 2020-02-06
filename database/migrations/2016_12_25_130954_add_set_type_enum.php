@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class AddSetTypeEnum extends Migration
 {
@@ -13,11 +13,9 @@ class AddSetTypeEnum extends Migration
      */
     public function up()
     {
-
         Schema::table('sets', function ($table) {
             $table->integer('setTypeEnum')->nullable()->after('craftable');
         });
-
     }
 
     /**
@@ -30,6 +28,5 @@ class AddSetTypeEnum extends Migration
         Schema::table('sets', function ($table) {
             $table->dropColumn('setTypeEnum');
         });
-
     }
 }

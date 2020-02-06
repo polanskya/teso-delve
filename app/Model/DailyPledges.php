@@ -6,28 +6,30 @@ use Illuminate\Database\Eloquent\Model;
 
 class DailyPledges extends Model
 {
-
     public $timestamps = false;
 
     protected $table = 'dailyPledges';
 
     protected $dates = [
-        'date'
+        'date',
     ];
 
     protected $fillable = [
 
     ];
 
-    public function firstPledge() {
+    public function firstPledge()
+    {
         return $this->hasOne(Dungeon::class, 'id', 'pledge1');
     }
-    public function secondPledge() {
+
+    public function secondPledge()
+    {
         return $this->hasOne(Dungeon::class, 'id', 'pledge2');
     }
-    public function thirdPledge() {
+
+    public function thirdPledge()
+    {
         return $this->hasOne(Dungeon::class, 'id', 'pledge3');
     }
-
-
 }

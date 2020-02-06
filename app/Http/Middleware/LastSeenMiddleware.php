@@ -8,11 +8,9 @@ use Illuminate\Support\Facades\Auth;
 
 class LastSeenMiddleware
 {
-
     public function handle($request, Closure $next, $guard = null)
     {
-
-        if(Auth::check()) {
+        if (Auth::check()) {
             $user = Auth::user();
             $user->seen_at = Carbon::now();
             $user->save();

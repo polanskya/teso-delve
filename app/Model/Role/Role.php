@@ -6,10 +6,8 @@ use Laratrust\LaratrustRole;
 
 class Role extends LaratrustRole
 {
-
     public function getRouteKeyName()
     {
         return 'name';
     }
-
 }

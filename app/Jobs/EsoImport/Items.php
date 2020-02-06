@@ -1,4 +1,6 @@
-<?php namespace App\Jobs\EsoImport;
+<?php
+
+namespace App\Jobs\EsoImport;
 
 use App\Enum\BagType;
 use App\Enum\Import\ItemPosition;
@@ -69,7 +71,7 @@ class Items implements ShouldQueue
             $data['arr_key'] = $id;
 
             $lang = App::getLocale();
-            if(isset($data[ItemPosition::LANG])) {
+            if (isset($data[ItemPosition::LANG])) {
                 $lang = explode('"', $data[ItemPosition::LANG])[0];
             }
             $this->lang = $lang;
@@ -84,98 +86,94 @@ class Items implements ShouldQueue
         $this->createUserItems();
         $this->updateUserItems();
 
-
         $itemSlugs = new ItemSlugs();
         dispatch($itemSlugs);
     }
 
-    private function updateUserItems() {
-
-        foreach($this->orderedLines->where('userItem_id', '!=', null) as $data) {
+    private function updateUserItems()
+    {
+        foreach ($this->orderedLines->where('userItem_id', '!=', null) as $data) {
             $newUi = $this->itemRepository->userItem($data, $this->user_id, $this->itemStyles, $this->characters);
             $newUi->id = $data['userItem_id'];
             $newUi->exists = true;
             $newUi->updated_at = Carbon::now();
             $newUi->save();
         }
-
     }
 
-
-    private function createUserItems() {
-
+    private function createUserItems()
+    {
         $inserts = collect();
 
-        foreach($this->orderedLines->where('item_id', '!=', null)->where('userItem_id', null) as $key => $data) {
+        foreach ($this->orderedLines->where('item_id', '!=', null)->where('userItem_id', null) as $key => $data) {
             $userItem = $this->itemRepository->userItem($data, $this->user_id, $this->itemStyles, $this->characters);
             $inserts->push($userItem);
         }
 
-        if($inserts->count() > 0) {
+        if ($inserts->count() > 0) {
             UserItem::insert($inserts->toArray());
         }
     }
 
-    private function matchUserItems() {
-
-
+    private function matchUserItems()
+    {
         UserItem::where('userId', $this->user_id)->chunk($this->userItemsChunk, function ($userItems) {
             $userItems = $userItems->groupBy('itemId');
 
             foreach ($this->orderedLines->where('item_id', '!=', null)->where('userItem_id', null) as $key => $line) {
-
                 $bagType = $line[ItemPosition::BAGTYPE];
 
                 $character = $this->characters
                     ->where('externalId', intval($line[ItemPosition::CHARACTER_EXTERNAL_ID]))
                     ->first();
 
-                if(isset($bagType) and $bagType === BagType::BANK) {
+                if (isset($bagType) and $bagType === BagType::BANK) {
                     $character = null;
                 }
 
-                if(isset($bagType) and $bagType == BagType::VIRTUAL) {
+                if (isset($bagType) and $bagType == BagType::VIRTUAL) {
                     $character = null;
                 }
 
                 $userItemsPerItemId = $userItems->get($line['item_id']);
                 $userItem = null;
 
-                if(!is_null($userItemsPerItemId)) {
+                if (! is_null($userItemsPerItemId)) {
                     $userItem = $userItemsPerItemId->where('characterId', $character ? $character->id : null)
                         ->where('bagEnum', $bagType)
                         ->where('uniqueId', $line[ItemPosition::UNIQUE_ID])
                         ->first();
                 }
 
-                if(!is_null($userItem)) {
+                if (! is_null($userItem)) {
                     $line['userItem_id'] = $userItem->id;
                     $this->orderedLines->put($line['arr_key'], $line);
                 }
             }
-
         });
     }
 
-    private function createItems() {
+    private function createItems()
+    {
         $new_items = collect();
-        foreach($this->orderedLines->where('item_id', null) as $data) {
+        foreach ($this->orderedLines->where('item_id', null) as $data) {
             $new_items->push($this->itemRepository->create($data, $this->itemStyles));
         }
 
         Item::insert($new_items->toArray());
     }
 
-    private function updateFlavor($data, $item) {
-        if($item->flavor != null) {
+    private function updateFlavor($data, $item)
+    {
+        if ($item->flavor != null) {
             return true;
         }
 
-        if(!isset($data[29])) {
+        if (! isset($data[29])) {
             return true;
         }
 
-        if($data[29] == "") {
+        if ($data[29] == '') {
             return true;
         }
 
@@ -183,7 +181,8 @@ class Items implements ShouldQueue
         $item->save();
     }
 
-    private function matchItems() {
+    private function matchItems()
+    {
         $lines = $this->orderedLines;
         $names = $lines->where('item_id', null)->pluck(ItemPosition::NAME);
 
@@ -202,12 +201,11 @@ class Items implements ShouldQueue
                         $item = $this->itemRepository->importGet($line, $itemsGrouped->get($external_id));
                     }
 
-                    if (!is_null($item)) {
+                    if (! is_null($item)) {
                         $line['item_id'] = $item->id;
                         $this->updateFlavor($line, $item);
                         $this->orderedLines->put($line['arr_key'], $line + ['item_id' => $item->id]);
                     }
-
                 }
             });
     }

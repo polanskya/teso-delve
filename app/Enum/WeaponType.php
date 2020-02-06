@@ -1,25 +1,26 @@
-<?php namespace App\Enum;
+<?php
+
+namespace App\Enum;
 
 class WeaponType
 {
+    const Axe = 1;
+    const Bow = 8;
+    const Dagger = 11;
+    const Fire_staff = 12;
+    const Frost_staff = 13;
+    const Hammer = 2;
+    const Healing_staff = 9;
+    const Lightning_staff = 15;
+    const Shield = 14;
+    const Sword = 3;
+    const Twoh_Axe = 5;
+    const Twoh_Hammer = 6;
+    const Twoh_Sword = 4;
 
-    CONST Axe = 1;
-    CONST Bow = 8;
-    CONST Dagger = 11;
-    CONST Fire_staff = 12;
-    CONST Frost_staff = 13;
-    CONST Hammer =  2;
-    CONST Healing_staff = 9;
-    CONST Lightning_staff = 15;
-    CONST Shield = 14;
-    CONST Sword = 3;
-    CONST Twoh_Axe = 5;
-    CONST Twoh_Hammer = 6;
-    CONST Twoh_Sword = 4;
-
-    static public function craftingType($craftingType) {
-
-        if($craftingType == CraftingType::BLACKSMITHING) {
+    public static function craftingType($craftingType)
+    {
+        if ($craftingType == CraftingType::BLACKSMITHING) {
             return [
                 self::Axe,
                 self::Dagger,
@@ -27,11 +28,11 @@ class WeaponType
                 self::Sword,
                 self::Twoh_Axe,
                 self::Twoh_Hammer,
-                self::Twoh_Sword
+                self::Twoh_Sword,
             ];
         }
 
-        if($craftingType == CraftingType::WOODWORKING) {
+        if ($craftingType == CraftingType::WOODWORKING) {
             return [
                 self::Bow,
                 self::Fire_staff,
@@ -44,5 +45,4 @@ class WeaponType
 
         return [];
     }
-
 }

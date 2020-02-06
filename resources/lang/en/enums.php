@@ -1,4 +1,5 @@
 <?php
+
 return [
     'CraftingType' => [
         4 => 'Alchemy',
@@ -49,7 +50,7 @@ return [
     ],
     'Trait' => [
         '' => [
-            15 => 'Training'
+            15 => 'Training',
         ],
         1 => /* Weapon */ [
             'name' => 'Weapon',
@@ -88,7 +89,7 @@ return [
             21 => 'Healthy',
             24 => 'Ornate',
             23 => 'Robust',
-        ]
+        ],
     ],
     'bags' => [
         App\Enum\BagType::VIRTUAL => 'Crafting bag',
@@ -159,5 +160,5 @@ return [
         \App\Enum\SkilltypeEnum::GUILD => 'Guild',
         \App\Enum\SkilltypeEnum::RACIAL => 'Racial',
         \App\Enum\SkilltypeEnum::TRADESKILL => 'Craft',
-    ]
+    ],
 ];

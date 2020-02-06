@@ -1,4 +1,6 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php
+
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Model\Role\Permission;
@@ -7,17 +9,18 @@ use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
-
-    public function index() {
+    public function index()
+    {
         $roles = Role::all();
 
         return view('admin.roles.index', compact('roles'));
     }
 
-    public function save(Request $request, Role $role = null) {
+    public function save(Request $request, Role $role = null)
+    {
         $data = $request->get('role');
 
-        if(empty($data['name'])) {
+        if (empty($data['name'])) {
             return redirect()->back();
         }
 
@@ -28,8 +31,8 @@ class RoleController extends Controller
 
         $role->permissions()->detach();
         $permissions = $request->get('permission');
-        if(count($permissions) > 0) {
-            foreach($permissions as $permission_id) {
+        if (count($permissions) > 0) {
+            foreach ($permissions as $permission_id) {
                 $role->permissions()->attach($permission_id);
             }
         }
@@ -37,11 +40,10 @@ class RoleController extends Controller
         return redirect()->back();
     }
 
-    public function edit(Role $role) {
-
+    public function edit(Role $role)
+    {
         $permissions = Permission::orderBy('display_name')->get();
 
         return view('admin.roles.edit', compact('role', 'permissions'));
     }
-
 }

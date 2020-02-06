@@ -2,9 +2,9 @@
 
 namespace App\Model;
 
-use App\Traits\EloquentGetTableNameTrait;
 use App\Enum\EquipType;
 use App\Enum\ItemType;
+use App\Traits\EloquentGetTableNameTrait;
 use HeppyKarlsson\Sluggify\Traits\Sluggify;
 use Illuminate\Database\Eloquent\Model;
 
@@ -55,33 +55,38 @@ class Item extends Model
 
     protected $sluggify = [
         'slugs' => [
-            'slug' => ['id', 'name']
+            'slug' => ['id', 'name'],
         ],
         'routeKey' => 'slug',
     ];
 
-    public function setNameAttribute($value) {
+    public function setNameAttribute($value)
+    {
         $value = str_ireplace('^n', '', $value);
         $value = str_ireplace('^p', '', $value);
         $this->attributes['name'] = $value;
     }
 
-    public function set() {
+    public function set()
+    {
         return $this->belongsTo(Set::class, 'setId');
     }
 
-    public function character() {
+    public function character()
+    {
         return $this->belongsTo(Character::class, 'characterId');
     }
 
-    public function sales() {
+    public function sales()
+    {
         return $this->hasMany(ItemSale::class);
     }
 
-    public function setItemSet($setName) {
+    public function setItemSet($setName)
+    {
         $setName = trim($setName);
         $external_id = $setName;
-        if(stripos($setName, '^') !== false) {
+        if (stripos($setName, '^') !== false) {
             $setName = substr($setName, 0, stripos($setName, '^'));
         }
 
@@ -89,7 +94,7 @@ class Item extends Model
             ->where('lang', $this->lang)
             ->first();
 
-        if (!$set) {
+        if (! $set) {
             $set = new Set();
             $set->name = $setName;
             $set->external_id = $external_id;
@@ -100,33 +105,34 @@ class Item extends Model
         $this->setId = $set->id;
     }
 
-    public function materialStyle() {
+    public function materialStyle()
+    {
         return $this->hasOne(ItemStyle::class, 'material_id');
     }
 
-    public function itemStyleChapter() {
+    public function itemStyleChapter()
+    {
         return $this->belongsToMany(ItemStyle::class, 'itemStyle_chapter', 'itemId', 'itemStyleId');
     }
 
-    public function traitCategory() {
-
-        if($this->type == ItemType::WEAPON and $this->equipType == EquipType::OFF_HAND) {
+    public function traitCategory()
+    {
+        if ($this->type == ItemType::WEAPON and $this->equipType == EquipType::OFF_HAND) {
             return 2;
         }
 
-        if($this->type == ItemType::WEAPON) {
+        if ($this->type == ItemType::WEAPON) {
             return 1;
         }
 
-        if($this->type == ItemType::ARMOR and in_array($this->equipType, [EquipType::RING, EquipType::NECK])) {
+        if ($this->type == ItemType::ARMOR and in_array($this->equipType, [EquipType::RING, EquipType::NECK])) {
             return 3;
         }
 
-        if($this->type == ItemType::ARMOR) {
+        if ($this->type == ItemType::ARMOR) {
             return 2;
         }
 
         return false;
     }
-
 }

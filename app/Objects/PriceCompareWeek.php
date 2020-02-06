@@ -1,4 +1,6 @@
-<?php namespace App\Objects;
+<?php
+
+namespace App\Objects;
 
 use App\Model\Item;
 use App\Model\ItemSale;
@@ -8,7 +10,6 @@ use Illuminate\Support\Facades\DB;
 
 class PriceCompareWeek
 {
-
     private $item;
     private $weekSales;
     private $prevWeekSales;
@@ -19,8 +20,7 @@ class PriceCompareWeek
     {
         $this->item = $item;
 
-        $sales = Cache::remember('priceComparison_'.$item->id, 60, function() use ($item) {
-
+        $sales = Cache::remember('priceComparison_'.$item->id, 60, function () use ($item) {
             return ItemSale::where('item_id', $item->id)
                 ->where('sold_at', '>=', Carbon::now()->subMonth())
                 ->select(DB::raw('avg(price_ea) as price_avg, max(price_ea) as price_max, min(price_ea) as price_min, count(*) as hits, week'))
@@ -28,19 +28,19 @@ class PriceCompareWeek
                 ->get()
                 ->sortByDesc('week')
                 ->keyBy('week');
-
         });
 
         $this->weekSales = $sales->shift();
         $this->prevWeekSales = $sales->shift();
 
-        if(!is_null($this->weekSales) and !is_null($this->prevWeekSales)) {
+        if (! is_null($this->weekSales) and ! is_null($this->prevWeekSales)) {
             $this->comparison = (1 - ($this->prevWeekSales->price_avg / $this->weekSales->price_avg)) * 100;
         }
     }
 
-    public function isValid() {
-        if(is_null($this->weekSales) or is_null($this->prevWeekSales)) {
+    public function isValid()
+    {
+        if (is_null($this->weekSales) or is_null($this->prevWeekSales)) {
             return false;
         }
 
@@ -52,21 +52,23 @@ class PriceCompareWeek
         return $this->weekSales->price_avg;
     }
 
-    public function hits() {
+    public function hits()
+    {
         return $this->weekSales->hits;
     }
 
-    public function prevAverage() {
+    public function prevAverage()
+    {
         return $this->prevWeekSales->price_avg;
     }
 
-    public function prevHits() {
+    public function prevHits()
+    {
         return $this->prevWeekSales->hits;
     }
 
-    public function comparison() {
+    public function comparison()
+    {
         return $this->comparison;
     }
-
 }
-

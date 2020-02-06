@@ -1,6 +1,6 @@
 <?php
-use Illuminate\Support\Facades\Route;
 
+use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['auth', 'guild.member']], function () {
     Route::get('/guild/{guild}/members', 'GuildController@members')->name('guilds.members');

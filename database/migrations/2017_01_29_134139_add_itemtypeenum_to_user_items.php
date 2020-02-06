@@ -1,9 +1,9 @@
 <?php
 
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Migrations\Migration;
 
 class AddItemtypeenumToUserItems extends Migration
 {
@@ -18,13 +18,13 @@ class AddItemtypeenumToUserItems extends Migration
             $table->integer('itemTypeEnum')->nullable()->after('weaponTypeEnum');
         });
 
-       /* $query = 'UPDATE user_items 
-            INNER JOIN items
-                ON user_items.itemId=items.id
-            SET user_items.itemTypeEnum = items.type';
+        /* $query = 'UPDATE user_items
+             INNER JOIN items
+                 ON user_items.itemId=items.id
+             SET user_items.itemTypeEnum = items.type';
 
-        DB::update($query);
-        */
+         DB::update($query);
+         */
     }
 
     /**

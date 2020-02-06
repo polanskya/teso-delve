@@ -1,13 +1,13 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 
 $middlewares = [
     'auth',
-    'role:admin'
+    'role:admin',
 ];
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'aliasMiddleware' => $middlewares], function () {
-
     Route::get('', 'Admin\AdminController@index')->name('index');
     Route::get('generate-error', 'Admin\AdminController@generateError')->name('generate-error');
 
@@ -24,7 +24,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'aliasMiddleware' => $middl
     Route::post('crafting/motifs', 'Admin\CraftingController@updateStyles')->name('crafting.updateStyles');
     Route::post('crafting/motifs/{itemStyle}', 'Admin\CraftingController@updateItemStyle')->name('crafting.item-style.update');
 
-
     Route::get('generate-slugs', 'Admin\SlugController@generateSlugs')->name('generate-slugs');
 
     Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
@@ -37,14 +36,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'aliasMiddleware' => $middl
     Route::get('ban/{ip}/delete', '\HeppyKarlsson\BanHammer\Controller\BanhammerController@delete')->name('ban.delete');
     Route::post('ban', '\HeppyKarlsson\BanHammer\Controller\BanhammerController@store')->name('ban.store');
 
-
-
-
     Route::get('dungeon/create', 'DungeonController@create')->name('dungeon.create');
     Route::post('dungeon', 'DungeonController@store')->name('dungeon.store');
     Route::put('dungeon/{dungeon}', 'DungeonController@update')->name('dungeon.update');
     Route::get('dungeon/{dungeon}/edit', 'DungeonController@edit')->name('dungeon.edit');
-
 
     Route::get('boss/create', 'Admin\BossController@create')->name('boss.create');
     Route::get('boss/{boss}/edit', 'Admin\BossController@edit')->name('boss.edit');
@@ -57,17 +52,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'aliasMiddleware' => $middl
 
     Route::get('crafting-table/{smithingType}', 'Admin\CraftingController@craftingTable')->name('crafting-table.edit');
     Route::post('crafting-table/{smithingType}', 'Admin\CraftingController@updateCraftingTable')->name('crafting-table.update');
-    Route::get('info', function()
-    {
+    Route::get('info', function () {
         phpinfo();
-       # return Redirect::to('web/admin/info.php');
-        #include('web/admin/info.php');
+        // return Redirect::to('web/admin/info.php');
+        //include('web/admin/info.php');
     });
 
-#    Route::get("info","info");
+//    Route::get("info","info");
 
-    include('web/admin/roles.php');
-   
-
-
+    include 'web/admin/roles.php';
 });

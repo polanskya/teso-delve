@@ -1,4 +1,6 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php
+
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Model\Role\Permission;
@@ -7,8 +9,8 @@ use Illuminate\Http\Request;
 
 class PermissionController extends Controller
 {
-
-    public function store(Request $request, Permission $permission) {
+    public function store(Request $request, Permission $permission)
+    {
         $data = $request->get('permission');
 
         $permission->name = $data['name'];
@@ -18,5 +20,4 @@ class PermissionController extends Controller
 
         return redirect()->back();
     }
-
 }

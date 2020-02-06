@@ -42,7 +42,7 @@ class SetPolicy
      */
     public function update(User $user, Set $set)
     {
-        if($user->id == 1) {
+        if ($user->id == 1) {
             return true;
         }
 

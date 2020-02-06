@@ -28,17 +28,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class UserItem extends Model
 {
-
     protected $fillable = [
 
     ];
 
-    public function character() {
+    public function character()
+    {
         return $this->belongsTo(Character::class, 'characterId');
     }
 
-    public function item() {
+    public function item()
+    {
         return $this->hasOne(Item::class, 'id', 'itemId');
     }
-
 }

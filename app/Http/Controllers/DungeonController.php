@@ -1,5 +1,6 @@
-<?php namespace App\Http\Controllers;
+<?php
 
+namespace App\Http\Controllers;
 
 use App\Enum\DungeonType;
 use App\Enum\SetType;
@@ -15,22 +16,19 @@ use Illuminate\Support\Facades\Route;
 
 class DungeonController
 {
-
-    public function index() {
+    public function index()
+    {
         $routeName = Route::getCurrentRoute()->getName();
         $items = Dungeon::all();
 
         $dungeonType = DungeonType::GROUP_DUNGEON;
-        if($routeName == 'dungeons.public.index') {
+        if ($routeName == 'dungeons.public.index') {
             $dungeonType = DungeonType::PUBLIC_DUNGEON;
-        }
-        elseif($routeName == 'dungeons.trials.index') {
+        } elseif ($routeName == 'dungeons.trials.index') {
             $dungeonType = DungeonType::TRIAL;
-        }
-        elseif($routeName == 'dungeons.delves.index') {
+        } elseif ($routeName == 'dungeons.delves.index') {
             $dungeonType = DungeonType::DELVE;
-        }
-        elseif($routeName == 'dungeons.arenas.index') {
+        } elseif ($routeName == 'dungeons.arenas.index') {
             $dungeonType = DungeonType::ARENA;
         }
 
@@ -45,7 +43,8 @@ class DungeonController
         return view('dungeon.index', compact('dungeons', 'items', 'dungeonType', 'pledges'));
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $data = $request->get('dungeon');
 
         $dungeon = new Dungeon();
@@ -54,7 +53,7 @@ class DungeonController
         $dungeon->zone = empty($data['zone']) ? null : $data['zone'];
         $zoneObject = new Zones();
 
-        if(!is_null($dungeon->zone)) {
+        if (! is_null($dungeon->zone)) {
             $zone = $zoneObject->getZone($dungeon->zone);
         }
 
@@ -67,7 +66,8 @@ class DungeonController
         return redirect()->route('dungeon.show', [$dungeon]);
     }
 
-    public function create(Request $request) {
+    public function create(Request $request)
+    {
         $dungeon = new Dungeon();
 
         $dungeon->dungeonTypeEnum = $request->has('dungeonType') ? $request->get('dungeonType') : null;
@@ -81,8 +81,7 @@ class DungeonController
     {
         $sets = $dungeon->sets;
 
-        if(in_array($dungeon->dungeonTypeEnum, [DungeonType::DELVE, DungeonType::PUBLIC_DUNGEON])) {
-
+        if (in_array($dungeon->dungeonTypeEnum, [DungeonType::DELVE, DungeonType::PUBLIC_DUNGEON])) {
             $sets = ZoneSet::where('zoneId', $dungeon->zone)
                 ->with('sets')
                 ->get()
@@ -98,7 +97,7 @@ class DungeonController
             ->get();
 
         $pledge = DailyPledges::where('date', '>', Carbon::now())
-            ->where(function($query) use ($dungeon) {
+            ->where(function ($query) use ($dungeon) {
                 return $query->orWhere('pledge1', $dungeon->id)
                     ->orWhere('pledge2', $dungeon->id)
                     ->orWhere('pledge3', $dungeon->id);
@@ -116,7 +115,8 @@ class DungeonController
         return view('dungeon.show', compact('dungeon', 'items', 'favourites', 'sets', 'all_sets', 'user', 'bosses', 'pledge'));
     }
 
-    public function update(Dungeon $dungeon, Request $request) {
+    public function update(Dungeon $dungeon, Request $request)
+    {
         $data = $request->get('dungeon');
         $dungeon->description = $data['description'];
         $dungeon->name = $data['name'];
@@ -126,7 +126,8 @@ class DungeonController
         return redirect()->route('dungeon.show', $dungeon);
     }
 
-    public function edit(Dungeon $dungeon) {
+    public function edit(Dungeon $dungeon)
+    {
         $sets = $dungeon->sets;
 
         $zones = new Zones();
@@ -139,10 +140,11 @@ class DungeonController
         return view('dungeon.edit', compact('dungeon', 'sets', 'all_sets', 'zones'));
     }
 
-    public function addSet(Request $request, Dungeon $dungeon) {
+    public function addSet(Request $request, Dungeon $dungeon)
+    {
         $setId = $request->get('setId');
         $dungeon->sets()->attach($setId);
+
         return redirect()->route('dungeon.show', [$dungeon]);
     }
-
 }

@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
 {
-
     public function index(ServerService $serverService)
     {
         $dailyPledges = DailyPledges::where('date', '>=', Carbon::now()->subDay())
@@ -31,7 +30,7 @@ class HomeController extends Controller
 
         $statuses = $serverService->serverStatus();
 
-        $information = Cache::remember('startpage-info-'.$lang, 60*2, function() use ($lang) {
+        $information = Cache::remember('startpage-info-'.$lang, 60 * 2, function () use ($lang) {
             return [
                 'items' => Item::where('lang', App::getLocale())->count(),
                 'characters' => Character::count(),

@@ -1,5 +1,6 @@
-<?php namespace App\Http\Controllers;
+<?php
 
+namespace App\Http\Controllers;
 
 use App\Model\Dungeon;
 use App\Model\Set;
@@ -9,7 +10,8 @@ use Illuminate\Support\Facades\DB;
 
 class ContributeController
 {
-    public function index() {
+    public function index()
+    {
         return view('donate.index');
     }
 }

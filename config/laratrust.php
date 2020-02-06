@@ -5,7 +5,6 @@
  * a role & permission management solution for Laravel.
  *
  * @license MIT
- * @package Laratrust
  */
 
 return [
@@ -121,7 +120,7 @@ return [
     |--------------------------------------------------------------------------
     */
     'permission_foreign_key' => 'permission_id',
-    
+
     /*
     |--------------------------------------------------------------------------
     | Method to be called in the middleware return case

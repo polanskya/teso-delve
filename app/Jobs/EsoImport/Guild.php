@@ -1,4 +1,6 @@
-<?php namespace App\Jobs\EsoImport;
+<?php
+
+namespace App\Jobs\EsoImport;
 
 use App\User;
 use Carbon\Carbon;
@@ -25,14 +27,15 @@ class Guild implements ShouldQueue
         $this->user_id = $user_id;
     }
 
-    public function member($member) {
+    public function member($member)
+    {
         $this->members[] = $member;
     }
 
-    public function rank($rank) {
+    public function rank($rank)
+    {
         $this->ranks[] = $rank;
     }
-
 
     /**
      * Execute the job.
@@ -47,21 +50,18 @@ class Guild implements ShouldQueue
         $rankImport = new GuildRank();
         $now = Carbon::now()->subMinute();
 
-        foreach($this->ranks as $rank)
-        {
+        foreach ($this->ranks as $rank) {
             try {
                 $rankImport->process($rank, $guilds);
-            }
-            catch(\Throwable $throwable) {
+            } catch (\Throwable $throwable) {
                 DBLogger::save($throwable);
             }
         }
 
-        foreach($this->members as $member) {
+        foreach ($this->members as $member) {
             try {
                 $memberImport->process($member, $user, $guilds);
-            }
-            catch(\Throwable $throwable) {
+            } catch (\Throwable $throwable) {
                 DBLogger::save($throwable);
             }
         }
@@ -70,5 +70,4 @@ class Guild implements ShouldQueue
             ->where('updated_at', '<', $now)
             ->delete();
     }
-
 }

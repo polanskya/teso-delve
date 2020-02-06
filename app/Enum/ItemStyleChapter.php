@@ -1,4 +1,6 @@
-<?php namespace App\Enum;
+<?php
+
+namespace App\Enum;
 
 class ItemStyleChapter
 {
@@ -18,7 +20,8 @@ class ItemStyleChapter
     const STAVES = 12;
     const SWORDS = 8;
 
-    static public function order() {
+    public static function order()
+    {
         return [
             self::ALL,
             self::AXES,
@@ -37,6 +40,4 @@ class ItemStyleChapter
             self::SWORDS,
         ];
     }
-
 }
-

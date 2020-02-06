@@ -1,6 +1,8 @@
 <?php
-use Illuminate\Support\Facades\DB;
+
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+
 class DungeonSeeder extends Seeder
 {
     /**
@@ -10,20 +12,18 @@ class DungeonSeeder extends Seeder
      */
     public function run()
     {
-
         $dungeons = file_get_contents(storage_path('dump/dungeons.json'));
         $dungeonsSets = file_get_contents(storage_path('dump/dungeonSets.json'));
 
         $dungeons = json_decode($dungeons);
         $dungeonSets = json_decode($dungeonsSets);
 
-        foreach($dungeons as $dungeon) {
+        foreach ($dungeons as $dungeon) {
             DB::table('dungeons')->insert((array) $dungeon);
         }
 
-        foreach($dungeonSets as $dungeonSet) {
+        foreach ($dungeonSets as $dungeonSet) {
             DB::table('dungeon_sets')->insert((array) $dungeonSet);
         }
-
     }
 }

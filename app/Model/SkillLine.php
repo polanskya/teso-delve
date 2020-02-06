@@ -1,4 +1,6 @@
-<?php namespace App\Model;
+<?php
+
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -6,13 +8,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property int skilltypeEnum
  * @property string name
  * @property mixed id
- * @property null|integer classEnum
+ * @property null|int classEnum
  */
 class SkillLine extends Model
 {
-
-    public function abilities() {
+    public function abilities()
+    {
         return $this->hasMany(Ability::class);
     }
-
 }

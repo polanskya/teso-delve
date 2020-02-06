@@ -12,17 +12,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class GuildMember extends Model
 {
-
     protected $dates = [
-        'lastSeen_at'
+        'lastSeen_at',
     ];
 
-    public function user() {
+    public function user()
+    {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-    public function presentNote() {
+    public function presentNote()
+    {
         return str_ireplace(['\n', '\r'], ['<br>', ''], $this->note);
     }
-
 }

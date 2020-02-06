@@ -11,7 +11,6 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-
         $roles = file_get_contents(storage_path('dump/roles.json'));
         $permissions = file_get_contents(storage_path('dump/permissions.json'));
         $permissionRoles = file_get_contents(storage_path('dump/permissionRole.json'));
@@ -20,15 +19,15 @@ class RoleSeeder extends Seeder
         $permissions = json_decode($permissions);
         $permissionRoles = json_decode($permissionRoles);
 
-        foreach($roles as $role) {
+        foreach ($roles as $role) {
             DB::table('roles')->insert((array) $role);
         }
 
-        foreach($permissions as $permission) {
+        foreach ($permissions as $permission) {
             DB::table('permissions')->insert((array) $permission);
         }
 
-        foreach($permissionRoles as $permissionRole) {
+        foreach ($permissionRoles as $permissionRole) {
             unset($permissionRole->id);
             DB::table('permission_role')->insert((array) $permissionRole);
         }
@@ -37,6 +36,5 @@ class RoleSeeder extends Seeder
 
         $user->roles()->attach(1);
         $user->roles()->attach(2);
-
     }
 }

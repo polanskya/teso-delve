@@ -1,4 +1,6 @@
-<?php namespace App\Http\Controllers;
+<?php
+
+namespace App\Http\Controllers;
 
 use App\Model\Dungeon;
 use App\Model\Item;
@@ -10,8 +12,8 @@ use Illuminate\Support\Facades\App;
 
 class SearchController extends Controller
 {
-
-    public function search(Request $request) {
+    public function search(Request $request)
+    {
         $search = $request->get('s');
 
         $merged_results = collect();
@@ -24,8 +26,7 @@ class SearchController extends Controller
             'total' => 0,
         ];
 
-        if(!empty($search)) {
-
+        if (! empty($search)) {
             $sets = Set::where('name', 'like', "%{$search}%")
                 ->select('id', 'name')
                 ->where('lang', App::getLocale())
@@ -68,12 +69,11 @@ class SearchController extends Controller
         $merged_results = $merged_results->take(75);
         $results = collect();
 
-        foreach($merged_results as $result) {
+        foreach ($merged_results as $result) {
             $result = $result->fresh();
             $results->push($result);
         }
 
         return view('search.results', compact('search', 'results', 'counts'));
     }
-
 }

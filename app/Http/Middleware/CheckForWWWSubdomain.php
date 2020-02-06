@@ -1,4 +1,6 @@
-<?php namespace App\Http\Middleware;
+<?php
+
+namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Foundation\Application;
@@ -41,8 +43,8 @@ class CheckForWWWSubdomain
         $host = Request::getHttpHost();
         $host = explode('.', $host);
 
-        if($host[0] == 'www') {
-            return Redirect::to('http://'.$host[1].".".$host[2] . Request::getRequestUri(), 301);
+        if ($host[0] == 'www') {
+            return Redirect::to('http://'.$host[1].'.'.$host[2].Request::getRequestUri(), 301);
         }
 
         return $next($request);

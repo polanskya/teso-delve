@@ -21,21 +21,23 @@ class Guild extends Model
         'founded_at',
     ];
 
-    public function members() {
+    public function members()
+    {
         return $this->hasMany(GuildMember::class);
     }
 
-    public function presentMotd() {
+    public function presentMotd()
+    {
         return str_ireplace(['\n', '\r'], ['<br>', ''], $this->motd);
     }
 
-    public function presentDescription() {
+    public function presentDescription()
+    {
         return str_ireplace(['\n', '\r'], ['<br>', ''], $this->description);
     }
 
-    public function ranks() {
+    public function ranks()
+    {
         return $this->hasMany(GuildRank::class);
     }
-
 }
-

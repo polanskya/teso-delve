@@ -1,17 +1,16 @@
-<?php namespace App\Services;
+<?php
+
+namespace App\Services;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 
 class ServerService
 {
-
-    public function serverStatus() {
-
+    public function serverStatus()
+    {
         try {
-
-            $statuses = Cache::remember('eso_server_status', config('eso.server-status.cache'), function() {
-
+            $statuses = Cache::remember('eso_server_status', config('eso.server-status.cache'), function () {
                 $contents = file_get_contents(config('eso.server-status.url'));
                 $servers = json_decode($contents);
 
@@ -22,32 +21,28 @@ class ServerService
                     'error' => false,
                 ];
 
-                foreach($servers->zos_platform_response->response as $server => $status) {
+                foreach ($servers->zos_platform_response->response as $server => $status) {
                     $server = str_ireplace(['The Elder Scrolls Online ', '(', ')'], ['', '', ''], $server);
 
-                    if($server == 'PTS') {
+                    if ($server == 'PTS') {
                         continue;
                     }
 
                     $statuses['servers'][$server] = $status;
 
-                    if($status !== 'UP') {
+                    if ($status !== 'UP') {
                         $statuses['all'] = false;
                     }
                 }
 
                 return $statuses;
             });
-
-        }
-        catch(\Exception $e) {
+        } catch (\Exception $e) {
             $statuses = [
-                'error' => true
+                'error' => true,
             ];
-
         }
 
         return $statuses;
     }
-
 }

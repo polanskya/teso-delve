@@ -41,24 +41,28 @@ class User extends Authenticatable
 
     protected $dates = [
         'seen_at',
-        'dumpUploaded_at'
+        'dumpUploaded_at',
     ];
 
-    public function items() {
+    public function items()
+    {
         return $this->belongsToMany(Item::class, 'user_items', 'userId', 'itemId')
             ->withPivot('characterId', 'uniqueId', 'bagEnum', 'slotId', 'traitEnum', 'traitDescription', 'enchant', 'enchantDescription', 'equipTypeEnum', 'armorTypeEnum', 'weaponTypeEnum', 'isLocked', 'isBound', 'isJunk', 'count');
     }
 
-    public function userItems() {
+    public function userItems()
+    {
         return $this->hasMany(UserItem::class, 'userId');
     }
 
-    public function guilds() {
+    public function guilds()
+    {
         return $this->belongsToMany(Guild::class, 'guild_members')
           ->withPivot('rank', 'note', 'accountName');
     }
 
-    public function favouriteSets() {
+    public function favouriteSets()
+    {
         return $this->hasMany(UserSetFavourite::class, 'userId');
     }
 
@@ -67,8 +71,8 @@ class User extends Authenticatable
         return $this->hasMany(Character::class, 'userId');
     }
 
-    public function accounts() {
+    public function accounts()
+    {
         return $this->characters->pluck('account')->unique();
     }
-
 }

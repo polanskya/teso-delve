@@ -4,7 +4,6 @@ use App\Enum\Quality;
 
 return [
 
-
     'quality' => [
 
         Quality::NORMAL => [
@@ -27,6 +26,6 @@ return [
             'tempers' => 8,
         ],
 
-    ]
+    ],
 
 ];

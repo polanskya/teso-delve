@@ -1,10 +1,11 @@
-<?php namespace App\Model;
+<?php
+
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
 class CharacterItemStyle extends Model
 {
-
     public $table = 'character_itemStyle';
     public $timestamps = false;
 
@@ -12,11 +13,11 @@ class CharacterItemStyle extends Model
         'characterId',
         'itemStyleId',
         'itemStyleChapterEnum',
-        'isKnown'
+        'isKnown',
     ];
 
-    public function itemStyle() {
+    public function itemStyle()
+    {
         return $this->hasOne(ItemStyle::class, 'id', 'itemStyleId');
     }
-
 }

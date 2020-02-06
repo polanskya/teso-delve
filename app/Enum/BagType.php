@@ -1,4 +1,6 @@
-<?php namespace App\Enum;
+<?php
+
+namespace App\Enum;
 
 class BagType
 {

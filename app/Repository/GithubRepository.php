@@ -1,4 +1,6 @@
-<?php namespace App\Repository;
+<?php
+
+namespace App\Repository;
 
 use App\Enum\ItemStyleChapter;
 use App\Enum\ItemTrait;
@@ -9,12 +11,12 @@ use Illuminate\Support\Facades\Cache;
 
 class GithubRepository
 {
-
     const FILE_PATH = 'app/github.json';
 
-    public function info() {
+    public function info()
+    {
         try {
-            $info = Cache::remember('github_addon_version', config('addon.github.cache-time'), function() {
+            $info = Cache::remember('github_addon_version', config('addon.github.cache-time'), function () {
                 $opts = config('addon.github.opts');
                 $context = stream_context_create($opts);
 
@@ -30,8 +32,7 @@ class GithubRepository
 
                 return $data;
             });
-        }
-        catch(\Exception $e) {
+        } catch (\Exception $e) {
             //TODO: Send mail to someone?
 
             $info = file_get_contents(storage_path(self::FILE_PATH));
@@ -40,5 +41,4 @@ class GithubRepository
 
         return $info;
     }
-
 }
