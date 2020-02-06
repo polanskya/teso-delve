@@ -2,7 +2,7 @@
 
 namespace App\Jobs\EsoImport;
 
-use App\User;
+use App\Models\User;
 use HeppyKarlsson\EsoImport\EsoImport;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;

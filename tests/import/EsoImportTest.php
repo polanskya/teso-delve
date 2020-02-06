@@ -13,7 +13,7 @@ class EsoImportTest extends TestCase
      */
     public function testImportData()
     {
-        $user = \App\User::find(1);
+        $user = \App\Models\User::find(1);
 
         $this->be($user)
             ->visit('/import-data')
@@ -27,7 +27,7 @@ class EsoImportTest extends TestCase
     {
         $item = new \HeppyKarlsson\EsoImport\Import\Item();
         $itemStyles = \App\Model\ItemStyle::all();
-        $user = \App\User::find($user_id);
+        $user = \App\Models\User::find($user_id);
 
         $result = $item->process($line, $user, $itemStyles, $user->userItems);
         $this->assertEquals($expectedResult, $result);
@@ -46,7 +46,7 @@ class EsoImportTest extends TestCase
      */
     public function testCharacterImport($expectedResult, $user_id, $line)
     {
-        $user = \App\User::find($user_id);
+        $user = \App\Models\User::find($user_id);
 
         $character = new \HeppyKarlsson\EsoImport\Import\Character();
         $result = $character->process($line, $user);

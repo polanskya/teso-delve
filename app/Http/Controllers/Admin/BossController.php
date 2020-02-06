@@ -11,7 +11,7 @@ use App\Model\Item;
 use App\Model\ItemStyle;
 use App\Model\ItemStyleChapter as ItemStyleChapterModel;
 use App\Objects\Zones;
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\File\UploadedFile;

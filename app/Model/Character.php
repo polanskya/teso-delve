@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-use App\User;
+use App\Models\User;
 use Carbon\Carbon;
 use HeppyKarlsson\Meta\Traits\Meta;
 use Illuminate\Database\Eloquent\Model;

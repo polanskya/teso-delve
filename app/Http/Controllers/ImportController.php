@@ -13,7 +13,7 @@ use App\Model\Set;
 use App\Model\SetBonus;
 use App\Model\UserSetFavourite;
 use App\Repository\GithubRepository;
-use App\User;
+use App\Models\User;
 use HeppyKarlsson\EsoImport\EsoImport;
 use HeppyKarlsson\Meta\Model\Meta;
 use HeppyKarlsson\MMImport\ImportService;
@@ -44,7 +44,7 @@ class ImportController
 
         $metainformation = Meta::where('value', $request->get('key'))
             ->where('key', 'user_upload_key')
-            ->where('metable_type', \App\User::class)
+            ->where('metable_type', \App\Models\User::class)
             ->first();
 
         if (is_null($metainformation)) {

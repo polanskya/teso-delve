@@ -2,7 +2,7 @@
 
 namespace App\Jobs\EsoImport;
 
-use App\User;
+use App\Models\User;
 use Carbon\Carbon;
 use HeppyKarlsson\DBLogger\Facade\DBLogger;
 use HeppyKarlsson\EsoImport\Import\GuildMember;

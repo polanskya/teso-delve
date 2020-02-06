@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-use App\User;
+use App\Models\User;
 use HeppyKarlsson\Sluggify\Traits\Sluggify;
 use Illuminate\Database\Eloquent\Model;
 

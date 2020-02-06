@@ -11,7 +11,7 @@ use App\Model\ItemStyle;
 use App\Model\ItemStyleChapter;
 use App\Model\Set;
 use App\Services\ServerService;
-use App\User;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;

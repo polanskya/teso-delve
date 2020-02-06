@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use App\Model\Set;
-use App\User;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class SetPolicy
@@ -13,7 +13,7 @@ class SetPolicy
     /**
      * Determine whether the user can view the set.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Model\Set  $set
      * @return mixed
      */
@@ -25,7 +25,7 @@ class SetPolicy
     /**
      * Determine whether the user can create sets.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function create(User $user)
@@ -36,7 +36,7 @@ class SetPolicy
     /**
      * Determine whether the user can update the set.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Model\Set  $set
      * @return mixed
      */
@@ -52,7 +52,7 @@ class SetPolicy
     /**
      * Determine whether the user can delete the set.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Model\Set  $set
      * @return mixed
      */

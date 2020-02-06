@@ -7,7 +7,7 @@ use App\Model\Character;
 use App\Model\Item;
 use App\Model\ItemSale;
 use App\Model\Job;
-use App\User;
+use App\Models\User;
 use Carbon\Carbon;
 use HeppyKarlsson\DBLogger\Model\Log;
 use Illuminate\Support\Facades\Auth;

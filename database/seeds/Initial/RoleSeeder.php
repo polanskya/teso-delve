@@ -32,7 +32,7 @@ class RoleSeeder extends Seeder
             DB::table('permission_role')->insert((array) $permissionRole);
         }
 
-        $user = \App\User::find(1);
+        $user = \App\Models\User::find(1);
 
         $user->roles()->attach(1);
         $user->roles()->attach(2);
