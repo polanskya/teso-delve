@@ -28,6 +28,8 @@ class AppServiceProvider extends ServiceProvider
     {
         if(env('APP_ENV') == 'local' and env('ENABLE_DEBUGBAR') != false) {
             $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
+            $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
+
         }
     }
 }
