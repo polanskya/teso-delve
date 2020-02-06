@@ -1,1 +1,18 @@
-[{"id":1,"name":"super-admin","display_name":"Super admin","description":null,"created_at":null,"updated_at":null},{"id":2,"name":"admin","display_name":"Admin","description":null,"created_at":null,"updated_at":null}]
+[
+    {
+        "id": 1,
+        "name": "super-admin",
+        "display_name": "Super admin",
+        "description": null,
+        "created_at": null,
+        "updated_at": null
+    },
+    {
+        "id": 2,
+        "name": "admin",
+        "display_name": "Admin",
+        "description": null,
+        "created_at": null,
+        "updated_at": null
+    }
+]
