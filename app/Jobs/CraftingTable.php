@@ -9,6 +9,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class CraftingTable implements ShouldQueue
 {
@@ -91,6 +92,7 @@ class CraftingTable implements ShouldQueue
                     return $query->where('championLevel', '<=', $material['end-champ']);
                 })
                 ->orderBy('level', 'championLevel')
+ //               ->orderBy('level')->orderBy('championLevel') // potential error
                 ->get();
 
             if($craftingItems->first()->championLevel == null) {
@@ -178,7 +180,8 @@ class CraftingTable implements ShouldQueue
             }
 
             $bonus = $this->getBonus($material, $ci, $armorStart);
-
+            Log::info($item);
+            Log::info($item->id);
             $ci->material_id = $item->id;
             $ci->materialCount = $bonus + $armorStart;
             $ci->save();

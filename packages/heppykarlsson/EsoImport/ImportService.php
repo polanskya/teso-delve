@@ -9,7 +9,7 @@ class ImportService
     private $dispatch = false;
     private $smithings = null;
 
-    const ITEM_COUNT = 500;
+    const ITEM_COUNT = 1000;
 
     public function __construct($user_id)
     {

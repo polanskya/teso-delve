@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class SetSeeder extends Seeder
 {
@@ -19,9 +20,12 @@ class SetSeeder extends Seeder
         $sets = json_decode($sets);
         $setBonuses = json_decode($setBonuses);
         $userFavourites = json_decode($userFavourites);
-
         foreach($sets as $set) {
-            DB::table('sets')->insert((array) $set);
+           # print($set->lang);
+            if ($set->lang=='en') {
+               # print("insetin " + $set);
+                DB::table('sets')->insert((array) $set);
+            }
         }
 
         foreach($setBonuses as $bonus) {

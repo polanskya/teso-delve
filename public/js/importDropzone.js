@@ -5,6 +5,8 @@ $(document).ready(function() {
     if(!dropzoneDiv.hasClass('dropzoneDisabled')) {
         var myDropzone = dropzoneDiv.dropzone({
             url: dropzoneDiv.attr('url'),
+            maxFilesize: 3072, // 3GB
+            chunkSize: 10000000, // 10MB
             previewTemplate: '<p style="display:none;"></p>',
             success: function (file, response) {
                 myDropzone.find('.dropzone-message:visible').fadeOut();

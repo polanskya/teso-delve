@@ -20,7 +20,10 @@ class CreateLogsTable extends Migration
 
             $table->string('error', 2000);
             $table->integer('user_id')->nullable();
+            
+            $table->string('ip', 5*4)->nullable();
             $table->string('route')->nullable();
+            $table->string('user_agent')->nullable();
             $table->string('method', 20)->nullable();
             $table->string('url', 1000)->nullable();
             $table->string('session')->nullable();
@@ -30,6 +33,7 @@ class CreateLogsTable extends Migration
             $table->integer('row')->nullable();
             $table->text('trace')->nullable();
             $table->string('exception', 500)->nullable();
+            
             $table->timestamps();
         });
     }
@@ -41,6 +45,6 @@ class CreateLogsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('logs');
+     Schema::dropIfExists('logs');
     }
 }

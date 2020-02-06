@@ -18,7 +18,7 @@ class DailyPledgesSeeder extends Seeder
         $pledges = DailyPledgesEnum::$schedule;
 
         $startDate = Carbon::parse(DailyPledgesEnum::$startDate);
-        $now = Carbon::now()->addYears(5);
+        $now = Carbon::now()->addYears(1);
         while($startDate->lt($now)) {
             $pledge = array_shift($pledges);
 

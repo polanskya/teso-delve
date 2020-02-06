@@ -5,7 +5,7 @@ namespace App\Enum;
 
 class DailyPledges
 {
-    static public $startDate = '2016-12-19';
+    static public $startDate = '2019-12-19';
 
     static public $schedule = [
         // Darkshade Caverns I	Crypt of Hearts I	White-Gold Tower

@@ -18,6 +18,7 @@ class DungeonController
 
     public function index() {
         $routeName = Route::getCurrentRoute()->getName();
+        $items = Dungeon::all();
 
         $dungeonType = DungeonType::GROUP_DUNGEON;
         if($routeName == 'dungeons.public.index') {

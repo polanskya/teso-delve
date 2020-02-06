@@ -18,12 +18,13 @@ class AddItemtypeenumToUserItems extends Migration
             $table->integer('itemTypeEnum')->nullable()->after('weaponTypeEnum');
         });
 
-        $query = 'UPDATE user_items 
+       /* $query = 'UPDATE user_items 
             INNER JOIN items
                 ON user_items.itemId=items.id
             SET user_items.itemTypeEnum = items.type';
 
         DB::update($query);
+        */
     }
 
     /**

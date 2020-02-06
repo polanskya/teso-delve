@@ -1,6 +1,6 @@
 <?php
     $request = request();
-    $uri = $request->route()->getUri();
+    $uri = $request->route()->uri();
     $routeName = $request->route()->getName();
 ?>
 <aside class="navbar-default sidebar affix-top ps-container ps-theme-default hidden-xs">

@@ -6,7 +6,7 @@ $middlewares = [
     'role:admin'
 ];
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => $middlewares], function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'aliasMiddleware' => $middlewares], function () {
 
     Route::get('', 'Admin\AdminController@index')->name('index');
     Route::get('generate-error', 'Admin\AdminController@generateError')->name('generate-error');

@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 |
 */
 
+/* Migration guilde
 Route::get('/user', function (Request $request) {
-    return $request->user();
+   return $request->user();
 })->middleware('auth:api');
+*/
