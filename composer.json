@@ -10,7 +10,9 @@
         "cviebrock/eloquent-sluggable": "^4.1",
         "rap2hpoutre/laravel-log-viewer": "^0.8.0",
         "guzzlehttp/guzzle": "^6.2",
-        "santigarcor/laratrust": "3.2.*"
+        "santigarcor/laratrust": "3.2.*",
+        "predis/predis": "^1.1",
+        "phpoffice/phpspreadsheet": "^1.10"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -46,7 +48,6 @@
         ],
         "post-install-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postInstall",
-            "php artisan optimize"
         ],
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate"
