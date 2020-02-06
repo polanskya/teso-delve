@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-use App\User;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -24,13 +24,13 @@ class ImportGroup extends Model
 
     public $incrementing = false;
 
-
-    public function rows() {
+    public function rows()
+    {
         return $this->hasMany(ImportRow::class, 'import_group_guid');
     }
 
-    public function rowCount() {
+    public function rowCount()
+    {
         return $this->rows()->count();
     }
-
 }

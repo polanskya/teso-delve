@@ -1,5 +1,6 @@
-<?php namespace App\Http\Controllers;
+<?php
 
+namespace App\Http\Controllers;
 
 use App\Enum\CraftingType;
 use App\Enum\ItemType;
@@ -11,8 +12,8 @@ use Illuminate\Support\Facades\App;
 
 class CraftingController
 {
-
-    public function calculator() {
+    public function calculator()
+    {
         $craftingType = CraftingType::BLACKSMITHING;
         $researchLines = ResearchLine::blacksmithing();
         $researchLinesGrouped = ResearchLine::blacksmithingGrouped();
@@ -46,5 +47,4 @@ class CraftingController
 
         return view('crafting.calculator', compact('researchLines', 'craftingItemsGrouped', 'materials', 'researchLinesGrouped', 'tempers', 'itemStyles', 'craftingType', 'traits'));
     }
-
 }

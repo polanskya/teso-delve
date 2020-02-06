@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: Heppy
  * Date: 2016-12-04
- * Time: 15:13
+ * Time: 15:13.
  */
 
 namespace App\Enum;
-
 
 class ItemTrait
 {
@@ -27,7 +26,7 @@ class ItemTrait
     const JEWELRY_HEALTHY = 21;
     const JEWELRY_ORNATE = 24;
     const JEWELRY_ROBUST = 23;
-    const NONE =0;
+    const NONE = 0;
     const SPECIAL_STAT = 27;
     const WEAPON_CHARGED = 2;
     const WEAPON_DECISIVE = 8;
@@ -42,12 +41,9 @@ class ItemTrait
     const WEAPON_TRAINING = 6;
     const WEAPON_WEIGHTED = 8;
 
-
-    /**
-     *
-     */
-    static public function matris($craftingTypeEnum = null) {
-        if($craftingTypeEnum == CraftingType::CLOTHIER) {
+    public static function matris($craftingTypeEnum = null)
+    {
+        if ($craftingTypeEnum == CraftingType::CLOTHIER) {
             return [
                 self::ARMOR_STURDY,
                 self::ARMOR_IMPENETRABLE,
@@ -57,7 +53,7 @@ class ItemTrait
                 self::ARMOR_INFUSED,
                 self::ARMOR_PROSPEROUS,
                 self::ARMOR_DIVINES,
-                self::ARMOR_NIRNHONED
+                self::ARMOR_NIRNHONED,
             ];
         }
 
@@ -80,8 +76,7 @@ class ItemTrait
             self::ARMOR_INFUSED,
             self::ARMOR_PROSPEROUS,
             self::ARMOR_DIVINES,
-            self::ARMOR_NIRNHONED
+            self::ARMOR_NIRNHONED,
         ];
     }
-
-};
+}

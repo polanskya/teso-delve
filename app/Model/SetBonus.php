@@ -10,9 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class SetBonus extends Model
 {
-
     protected $fillable = [
 
     ];
-
 }

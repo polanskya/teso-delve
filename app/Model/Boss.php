@@ -1,4 +1,6 @@
-<?php namespace App\Model;
+<?php
+
+namespace App\Model;
 
 use HeppyKarlsson\Sluggify\Traits\Sluggify;
 use Illuminate\Database\Eloquent\Model;
@@ -22,5 +24,4 @@ class Boss extends Model
     ];
 
     public $timestamps = false;
-
 }

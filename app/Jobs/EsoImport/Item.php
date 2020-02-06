@@ -1,4 +1,6 @@
-<?php namespace App\Jobs\EsoImport;
+<?php
+
+namespace App\Jobs\EsoImport;
 
 use App\Enum\BagType;
 use App\Enum\ImportType;
@@ -53,12 +55,11 @@ class Item implements ShouldQueue
 
         $character = $import->user->characters->where('externalId', intval($properties[14]))->first();
 
-        if(isset($bagType) and $bagType === BagType::BANK) {
+        if (isset($bagType) and $bagType === BagType::BANK) {
             $character = null;
         }
 
-        if(isset($properties[23])) {
-
+        if (isset($properties[23])) {
             $item = \App\Model\Item::where('name', trim($properties[1]))
                 ->where('trait', intval($properties[2]))
                 ->where('quality', intval($properties[5]))
@@ -74,7 +75,7 @@ class Item implements ShouldQueue
                 ->where('lang', isset($properties[26]) ? trim(preg_replace('/\s\s+/', ' ', $properties[26])) : config('constants.default-language'))
                 ->first();
 
-            if(!$item) {
+            if (! $item) {
                 $item = new \App\Model\Item();
                 $item->uniqueId = $properties[0];
                 $item->name = trim($properties[1]);
@@ -93,13 +94,13 @@ class Item implements ShouldQueue
                 $item->enchantDescription = $properties[20];
                 $item->itemValue = intval($properties[22]);
 
-                if(!empty($properties[4])) {
+                if (! empty($properties[4])) {
                     $item->setItemSet($properties[4]);
                 }
 
-                if(isset($properties[25]) and intval($properties[25]) != 0) {
+                if (isset($properties[25]) and intval($properties[25]) != 0) {
                     $itemStyle = ItemStyle::where('externalId', intval($properties[25]))->first();
-                    if(is_null($itemStyle)) {
+                    if (is_null($itemStyle)) {
                         $itemStyle = new ItemStyle();
                         $itemStyle->externalId = intval($properties[25]);
                         $itemStyle->name = '';
@@ -112,7 +113,7 @@ class Item implements ShouldQueue
                 $item->save();
             }
 
-            if($item) {
+            if ($item) {
                 $userItem = new UserItem();
                 $userItem->userId = $import->user->id;
                 $userItem->itemId = $item->id;
@@ -126,7 +127,7 @@ class Item implements ShouldQueue
                 $userItem->bagEnum = $bagType;
                 $userItem->slotId = intval($properties[23]);
 
-                if(isset($properties[25]) and intval($properties[25]) != 0) {
+                if (isset($properties[25]) and intval($properties[25]) != 0) {
                     $itemStyle = ItemStyle::where('externalId', intval($properties[25]))->first();
                     $userItem->itemStyleId = isset($itemStyle->id) ? $itemStyle->id : null;
                 }
@@ -141,11 +142,9 @@ class Item implements ShouldQueue
                 $userItem->isLocked = $properties[7] == 'true';
 
                 $userItem->save();
-
             }
         }
 
         $import->delete();
     }
-
 }

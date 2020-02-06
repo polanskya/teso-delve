@@ -1,5 +1,6 @@
-<?php namespace App\Enum;
+<?php
 
+namespace App\Enum;
 
 class DungeonType
 {
@@ -10,5 +11,4 @@ class DungeonType
     const DELVE = 3;
     const TRIAL = 4;
     const ARENA = 5;
-
-};
+}

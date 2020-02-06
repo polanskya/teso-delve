@@ -5,7 +5,6 @@
  * a role & permission management solution for Laravel.
  *
  * @license MIT
- * @package Laratrust
  */
 
 return [
@@ -22,7 +21,7 @@ return [
     |
     */
     'user_models' => [
-        'users' => 'App\User',
+        'users' => App\Models\User::class,
     ],
 
     /*
@@ -34,7 +33,7 @@ return [
     | the role if it is in a different namespace.
     |
     */
-    'role' => 'App\Model\Role\Role',
+    'role' => App\Model\Role\Role::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -55,7 +54,7 @@ return [
     | Update the permission if it is in a different namespace.
     |
     */
-    'permission' => 'App\Model\Role\Permission',
+    'permission' => App\Model\Role\Permission::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -121,7 +120,7 @@ return [
     |--------------------------------------------------------------------------
     */
     'permission_foreign_key' => 'permission_id',
-    
+
     /*
     |--------------------------------------------------------------------------
     | Method to be called in the middleware return case

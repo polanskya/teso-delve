@@ -1,4 +1,6 @@
-<?php namespace App\Jobs\Sitemap;
+<?php
+
+namespace App\Jobs\Sitemap;
 
 use App\Enum\BagType;
 use App\Enum\CraftingType;
@@ -12,17 +14,16 @@ use App\Objects\Zones;
 use Carbon\Carbon;
 use HeppyKarlsson\Sitemap\Page;
 use Illuminate\Bus\Queueable;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
 class Sitemap implements ShouldQueue
 {
     use InteractsWithQueue, Queueable, SerializesModels;
-
 
     /**
      * Execute the job.
@@ -42,7 +43,7 @@ class Sitemap implements ShouldQueue
         $pages->add(Page::route('set.craftable'));
 
         $sets = Set::where('lang', config('constants.default-language'))->get();
-        foreach($sets as $set) {
+        foreach ($sets as $set) {
             $pages->add(new Page(route('set.show', [$set])));
         }
 
@@ -53,25 +54,24 @@ class Sitemap implements ShouldQueue
         $pages->add(Page::route('dungeons.trials.index'));
 
         $dungeons = Dungeon::all();
-        foreach($dungeons as $dungeon) {
+        foreach ($dungeons as $dungeon) {
             $pages->add(Page::route('dungeon.show', [$dungeon]));
         }
 
         $zonesObject = new Zones();
         $zones = $zonesObject->getZones();
 
-        foreach($zones as $zone) {
+        foreach ($zones as $zone) {
             $pages->add(Page::route('zone.show', [$zone['slug']]));
         }
 
         $pages->add(Page::route('item-styles.index'));
 
         $styles = ItemStyle::where('isHidden', 0)->get();
-        foreach($styles as $style) {
+        foreach ($styles as $style) {
             $pages->add(Page::route('item-styles.show', [$style]));
         }
 
-       File::put(public_path('sitemap.xml'), view('sitemap.show', compact('pages')));
+        File::put(public_path('sitemap.xml'), view('sitemap.show', compact('pages')));
     }
-
 }

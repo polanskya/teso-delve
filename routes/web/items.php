@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/item/{item_id}', 'ItemController@showItemById')->where('item_id', '[\d+]+');

@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateLogsTable extends Migration
 {
@@ -20,8 +20,8 @@ class CreateLogsTable extends Migration
 
             $table->string('error', 2000);
             $table->integer('user_id')->nullable();
-            
-            $table->string('ip', 5*4)->nullable();
+
+            $table->string('ip', 5 * 4)->nullable();
             $table->string('route')->nullable();
             $table->string('user_agent')->nullable();
             $table->string('method', 20)->nullable();
@@ -33,7 +33,7 @@ class CreateLogsTable extends Migration
             $table->integer('row')->nullable();
             $table->text('trace')->nullable();
             $table->string('exception', 500)->nullable();
-            
+
             $table->timestamps();
         });
     }
@@ -45,6 +45,6 @@ class CreateLogsTable extends Migration
      */
     public function down()
     {
-     Schema::dropIfExists('logs');
+        Schema::dropIfExists('logs');
     }
 }

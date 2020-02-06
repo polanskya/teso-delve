@@ -1,15 +1,17 @@
-<?php namespace App\Services;
+<?php
+
+namespace App\Services;
 
 use App\Model\Ability;
 
 class AbilityService
 {
-
-    public function create($data, $skillLine) {
+    public function create($data, $skillLine)
+    {
         $ability = new Ability();
 
         $name = $data[7];
-        if(stripos($name, '^') !== false) {
+        if (stripos($name, '^') !== false) {
             $name = explode('^', $data[7]);
             $name = $name[0];
         }
@@ -59,5 +61,4 @@ class AbilityService
 
         return $ability;
     }
-
 }

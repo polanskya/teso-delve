@@ -32,21 +32,25 @@ class Dungeon extends Model
 
     ];
 
-    public function getNameSanitizedAttribute() {
+    public function getNameSanitizedAttribute()
+    {
         return str_ireplace("'", '', $this->name);
     }
 
-    public function sets() {
+    public function sets()
+    {
         return $this->belongsToMany(Set::class, 'dungeon_sets', 'dungeonId', 'setId');
     }
 
-    public function bosses() {
+    public function bosses()
+    {
         return $this->hasMany(Boss::class);
     }
 
-    public function zone() {
+    public function zone()
+    {
         $zoneObject = new Zones();
+
         return is_null($this->getAttribute('zone')) ? null : $zoneObject->getZone($this->getAttribute('zone'));
     }
-
 }

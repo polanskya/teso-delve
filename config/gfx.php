@@ -1,4 +1,5 @@
 <?php
+
 use App\Enum\DungeonType;
 
 return [
@@ -9,5 +10,5 @@ return [
         DungeonType::DELVE => '/gfx/ON-mapicon-Delve.png',
         DungeonType::TRIAL => '/gfx/icons/ON-mapicon-RaidDungeon.png',
         DungeonType::ARENA => '/gfx/icons/ON-mapicon-SoloTrial.png',
-    ]
+    ],
 ];

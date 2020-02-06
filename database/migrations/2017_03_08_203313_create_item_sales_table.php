@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateItemSalesTable extends Migration
 {
@@ -18,15 +18,13 @@ class CreateItemSalesTable extends Migration
             $table->integer('item_id')->nullable();
             $table->integer('external_id');
 
-
-            /** For mapping sale to item */
+            /* For mapping sale to item */
             $table->integer('link_id');
             $table->integer('level');
             $table->integer('championLevel');
             $table->integer('quality');
             $table->integer('trait');
             $table->integer('itemLink_last');
-
 
             $table->integer('guild_id')->nullable();
             $table->string('item_key');
@@ -42,7 +40,6 @@ class CreateItemSalesTable extends Migration
 
             $table->primary('guid');
         });
-
     }
 
     /**

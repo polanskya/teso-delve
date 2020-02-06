@@ -1,6 +1,5 @@
 <?php
 
-
 use App\Enum\Alliance;
 
 return [

@@ -1,13 +1,15 @@
-<?php namespace App\Jobs\EsoImport;
+<?php
+
+namespace App\Jobs\EsoImport;
 
 use App\Enum\ImportType;
 use App\Model\CraftingTrait;
 use App\Model\ImportRow;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Auth;
 
 class Smithing implements ShouldQueue
@@ -53,7 +55,7 @@ class Smithing implements ShouldQueue
             ->where('traitIndex', intval($info[5]))
             ->first();
 
-        if(is_null($craftingTrait)) {
+        if (is_null($craftingTrait)) {
             $craftingTrait = new CraftingTrait();
             $craftingTrait->characterId = $character->id;
             $craftingTrait->craftingTypeEnum = $smithingType;
@@ -66,7 +68,7 @@ class Smithing implements ShouldQueue
             $craftingTrait->save();
         }
 
-        if(isset($info[13]) and $info[2] !== 'nil') {
+        if (isset($info[13]) and $info[2] !== 'nil') {
             $researchDone = intval($info[13]) + intval($info[2]);
             $craftingTrait->researchDone_at = Carbon::createFromTimestamp($researchDone);
             $craftingTrait->save();
@@ -74,5 +76,4 @@ class Smithing implements ShouldQueue
 
         $import->delete();
     }
-
 }

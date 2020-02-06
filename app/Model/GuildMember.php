@@ -3,7 +3,7 @@
 namespace App\Model;
 
 use App\Enum\CraftingType;
-use App\User;
+use App\Models\User;
 use Carbon\Carbon;
 use HeppyKarlsson\Meta\Traits\Meta;
 use HeppyKarlsson\Sluggify\Traits\Sluggify;
@@ -12,17 +12,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class GuildMember extends Model
 {
-
     protected $dates = [
-        'lastSeen_at'
+        'lastSeen_at',
     ];
 
-    public function user() {
+    public function user()
+    {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-    public function presentNote() {
+    public function presentNote()
+    {
         return str_ireplace(['\n', '\r'], ['<br>', ''], $this->note);
     }
-
 }

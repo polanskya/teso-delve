@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateUserItemTable extends Migration
 {
@@ -49,7 +49,6 @@ class CreateUserItemTable extends Migration
             $table->string('enchantDescription', 500)->nullable()->after('enchant');
             $table->integer('itemValue')->nullable()->after('weaponType');
         });
-
     }
 
     /**
@@ -64,7 +63,5 @@ class CreateUserItemTable extends Migration
         Schema::table('items', function ($table) {
             $table->dropColumn('itemLink');
         });
-
-
     }
 }

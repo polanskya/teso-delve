@@ -15,6 +15,6 @@ class VerifyCsrfToken extends BaseVerifier
         'import-data',
         'import-tesodelve',
         'import-auto',
-        'admin/crafting/motifs/upload-images/*'
+        'admin/crafting/motifs/upload-images/*',
     ];
 }

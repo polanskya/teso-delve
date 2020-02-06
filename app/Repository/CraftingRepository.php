@@ -1,4 +1,6 @@
-<?php namespace App\Repository;
+<?php
+
+namespace App\Repository;
 
 use App\Enum\ItemStyleChapter;
 use App\Enum\ItemTrait;
@@ -9,8 +11,8 @@ use Illuminate\Support\Facades\Auth;
 
 class CraftingRepository
 {
-
-    public function researchGrid($user, $craftingEnumType, $character) {
+    public function researchGrid($user, $craftingEnumType, $character)
+    {
         $traits = ItemTrait::matris();
 
         $researchLines = CraftingTrait::where('craftingTypeEnum', $craftingEnumType)
@@ -28,21 +30,21 @@ class CraftingRepository
             ->where('isKnown', 0)
             ->update(['isKnown' => 1]);
 
-        $characters->load(['craftingTraits' => function($query) use($craftingEnumType) {
+        $characters->load(['craftingTraits' => function ($query) use ($craftingEnumType) {
             $query->where('craftingTypeEnum', $craftingEnumType);
         }, 'craftingTraits.character']);
 
         $craftingTraits = $characters->pluck('craftingTraits')->collapse();
         $crafting = new Collection();
 
-        foreach($researchLines as $researchLineIndex => $researchLine) {
+        foreach ($researchLines as $researchLineIndex => $researchLine) {
             $researchLineFirst = $researchLine->first();
             $typeData = [
                 'researchLine' => $researchLineFirst,
                 'traits' => [],
             ];
 
-            foreach($traits as  $trait) {
+            foreach ($traits as  $trait) {
                 $cTraits = $craftingTraits->where('researchLineIndex', $researchLineFirst->researchLineIndex)->where('traitId', $trait);
                 $data = [];
                 $data['trait'] = $trait;
@@ -62,5 +64,4 @@ class CraftingRepository
 
         return $crafting;
     }
-
 }

@@ -1,4 +1,6 @@
-<?php namespace App\Jobs\EsoImport;
+<?php
+
+namespace App\Jobs\EsoImport;
 
 use App\Model\Character;
 use App\Model\CraftingTrait;
@@ -11,7 +13,6 @@ use Illuminate\Queue\SerializesModels;
 class Smithings implements ShouldQueue
 {
     use InteractsWithQueue, Queueable, SerializesModels;
-
 
     private $user_id;
     private $lines = [];
@@ -26,7 +27,8 @@ class Smithings implements ShouldQueue
         $this->user_id = $user_id;
     }
 
-    public function add($line) {
+    public function add($line)
+    {
         $this->lines[] = $line;
     }
 
@@ -42,18 +44,18 @@ class Smithings implements ShouldQueue
             ->get()
             ->keyBy('externalId');
 
-        foreach($this->lines as $line) {
+        foreach ($this->lines as $line) {
             $data = explode(';', $line);
             $datasPerCharacter->push($data);
         }
 
         $datasPerCharacter = $datasPerCharacter->groupBy(1);
 
-        $datasPerCharacter->each(function($datas, $externalId) use($characters) {
+        $datasPerCharacter->each(function ($datas, $externalId) use ($characters) {
             $character = $characters->get($externalId);
             $craftingTraits = $character->craftingTraits()->get();
 
-            foreach($datas as $data) {
+            foreach ($datas as $data) {
                 $smithingType = intval($data[3]);
 
                 $craftingTrait = $craftingTraits->where('craftingTypeEnum', $smithingType)
@@ -62,8 +64,7 @@ class Smithings implements ShouldQueue
                     ->where('traitIndex', intval($data[5]))
                     ->first();
 
-
-                if(trim($data[9]) == 'true' or (isset($data[13]) and $data[2] !== 'nil')) {
+                if (trim($data[9]) == 'true' or (isset($data[13]) and $data[2] !== 'nil')) {
                     $craftingTrait = isset($craftingTrait) ? $craftingTrait : new CraftingTrait();
                     $craftingTrait->characterId = $character->id;
                     $craftingTrait->craftingTypeEnum = $smithingType;
@@ -73,7 +74,7 @@ class Smithings implements ShouldQueue
                     $craftingTrait->name = $data[10];
                     $craftingTrait->image = $data[11];
 
-                    if(isset($data[13]) and $data[2] !== 'nil') {
+                    if (isset($data[13]) and $data[2] !== 'nil') {
                         $researchDone = intval($data[13]) + intval($data[2]);
                         $craftingTrait->researchDone_at = Carbon::createFromTimestamp($researchDone);
                     }
@@ -83,7 +84,5 @@ class Smithings implements ShouldQueue
                 }
             }
         });
-
-
     }
 }

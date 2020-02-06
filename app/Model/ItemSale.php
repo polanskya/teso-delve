@@ -1,4 +1,6 @@
-<?php namespace App\Model;
+<?php
+
+namespace App\Model;
 
 use App\Traits\EloquentGetTableNameTrait;
 use Carbon\Carbon;
@@ -11,25 +13,28 @@ class ItemSale extends Model
     public $timestamps = true;
 
     public $dates = [
-        'sold_at'
+        'sold_at',
     ];
 
-    public function guild() {
+    public function guild()
+    {
         return $this->belongsTo(Guild::class);
     }
 
-    public function scopeBetween($query, Carbon $start, Carbon $end) {
+    public function scopeBetween($query, Carbon $start, Carbon $end)
+    {
         return $query->where('sold_at', '>=', $start)
             ->where('sold_at', '<=', $end);
     }
 
-    public function item() {
+    public function item()
+    {
         return $this->belongsTo(Item::class);
     }
 
-    public function guid() {
-
-        if(isset($this->attributes['guid'])) {
+    public function guid()
+    {
+        if (isset($this->attributes['guid'])) {
             return $this->attributes['guid'];
         }
 
@@ -46,7 +51,7 @@ class ItemSale extends Model
         ]);
 
         $this->attributes['guid'] = $itemString;
+
         return $this->attributes['guid'];
     }
-
 }

@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateImportRowTable extends Migration
 {
@@ -46,6 +46,5 @@ class CreateImportRowTable extends Migration
     {
         Schema::dropIfExists('import_group');
         Schema::dropIfExists('import_row');
-
     }
 }

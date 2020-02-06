@@ -1,5 +1,6 @@
-<?php namespace App\Http\Controllers;
+<?php
 
+namespace App\Http\Controllers;
 
 use App\Enum\BagType;
 use App\Enum\SetType;
@@ -14,8 +15,8 @@ use Illuminate\Support\Facades\Auth;
 
 class CharacterController
 {
-
-    public function show(Character $character) {
+    public function show(Character $character)
+    {
         $user = Auth::user();
 
         $equippedItems = $character->items()
@@ -26,26 +27,31 @@ class CharacterController
         return view('character.show', compact('character', 'equippedItems', 'user'));
     }
 
-    public function delete(Character $character) {
-        if(Auth::id() != $character->userId) {
+    public function delete(Character $character)
+    {
+        if (Auth::id() != $character->userId) {
             abort(403);
         }
 
         $character->delete();
+
         return redirect()->back();
     }
 
-    public function restore($character_id) {
+    public function restore($character_id)
+    {
         $character = Character::onlyTrashed()->find($character_id);
-        if(Auth::id() != $character->userId) {
+        if (Auth::id() != $character->userId) {
             abort(403);
         }
 
         $character->restore();
+
         return redirect()->back();
     }
 
-    public function skills(Character $character, SkillLine $skillLine) {
+    public function skills(Character $character, SkillLine $skillLine)
+    {
         $skilltypes = SkillLine::where('lang', App::getLocale())
             ->get()
             ->groupBy('skilltypeEnum');
@@ -66,7 +72,8 @@ class CharacterController
         return view('character.skills', compact('character', 'skilltypes', 'showSkillLine', 'abilities', 'characterAbilities', 'spentSkillpoints'));
     }
 
-    public function index() {
+    public function index()
+    {
         $user = Auth::user();
         $characters = $user->characters()
             ->with('craftingTraits', 'userItems', 'meta')
@@ -82,7 +89,8 @@ class CharacterController
         return view('character.index', compact('characters', 'removedCharacters'));
     }
 
-    public function indexDeleted() {
+    public function indexDeleted()
+    {
         $user = Auth::user();
 
         $removedCharacters = $user->characters()
@@ -96,17 +104,19 @@ class CharacterController
         return view('character.index', compact('characters', 'removedCharacters'));
     }
 
-    public function itemStyles(Character $character) {
+    public function itemStyles(Character $character)
+    {
         $knownItemStyles = $character->itemStyles;
         $itemStyles = ItemStyle::where('craftable', 1)->get();
 
         return view('character.itemStyles', compact('character', 'knownItemStyles', 'itemStyles'));
     }
 
-    public function craftingResearch(Character $character, $craftingTypeEnum, CraftingRepository $craftingRepository) {
+    public function craftingResearch(Character $character, $craftingTypeEnum, CraftingRepository $craftingRepository)
+    {
         $user = Auth::user();
         $characters = new Collection([$character]);
-        if($user and Auth::id() == $character->userId) {
+        if ($user and Auth::id() == $character->userId) {
             $user = Auth::user();
             $characters = $user->characters;
         }
@@ -126,12 +136,12 @@ class CharacterController
         return view('character.crafting', compact('character', 'researchGrid', 'craftableSets', 'craftingTypeEnum', 'craftingTraits', 'traitsGrouped', 'characters'));
     }
 
-    public function inventory(Character $character, $bagEnum = null) {
+    public function inventory(Character $character, $bagEnum = null)
+    {
         $items = $character->items->where('pivot.bagEnum', is_null($bagEnum) ? BagType::BACKPACK : $bagEnum);
         $gold = $character->currency;
-        $bagSize = $character->getMeta('bag_' . BagType::BACKPACK);
+        $bagSize = $character->getMeta('bag_'.BagType::BACKPACK);
 
         return view('inventory.index', compact('character', 'bagEnum', 'items', 'gold', 'bagSize'));
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/roles', 'Admin\RoleController@index')->name('role.index');

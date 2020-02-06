@@ -3,7 +3,7 @@
 namespace App\Model;
 
 use App\Enum\CraftingType;
-use App\User;
+use App\Models\User;
 use Carbon\Carbon;
 use HeppyKarlsson\Meta\Traits\Meta;
 use HeppyKarlsson\Sluggify\Traits\Sluggify;
@@ -12,6 +12,4 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class GuildRank extends Model
 {
-
-
 }

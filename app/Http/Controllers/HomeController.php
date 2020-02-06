@@ -11,14 +11,13 @@ use App\Model\ItemStyle;
 use App\Model\ItemStyleChapter;
 use App\Model\Set;
 use App\Services\ServerService;
-use App\User;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
 {
-
     public function index(ServerService $serverService)
     {
         $dailyPledges = DailyPledges::where('date', '>=', Carbon::now()->subDay())
@@ -31,7 +30,7 @@ class HomeController extends Controller
 
         $statuses = $serverService->serverStatus();
 
-        $information = Cache::remember('startpage-info-'.$lang, 60*2, function() use ($lang) {
+        $information = Cache::remember('startpage-info-'.$lang, 60 * 2, function () use ($lang) {
             return [
                 'items' => Item::where('lang', App::getLocale())->count(),
                 'characters' => Character::count(),

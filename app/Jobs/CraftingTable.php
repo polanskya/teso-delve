@@ -1,4 +1,6 @@
-<?php namespace App\Jobs;
+<?php
+
+namespace App\Jobs;
 
 use App\Enum\ArmorType;
 use App\Enum\CraftingType;
@@ -15,9 +17,8 @@ class CraftingTable implements ShouldQueue
 {
     use InteractsWithQueue, Queueable, SerializesModels;
 
-
-    public function handle() {
-
+    public function handle()
+    {
         $clothingMedium = ResearchLine::clothing(ArmorType::MEDIUM);
         $clothingLight = ResearchLine::clothing(ArmorType::LIGHT);
 
@@ -35,7 +36,6 @@ class CraftingTable implements ShouldQueue
             ['link' => '|H0:item:46130:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h', 'start-level' => 50, 'end-level' => 50, 'start-champ' => 90, 'end-champ' => 140, 'smithing-type' => CraftingType::BLACKSMITHING, 'armor-start' => 13],
             ['link' => '|H0:item:64489:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h', 'start-level' => 50, 'end-level' => 50, 'start-champ' => 150, 'end-champ' => 160, 'smithing-type' => CraftingType::BLACKSMITHING, 'armor-start' => 13],
 
-
             // Clothing light
             ['link' => '|H0:item:811:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h', 'start-level' => 1, 'end-level' => 14, 'start-champ' => null, 'end-champ' => null, 'smithing-type' => CraftingType::CLOTHIER, 'armor-start' => 5, 'researchLines' => $clothingLight],
             ['link' => '|H0:item:4463:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h', 'start-level' => 16, 'end-level' => 24, 'start-champ' => null, 'end-champ' => null, 'smithing-type' => CraftingType::CLOTHIER, 'armor-start' => 6, 'researchLines' => $clothingLight],
@@ -47,7 +47,6 @@ class CraftingTable implements ShouldQueue
             ['link' => '|H0:item:46133:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h', 'start-level' => 50, 'end-level' => 50, 'start-champ' => 70, 'end-champ' => 80, 'smithing-type' => CraftingType::CLOTHIER, 'armor-start' => 12, 'researchLines' => $clothingLight],
             ['link' => '|H0:item:46134:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h', 'start-level' => 50, 'end-level' => 50, 'start-champ' => 90, 'end-champ' => 140, 'smithing-type' => CraftingType::CLOTHIER, 'armor-start' => 13, 'researchLines' => $clothingLight],
             ['link' => '|H0:item:64504:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h', 'start-level' => 50, 'end-level' => 50, 'start-champ' => 150, 'end-champ' => 160, 'smithing-type' => CraftingType::CLOTHIER, 'armor-start' => 13, 'researchLines' => $clothingLight],
-
 
             // Clothing medium
             ['link' => '|H0:item:794:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h', 'start-level' => 1, 'end-level' => 14, 'start-champ' => null, 'end-champ' => null, 'smithing-type' => CraftingType::CLOTHIER, 'armor-start' => 5, 'researchLines' => $clothingMedium],
@@ -75,49 +74,47 @@ class CraftingTable implements ShouldQueue
 
         ];
 
-
-        foreach($materials as $material) {
+        foreach ($materials as $material) {
             $item = Item::where('itemLink', $material['link'])->where('lang', 'en')->first();
 
             $craftingItems = CraftingItem::where('smithingTypeEnum', $material['smithing-type'])
                 ->where('level', '>=', $material['start-level'])
                 ->where('level', '<=', $material['end-level'])
-                ->when(is_null($material['start-champ']), function($query) use ($material) {
+                ->when(is_null($material['start-champ']), function ($query) use ($material) {
                     return $query->whereNull('championLevel');
                 })
-                ->when($material['start-champ'], function($query) use ($material) {
+                ->when($material['start-champ'], function ($query) use ($material) {
                     return $query->where('championLevel', '>=', $material['start-champ']);
                 })
-                ->when($material['end-champ'], function($query) use ($material) {
+                ->when($material['end-champ'], function ($query) use ($material) {
                     return $query->where('championLevel', '<=', $material['end-champ']);
                 })
                 ->orderBy('level', 'championLevel')
  //               ->orderBy('level')->orderBy('championLevel') // potential error
                 ->get();
 
-            if($craftingItems->first()->championLevel == null) {
+            if ($craftingItems->first()->championLevel == null) {
                 $craftingItemsLevel = $craftingItems->groupBy('level');
-            }
-            else {
+            } else {
                 $craftingItemsLevel = $craftingItems->groupBy('championLevel');
             }
 
             $craftingItemsLevel = $craftingItemsLevel->sort();
             $start = $material['armor-start'];
-            foreach($craftingItemsLevel as $level => $cis) {
+            foreach ($craftingItemsLevel as $level => $cis) {
                 $this->updateCraftingItems($cis, $start, $item, $material);
                 $start++;
             }
-
         }
     }
 
-    private function getBonus($material, $ci, $armorStart) {
+    private function getBonus($material, $ci, $armorStart)
+    {
         $smithingType = $material['smithing-type'];
         $researchLineIndex = $ci->researchLineIndex;
         $bonus = 0;
 
-        if($smithingType == CraftingType::BLACKSMITHING) {
+        if ($smithingType == CraftingType::BLACKSMITHING) {
             if ($researchLineIndex == ResearchLine::Cuirass) {
                 $bonus = 2;
             }
@@ -130,13 +127,12 @@ class CraftingTable implements ShouldQueue
                 $bonus = -3;
             }
 
-            if(in_array($researchLineIndex, [ResearchLine::Sword,  ResearchLine::Axe, ResearchLine::Mace])) {
+            if (in_array($researchLineIndex, [ResearchLine::Sword,  ResearchLine::Axe, ResearchLine::Mace])) {
                 $bonus = -2;
             }
         }
 
-        if($smithingType == CraftingType::CLOTHIER) {
-
+        if ($smithingType == CraftingType::CLOTHIER) {
             if (in_array($researchLineIndex, [ResearchLine::Robe_AND_Jerkin, ResearchLine::Jack])) {
                 $bonus = 2;
             }
@@ -144,22 +140,17 @@ class CraftingTable implements ShouldQueue
             if (in_array($researchLineIndex, [ResearchLine::Breeches, ResearchLine::Guards])) {
                 $bonus = 1;
             }
-
         }
 
-        if($smithingType == CraftingType::WOODWORKING) {
-
-            if($researchLineIndex == ResearchLine::Shield) {
+        if ($smithingType == CraftingType::WOODWORKING) {
+            if ($researchLineIndex == ResearchLine::Shield) {
                 $bonus = 3;
             }
 
-
-            if($researchLineIndex == ResearchLine::Shield and ($ci->championLevel >= 150)) {
+            if ($researchLineIndex == ResearchLine::Shield and ($ci->championLevel >= 150)) {
                 $bonus = $bonus - 1;
             }
-
         }
-
 
         if ($ci->championLevel == config('eso.champion-level.gear-max')) {
             $previous = $armorStart - 1 + $bonus;
@@ -170,12 +161,12 @@ class CraftingTable implements ShouldQueue
         return $bonus;
     }
 
-    private function updateCraftingItems($craftingItems, $armorStart, $item, $material) {
+    private function updateCraftingItems($craftingItems, $armorStart, $item, $material)
+    {
         $craftingItems = $craftingItems->sort();
 
-        foreach($craftingItems as $ci) {
-
-            if(isset($material['researchLines']) and !in_array($ci->researchLineIndex, $material['researchLines'])) {
+        foreach ($craftingItems as $ci) {
+            if (isset($material['researchLines']) and ! in_array($ci->researchLineIndex, $material['researchLines'])) {
                 continue;
             }
 
@@ -187,5 +178,4 @@ class CraftingTable implements ShouldQueue
             $ci->save();
         }
     }
-
 }

@@ -1,4 +1,6 @@
-<?php namespace App\Repository;
+<?php
+
+namespace App\Repository;
 
 use App\Enum\BagType;
 use App\Enum\Import\ItemPosition;
@@ -15,8 +17,8 @@ class ItemRepository
         $this->save = $save;
     }
 
-    public function importGet($data, $items) {
-
+    public function importGet($data, $items)
+    {
         $item = $items->where('external_id', $data[ItemPosition::NAME])
             ->where('trait', intval($data[2]))
             ->where('quality', intval($data[5]))
@@ -32,21 +34,21 @@ class ItemRepository
             ->first();
 
         return $item;
-
     }
 
-    public function userItem($data, $user_id, $itemStyles, $characters) {
+    public function userItem($data, $user_id, $itemStyles, $characters)
+    {
         $bagType = $data[ItemPosition::BAGTYPE];
 
         $character = $characters
             ->where('externalId', intval($data[ItemPosition::CHARACTER_EXTERNAL_ID]))
             ->first();
 
-        if($bagType == BagType::BANK) {
+        if ($bagType == BagType::BANK) {
             $character = null;
         }
 
-        if($bagType == BagType::VIRTUAL) {
+        if ($bagType == BagType::VIRTUAL) {
             $character = null;
         }
 
@@ -64,7 +66,7 @@ class ItemRepository
         $userItem->slotId = intval($data[23]);
 
         $userItem->itemStyleId = null;
-        if(isset($data[25]) and intval($data[25]) != 0) {
+        if (isset($data[25]) and intval($data[25]) != 0) {
             $itemStyle = $itemStyles->where('externalId', intval($data[25]))->first();
             $userItem->itemStyleId = isset($itemStyle->id) ? $itemStyle->id : null;
         }
@@ -78,8 +80,9 @@ class ItemRepository
         $userItem->isBound = (isset($data[16]) and stripos($data[16], 'true') !== false);
         $userItem->isLocked = $data[7] == 'true';
 
-        if($this->save) {
+        if ($this->save) {
             $userItem->save();
+
             return $userItem;
         }
 
@@ -89,7 +92,8 @@ class ItemRepository
         return $userItem;
     }
 
-    public function create($data, $itemStyles) {
+    public function create($data, $itemStyles)
+    {
         $name = $data[ItemPosition::NAME];
         $lang = explode('"', $data[ItemPosition::LANG])[0];
 
@@ -116,31 +120,31 @@ class ItemRepository
         $item->itemStyleId = null;
         $item->flavor = null;
 
-        if(isset($data[29])) {
+        if (isset($data[29])) {
             $item->flavor = $data[29];
         }
 
-        if(!empty($data[4])) {
+        if (! empty($data[4])) {
             $item->setItemSet($data[4]);
         }
 
-        if(isset($data[25]) and intval($data[25]) != 0) {
+        if (isset($data[25]) and intval($data[25]) != 0) {
             $itemStyle = $itemStyles->where('externalId', intval($data[25]))->first();
 
-            if(is_null($itemStyle)) {
+            if (is_null($itemStyle)) {
                 $itemStyle = new ItemStyle();
                 $itemStyle->externalId = intval($data[25]);
                 $itemStyle->name = '';
                 $itemStyle->image = '';
                 $itemStyle->save();
                 $itemStyles->add($itemStyle);
-
             }
             $item->itemStyleId = isset($itemStyle->id) ? $itemStyle->id : null;
         }
 
-        if($this->save) {
+        if ($this->save) {
             $item->save();
+
             return $item;
         }
 

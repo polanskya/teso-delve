@@ -1,9 +1,9 @@
-<?php namespace App\Enum;
+<?php
 
+namespace App\Enum;
 
 class ResearchLine
 {
-
     // Blacksmithing
     const Axe = 1;
     const Mace = 2;
@@ -44,8 +44,8 @@ class ResearchLine
     const Restoration_Staff = 5;
     const Shield = 6;
 
-
-    public static function blacksmithingGrouped() {
+    public static function blacksmithingGrouped()
+    {
         $weapons = [
             self::Axe,
             self::Mace,
@@ -66,12 +66,11 @@ class ResearchLine
             self::Girdle,
         ];
 
-
         return ['armors' => $armors, 'weapons' => $weapons];
     }
 
-    public static function blacksmithing() {
-
+    public static function blacksmithing()
+    {
         return [
             self::Axe,
             self::Mace,
@@ -88,11 +87,11 @@ class ResearchLine
             self::Pauldron,
             self::Girdle,
         ];
-
     }
 
-    public static function clothing($armorType = ArmorType::LIGHT) {
-        if($armorType == ArmorType::LIGHT) {
+    public static function clothing($armorType = ArmorType::LIGHT)
+    {
+        if ($armorType == ArmorType::LIGHT) {
             return [
                 self::Robe_AND_Jerkin,
                 self::Shoes,
@@ -114,6 +113,4 @@ class ResearchLine
             self::Belt,
         ];
     }
-
-
 }

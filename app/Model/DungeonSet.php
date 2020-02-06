@@ -6,13 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class DungeonSet extends Model
 {
-
     protected $fillable = [
 
     ];
 
-    public function sets() {
-
+    public function sets()
+    {
     }
-
 }

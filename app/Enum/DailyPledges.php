@@ -2,12 +2,11 @@
 
 namespace App\Enum;
 
-
 class DailyPledges
 {
-    static public $startDate = '2019-12-19';
+    public static $startDate = '2019-12-19';
 
-    static public $schedule = [
+    public static $schedule = [
         // Darkshade Caverns I	Crypt of Hearts I	White-Gold Tower
         [19, 15, 27],
 //        Elden Hollow II	Volenfell	Cradle of Shadows
@@ -31,7 +30,6 @@ class DailyPledges
         //Fungal Grotto I	Selene's Web	Imperial City Prison
         [1, 10, 28],
         //Banished Cells II	City of Ash II	Ruins of Mazzatun
-        [4, 8, 24]
+        [4, 8, 24],
     ];
-
 }

@@ -1,4 +1,6 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php
+
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Model\Dungeon;
@@ -9,24 +11,23 @@ use Carbon\Carbon;
 
 class SlugController extends Controller
 {
-
-    public function generateSlugs() {
+    public function generateSlugs()
+    {
         set_time_limit(120);
 
-        foreach(Set::all() as $set) {
+        foreach (Set::all() as $set) {
             $set->updated_at = Carbon::now();
             $set->save();
         }
 
-        foreach(ItemStyle::all() as $itemStyle) {
+        foreach (ItemStyle::all() as $itemStyle) {
             $itemStyle->updated_at = Carbon::now();
             $itemStyle->save();
         }
 
-        foreach(Dungeon::all() as $dungeon) {
+        foreach (Dungeon::all() as $dungeon) {
             $dungeon->updated_at = Carbon::now();
             $dungeon->save();
         }
     }
-
 }

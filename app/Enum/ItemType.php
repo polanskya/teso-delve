@@ -1,5 +1,6 @@
-<?php namespace App\Enum;
+<?php
 
+namespace App\Enum;
 
 class ItemType
 {
@@ -66,7 +67,8 @@ class ItemType
     const WOODWORKING_MATERIAL = 38;
     const WOODWORKING_RAW_MATERIAL = 37;
 
-    static public function consumables() {
+    public static function consumables()
+    {
         return [
             self::POTION,
             self::FOOD,
@@ -78,23 +80,25 @@ class ItemType
         ];
     }
 
-    static public function material($craftingTypeEnum) {
-        if($craftingTypeEnum == CraftingType::BLACKSMITHING) {
+    public static function material($craftingTypeEnum)
+    {
+        if ($craftingTypeEnum == CraftingType::BLACKSMITHING) {
             return self::BLACKSMITHING_MATERIAL;
         }
 
-        if($craftingTypeEnum == CraftingType::CLOTHIER) {
+        if ($craftingTypeEnum == CraftingType::CLOTHIER) {
             return self::CLOTHIER_MATERIAL;
         }
 
-        if($craftingTypeEnum == CraftingType::WOODWORKING) {
+        if ($craftingTypeEnum == CraftingType::WOODWORKING) {
             return self::WOODWORKING_MATERIAL;
         }
 
-        throw new \Exception('No material found for: ' . $craftingTypeEnum);
+        throw new \Exception('No material found for: '.$craftingTypeEnum);
     }
 
-    static public function materials() {
+    public static function materials()
+    {
         return [
             self::RAW_MATERIAL,
             self::WOODWORKING_MATERIAL,
@@ -113,8 +117,8 @@ class ItemType
         ];
     }
 
-
-    static public function misc() {
+    public static function misc()
+    {
         return [
             self::WEAPON_BOOSTER,
             self::TABARD,
@@ -131,6 +135,4 @@ class ItemType
             self::PLUG,
         ];
     }
-
-
-};
+}

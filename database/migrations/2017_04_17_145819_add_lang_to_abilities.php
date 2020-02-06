@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class AddLangToAbilities extends Migration
 {
@@ -24,17 +24,16 @@ class AddLangToAbilities extends Migration
         });
 
         $skillLines = \App\Model\SkillLine::whereNull('externalName')->get();
-        foreach($skillLines as $skillLine) {
+        foreach ($skillLines as $skillLine) {
             $skillLine->externalName = $skillLine->name;
             $skillLine->save();
         }
 
         $abilities = \App\Model\Ability::whereNull('externalName')->get();
-        foreach($abilities as $ability) {
+        foreach ($abilities as $ability) {
             $ability->externalName = $ability->name;
             $ability->save();
         }
-
     }
 
     /**

@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class AddLangColumns extends Migration
 {
@@ -31,7 +31,6 @@ class AddLangColumns extends Migration
             $table->string('server')->nullable()->after('lang');
             $table->string('account')->nullable()->after('server');
         });
-
     }
 
     /**
@@ -59,6 +58,5 @@ class AddLangColumns extends Migration
             $table->dropColumn('server');
             $table->dropColumn('account');
         });
-
     }
 }

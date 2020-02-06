@@ -14,12 +14,11 @@ class DailyPledgesSeeder extends Seeder
      */
     public function run()
     {
-
         $pledges = DailyPledgesEnum::$schedule;
 
         $startDate = Carbon::parse(DailyPledgesEnum::$startDate);
         $now = Carbon::now()->addYears(1);
-        while($startDate->lt($now)) {
+        while ($startDate->lt($now)) {
             $pledge = array_shift($pledges);
 
             $dp = new DailyPledges();

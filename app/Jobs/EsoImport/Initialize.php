@@ -1,4 +1,6 @@
-<?php namespace App\Jobs\EsoImport;
+<?php
+
+namespace App\Jobs\EsoImport;
 
 use App\Enum\ImportType;
 use App\Enum\ItemType;
@@ -36,7 +38,7 @@ class Initialize implements ShouldQueue
      */
     public function handle()
     {
-        $importGroup = sha1($this->file . Carbon::now() . $this->user->id);
+        $importGroup = sha1($this->file.Carbon::now().$this->user->id);
         UserItem::where('userId', $this->user->id)->delete();
         ImportGroup::where('user_id', $this->user->id)->delete();
 
@@ -53,40 +55,40 @@ class Initialize implements ShouldQueue
         $ig->save();
         $jobs = new Collection();
 
-        foreach(file($this->file) as $line) {
-            if($this->contains($line, 'CHARACTER:')) {
+        foreach (file($this->file) as $line) {
+            if ($this->contains($line, 'CHARACTER:')) {
                 $character = new Character($line, $this->user, $importGroup);
                 $ig->characters++;
                 dispatch($character->onQueue('high'));
             }
         }
 
-        foreach(file($this->file) as $line) {
-            if($this->contains($line, 'ITEM:')) {
+        foreach (file($this->file) as $line) {
+            if ($this->contains($line, 'ITEM:')) {
                 $jobs->add(new Item($line, $this->user, $importGroup));
                 $ig->items++;
             }
 
-            if($this->contains($line, 'ITEMSTYLE:')) {
+            if ($this->contains($line, 'ITEMSTYLE:')) {
                 $jobs->add(new ItemStyle($line, $this->user, $importGroup));
                 $ig->itemStyles++;
             }
 
-            if($this->contains($line, 'SMITHING:')) {
+            if ($this->contains($line, 'SMITHING:')) {
                 $jobs->add(new Smithing($line, $this->user, $importGroup));
                 $ig->smithing++;
             }
-
         }
 
         $ig->save();
 
-        $jobs->each(function($job) {
-           dispatch($job);
+        $jobs->each(function ($job) {
+            dispatch($job);
         });
     }
 
-    public function contains($line, $key) {
+    public function contains($line, $key)
+    {
         return stripos($line, $key) !== false;
     }
 }

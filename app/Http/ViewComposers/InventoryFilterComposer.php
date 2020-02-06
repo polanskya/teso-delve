@@ -1,4 +1,6 @@
-<?php namespace App\Http\ViewComposers;
+<?php
+
+namespace App\Http\ViewComposers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -7,7 +9,6 @@ use Illuminate\View\View;
 
 class InventoryFilterComposer
 {
-
     private $request;
 
     public function __construct(Request $request)
@@ -23,7 +24,6 @@ class InventoryFilterComposer
      */
     public function compose(View $view)
     {
-
         $request = request();
         $route = route($request->route()->getName(), $request->route()->parameters());
         $query = $this->request->query();

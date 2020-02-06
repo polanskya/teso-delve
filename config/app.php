@@ -174,7 +174,6 @@ return [
         HeppyKarlsson\DBLogger\ServiceProvider::class,
         HeppyKarlsson\BanHammer\ServiceProvider::class,
 
-
         /*
          * Application Service Providers...
          */

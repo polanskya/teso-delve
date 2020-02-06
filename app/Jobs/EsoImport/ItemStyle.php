@@ -1,4 +1,6 @@
-<?php namespace App\Jobs\EsoImport;
+<?php
+
+namespace App\Jobs\EsoImport;
 
 use App\Enum\ImportType;
 use App\Enum\ItemStyleChapter;
@@ -6,9 +8,9 @@ use App\Model\CharacterItemStyle;
 use App\Model\ImportRow;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Auth;
 
 class ItemStyle implements ShouldQueue
@@ -48,7 +50,7 @@ class ItemStyle implements ShouldQueue
         $externalId = intval($data[5]);
         $itemStyle = \App\Model\ItemStyle::where('externalId', $externalId)->first();
 
-        if(is_null($itemStyle)) {
+        if (is_null($itemStyle)) {
             $itemStyle = new \App\Model\ItemStyle();
             $itemStyle->externalId = $externalId;
             $itemStyle->name = '';
@@ -58,15 +60,15 @@ class ItemStyle implements ShouldQueue
         }
 
         $character = $import->user->characters->where('externalId', $data[1])->first();
-        if(is_null($character)) {
+        if (is_null($character)) {
             return true;
         }
 
         $chapterKnown = explode('-', $data[7]);
         $chapters = ItemStyleChapter::order();
 
-        foreach($chapterKnown as $key => $known) {
-            if(stripos($known, 'true') !== false) {
+        foreach ($chapterKnown as $key => $known) {
+            if (stripos($known, 'true') !== false) {
                 $characterItemStyle = CharacterItemStyle::firstOrNew([
                     'characterId' => $character->id,
                     'itemStyleId' => $itemStyle->id,
@@ -78,8 +80,6 @@ class ItemStyle implements ShouldQueue
             }
         }
 
-
         $import->delete();
     }
-
 }

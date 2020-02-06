@@ -16,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-       Item::observe(ItemObserver::class);
+        Item::observe(ItemObserver::class);
     }
 
     /**
@@ -26,10 +26,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        if(env('APP_ENV') == 'local' and env('ENABLE_DEBUGBAR') != false) {
+        if (env('APP_ENV') == 'local' and env('ENABLE_DEBUGBAR') != false) {
             $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
-
         }
     }
 }

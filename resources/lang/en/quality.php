@@ -10,6 +10,6 @@ return [
         Quality::SUPERIOR => 'Superior',
         Quality::EPIC => 'Epic',
         Quality::LEGENDARY => 'Legendary',
-    ]
+    ],
 
 ];
