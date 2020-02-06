@@ -22,7 +22,7 @@
                             <tr>
                                 <td></td>
                                 <td class="text-white">
-                                    {{$log->user->name or '-'}}
+                                    {{empty($log->user) ? '-' : $log->user->name}}
                                 </td>
                                 </td>
                                 <td class="text-right min-width nowrap text-white">{{$log->ip}}</td>

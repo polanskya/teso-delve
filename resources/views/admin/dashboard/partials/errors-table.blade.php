@@ -25,7 +25,7 @@
                                 <i class="fa fa-exclamation-circle text-danger"></i>
                             @endif
                         </td>
-                        <td class="text-white">{{$log->user->name or '-'}} </td>
+                        <td class="text-white">{{empty($log->user) ? '-' : $log->user->name}} </td>
                         <td class="text-white">{{$log->ip or '-'}}</td>
                         <td>
                             <a href="{{route('admin.error.show', [$log])}}" class="text-white">{{empty($log->error) ? 'error' : $log->error}}</a><br>{{$log->exception}}</td>
