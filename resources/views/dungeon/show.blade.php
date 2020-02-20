@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('meta-title')
-    {{$dungeon->name}} {{ lcfirst(trans('eso.dungeonType.' . $dungeon->dungeonTypeEnum)) }} - @parent
+    {{$dungeon->name}} {{ lcfirst(trans('eso.dungeonType.' . $dungeon->type)) }} - @parent
 @endsection
 
 @section('meta-description')
-    {{$dungeon->name}} is a {{$dungeon->groupSize}} man {{lcfirst(trans('eso.dungeonType.'.$dungeon->dungeonTypeEnum))}} in {{$dungeon->zone()['name']}} that drops: {{implode(', ', $dungeon->sets->pluck('name')->toArray())}}
+    {{$dungeon->name}} is a {{$dungeon->groupSize}} man {{lcfirst(trans('eso.dungeonType.'.$dungeon->type))}} in {{$dungeon->zone->name}} that drops: {{implode(', ', $dungeon->sets->pluck('name')->toArray())}}
 @endsection
 
 @section('content')
@@ -30,7 +30,7 @@
 
                                 <div>
                                     <p>
-                                        {{$dungeon->name}} is a {{$dungeon->groupSize}} man {{lcfirst(trans('eso.dungeonType.'.$dungeon->dungeonTypeEnum))}} in Elder Scrolls Online and can be found in {{$dungeon->zone()['name']}}.
+                                        {{$dungeon->name}} is a {{$dungeon->groupsize}} man {{lcfirst(trans('eso.dungeonType.'.$dungeon->type))}} in Elder Scrolls Online and can be found in {{$dungeon->zone->name}}.
                                     </p>
                                     {!! nl2br($dungeon->description) !!}
                                 </div>

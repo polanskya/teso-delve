@@ -21,7 +21,7 @@ class Date
     }
 
     static public function until($date) {
-        $return = Carbon::now()->diffForHumans($date, 2);
+        $return = Carbon::now()->diffForHumans($date,1);
         return "<span title='$date'>" . $return . "</span>";
     }
 

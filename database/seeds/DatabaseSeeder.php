@@ -16,5 +16,7 @@ class DatabaseSeeder extends Seeder
          $this->call(DungeonSeeder::class);
          $this->call(DailyPledgesSeeder::class);
          $this->call(RoleSeeder::class);
+         $this->call(ZonesSeeder::class);
+         $this->call(DungeonSeederAuto::class);
     }
 }

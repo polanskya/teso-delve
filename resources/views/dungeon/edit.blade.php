@@ -29,12 +29,12 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="dungeon[dungeonTypeEnum]" class="control-label col-md-2">Type</label>
+                                    <label for="dungeon[type]" class="control-label col-md-2">Type</label>
                                     <div class="col-md-10">
-                                        <select class="form-control" name="dungeon[dungeonTypeEnum]">
+                                        <select class="form-control" name="dungeon[type]">
                                             <option value="">Select type</option>
                                             @foreach(\App\Enum\DungeonType::constants() as $dungeonType)
-                                                <option {{$dungeonType == $dungeon->dungeonTypeEnum ? 'selected="selected"' : ''}} value="{{$dungeonType}}">{{trans('eso.dungeonType.'.$dungeonType)}}</option>
+                                                <option {{$dungeonType == $dungeon->type ? 'selected="selected"' : ''}} value="{{$dungeonType}}">{{trans('eso.dungeonType.'.$dungeonType)}}</option>
                                             @endforeach
                                         </select>
                                     </div>

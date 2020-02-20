@@ -97,7 +97,7 @@ class SetController
 
     public function edit(Set $set) {
         $zonesService = new Zones();
-        $dungeonsByAlliance = Dungeon::whereIn('dungeonTypeEnum', [DungeonType::TRIAL, DungeonType::GROUP_DUNGEON, DungeonType::ARENA])
+        $dungeonsByAlliance = Dungeon::whereIn('type', [DungeonType::TRIAL, DungeonType::GROUP_DUNGEON, DungeonType::ARENA])
             ->get()
             ->groupBy('alliance');
 

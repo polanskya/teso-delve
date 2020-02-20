@@ -22,6 +22,7 @@ Zone sets - @parent
                                 <tr>
                                     <th class="min-width"><img class="alliance-img" src="gfx/alliance_{{$alliance}}.png"></th>
                                     <th><h5>{{ trans('alliance.'.$alliance . "") }}</h5></th>
+                                    <th>DLC</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -29,6 +30,7 @@ Zone sets - @parent
                                     <tr>
                                         <td></td>
                                         <td><a href="{{route('zone.show', [$z['slug']])}}">{{$z['name']}}</a></td>
+                                        <td>{{$z->dlc_name}}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>

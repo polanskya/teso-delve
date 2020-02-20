@@ -12,9 +12,10 @@ class CraftingType
     const INVALID = 0;
     const PROVISIONING = 5;
     const WOODWORKING = 6;
+    const JEWELRYCRAFTING =7;
 
     static public function smithing() {
-        return [self::BLACKSMITHING, self::CLOTHIER, self::WOODWORKING];
+        return [self::BLACKSMITHING, self::CLOTHIER, self::WOODWORKING,self::JEWELRYCRAFTING];
     }
 
 };

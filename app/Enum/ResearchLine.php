@@ -44,6 +44,9 @@ class ResearchLine
     const Restoration_Staff = 5;
     const Shield = 6;
 
+    //JC 
+    const RING = 1;
+    const NECK = 2;
 
     public static function blacksmithingGrouped() {
         $weapons = [

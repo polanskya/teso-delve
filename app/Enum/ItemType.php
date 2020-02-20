@@ -66,6 +66,16 @@ class ItemType
     const WOODWORKING_MATERIAL = 38;
     const WOODWORKING_RAW_MATERIAL = 37;
 
+
+
+    const JEWELRYCRAFTING_BOOSTER=65;
+    const JEWELRYCRAFTING_MATERIAL=64;
+    const JEWELRYCRAFTING_RAW_BOOSTER=67;
+    const JEWELRYCRAFTING_RAW_MATERIAL=63;
+    const JEWELRY_RAW_TRAIT=68;
+    const JEWELRY_TRAIT = 66;
+
+
     static public function consumables() {
         return [
             self::POTION,
@@ -90,7 +100,9 @@ class ItemType
         if($craftingTypeEnum == CraftingType::WOODWORKING) {
             return self::WOODWORKING_MATERIAL;
         }
-
+        if($craftingTypeEnum == CraftingType::JEWELRYCRAFTING) {
+            return self::JEWELRYCRAFTING_MATERIAL;
+        }
         throw new \Exception('No material found for: ' . $craftingTypeEnum);
     }
 
@@ -106,7 +118,11 @@ class ItemType
             self::ENCHANTING_RUNE_POTENCY,
             self::CLOTHIER_MATERIAL,
             self::CLOTHIER_RAW_MATERIAL,
+            self::JEWELRYCRAFTING_MATERIAL,
+            self::JEWELRY_RAW_TRAIT,
+            self::JEWELRYCRAFTING_RAW_MATERIAL,
             self::WEAPON_TRAIT,
+            self::JEWELRY_TRAIT,
             self::ARMOR_TRAIT,
             self::REAGENT,
             self::INGREDIENT,

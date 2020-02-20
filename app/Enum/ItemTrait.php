@@ -23,10 +23,22 @@ class ItemTrait
     const ARMOR_STURDY = 11;
     const ARMOR_TRAINING = 15;
     const ARMOR_WELL_FITTED = 14;
+    
     const JEWELRY_ARCANE = 22;
     const JEWELRY_HEALTHY = 21;
     const JEWELRY_ORNATE = 24;
     const JEWELRY_ROBUST = 23;
+
+
+    const JEWELRY_BLOODTHIRSTY=31;
+    const JEWELRY_HARMONY=29;
+    const JEWELRY_INFUSED=33;
+    const JEWELRY_INTRICATE=27;
+    const JEWELRY_PROTECTIVE=32;
+    const JEWELRY_SWIFT=28;
+    const JEWELRY_TRIUNE=30;
+
+
     const NONE =0;
     const SPECIAL_STAT = 27;
     const WEAPON_CHARGED = 2;
@@ -58,6 +70,20 @@ class ItemTrait
                 self::ARMOR_PROSPEROUS,
                 self::ARMOR_DIVINES,
                 self::ARMOR_NIRNHONED
+            ];
+        }
+
+        if($craftingTypeEnum == CraftingType::JEWELRYCRAFTING) {
+            return [
+                self::JEWELRY_ARCANE,
+                self::JEWELRY_HEALTHY,
+                self::JEWELRY_ROBUST,
+                self::JEWELRY_TRIUNE,
+                self::JEWELRY_INFUSED,
+                self::JEWELRY_PROTECTIVE,
+                self::JEWELRY_SWIFT,
+                self::JEWELRY_HARMONY,
+                self::JEWELRY_BLOODTHIRSTY
             ];
         }
 

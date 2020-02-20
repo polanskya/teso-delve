@@ -31,6 +31,7 @@
                             <tr>
                                 <th colspan="2">Name</th>
                                 <th>Bosses</th>
+                                <th>DLC</th>
                                 <th>Zone</th>
                             </tr>
                             </thead>
@@ -39,13 +40,14 @@
                                 <tr class="bg-gray-darker">
                                     <td class="min-width"><img class="alliance-img" src="/gfx/alliance_{{$alliance}}.png"></td>
                                     <td><h5>{{ trans('alliance.'.$alliance . "") }}</h5></td>
-                                    <td colspan="3"></td>
+                                    <td colspan="4"></td>
                                 </tr>
-                                @foreach($zoneDungeons->sortBy('zone') as $dungeon)
+                                @foreach($zoneDungeons->sortBy('zone_id') as $dungeon)
                                     <tr>
                                         <td colspan="2"><a href="{{route('dungeon.show', [$dungeon])}}">{{$dungeon->name}}</a></td>
                                         <td>{{$dungeon->bosses->count()}}</td>
-                                        <td>{{$dungeon->zone() ? $dungeon->zone()['name'] : ''}}</td>
+                                        <td>{{$dungeon->getDlcLabel()}}</td>
+                                        <td>{{$dungeon->zone->name}}</td>
                                         <td class="min-width text-center">
                                             @if(in_array($dungeon->id, $pledges))
                                                 <img src="/gfx/icons/ON-icon-UndauntedEnclave.png" title="Undaunted pledge today" class="icon-size">

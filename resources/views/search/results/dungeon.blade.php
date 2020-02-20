@@ -13,7 +13,7 @@ $url = route('dungeon.show', [$result], true);
         </h4>
 
         <div class="col-md-6 text-right">
-            <span class="label label-gray-lighter m-r-1 label-outline">{{trans("eso.dungeonType.{$result->dungeonTypeEnum}")}}</span>
+            <span class="label label-gray-lighter m-r-1 label-outline">{{trans("eso.dungeonType.{$result->type}")}}</span>
         </div>
 
         <div class="col-md-12">

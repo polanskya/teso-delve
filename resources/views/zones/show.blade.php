@@ -25,10 +25,10 @@
                             </div>
 
                             <div class="col-md-12">
-                                @foreach($dungeons->groupBy('dungeonTypeEnum') as $dungeonTypeEnum => $dungeons)
+                                @foreach($dungeons->groupBy('type') as $type => $dungeons)
                                     <div class="col-md-2">
 
-                                        <h5><img src="{{config('gfx.dungeonTypes.'.$dungeons->first()->dungeonTypeEnum)}}" class="icon-size"> @lang('eso.dungeonType.'.$dungeonTypeEnum)s</h5>
+                                        <h5><img src="{{config('gfx.dungeonTypes.'.$dungeons->first()->type)}}" class="icon-size"> @lang('eso.dungeonType.'.$type)s</h5>
                                         <ul class="list-unstyled">
                                             @foreach($dungeons as $dungeon)
                                                 <li><a href="{{route('dungeon.show', [$dungeon])}}">{{$dungeon->name}}</a></li>

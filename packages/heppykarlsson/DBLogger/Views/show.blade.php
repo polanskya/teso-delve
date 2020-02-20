@@ -113,7 +113,7 @@
                                         @if(!empty($trace->file))
                                                 {{$trace->file or ''}}({{$trace->line or ''}})</span><br>
                                         @endif
-                                        {{$trace->class or ''}}{{$trace->type or ''}}{{$trace->function or ''}}</td>
+                                        {{isset($trace->class) ? $trace->class : ''}}{{isset($trace->type) ? $trace->type : ''}}{{isset($trace->function) ? $trace->function : ''}}</td>
                                 </tr>
                             @endforeach
                             </tbody>

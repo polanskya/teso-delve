@@ -233,9 +233,9 @@
                             </div>
 
                             <div class="row">
-                                @include('dungeon.pledge-box', ['dungeon' => $dailyPledge->firstPledge])
-                                @include('dungeon.pledge-box', ['dungeon' => $dailyPledge->secondPledge])
-                                @include('dungeon.pledge-box', ['dungeon' => $dailyPledge->thirdPledge])
+                                @include('dungeon.pledge-box', ['dungeon' => $dailyPledge->firstPledge, 'giver' => "Maj al-Ragath"])
+                                @include('dungeon.pledge-box', ['dungeon' => $dailyPledge->secondPledge, 'giver' => "Glirion"])
+                                @include('dungeon.pledge-box', ['dungeon' => $dailyPledge->thirdPledge, 'giver' => "Urgarlag / DLC"])
                             </div>
                         </div>
                     @endforeach

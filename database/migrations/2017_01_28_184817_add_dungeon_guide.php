@@ -15,7 +15,7 @@ class AddDungeonGuide extends Migration
     {
         Schema::table('dungeons', function (Blueprint $table) {
             $table->dropColumn('type');
-            $table->integer('dungeonTypeEnum')->default(\App\Enum\DungeonType::GROUP_DUNGEON)->after('zone');
+            $table->integer('type')->default(\App\Enum\DungeonType::GROUP_DUNGEON)->after('zone_id');
         });
 
         Schema::create('bosses', function (Blueprint $table) {

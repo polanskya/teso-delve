@@ -10,7 +10,7 @@
         <div class="col-sm-6"><h4><img class="champion-icon" src="/gfx/champion_icon.png"> 160</h4></div>
 
         @if($user)
-            <div class="col-md-12 text-center text-white setCount">You have <strong>{{$user->items->where('setId', $set->id)->groupBy('equipType')->count()}}/{{$set->bonuses->sortBy('bonusNumber')->last()->bonusNumber or ''}}</strong> item types of {{$set->name}}</div>
+            <div class="col-md-12 text-center text-white setCount">You have <strong>{{$user->items->where('setId', $set->id)->groupBy('equipType')->count()}}/{{isset($set->bonuses->sortBy('bonusNumber')->last()->bonusNumber) or ''}}</strong> item types of {{$set->name}}</div>
         @endif
 
         <div class="col-md-12 setBonuses">

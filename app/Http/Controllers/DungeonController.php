@@ -7,7 +7,7 @@ use App\Model\DailyPledges;
 use App\Model\Dungeon;
 use App\Model\Set;
 use App\Model\ZoneSet;
-use App\Objects\Zones;
+use App\Model\Zone;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,7 +35,7 @@ class DungeonController
         }
 
         $dungeons = Dungeon::with('sets', 'bosses')
-            ->where('dungeonTypeEnum', $dungeonType)
+            ->where('type', $dungeonType)
             ->get()
             ->groupBy('alliance');
 
@@ -50,9 +50,9 @@ class DungeonController
 
         $dungeon = new Dungeon();
         $dungeon->name = $data['name'];
-        $dungeon->dungeonTypeEnum = empty($data['dungeonTypeEnum']) ? null : $data['dungeonTypeEnum'];
+        $dungeon->type = empty($data['type']) ? null : $data['type'];
         $dungeon->zone = empty($data['zone']) ? null : $data['zone'];
-        $zoneObject = new Zones();
+        $zoneObject = new Zone();
 
         if(!is_null($dungeon->zone)) {
             $zone = $zoneObject->getZone($dungeon->zone);
@@ -70,8 +70,8 @@ class DungeonController
     public function create(Request $request) {
         $dungeon = new Dungeon();
 
-        $dungeon->dungeonTypeEnum = $request->has('dungeonType') ? $request->get('dungeonType') : null;
-        $zones = new Zones();
+        $dungeon->type = $request->has('type') ? $request->get('type') : null;
+        $zones = new Zone();
         $zones = $zones->getZones();
 
         return view('dungeon.edit', compact('dungeon', 'zones'));
@@ -81,7 +81,7 @@ class DungeonController
     {
         $sets = $dungeon->sets;
 
-        if(in_array($dungeon->dungeonTypeEnum, [DungeonType::DELVE, DungeonType::PUBLIC_DUNGEON])) {
+        if(in_array($dungeon->type, [DungeonType::DELVE, DungeonType::PUBLIC_DUNGEON])) {
 
             $sets = ZoneSet::where('zoneId', $dungeon->zone)
                 ->with('sets')
@@ -129,7 +129,7 @@ class DungeonController
     public function edit(Dungeon $dungeon) {
         $sets = $dungeon->sets;
 
-        $zones = new Zones();
+        $zones = new Zone();
         $zones = $zones->getZones();
 
         $all_sets = Set::whereNotIn('id', $sets->pluck('id'))

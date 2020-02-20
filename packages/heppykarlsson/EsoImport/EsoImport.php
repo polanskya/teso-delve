@@ -24,8 +24,8 @@ class EsoImport
     private $itemStyles = null;
 
     public function import($file_path, $user) {
-        set_time_limit(120);
-        ini_set('memory_limit', env('IMPORT_MAX_MEMORY', 132).'M');
+        set_time_limit(1200);
+        ini_set('memory_limit', env('IMPORT_MAX_MEMORY', 8000).'M');
 
         $updateStart = Carbon::now()->subSecond(5);
 
